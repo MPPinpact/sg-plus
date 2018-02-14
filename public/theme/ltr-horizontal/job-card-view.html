@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Able Pro Responsive Bootstrap 4 Admin Template by Phoenixcoded</title>
+
+    <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content="Phoenixcoded">
+    <meta name="keywords"  content=", Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+    <meta name="author" content="Phoenixcoded">
+
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+  <!--Date Picker Material Icon Css-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- iconfont -->
+    <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
+
+    <!-- simple line icon -->
+    <link rel="stylesheet" type="text/css" href="assets/icon/simple-line-icons/css/simple-line-icons.css">
+
+    <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/css/bootstrap.min.css">
+
+    <!-- weather css -->
+    <link rel="stylesheet" type="text/css" href="assets/icon/weather-icons/css/weather-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/icon/weather-icons/css/weather-icons-wind.min.css">
+
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+    <!-- Responsive.css-->
+    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">    <!--color css-->
+    <link rel="stylesheet" type="text/css" href="assets/css/color/color-1.css" id="color"/>
+</head>
+<body class="horizontal-fixed fixed">
+<div class="wrapper">
+    <div class="loader-bg">
+        <div class="loader-bar">
+        </div>
+    </div>
+    <!-- Navbar-->
+    <header class="main-header-top hidden-print">
+        <a href="index.html" class="logo"><img class="img-fluid able-logo" src="assets/images/logo.png" alt="Theme-logo"></a>
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button--><a href="#!" data-toggle="offcanvas" class="sidebar-toggle hidden-md-up"></a>
+            <!-- Navbar Right Menu-->
+            <div class="navbar-custom-menu">
+                <ul class="top-nav">
+                    <!--Notification Menu-->
+
+                    <li class="dropdown pc-rheader-submenu message-notification search-toggle">
+                        <a href="#!" id="morphsearch-search" class="drop icon-circle txt-white">
+                            <i class="icofont icofont-search-alt-1"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown notification-menu">
+                        <a href="#!" data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">
+                            <i class="icon-bell"></i>
+                            <span class="badge badge-danger header-badge">9</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="not-head">You have <b class="text-primary">4</b> new notifications.</li>
+                            <li class="bell-notification">
+                                <a href="javascript:;" class="media">
+              <span class="mr-3 media-icon">
+                <img class="rounded-circle" src="assets/images/avatar-1.png" alt="User Image">
+              </span>
+                                    <div class="media-body"><span class="block">Lisa sent you a mail</span><span class="text-muted block-time">2min ago</span></div></a>
+                            </li>
+                            <li class="bell-notification">
+                                <a href="javascript:;" class="media">
+                <span class="mr-3 media-icon">
+                  <img class="rounded-circle" src="assets/images/avatar-2.png" alt="User Image">
+                </span>
+                                    <div class="media-body"><span class="block">Server Not Working</span><span class="text-muted block-time">20min ago</span></div></a>
+                            </li>
+                            <li class="bell-notification">
+                                <a href="javascript:;" class="media"><span class="mr-3 media-icon">
+                  <img class="rounded-circle" src="assets/images/avatar-3.png" alt="User Image">
+                </span>
+                                    <div class="media-body"><span class="block">Transaction xyz complete</span><span class="text-muted block-time">3 hours ago</span></div></a>
+                            </li>
+                            <li class="not-footer">
+                                <a href="#!">See all notifications.</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- chat dropdown -->
+                    <li class="pc-rheader-submenu ">
+                        <a href="#!" class="drop icon-circle displayChatbox">
+                            <i class="icon-bubbles"></i>
+                            <span class="badge badge-danger header-badge blink">5</span>
+                        </a>
+
+                    </li>
+                    <!-- window screen -->
+                    <li class="pc-rheader-submenu">
+                        <a href="#!" class="drop icon-circle" onclick="javascript:toggleFullScreen()">
+                            <i class="icon-size-fullscreen"></i>
+                        </a>
+
+                    </li>
+                    <!-- User Menu-->
+                    <li class="dropdown">
+                        <a href="#!" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle drop icon-circle drop-image">
+                            <span><img class="rounded-circle " src="assets/images/avatar-1.png" style="width:40px;" alt="User Image"></span>
+                            <span>John <b>Doe</b> <i class=" icofont icofont-simple-down"></i></span>
+
+                        </a>
+                        <ul class="dropdown-menu settings-menu">
+                            <li><a href="#!"><i class="icon-settings"></i> Settings</a></li>
+                            <li><a href="profile.html"><i class="icon-user"></i> Profile</a></li>
+                            <li><a href="message.html"><i class="icon-envelope-open"></i> My Messages</a></li>
+                            <li class="p-0">
+                                <div class="dropdown-divider m-0"></div>
+                            </li>
+                            <li><a href="lock-screen.html"><i class="icon-lock"></i> Lock Screen</a></li>
+                            <li><a href="#!"><i class="icon-logout"></i> Logout</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- search -->
+                <div id="morphsearch" class="morphsearch">
+                    <form class="morphsearch-form">
+
+                        <input class="morphsearch-input" type="search" placeholder="Search..."/>
+
+                        <button class="morphsearch-submit" type="submit">Search</button>
+
+                    </form>
+                    <div class="morphsearch-content">
+                        <div class="dummy-column">
+                            <h2>People</h2>
+                            <a class="dummy-media-object" href="#!">
+                                <img class="round" src="http://0.gravatar.com/avatar/81b58502541f9445253f30497e53c280?s=50&d=identicon&r=G" alt="Sara Soueidan"/>
+                                <h3>Sara Soueidan</h3>
+                            </a>
+
+                            <a class="dummy-media-object" href="#!">
+                                <img class="round" src="http://1.gravatar.com/avatar/9bc7250110c667cd35c0826059b81b75?s=50&d=identicon&r=G" alt="Shaun Dona"/>
+                                <h3>Shaun Dona</h3>
+                            </a>
+                        </div>
+                        <div class="dummy-column">
+                            <h2>Popular</h2>
+                            <a class="dummy-media-object" href="#!">
+                                <img src="assets/images/avatar-1.png" alt="PagePreloadingEffect"/>
+                                <h3>Page Preloading Effect</h3>
+                            </a>
+
+                            <a class="dummy-media-object" href="#!">
+                                <img src="assets/images/avatar-1.png" alt="DraggableDualViewSlideshow"/>
+                                <h3>Draggable Dual-View Slideshow</h3>
+                            </a>
+                        </div>
+                        <div class="dummy-column">
+                            <h2>Recent</h2>
+                            <a class="dummy-media-object" href="#!">
+                                <img src="assets/images/avatar-1.png" alt="TooltipStylesInspiration"/>
+                                <h3>Tooltip Styles Inspiration</h3>
+                            </a>
+                            <a class="dummy-media-object" href="#!">
+                                <img src="assets/images/avatar-1.png" alt="NotificationStyles"/>
+                                <h3>Notification Styles Inspiration</h3>
+                            </a>
+                        </div>
+                    </div><!-- /morphsearch-content -->
+                    <span class="morphsearch-close"><i class="icofont icofont-search-alt-1"></i></span>
+                </div>
+                <!-- search end -->
+            </div>
+        </nav>
+    </header>
+    <!-- Side-Nav-->
+    <aside class="main-sidebar hidden-print ">
+        <section class="sidebar" id="sidebar-scroll">
+            <div class="user-panel">
+                <div class="f-left image"><img src="assets/images/avatar-1.png" alt="User Image" class="rounded-circle">
+                </div>
+                <div class="f-left info">
+                    <p>John Doe</p>
+                    <p class="designation">UX Designer <i class="fa fa-sort-down m-l-5"></i>
+                    </p>
+                </div>
+            </div>
+            <!--horizontal Menu Starts-->
+            <ul class="sidebar-menu">
+                <li class="nav-level">Navigation</li>
+                <li class="treeview"><a href="#"><i class="icon-speedometer"></i><span>  Dashboard </span><i class="icon-arrow-down"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="index.html"><i class="icon-arrow-right"></i><span> Dashboard 1 </span></a>
+                        </li>
+                        <li><a href="dashboard2.html"><i class="icon-arrow-right"></i><span> Dashboard 2 </span></a>
+                        </li>
+                        <li><a href="dashboard3.html"><i class="icon-arrow-right"></i><span> Dashboard 3 </span></a>
+                        </li>
+                        <li><a href="dashboard4.html"><i class="icon-arrow-right"></i><span> Dashboard 4 </span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="widget.html"><i class="icon-grid"></i><span>  Widget </span></a>
+                </li>
+
+                <li class="treeview"><a href="#"><i class="icon-user-follow"></i><span>  Components  </span><i class="icon-arrow-down"></i></a>
+                    <ul class="mega-menu treeview-menu">
+                        <li class="col-md-3">
+                            <div class="card-block mega-card">
+                                <h6 class="sub-title">UI Elements</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="accordion.html"><i class="icon-arrow-right"></i> Accordion</a></li>
+                                            <li><a class="waves-effect waves-dark" href="button.html"><i class="icon-arrow-right"></i> Button</a></li>
+                                            <li><a class="waves-effect waves-dark" href="button-fab.html"><i class="icon-arrow-right"></i> Button FAB</a></li>
+                                            <li><a class="waves-effect waves-dark" href="label-badge.html"><i class="icon-arrow-right"></i> Label Badge</a></li>
+                                            <li><a class="waves-effect waves-dark" href="bootstrap-ui.html"><i class="icon-arrow-right"></i> Grid system</a></li>
+                                            <li><a class="waves-effect waves-dark" href="box-shadow.html"><i class="icon-arrow-right"></i> Box Shadow</a></li>
+                                            <li><a class="waves-effect waves-dark" href="color.html"><i class="icon-arrow-right"></i> Color</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="draggable.html"><i class="icon-arrow-right"></i> Draggable</a></li>
+                                            <li><a class="waves-effect waves-dark" href="light-box.html"><i class="icon-arrow-right"></i> Light Box</a></li>
+                                            <li><a class="waves-effect waves-dark" href="list.html"><i class="icon-arrow-right"></i> List</a></li>
+                                            <li><a class="waves-effect waves-dark" href="nestable.html"><i class="icon-arrow-right"></i> Nestable</a></li>
+                                            <li><a class="waves-effect waves-dark" href="notification.html"><i class="icon-arrow-right"></i> Notification</a></li>
+                                            <li><a class="waves-effect waves-dark" href="panels-wells.html"><i class="icon-arrow-right"></i> Panels-Wells</a></li>
+                                            <li><a class="waves-effect waves-dark" href="preloader.html"><i class="icon-arrow-right"></i> Preloader</a></li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div class="card-block mega-card">
+                                <h6 class="sub-title">Other Components</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="range-slider.html"><i class="icon-arrow-right"></i> Range-Slider</a></li>
+                                            <li><a class="waves-effect waves-dark" href="rating.html"><i class="icon-arrow-right"></i> Rating</a></li>
+                                            <li><a class="waves-effect waves-dark" href="slider.html"><i class="icon-arrow-right"></i> Slider</a></li>
+                                            <li><a class="waves-effect waves-dark" href="tabs.html"><i class="icon-arrow-right"></i> Tabs</a></li>
+                                            <li><a class="waves-effect waves-dark" href="treeview.html"><i class="icon-arrow-right"></i> Tree View</a></li>
+                                            <li><a class="waves-effect waves-dark" href="tour.html"><i class="icon-arrow-right"></i> Tour</a></li>
+                                            <li><a class="waves-effect waves-dark" href="tooltips.html"><i class="icon-arrow-right"></i> Tooltips</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="typography.html"><i class="icon-arrow-right"></i> Typography</a></li>
+                                            <li><a class="waves-effect waves-dark" href="card.html"><i class="icon-arrow-right"></i> Card</a></li>
+                                            <li><a class="waves-effect waves-dark" href="footer.html"><i class="icon-arrow-right"></i> Footer</a></li>
+                                            <li><a class="waves-effect waves-dark" href="footer-center.html"><i class="icon-arrow-right"></i> Footer Center</a></li>
+                                            <li><a class="waves-effect waves-dark" href="footer-right.html"><i class="icon-arrow-right"></i> Footer Right</a></li>
+                                            <li><a class="waves-effect waves-dark" href="other.html"><i class="icon-arrow-right"></i> Other</a></li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div class="card-block mega-card">
+                                <h6 class="sub-title">Theme UI</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="contact-card.html"><i class="icon-arrow-right"></i> Contact Card</a></li>
+                                            <li><a class="waves-effect waves-dark" href="contact-details.html"><i class="icon-arrow-right"></i> Contact Details</a></li>
+                                            <li><a class="waves-effect waves-dark" href="animation.html"><i class="icon-arrow-right"></i> Animation</a></li>
+                                            <li><a class="waves-effect waves-dark" href="dynamic-grid.html"><i class="icon-arrow-right"></i> Dynamic Grid</a></li>
+                                            <li><a class="waves-effect waves-dark" href="generic-class.html"><i class="icon-arrow-right"></i> Generic Class</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="gridstack.html"><i class="icon-arrow-right"></i> Grid Stack</a></li>
+                                            <li><a class="waves-effect waves-dark" href="modal.html"><i class="icon-arrow-right"></i> Modal</a></li>
+                                            <li><a class="waves-effect waves-dark" href="portlets.html"><i class="icon-arrow-right"></i> Portlets</a></li>
+                                            <li><a class="waves-effect waves-dark" href="sticky.html"><i class="icon-arrow-right"></i> Sticky</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div class="card-block mega-card">
+                                <h6 class="sub-title">Page Layout</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="menu-static.html" target="_blank"><i class="icon-arrow-right"></i> Static Layout</a></li>
+                                            <li><a class="waves-effect waves-dark" href="menu-fixed.html" target="_blank"><i class="icon-arrow-right"></i> Header and Sidebar Fixed</a></li>
+                                            <li><a class="waves-effect waves-dark" href="menu-sidebar-sticky.html" target="_blank"><i class="icon-arrow-right"></i> Sidebar Sticky</a></li>
+                                            <li><a class="waves-effect waves-dark" href="menu-header-fixed.html" target="_blank"><i class="icon-arrow-right"></i> Header Fixed</a></li>
+                                            <li><a class="waves-effect waves-dark" href="menu-horizontal.html" target="_blank"><i class="icon-arrow-right"></i> Menu Horizontal</a></li>
+                                            <li><a class="waves-effect waves-dark" href="menu-horizontal-icon.html" target="_blank"><i class="icon-arrow-right"></i> Menu Horizontal Icon</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="menu-horizontal-fixed.html" target="_blank"><i class="icon-arrow-right"></i> Header Horizontal Fixed</a></li>
+                                            <li><a class="waves-effect waves-dark" href="menu-horizontal-icon-fixed.html" target="_blank"><i class="icon-arrow-right"></i> Header Horizontal Icon Fixed</a></li>
+                                            <li><a class="waves-effect waves-dark" href="menu-footer-fixed.html" target="_blank"><i class="icon-arrow-right"></i> Footer Fixed</a></li></li>
+                                            <li><a class="waves-effect waves-dark" href="menu-bottom.html" target="_blank"><i class="icon-arrow-right"></i> Bottom Menu Fixed</a></li>
+                                            <li><a class="waves-effect waves-dark" href="mega-menu.html" target="_blank"><i class="icon-arrow-right"></i> Mega Menu</a></li>
+                                            <li><a class="waves-effect waves-dark" href="box-layout.html"><i class="icon-arrow-right"></i> Box-Layout</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+                <li class="treeview"><a href="#"><i class="icon-user-follow"></i><span>  Useful Elements  </span><i class="icon-arrow-down"></i></a>
+                    <ul class="mega-menu treeview-menu">
+                        <li class="col-md-3">
+                            <div class="card-block mega-card">
+                                <h6 class="sub-title">Charts &amp; Maps</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="echart.html"><i class="icon-arrow-right"></i> E-Charts</a></li>
+                                            <li><a class="waves-effect waves-dark" href="chartjs.html"><i class="icon-arrow-right"></i> Chart Js</a></li>
+                                            <li><a class="waves-effect waves-dark" href="list-charts.html"><i class="icon-arrow-right"></i> List Charts</a></li>
+                                            <li><a class="waves-effect waves-dark" href="float-chart.html"><i class="icon-arrow-right"></i> Float Charts</a></li>
+                                            <li><a class="waves-effect waves-dark" href="knob-chart.html"><i class="icon-arrow-right"></i> Knob Charts</a></li>
+                                            <li><a class="waves-effect waves-dark" href="morris-chart.html"><i class="icon-arrow-right"></i> Morris Charts</a></li>
+                                            <li><a class="waves-effect waves-dark" href="nvd3-chart.html"><i class="icon-arrow-right"></i> nvd3 Charts</a></li>
+                                            <li><a class="waves-effect waves-dark" href="peity-chart.html"><i class="icon-arrow-right"></i> Peity Charts</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="radial-chart.html"><i class="icon-arrow-right"></i> Radial Charts</a></li>
+                                            <li><a class="waves-effect waves-dark" href="rickshaw-chart.html"><i class="icon-arrow-right"></i> Rickshaw Charts</a></li>
+                                            <li><a class="waves-effect waves-dark" href="sparkline-chart.html"><i class="icon-arrow-right"></i> Sparkline Charts</a></li>
+                                            <li><a class="waves-effect waves-dark" href="c3chart-chart.html"><i class="icon-arrow-right"></i> c3Chart Charts</a></li>
+                                            <li><a class="waves-effect waves-dark" href="map-google.html"><i class="icon-arrow-right"></i> Map Google</a></li>
+                                            <li><a class="waves-effect waves-dark" href="map-vector.html"><i class="icon-arrow-right"></i> Map Vector</a></li>
+                                        </ul>
+
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div class="card-block mega-card">
+                                <h6 class="sub-title">Forms</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="form-elements-bootstrap.html"><i class="icon-arrow-right"></i> Form Elements Bootstrap</a></li>
+                                            <li><a class="waves-effect waves-dark" href="form-elements-materialize.html"><i class="icon-arrow-right"></i> Form Elements Material</a></li>
+                                            <li><a class="waves-effect waves-dark" href="form-elements-advance.html"><i class="icon-arrow-right"></i> Form Elements Advance</a></li>
+                                            <li><a class="waves-effect waves-dark" href="forms-wizard.html"><i class="icon-arrow-right"></i> Form Wizard</a></li>
+                                            <li><a class="waves-effect waves-dark" href="form-mask.html"><i class="icon-arrow-right"></i> Form Masking</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="forms-validation.html"><i class="icon-arrow-right"></i> Form Validation</a></li>
+                                            <li><a class="waves-effect waves-dark" href="x-editable.html"><i class="icon-arrow-right"></i> X-Editable</a></li>
+                                            <li><a class="waves-effect waves-dark" href="file-upload.html"><i class="icon-arrow-right"></i> File Upload</a></li>
+                                            <li><a class="waves-effect waves-dark" href="image-cropper.html"><i class="icon-arrow-right"></i> Image Cropper</a></li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div class="card-block mega-card">
+                                <h6 class="sub-title">Tables</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-sm-12">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="basic-table.html"><i class="icon-arrow-right"></i> Basic Tables</a></li>
+                                            <li><a class="waves-effect waves-dark" href="data-table.html"><i class="icon-arrow-right"></i> Data Tables</a></li>
+                                            <li><a class="waves-effect waves-dark" href="responsive-table.html"><i class="icon-arrow-right"></i> Responsive Tables</a></li>
+                                            <li><a class="waves-effect waves-dark" href="editable-table.html"><i class="icon-arrow-right"></i> Editable Tables</a></li>
+                                            <li><a class="waves-effect waves-dark" href="foo-tables.html"><i class="icon-arrow-right"></i> Foo Tables</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div class="card-block mega-card">
+                                <h6 class="sub-title">Icons</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-sm-12">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="font-awesome.html"><i class="icon-arrow-right"></i> Font-Awesome Icons</a></li>
+                                            <li><a class="waves-effect waves-dark" href="material-design-icons.html"><i class="icon-arrow-right"></i> Material Design Icons</a></li>
+                                            <li><a class="waves-effect waves-dark" href="simple-line-icons.html"><i class="icon-arrow-right"></i> Simple Line Icons</a></li>
+                                            <li><a class="waves-effect waves-dark" href="ion-icon.html"><i class="icon-arrow-right"></i> Ion Icons</a></li>
+                                            <li><a class="waves-effect waves-dark" href="icofonts.html"><i class="icon-arrow-right"></i> Ico Fonts Icons</a></li>
+                                            <li><a class="waves-effect waves-dark" href="weather-icons.html"><i class="icon-arrow-right"></i> Weather Icons</a></li>
+                                            <li><a class="waves-effect waves-dark" href="typicons-icons.html"><i class="icon-arrow-right"></i> TypIcons</a></li>
+                                            <li><a class="waves-effect waves-dark" href="flags.html"><i class="icon-arrow-right"></i> Flags</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="active treeview"><a href="#"><i class="icon-user-follow"></i><span>  Pages  </span><i class="icon-arrow-down"></i></a>
+                    <ul class="mega-menu treeview-menu">
+                        <li class="col-md-3">
+                            <div class="card-block mega-card">
+                                <h6 class="sub-title">Pages</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="landing-page.html" target="_blank"><i class="icon-arrow-right"></i> Landing page</a></li>
+                                            <li><a class="waves-effect waves-dark" href="lock-screen.html" target="_blank"><i class="icon-arrow-right"></i> Lock Screen</a></li>
+                                            <li><a class="waves-effect waves-dark" href="400.html" target="_blank"><i class="icon-arrow-right"></i> Error 400</a></li>
+                                            <li><a class="waves-effect waves-dark" href="403.html" target="_blank"><i class="icon-arrow-right"></i> Error 403</a></li>
+                                            <li><a class="waves-effect waves-dark" href="404.html" target="_blank"><i class="icon-arrow-right"></i> Error 404</a></li>
+                                            <li><a class="waves-effect waves-dark" href="500.html" target="_blank"><i class="icon-arrow-right"></i> Error 500</a></li>
+                                            <li><a class="waves-effect waves-dark" href="503.html" target="_blank"><i class="icon-arrow-right"></i> Error 503</a></li>
+                                            <li><a class="waves-effect waves-dark" href="gallery.html"><i class="icon-arrow-right"></i> Gallery</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+
+                                            <li class="h-active"><a class="waves-effect waves-dark" href="sample-page.html"><i class="icon-arrow-right"></i> Sample Page</a></li>
+                                            <li><a class="waves-effect waves-dark" href="invoice.html"><i class="icon-arrow-right"></i> Invoice</a></li>
+                                            <li><a class="waves-effect waves-dark" href="blog.html"><i class="icon-arrow-right"></i> Blog</a></li>
+                                            <li><a class="waves-effect waves-dark" href="blog-detail.html"><i class="icon-arrow-right"></i> Blog Detail</a></li>
+                                            <li><a class="waves-effect waves-dark" href="search-result.html"><i class="icon-arrow-right"></i> Search Result 1</a></li>
+                                            <li><a class="waves-effect waves-dark" href="search-result2.html"><i class="icon-arrow-right"></i> Search Result 2</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div class="card-block mega-card">
+
+                                <h6 class="sub-title">Authentication</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="register1.html" target="_blank"><i class="icon-arrow-right"></i> Register 1</a></li>
+                                            <li><a class="waves-effect waves-dark" href="register2.html" target="_blank"><i class="icon-arrow-right"></i><span> Register 2</span></a></li>
+                                            <li><a class="waves-effect waves-dark" href="signin-up-modal.html"><i class="icon-arrow-right"></i><span> Sign In/Up with Modal </span></a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="login1.html" target="_blank"><i class="icon-arrow-right"></i><span> Login 1</span></a></li>
+                                            <li><a class="waves-effect waves-dark" href="login2.html" target="_blank"><i class="icon-arrow-right"></i><span> Login 2</span></a></li>
+                                            <li><a class="waves-effect waves-dark" href="forgot-password.html" target="_blank"><i class="icon-arrow-right"></i><span> Forgot Password</span></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-md-6">
+                                        <h6 class="sub-title">Email</h6>
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="inbox.html"><i class="icon-arrow-right"></i> Inbox</a></li>
+                                            <li><a class="waves-effect waves-dark" href="compose.html"><i class="icon-arrow-right"></i> Compose</a></li>
+                                            <li><a class="waves-effect waves-dark" href="read-mail.html"><i class="icon-arrow-right"></i> Read Mail</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <h6 class="sub-title">Job Search</h6>
+                                        <ul>
+                                            <li class="h-active"><a class="waves-effect waves-dark" href="job-card-view.html"><i class="icon-arrow-right"></i> Card View</a></li>
+                                            <li><a class="waves-effect waves-dark" href="job-details.html"><i class="icon-arrow-right"></i> Job Detailed</a></li>
+                                            <li><a class="waves-effect waves-dark" href="job-find.html"><i class="icon-arrow-right"></i> Job Find </a></li>
+                                            <li><a class="waves-effect waves-dark" href="job-panel-view.html"><i class="icon-arrow-right"></i> Job Panel View</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div class="card-block mega-card">
+                                <h6 class="sub-title">Apps</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="task-list.html"><i class="icon-arrow-right"></i> Task List</a></li>
+                                            <li><a class="waves-effect waves-dark" href="task-board.html"><i class="icon-arrow-right"></i> Task Board</a></li>
+                                            <li><a class="waves-effect waves-dark" href="task-detailed.html"><i class="icon-arrow-right"></i> Task Detailed</a></li>
+                                            <li><a class="waves-effect waves-dark" href="issue-list.html"><i class="icon-arrow-right"></i> Issue List</a></li>
+                                            <li><a class="waves-effect waves-dark" href="todo.html"><i class="icon-arrow-right"></i> To Do</a></li>
+                                        </ul>
+
+                                    </li>
+                                    <li class="col-xs-12 col-md-6">
+                                        <ul>
+
+                                            <li><a class="waves-effect waves-dark" href="chat.html"><i class="icon-arrow-right"></i> Chat</a></li>
+                                            <li><a class="waves-effect waves-dark" href="ck-editor.html"><i class="icon-arrow-right"></i> CK Editor</a></li>
+                                            <li><a class="waves-effect waves-dark" href="wysiwyg-editor.html"><i class="icon-arrow-right"></i> wysiwyg Editor</a></li>
+                                            <li><a class="waves-effect waves-dark" href="ace-editor.html"><i class="icon-arrow-right"></i> Ace Editor</a></li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="col-md-3">
+                            <div class="card-block mega-card">
+                                <h6 class="sub-title"> E-Commerce</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-sm-12">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="product.html"><i class="icon-arrow-right"></i> Product</a></li>
+                                            <li><a class="waves-effect waves-dark" href="product-detail.html"><i class="icon-arrow-right"></i> Product Detail</a></li>
+                                            <li><a class="waves-effect waves-dark" href="product-list.html"><i class="icon-arrow-right"></i> Product List</a></li>
+                                            <li><a class="waves-effect waves-dark" href="product-edit.html"><i class="icon-arrow-right"></i> Product Edit</a></li>
+                      <li><a class="waves-effect waves-dark" href="product-cart.html"><i class="icon-arrow-right"></i> Product Card</a></li>
+                      <li><a class="waves-effect waves-dark" href="e-payment.html"><i class="icon-arrow-right"></i> Credit Card  Form</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <h6 class="sub-title">CRM</h6>
+                                <ul class="mega-list row">
+                                    <li class="col-xs-12 col-sm-12">
+                                        <ul>
+                                            <li><a class="waves-effect waves-dark" href="crm-dashboard.html"><i class="icon-arrow-right"></i> CRM-Dashbord</a></li>
+                                            <li><a class="waves-effect waves-dark" href="crm-contact.html"><i class="icon-arrow-right"></i> CRM-Contact</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="treeview"><a href="#"><i class="icon-present"></i><span> Extras </span><i class="icon-arrow-down"></i></a>
+                    <ul class="treeview-menu">
+                        <li class="treeview"><a href="#"><i class="icon-arrow-right"></i><span>  Social </span><i class="icofont icofont-caret-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a class="waves-effect waves-dark" href="profile-social.html"><i class="icon-arrow-right"></i> Profile Social</a></li>
+                                <li><a class="waves-effect waves-dark" href="timeline-social.html"><i class="icon-arrow-right"></i><span> Timeline Social</span></a></li>
+                                <li><a class="waves-effect waves-dark" href="wall.html"><i class="icon-arrow-right"></i><span> Wall</span></a></li>
+                                <li><a class="waves-effect waves-dark" href="message.html"><i class="icon-arrow-right"></i><span> Message</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview"><a href="#"><i class="icon-arrow-right"></i><span>  Email Template </span><i class="icofont icofont-caret-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a class="waves-effect waves-dark" href="email-confirm.html" target="_blank"><i class="icon-arrow-right"></i> Email Confirm</a></li>
+                                <li><a class="waves-effect waves-dark" href="email-order-track.html" target="_blank"><i class="icon-arrow-right"></i> Email Order Track</a></li>
+                                <li><a class="waves-effect waves-dark" href="email-otp.html" target="_blank"><i class="icon-arrow-right"></i> Email OTP</a></li>
+                                <li><a class="waves-effect waves-dark" href="email-signup.html" target="_blank"><i class="icon-arrow-right"></i> Email Signup</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a class="waves-effect waves-dark" href="timeline.html"><i class="icon-arrow-right"></i> Timeline</a></li>
+                        <li><a class="waves-effect waves-dark" href="maintainance.html" target="_blank"><i class="icon-arrow-right"></i> Maintainace</a></li>
+                        <li><a class="waves-effect waves-dark" href="coming-soon.html" target="_blank"><i class="icon-arrow-right"></i> Coming Soon</a></li>
+                        <li><a class="waves-effect waves-dark" href="profile.html"><i class="icon-arrow-right"></i> Profile</a></li>
+                        <li><a class="waves-effect waves-dark" href="pricing.html"><i class="icon-arrow-right"></i> Pricing</a></li>
+                        <li><a class="waves-effect waves-dark" href="full-calender.html"><i class="icon-arrow-right"></i>Full Calender<span class="label label-danger menu-caption">Hot</span></a>
+                        <li><a class="waves-effect waves-dark" href="Change-loges.html"><i class="icon-arrow-right"></i>Change log<span class="label label-danger menu-caption">5</span></a></li></li>
+                    </ul>
+                </li>
+                <li class="nav-level">Menu Level</li>
+                <li class="treeview"><a href="#"><i class="icofont icofont-company"></i><span> Menu Level 1 </span><i class="icon-arrow-down"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="#!"><i class="icon-arrow-right"></i> Level Two</a>
+                        </li>
+                        <li class="treeview"><a href="#"><i class="icon-arrow-right"></i><span>  Level Two </span><i class="icofont icofont-caret-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="#!"><i class="icon-arrow-right"></i> Level Three</a>
+                                </li>
+                                <li class="treeview"><a href="#"><i class="icon-arrow-right"></i><span>  Level Three </span><i class="icofont icofont-caret-right"></i></a>
+                                    <ul class="treeview-menu">
+                                        <li><a href="#!"><i class="icon-arrow-right"></i> Level Four</a>
+                                        </li>
+                                        <li><a href="#"><i class="icon-arrow-right"></i><span>  Level Four </span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!--horizontal Menu Ends-->
+        </section>
+    </aside>
+    <!-- Sidebar chat start -->
+    <div id="sidebar" class="p-fixed header-users showChat">
+        <div class="had-container">
+            <div class="card card_main header-users-main">
+                <div class="card-content user-box">
+
+                    <div class="md-group-add-on p-20">
+         <span class="md-add-on">
+          <i class="icofont icofont-search-alt-2 chat-search"></i>
+        </span>
+                        <div class="md-input-wrapper">
+                            <input type="text" class="md-form-control"  name="username" id="search-friends">
+                            <label for="username">Search</label>
+                        </div>
+
+                    </div>
+                    <div class="media friendlist-main">
+
+                        <h6>Friend List</h6>
+
+                    </div>
+                    <div class="main-friend-list">
+                        <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Josephin Doe</div>
+                                <span>20min ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="3" data-status="online" data-username="Alice"  data-toggle="tooltip" data-placement="left" title="Alice">
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-2.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Alice</div>
+                                <span>1 hour ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="7" data-status="offline" data-username="Michael Scofield" data-toggle="tooltip" data-placement="left" title="Michael Scofield">
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-3.png" alt="Generic placeholder image">
+                                <div class="live-status bg-danger"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Michael Scofield</div>
+                                <span>3 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="5" data-status="online" data-username="Irina Shayk" data-toggle="tooltip" data-placement="left" title="Irina Shayk">
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-4.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Irina Shayk</div>
+                                <span>1 day ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="6" data-status="offline" data-username="Sara Tancredi" data-toggle="tooltip" data-placement="left" title="Sara Tancredi">
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-5.png" alt="Generic placeholder image">
+                                <div class="live-status bg-danger"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Sara Tancredi</div>
+                                <span>2 days ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Josephin Doe</div>
+                                <span>20min ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="3" data-status="online" data-username="Alice" data-toggle="tooltip" data-placement="left" title="Alice">
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-2.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Alice</div>
+                                <span>1 hour ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Josephin Doe</div>
+                                <span>20min ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="3" data-status="online" data-username="Alice" data-toggle="tooltip" data-placement="left" title="Alice">
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-2.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Alice</div>
+                                <span>1 hour ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip"  data-placement="left" title="Josephin Doe">
+
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Josephin Doe</div>
+                                <span>20min ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="3" data-status="online" data-username="Alice"  data-toggle="tooltip" data-placement="left" title="Alice">
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-2.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Alice</div>
+                                <span>1 hour ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Josephin Doe</div>
+                                <span>20min ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Josephin Doe</div>
+                                <span>20min ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Josephin Doe</div>
+                                <span>20min ago</span>
+                            </div>
+                        </div>
+                        <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                            <a class="mr-3" href="#!">
+                                <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                <div class="live-status bg-success"></div>
+                            </a>
+                            <div class="media-body">
+                                <div class="friend-header">Josephin Doe</div>
+                                <span>20min ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="showChat_inner">
+        <div class="media chat-inner-header">
+            <a class="back_chatBox">
+                <i class="icofont icofont-rounded-left"></i> Josephin Doe
+            </a>
+        </div>
+        <div class="media chat-messages">
+            <a class="mr-3 photo-table" href="#!">
+                <img class="media-object rounded-circle m-t-5" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                <div class="live-status bg-success"></div>
+            </a>
+            <div class="media-body chat-menu-content">
+                <div class="">
+                    <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
+                    <p class="chat-time">8:20 a.m.</p>
+                </div>
+            </div>
+        </div>
+        <div class="media chat-messages">
+            <div class="media-body chat-menu-reply">
+                <div class="">
+                    <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
+                    <p class="chat-time">8:20 a.m.</p>
+                </div>
+            </div>
+            <div class="media-right photo-table">
+                <a href="#!">
+                    <img class="media-object rounded-circle m-t-5" src="assets/images/avatar-2.png" alt="Generic placeholder image">
+                    <div class="live-status bg-success"></div>
+                </a>
+            </div>
+        </div>
+        <div class="media chat-reply-box">
+            <div class="md-input-wrapper">
+                <input type="text" class="md-form-control" id="inputEmail" name="inputEmail" >
+                <label>Share your thoughts</label>
+                <span class="highlight"></span>
+                <span class="bar"></span>  <button type="button" class="chat-send waves-effect waves-light">
+                <i class="icofont icofont-location-arrow f-20 "></i>
+            </button>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Sidebar chat end-->
+    <div class="content-wrapper">
+        <!-- Container-fluid starts -->
+        <div class="container-fluid">
+            <!-- Row Starts -->
+            <div class="row">
+                <div class="col-sm-12 p-0">
+                    <div class="main-header">
+                        <h4>Sample page</h4>
+                        <ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="icofont icofont-home"></i></a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="#!">Job Search</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="sample-page.html">Card View</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <!-- Row end -->
+            <div class="page-body">
+                <div class="row">
+                    <!-- Left column start -->
+                    <div class="col-lg-9">
+                        <div class="job-card card-columns">
+                            <!-- Job card start -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="media">
+                                        <a class="media-left media-middle" href="#">
+                                            <img class="media-object img-60"
+                                                 src="assets/images/browser/chrome.png"
+                                                 alt="Generic placeholder image">
+                                        </a>
+                                        <div class="media-body media-middle">
+                                            <div class="company-name">
+                                                <p>Chrome</p>
+                                                <span class="text-muted f-14">December 16, 2017</span>
+                                            </div>
+                                            <div class="job-badge">
+                                                <label class="label bg-primary">New</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <div class="job-lable">
+                                        <label class="label">Animation</label>
+                                        <label class="label">Bootstrap</label>
+                                        <label class="label">Css 3</label>
+                                        <label class="label">Jade</label>
+                                    </div>
+                                    <h6 class="job-card-desc">Job Description</h6>
+                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur
+                                        adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                                        et dolore magna aliqua.Lorem ipsum dolor sit amet,
+                                        incididunt ut labore et dolore magna aliqua.</p>
+                                    <div class="job-meta-data"><i
+                                            class="icofont icofont-safety"></i>washington
+                                    </div>
+                                    <div class="job-meta-data"><i
+                                            class="icofont icofont-university"></i>10 Years
+                                    </div>
+                                </div>
+                                <div class="card-footer text-right">
+                                    <button type="button"
+                                            class="btn btn-primary waves-effect waves-light"> Apply
+                                        Job
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Job card end -->
+
+                            <!-- Job card start -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="media">
+                                        <a class="media-left media-middle" href="#">
+                                            <img class="media-object img-60"
+                                                 src="assets/images/browser/firefox.png"
+                                                 alt="Generic placeholder image">
+                                        </a>
+                                        <div class="media-body media-middle">
+                                            <div class="company-name">
+                                                <p>Firefox</p>
+                                                <span class="text-muted f-14">December 16, 2017</span>
+                                            </div>
+                                            <div class="job-badge">
+                                                <label class="label bg-primary">New</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <div class="job-lable">
+                                        <label class="label">Animation</label>
+                                        <label class="label">Bootstrap</label>
+                                        <label class="label">Css 3</label>
+                                    </div>
+                                    <h6 class="job-card-desc">Job Description</h6>
+                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur
+                                        adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                                        et dolore magna aliqua.</p>
+                                    <div class="job-meta-data"><i
+                                            class="icofont icofont-safety"></i>washington
+                                    </div>
+                                    <div class="job-meta-data"><i
+                                            class="icofont icofont-university"></i>10 Years
+                                    </div>
+                                </div>
+                                <div class="card-footer text-right">
+                                    <button type="button"
+                                            class="btn btn-primary waves-effect waves-light"> Apply
+                                        Job
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Job card end -->
+
+                            <!-- Job card start -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="media">
+                                        <a class="media-left media-middle" href="#">
+                                            <img class="media-object img-60"
+                                                 src="assets/images/browser/ie.png"
+                                                 alt="Generic placeholder image">
+                                        </a>
+                                        <div class="media-body media-middle">
+                                            <div class="company-name">
+                                                <p>Internet Explorer</p>
+                                                <span class="text-muted f-14">December 16, 2017</span>
+                                            </div>
+                                            <div class="job-badge">
+                                                <label class="label bg-primary">New</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <div class="job-lable">
+                                        <label class="label">Animation</label>
+                                        <label class="label">Bootstrap</label>
+                                        <label class="label">SCSS</label>
+                                        <label class="label">Jade</label>
+                                        <label class="label">Javascript</label>
+                                    </div>
+                                    <h6 class="job-card-desc">Job Description</h6>
+                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur
+                                        adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                                        et dolore magna aliqua.</p>
+                                    <div class="job-meta-data"><i
+                                            class="icofont icofont-safety"></i>washington
+                                    </div>
+                                    <div class="job-meta-data"><i
+                                            class="icofont icofont-university"></i>10 Years
+                                    </div>
+                                </div>
+                                <div class="card-footer text-right">
+                                    <button type="button"
+                                            class="btn btn-primary waves-effect waves-light"> Apply
+                                        Job
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Job card end -->
+
+                            <!-- Job card start -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="media">
+                                        <a class="media-left media-middle" href="#">
+                                            <img class="media-object img-60"
+                                                 src="assets/images/browser/opera.png"
+                                                 alt="Generic placeholder image">
+                                        </a>
+                                        <div class="media-body media-middle">
+                                            <div class="company-name">
+                                                <p>Safari</p>
+                                                <span class="text-muted f-14">December 16, 2017</span>
+                                            </div>
+                                            <div class="job-badge">
+                                                <label class="label bg-primary">New</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <div class="job-lable">
+                                        <label class="label">Animation</label>
+                                        <label class="label">Bootstrap</label>
+                                        <label class="label">SCSS</label>
+                                    </div>
+                                    <h6 class="job-card-desc">Job Description</h6>
+                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur
+                                        adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                                        et dolore magna aliqua. adipisicing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua</p>
+                                    <div class="job-meta-data"><i
+                                            class="icofont icofont-safety"></i>washington
+                                    </div>
+                                    <div class="job-meta-data"><i
+                                            class="icofont icofont-university"></i>10 Years
+                                    </div>
+                                </div>
+                                <div class="card-footer text-right">
+                                    <button type="button"
+                                            class="btn btn-primary waves-effect waves-light"> Apply
+                                        Job
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Job card end -->
+
+                            <!-- Job card start -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="media">
+                                        <a class="media-left media-middle" href="#">
+                                            <img class="media-object img-60"
+                                                 src="assets/images/browser/opera.png"
+                                                 alt="Generic placeholder image">
+                                        </a>
+                                        <div class="media-body media-middle">
+                                            <div class="company-name">
+                                                <p>Opera</p>
+                                                <span class="text-muted f-14">December 16, 2017</span>
+                                            </div>
+                                            <div class="job-badge">
+                                                <label class="label bg-primary">New</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <div class="job-lable">
+                                        <label class="label">Animation</label>
+                                        <label class="label">Bootstrap</label>
+                                        <label class="label">SCSS</label>
+                                    </div>
+                                    <h6 class="job-card-desc">Job Description</h6>
+                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur
+                                        adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                                        et dolore magna aliqua. adipisicing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua</p>
+                                    <div class="job-meta-data"><i
+                                            class="icofont icofont-safety"></i>washington
+                                    </div>
+                                    <div class="job-meta-data"><i
+                                            class="icofont icofont-university"></i>10 Years
+                                    </div>
+                                </div>
+                                <div class="card-footer text-right">
+                                    <button type="button"
+                                            class="btn btn-primary waves-effect waves-light"> Apply
+                                        Job
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Job card end -->
+
+
+                            <!-- Job card start -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="media">
+                                        <a class="media-left media-middle" href="#">
+                                            <img class="media-object img-60"
+                                                 src="assets/images/browser/opera.png"
+                                                 alt="Generic placeholder image">
+                                        </a>
+                                        <div class="media-body media-middle">
+                                            <div class="company-name">
+                                                <p>Opera</p>
+                                                <span class="text-muted f-14">December 16, 2017</span>
+                                            </div>
+                                            <div class="job-badge">
+                                                <label class="label bg-primary">New</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <div class="job-lable">
+                                        <label class="label">Animation</label>
+                                        <label class="label">Bootstrap</label>
+                                        <label class="label">SCSS</label>
+                                    </div>
+                                    <h6 class="job-card-desc">Job Description</h6>
+                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur
+                                        adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                                        et dolore magna aliqua. adipisicing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua</p>
+                                    <div class="job-meta-data"><i
+                                            class="icofont icofont-safety"></i>washington
+                                    </div>
+                                    <div class="job-meta-data"><i
+                                            class="icofont icofont-university"></i>10 Years
+                                    </div>
+                                </div>
+                                <div class="card-footer text-right">
+                                    <button type="button"
+                                            class="btn btn-primary waves-effect waves-light"> Apply
+                                        Job
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Job card end -->
+                        </div>
+
+
+                        <!-- Pagination start -->
+                        <nav aria-label="...">
+                            <ul class="pagination justify-content-center m-t-20 m-b-20">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">2 <span
+                                            class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- Pagination end -->
+                    </div>
+
+                    <!-- Left column end -->
+                    <!-- Right column start -->
+                    <div class="col-lg-3">
+                        <!-- Filter card start -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="icofont icofont-filter m-r-5"></i>Filter</h5>
+                            </div>
+                            <div class="card-block">
+                                <form action="#">
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Job-title">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Location">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <select class="form-control">
+                                                <option>Select Job Type</option>
+                                                <option>Full Time</option>
+                                                <option>Part Time</option>
+                                                <option>Remote</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="icofont icofont-job-search m-r-5"></i> Job
+                                            Find
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Filter card end -->
+                        <!-- Location card start -->
+                        <div class="card job-right-header">
+                            <div class="card-header">
+                                <h5>Location</h5>
+                                <div class="card-header-right">
+                                    <label class="label label-danger">Add</label>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <form action="#">
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>Amsterdam, North Holland Province, Netherlands</div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>Koog aan de Zaan, North Holland Province, Netherlands
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>Amsterdam Binnenstad en Oostelijk Havengebied, North
+                                            Holland Province, Netherlands
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>Hoofddorp, North Holland Province, Netherlands</div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>Alkmaar, North Holland Province, Netherlands</div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="#!">All Location</a>
+                            </div>
+                        </div>
+                        <!-- Location card end -->
+                        <!-- Job Title card start -->
+                        <div class="card job-right-header">
+                            <div class="card-header">
+                                <h5>Job Title</h5>
+                                <div class="card-header-right">
+                                    <label class="label label-danger">Add</label>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <form action="#">
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            Developer
+                                            <span class="text-muted">(30)</span>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            Front end designer
+                                            <span class="text-muted">(48)</span>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            UX designer
+                                            <span class="text-muted">(37)</span>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            Software engineer
+                                            <span class="text-muted">(57)</span>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            PHP developer
+                                            <span class="text-muted">(60)</span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="#!">All Job Titles</a>
+                            </div>
+                        </div>
+                        <!-- Job Title card end -->
+                        <!-- Specific Skills card start -->
+                        <div class="card job-right-header">
+                            <div class="card-header">
+                                <h5>Specific Skills</h5>
+                                <div class="card-header-right">
+                                    <label class="label label-danger">Add</label>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <form action="#">
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            HTML / CSS / SCSS
+                                            <span class="text-muted">(30)</span>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            Javascript
+                                            <span class="text-muted">(48)</span>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            Jquery
+                                            <span class="text-muted">(37)</span>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            Angular JS
+                                            <span class="text-muted">(57)</span>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            Node js
+                                            <span class="text-muted">(60)</span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="#!">All Skills</a>
+                            </div>
+                        </div>
+                        <!-- Specific Skills card end -->
+                        <!-- Date Posted card start -->
+                        <div class="card job-right-header">
+                            <div class="card-header">
+                                <h5>Date Posted</h5>
+                                <div class="card-header-right">
+                                    <label class="label label-danger">Add</label>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <form action="#">
+                                    <div class="form-radio">
+                                        <div class="radio radiofill radio-inline">
+                                            <label>
+                                                <input type="radio" name="radio" checked="checked">
+                                                <i class="helper"></i> Today
+                                                <span class="text-muted">(30)</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio radiofill radio-inline">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i> Yesterday
+                                                <span class="text-muted">(85)</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio radiofill radio-inline">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i> Last-week
+                                                <span class="text-muted">(184)</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio radiofill radio-inline">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i> Last month
+                                                <span class="text-muted">(195)</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="#!">All Skills</a>
+                            </div>
+                        </div>
+                        <!-- Date Posted card end -->
+                        <!-- Company card start -->
+                        <div class="card job-right-header">
+                            <div class="card-header">
+                                <h5>Company</h5>
+                                <div class="card-header-right">
+                                    <label class="label label-danger">Add</label>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <form action="#">
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            Phoenixcoded
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            Peacock
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            Amazon
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            Flipkart
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-fade fade-in-primary">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr">
+                                                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                                </span>
+                                        </label>
+                                        <div>
+                                            Snapdeal
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="#!">All Companies</a>
+                            </div>
+                        </div>
+                        <!-- Company card end -->
+                        <!-- Recent Searches card start -->
+                        <div class="card job-right-header">
+                            <div class="card-header">
+                                <h5>Recent Searches</h5>
+                                <div class="card-header-right">
+                                    <label class="label label-danger">Add</label>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <form action="#">
+                                    <div>
+                                        Senior Web designer
+                                        <p>Amsterdam</p>
+                                    </div>
+                                    <div>
+                                        PHP Devloper
+                                        <p>Amsterdam</p>
+                                    </div>
+                                    <div>
+                                        Fresher UI designer
+                                        <p>Amsterdam</p>
+                                    </div>
+                                    <div>
+                                        Wordpress devloper
+                                        <p>Amsterdam</p>
+                                    </div>
+                                    <div>
+                                        Opencart devloper
+                                        <p>Amsterdam</p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Recent Searches card end -->
+                    </div>
+                </div>
+                <!-- Right column end -->
+            </div>
+        </div>
+        <!-- Container-fluid ends -->
+    </div>
+</div>
+
+
+<!-- Warning Section Starts -->
+<!-- Older IE warning message -->
+<!--[if lt IE 9]>
+<div class="ie-warning">
+    <h1>Warning!!</h1>
+    <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
+    <div class="iew-container">
+        <ul class="iew-download">
+            <li>
+                <a href="http://www.google.com/chrome/">
+                    <img src="assets/images/browser/chrome.png" alt="Chrome">
+                    <div>Chrome</div>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.mozilla.org/en-US/firefox/new/">
+                    <img src="assets/images/browser/firefox.png" alt="Firefox">
+                    <div>Firefox</div>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.opera.com">
+                    <img src="assets/images/browser/opera.png" alt="Opera">
+                    <div>Opera</div>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.apple.com/safari/">
+                    <img src="assets/images/browser/safari.png" alt="Safari">
+                    <div>Safari</div>
+                </a>
+            </li>
+            <li>
+                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                    <img src="assets/images/browser/ie.png" alt="">
+                    <div>IE (9 & above)</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <p>Sorry for the inconvenience!</p>
+</div>
+<![endif]-->
+<!-- Warning Section Ends -->
+
+
+<!-- Required Jqurey -->
+<script type="text/javascript" src="../bower_components/jquery/js/jquery.min.js"></script>
+<script type="text/javascript" src="../bower_components/jquery-ui/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../bower_components/popper.js/js/popper.min.js"></script>
+
+<!-- Required Fremwork -->
+<script type="text/javascript" src="../bower_components/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- waves effects.js -->
+<script src="assets/plugins/waves/js/waves.min.js"></script>
+
+<!-- Scrollbar JS-->
+<script type="text/javascript" src="../bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
+<script type="text/javascript" src="assets/plugins/jquery.nicescroll/js/jquery.nicescroll.min.js"></script>
+
+
+<!--classic JS-->
+<script type="text/javascript" src="../bower_components/classie/js/classie.js"></script>
+
+
+<!-- isotope js -->
+<script src="assets/plugins/isotope/js/jquery.isotope.js"></script>
+<script src="assets/plugins/isotope/js/isotope.pkgd.min.js"></script>
+
+<!-- notification -->
+<script type="text/javascript" src="assets/plugins/notification/js/bootstrap-growl.min.js"></script>
+
+<!-- custom js -->
+<script type="text/javascript" src="assets/js/main.min.js"></script>
+<script type="text/javascript" src="assets/pages/elements.js"></script>
+<script src="assets/js/menu-horizontal.min.js"></script>
+<script type="text/javascript">
+    $(window).on('load', function() {
+        var $container = $('.filter-container');
+        $container.isotope({
+            filter: '*',
+            animationOptions: {
+                duration: 750,
+                easing: 'linear',
+                queue: false
+            }
+        });
+        var $grid = $('.default-grid').isotope({
+            itemSelector: '.default-grid-item',
+            masonry: {}
+        });
+    });
+</script>
+</body>
+</html>

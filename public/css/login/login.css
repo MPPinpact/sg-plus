@@ -1,0 +1,37 @@
+.SpanTitulo{
+	color:#727272;
+	position:relative;
+	font-size:18px;
+}
+.help-block{
+	color:#E02121;
+	font-size: 10px;
+}
+.page-item.active .page-link{
+	z-index:1;
+}
+.label{
+	color:#blue;
+}
+#ErrorRut{
+	color:#E02121;
+	font-size: 10px;
+}
+#toolMantencion{
+	margin-top: 150px !important;
+}
+.gavatar{
+	width: 150px;
+	height: 150px;
+}	
+.avatar{
+	width: 40px;
+	height: 40px;
+}
+
+@media screen and (max-width:992px){
+	.SpanTitulo{
+		display:none;
+	}
+
+}
