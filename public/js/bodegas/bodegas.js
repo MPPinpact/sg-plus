@@ -12,7 +12,9 @@ var parametroAjax = {
 var ManejoRespuestaProcesarD = function(respuesta){
     if(respuesta.code==200){
         $(".divDetalles").toggle();
-        pintarDatosDetalles(respuesta.respuesta.v_detalles[0]);
+        bloquearInuts();
+        $("#divVolver").show();
+        pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
         cargarTablaProductos(respuesta.respuesta.v_productos);
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
@@ -37,15 +39,13 @@ var ManejoRespuestaProcesarI = function(respuesta){
 
 // Manejo Registro o actualizacion de empresa
 var ManejoRespuestaProcesar = function(respuesta){
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
-    console.log(respuesta.respuesta.f_registro);
     if(respuesta.code==200){
         var res = JSON.parse(respuesta.respuesta.f_registro.f_registro_bodega);
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
-                $(".divForm").toggle();
+                $(".divDetalles").toggle();
+                $(".divBotones").toggle();
                 $('#FormBodega')[0].reset();
                 $('#IdLocal').val("");
                 cargarTablaBodegas(respuesta.respuesta.v_bodegas);
@@ -65,45 +65,44 @@ var ManejoRespuestaProcesar = function(respuesta){
 var cargarTablaBodegas = function(data){
     if(limpiarLocales==1){destruirTabla('#tablaBodega');$('#tablaBodega thead').empty();}
         $("#tablaBodega").dataTable({ 
+            responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
             "language": LenguajeTabla,
-            "scrollX": true,
-            "scrollY": '45vh',
-            "scrollCollapse": true,
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
                 {"sWidth": "1px", "aTargets": [8]}
             ],
             "data": data,
             "columns":[
-            {"title": "IdBodega","data": "IdBodega",visible:0},
-            {"title": "Nombre Bodega","data": "NombreBodega"},
-            {"title": "Descripcion Bodega Local","data": "DescripcionBodega"},
-            {"title": "Local Asociado","data": "NombreLocal"},
-            {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
-            {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
-            {"title": "Creado por","data": "creador"},
-            {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
-            {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0},
-            {"title": "Modificado por","data": "modificador",visible:0},
-            {"title": "Estado","data": "desEstadoBodega"},
-            {
-                "title": "Opciones", 
-                "data": "IdBodega",
-                "render": function(data, type, row, meta){
-                    var result = `
-                    <center>
-                    <a href="#" onclick="verDetallesBodega(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
-                        <i class="icofont icofont-search"></i>
-                    </a>
-                    <a href="#" onclick="cambiarEstatusLocal(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
-                        <i class="icofont icofont-ui-delete"></i>
-                    </a>
-                    </center>`;
-                    return result; 
-                }
-            }],
+                {
+                    "title": "", 
+                    "data": "IdBodega",
+                    "render": function(data, type, row, meta){
+                        var result = `
+                        <center>
+                        <a href="#" onclick="verDetallesBodega(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
+                            <i class="icofont icofont-search"></i>
+                        </a>
+                        <a href="#" onclick="cambiarEstatusLocal(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                            <i class="icofont icofont-ui-delete"></i>
+                        </a>
+                        </center>`;
+                        return result; 
+                    }
+                },
+                {"title": "IdBodega","data": "IdBodega",visible:0},
+                {"title": "Nombre Bodega","data": "NombreBodega"},
+                {"title": "Descripcion Bodega Local","data": "DescripcionBodega"},
+                {"title": "Local Asociado","data": "NombreLocal"},
+                {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
+                {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
+                {"title": "Creado por","data": "creador"},
+                {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
+                {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0},
+                {"title": "Modificado por","data": "modificador",visible:0},
+                {"title": "Estado","data": "desEstadoBodega"}
+            ],
         });
         limpiarLocales=1;
     if (data.length>0){seleccionarTablaLocales();}
@@ -116,24 +115,22 @@ var seleccionarTablaLocales = function(data){
         $(this).addClass('selected');
         RegistroEmpresas = TablaTraerCampo('tablaBodega',this);
     });
-    $('#tablaBodega tbody').on('dblclick', 'tr', function () {
-        bloquearInuts();
-        $("#divVolver").show();
-        $("#divBtnModificar").show();
-        $("#divBtnAceptar").hide();  
-        cargarFormulario();
-        pintarDatosActualizar(RegistroEmpresas);
-    }); 
+    // $('#tablaBodega tbody').on('dblclick', 'tr', function () {
+    //     bloquearInuts();
+    //     $("#divVolver").show();
+    //     $("#divBtnModificar").show();
+    //     $("#divBtnAceptar").hide();  
+    //     pintarDatosActualizar(RegistroEmpresas);
+    // }); 
 }
 
 var cargarTablaProductos = function(data){
     if(limpiarBodegas==1){destruirTabla('#tablaProductos');}
         $("#tablaProductos").dataTable({ 
+            responsive:false,
             "aLengthMenu": DataTableLengthMenu,
-            'bSort': false,
-            "scrollCollapse": false,
-            "paging": false,
-            "searching": false,
+            "pagingType": "full_numbers",
+            "language": LenguajeTabla,
             "columnDefs": [
             {
                 "targets": [ 1 ],
@@ -141,32 +138,39 @@ var cargarTablaProductos = function(data){
             }],
             "data": data,
             "columns":[
-            {"title": "Id","data": "IdProducto",visible:0},
-            {"title": "Nombre","data": "CodigoBarra"},
-            {"title": "Descripción","data": "CodigoProveedor"},
-            {"title": "NombreProducto","data": "NombreProducto"},
-            {"title": "DescripcionProducto","data": "DescripcionProducto"},
-            {"title": "IdUltimoProveedor","data": "IdUltimoProveedor"},
-            {"title": "IdFamilia","data": "IdFamilia"},
-            {"title": "IdSubFamilia","data": "IdSubFamilia"},
-            {"title": "IdUnidadMedida","data": "IdUnidadMedida"},
-            {"title": "SeCompra","data": "SeCompra"},
-            {"title": "SeVende","data": "SeVende"},
-            {"title": "Descontinuado","data": "Descontinuado"},
-            {"title": "StockMinimo","data": "StockMinimo"},
-            {"title": "StockMaximo","data": "StockMaximo"},
-            {"title": "StockRecomendado","data": "StockRecomendado"},
-            {"title": "PrecioUltimaCompra","data": "PrecioUltimaCompra"},
-            {"title": "PrecioVentaSugerido","data": "PrecioVentaSugerido"},
-            {"title": "EstadoProducto","data": "EstadoProducto"},
+                {"title": "Id","data": "IdProducto",visible:0},
+                {"title": "Codigo Barra","data": "CodigoBarra"},
+                {"title": "Codigo Proveedor","data": "CodigoProveedor"},
+                {"title": "Nombre Producto","data": "NombreProducto"},
+                {"title": "Descripcion Producto","data": "DescripcionProducto"},
+                {"title": "Ultimo Proveedor","data": "IdUltimoProveedor"},
+                {"title": "IdFamilia","data": "IdFamilia", visible:0},
+                {"title": "Familia","data": "NombreFamilia"},
+                {"title": "IdSubFamilia","data": "IdSubFamilia",visible:0},
+                {"title": "Subfamilia","data": "NombreSubFamilia"},
+                {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
+                {"title": "Unidad Medida","data": "NombreUnidadMedida"},
+                {"title": "Se Compra","data": "SeCompra",visible:0},
+                {"title": "Se Compra","data": "DesCompra"},
+                {"title": "Se Vende","data": "SeVende", visible:0},
+                {"title": "Se Vende","data": "DesVende"},
+                {"title": "Se Combo","data": "EsProductoCombo", visible:0},
+                {"title": "Producto Combo","data": "DesProductoCombo"},
+                {"title": "Descontinuado","data": "Descontinuado",visible:0},
+                {"title": "Descontinuado","data": "DesDescontinuado"},
+                {"title": "Stock Minimo","data": "StockMinimo"},
+                {"title": "Stock Maximo","data": "StockMaximo"},
+                {"title": "Stock Recomendado","data": "StockRecomendado"},
+                {"title": "Precio Ultima Compra","data": "PrecioUltimaCompra"},
+                {"title": "Precio Venta Sugerido","data": "PrecioVentaSugerido"},
+                {"title": "Id Bodega","data": "IdBodega",visible:0},
+                {"title": "Bodega","data": "NombreBodega"},
+                {"title": "EstadoProducto","data": "EstadoProducto",visible:0},
+                {"title": "Estado","data": "DesEstadoProducto"}
             ],
         });
         limpiarBodegas=1; 
 };
-
-var cargarFormulario= function(){
-    $(".divForm").toggle();
-}
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
@@ -190,11 +194,16 @@ var pintarDatosDetalles = function(data){
 var BotonCancelar = function(){
     $(".md-form-control").removeClass("md-valid");
     $("#spanTitulo").text("Bodega registrados");
-    $(".divForm").toggle();    
     $('#divConsulta').hide();
     $('#FormBodega')[0].reset();
     $("#IdBodega").val("");
     $('#divSpanPerfiles').hide();
+    $("#divTabs").show();
+    $(".divDetalles").toggle();   
+    $(".md-form-control").removeClass("md-valid");
+    $('#divConsulta').hide();
+    $(".divBotones").toggle();    
+    bloquearInuts();
 }
 
 var BotonAgregar = function(){
@@ -202,12 +211,14 @@ var BotonAgregar = function(){
     $("#divBtnModificar").hide();
     $("#divVolver").hide();
     $("#divBtnAceptar").show();
-    cargarFormulario();
     $("#divConsulta").hide();
     $("#divSpanPerfiles").hide();
     $("#IdBodega").val("");
     $(".comboclear").val('').trigger("change");
     $('#FormBodega')[0].reset();
+    $("#divTabs").hide();
+    $(".divDetalles").toggle();
+    $(".divBotones").toggle();
     desbloquearInuts();
 }
 
@@ -279,13 +290,17 @@ var desbloquearInuts = function(){
 }
 
 var modificarBodega = function(){
-    $("#divBtnModificar").hide();
-    $("#divBtnAceptar").show();
+    $("#divVolver").hide();
+    $(".divBotones").toggle();
     desbloquearInuts();    
 }
 
 var volverTabs = function(){
-    $(".divDetalles").toggle();   
+    $(".divDetalles").toggle(); 
+    $("#detalles").addClass("active");
+    $("#adetalles").addClass("active");
+    $("#productos").removeClass("active");
+    $("#aproductos").removeClass("active");  
 }
 
 var crearAllSelect = function(data){
@@ -303,8 +318,8 @@ $(document).ready(function(){
     $(document).on('click','#cancelar',BotonCancelar);
     $(document).on('click','#agregar',BotonAgregar);
     $(document).on('click','#modificar',modificarBodega);
-    $(document).on('click','#volverAct',BotonCancelar);
-    $(document).on('click','#btn-volver',volverTabs);
+    $(document).on('click','#volverAct',volverTabs); 
+
     $('#FormBodega').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',

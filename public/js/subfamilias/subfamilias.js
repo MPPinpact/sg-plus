@@ -9,6 +9,19 @@ var parametroAjax = {
     'async': false
 };
 
+var ManejoRespuestaBuscar = function(respuesta){
+    if(respuesta.code==200){
+        bloquearInuts();
+        $("#divVolver").show();
+        $("#divBtnModificar").show();
+        $("#divBtnAceptar").hide();  
+        cargarFormulario();
+        pintarDatosActualizar(respuesta.respuesta);
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+    }
+}
+
 // Manejo Activar / Desactivar empresa
 var ManejoRespuestaProcesarI = function(respuesta){
     if(respuesta.code==200){
@@ -52,40 +65,42 @@ var ManejoRespuestaProcesar = function(respuesta){
 var cargarTablaSubfamilias = function(data){
     if(limpiarUnidades==1){destruirTabla('#tablaSubfamilias');$('#tablaSubfamilias thead').empty();}
         $("#tablaSubfamilias").dataTable({ 
+            responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
             "language": LenguajeTabla,
-            "scrollX": true,
-            "scrollY": '45vh',
-            "scrollCollapse": true,
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
                 {"sWidth": "1px", "aTargets": [8]}
             ],
             "data": data,
             "columns":[
-            {"title": "IdSubFamilia","data": "IdSubFamilia",visible:0},
-            {"title": "Nombre","data": "NombreSubFamilia"},
-            {"title": "fecha de creacion","data": "auFechaCreacion"},
-            {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
-            {"title": "Creado por","data": "creador"},
-            {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
-            {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0},
-            {"title": "Modificado por","data": "modificador"},
-            {"title": "Estado","data": "DesEstadoSubFamilia"},
-            {
-                "title": "Opciones", 
-                "data": "IdSubFamilia",
-                "render": function(data, type, row, meta){
-                    var result = `
-                    <center>
-                    <a href="#" onclick="cambiarEstatusUnidad(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
-                        <i class="icofont icofont-ui-delete"></i>
-                    </a>
-                    </center>`;
-                    return result; 
-                }
-            }
+                {
+                    "title": "", 
+                    "data": "IdSubFamilia",
+                    "render": function(data, type, row, meta){
+                        var result = `
+                        <center>
+                        <a href="#" onclick="verDetallesubfamilia(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
+                            <i class="icofont icofont-search"></i>
+                        </a>
+                        <a href="#" onclick="cambiarEstatusUnidad(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                            <i class="icofont icofont-ui-delete"></i>
+                        </a>
+                        </center>`;
+                        return result; 
+                    }
+                },
+                {"title": "IdSubFamilia","data": "IdSubFamilia",visible:0},
+                {"title": "Nombre","data": "NombreSubFamilia"},
+                {"title": "Familia","data": "NombreFamilia"},
+                {"title": "fecha de creacion","data": "auFechaCreacion"},
+                {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
+                {"title": "Creado por","data": "creador"},
+                {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
+                {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0},
+                {"title": "Modificado por","data": "modificador"},
+                {"title": "Estado","data": "DesEstadoSubFamilia"}
                 ],
         });
         limpiarUnidades=1;
@@ -98,14 +113,6 @@ var seleccionarTablaSubfamilias = function(data){
         tableB.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
         RegistroUnidades = TablaTraerCampo('tablaSubfamilias',this);
-    });
-    $('#tablaSubfamilias tbody').on('dblclick', 'tr', function () {
-        bloquearInuts();
-        $("#divVolver").show();
-        $("#divBtnModificar").show();
-        $("#divBtnAceptar").hide();  
-        cargarFormulario();
-        pintarDatosActualizar(RegistroUnidades);
     }); 
 }
 
@@ -113,12 +120,21 @@ var cargarFormulario= function(){
     $(".divForm").toggle();
 }
 
+var verDetallesubfamilia = function(data){
+    parametroAjax.ruta=rutaB;
+    parametroAjax.data = {"IdSubFamilia":data} ;
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaBuscar(respuesta);    
+}
+
 var pintarDatosActualizar= function(data){
+    console.log(data);
     $(".md-form-control").addClass("md-valid");
     $("#spanTitulo").text("Editar Subfamilia");
     $("#IdSubFamilia").val(data.IdSubFamilia);
     $("#NombreSubFamilia").val(data.NombreSubFamilia);
     $("#IdUnidadMedida").val(data.IdUnidadMedida);
+    $("#IdFamilia").val(data.IdFamilia);
     $("#EstadoSubFamilia").val(data.EstadoSubFamilia).trigger("change");
 }
 
@@ -174,12 +190,14 @@ var bloquearInuts = function(){
     $("#NombreSubFamilia").prop('readonly', true);
     $("#IdUnidadMedida").prop('disabled', true);
     $("#EstadoSubFamilia").prop('disabled', true);
+    $("#IdFamilia").prop('disabled', true);
 }
 
 var desbloquearInuts = function(){
     $("#NombreSubFamilia").prop('readonly', false);
     $("#IdUnidadMedida").prop('disabled', false);
     $("#EstadoSubFamilia").prop('disabled', false);
+    $("#IdFamilia").prop('disabled', false);
 }
 
 var modificarFamilia = function(){
@@ -189,8 +207,10 @@ var modificarFamilia = function(){
 }
 
 var crearAllSelect = function(data){
+    console.log(data);
     crearselect(data.v_unidadmedida,"IdUnidadMedida");
     crearselect(data.v_estados,"EstadoSubFamilia");
+    crearselect(data.v_familia,"IdFamilia");
 }
 
 $(document).ready(function(){

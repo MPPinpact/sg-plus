@@ -1,8 +1,7 @@
 @extends('menu.index')
 @section('content')
 <div class="row">
-	@include('menu.mantenedores')
-	<div class="col-md-10 divDetalles">
+	<div class="col-md-12 divDetalles">
 		<div class="card">
 			<div class="card-header">
 				<center>
@@ -37,6 +36,7 @@
 					'class'         => 'form-control'])!!}
 					<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 					<div class="row">
+						<div class="col-sm-2"></div>
 						<div class="col-sm-4">
 							<div class="md-input-wrapper">
 								<input id="NombreSubFamilia" name="NombreSubFamilia" type="text" class="md-form-control" maxlength="250" readonly />
@@ -45,6 +45,15 @@
 						</div>
 						<div class="col-sm-4">
 							<div class="md-input-wrapper">
+								<select name="IdFamilia" id="IdFamilia" class="md-disable md-valid" disabled></select>
+								<label for="IdFamilia">Familia</label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-4">
+						<div class="md-input-wrapper">
 								<select name="IdUnidadMedida" id="IdUnidadMedida" class="md-disable md-valid" disabled></select>
 								<label for="IdUnidadMedida">Unidad de Medida</label>
 							</div>
@@ -83,10 +92,12 @@
 <script Language="Javascript">
 	var ruta = "{{ URL::route('subfamilias') }}"
 	var rutaA = "{{ URL::route('activarSf') }}"
+	var rutaB = "{{ URL::route('subfamiliab') }}"
 	var d = [];
 	d['v_subfamilias'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_subfamilias) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
 	d['v_unidadmedida'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_unidadmedida) }}'));
+	d['v_familia'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_familia) }}'));
 </script>
 <script src="{{ asset('js/subfamilias/subfamilias.js') }}"></script>
 @endsection

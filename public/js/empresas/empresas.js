@@ -11,9 +11,15 @@ var parametroAjax = {
 
 var ManejoRespuestaProcesarD = function(respuesta){
     if(respuesta.code==200){
+        $("#adetalles").addClass("active");
+        $("#detalles").addClass("active");
+        $("#locales").removeClass("active");
+        $("#alocales").removeClass("active");
         $(".divDetalles").toggle();
+        $("#divVolver").show();
         $(".md-form-control").addClass("md-valid");
-        pintarDatosDetalles(respuesta.respuesta.v_detalles[0]);
+        bloquearInuts();
+        pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
         cargarTablaLocales(respuesta.respuesta.v_locales);
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
@@ -43,7 +49,8 @@ var ManejoRespuestaProcesar = function(respuesta){
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
-                $(".divForm").toggle();
+                $(".divDetalles").toggle();
+                $(".divBotones").toggle();
                 $('#FormEmpresa')[0].reset();
                 $('#IdEmpresa').val("");
                 cargarTablaEmpresas(respuesta.respuesta.v_empresas);
@@ -63,55 +70,54 @@ var ManejoRespuestaProcesar = function(respuesta){
 var cargarTablaEmpresas = function(data){
     if(limpiarEmpresas==1){destruirTabla('#tablaEmpresas');$('#tablaEmpresas thead').empty();}
         $("#tablaEmpresas").dataTable({ 
+            responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
             "language": LenguajeTabla,
-            "scrollX": true,
-            "scrollY": '45vh',
-            "scrollCollapse": true,
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
                 {"sWidth": "1px", "aTargets": [12]}
             ],
             "data": data,
             "columns":[
-            {"title": "IdEmpresa","data": "IdEmpresa",visible:0},
-            {"title": "IdRepresentanteLegal","data": "IdRepresentanteLegal",visible:0},
-            {"title": "Nombre","data": "NombreFantasia"},
-            {
-                "title": "RUT", 
-                "data": "RUT",
-                "render": function(data, type, row, meta){
-                    if(type === 'display'){
-                        data = formateaRut(data, true)
+                {
+                    "title": "", 
+                    "data": "IdEmpresa",
+                    "render": function(data, type, row, meta){
+                        var result = `
+                        <center>
+                        <a href="#" onclick="verDetallesEmpresa(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
+                            <i class="icofont icofont-search"></i>
+                        </a>
+                        <a href="#" onclick="cambiarEstatusEmpresa(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                            <i class="icofont icofont-ui-delete"></i>
+                        </a>
+                        </center>`;
+                        return result; 
                     }
-                    return data;
-                }
-            },
-            {"title": "Razon Social","data": "RazonSocial"},
-            {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
-            {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
-            {"title": "Creado por","data": "creador"},
-            {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
-            {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0},
-            {"title": "Modificado por","data": "modificador",visible:0},
-            {"title": "Estado","data": "desEstadoEmpresa"},
-            {
-                "title": "Opciones", 
-                "data": "IdEmpresa",
-                "render": function(data, type, row, meta){
-                    var result = `
-                    <center>
-                    <a href="#" onclick="verDetallesEmpresa(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
-                        <i class="icofont icofont-search"></i>
-                    </a>
-                    <a href="#" onclick="cambiarEstatusEmpresa(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
-                        <i class="icofont icofont-ui-delete"></i>
-                    </a>
-                    </center>`;
-                    return result; 
-                }
-            }],
+                },
+                {"title": "IdEmpresa","data": "IdEmpresa",visible:0},
+                {"title": "IdRepresentanteLegal","data": "IdRepresentanteLegal",visible:0},
+                {"title": "Nombre","data": "NombreFantasia"},
+                {
+                    "title": "RUT", 
+                    "data": "RUT",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = formateaRut(data, true)
+                        }
+                        return data;
+                    }
+                },
+                {"title": "Razon Social","data": "RazonSocial"},
+                {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
+                {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
+                {"title": "Creado por","data": "creador"},
+                {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
+                {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0},
+                {"title": "Modificado por","data": "modificador",visible:0},
+                {"title": "Estado","data": "desEstadoEmpresa"}
+            ],
         });
         limpiarEmpresas=1;
     if (data.length>0){seleccionarTablaEmpleados();}
@@ -124,24 +130,23 @@ var seleccionarTablaEmpleados = function(data){
         $(this).addClass('selected');
         RegistroEmpresas = TablaTraerCampo('tablaEmpresas',this);
     });
-    $('#tablaEmpresas tbody').on('dblclick', 'tr', function () {
-        bloquearInuts();
-        $("#divVolver").show();
-        $("#divBtnModificar").show();
-        $("#divBtnAceptar").hide();  
-        cargarFormulario();
-        pintarDatosActualizar(RegistroEmpresas);
-    }); 
+    // $('#tablaEmpresas tbody').on('dblclick', 'tr', function () {
+    //     bloquearInuts();
+    //     $("#divVolver").show();
+    //     $("#divBtnModificar").show();
+    //     $("#divBtnAceptar").hide();  
+    //     cargarFormulario();
+    //     pintarDatosActualizar(RegistroEmpresas);
+    // }); 
 }
 
 var cargarTablaLocales = function(data){
     if(limpiarLocales==1){destruirTabla('#tablaLocales');}
         $("#tablaLocales").dataTable({ 
+            responsive:false,
             "aLengthMenu": DataTableLengthMenu,
-            'bSort': false,
-            "scrollCollapse": false,
-            "paging": false,
-            "searching": false,
+            "pagingType": "full_numbers",
+            "language": LenguajeTabla,
             "columnDefs": [
             {
                 "targets": [ 1 ],
@@ -158,9 +163,9 @@ var cargarTablaLocales = function(data){
         limpiarLocales=1; 
 };
 
-var cargarFormulario= function(){
-    $(".divForm").toggle();
-}
+// var cargarFormulario= function(){
+//     $(".divForm").toggle();
+// }
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
@@ -184,21 +189,27 @@ var pintarDatosDetalles = function(data){
 }
 
 var BotonCancelar = function(){
+    $("#divTabs").show();
+    $(".divDetalles").toggle();   
     $(".md-form-control").removeClass("md-valid");
     $("#spanTitulo").text("Empresas registradas");
-    $(".divForm").toggle();    
+    $(".divBotones").toggle();    
     $('#divConsulta').hide();
     $('#FormEmpresa')[0].reset();
     $("#idUser").val("");
     $('#divSpanPerfiles').hide();
+    bloquearInuts();
 }
 
 var BotonAgregar = function(){
     $("#spanTitulo").text("Registrar Empresa");
-    $("#divBtnModificar").hide();
+    // $("#divBtnModificar").hide();
+    // $("#divBtnAceptar").show();
+    $("#divTabs").hide();
     $("#divVolver").hide();
-    $("#divBtnAceptar").show();
-    cargarFormulario();
+    // cargarFormulario();
+    $(".divDetalles").toggle();
+    $(".divBotones").toggle();
     $("#divConsulta").hide();
     $("#divSpanPerfiles").hide();
     $("#idUser").val("");
@@ -269,8 +280,10 @@ var desbloquearInuts = function(){
 }
 
 var modificarEmpresa = function(){
-    $("#divBtnModificar").hide();
-    $("#divBtnAceptar").show();
+    // $("#divBtnModificar").hide();
+    // $("#divBtnAceptar").show();
+    $("#divVolver").hide();
+    $(".divBotones").toggle();
     desbloquearInuts();    
 }
 
@@ -305,8 +318,7 @@ $(document).ready(function(){
     $(document).on('click','#cancelar',BotonCancelar);
     $(document).on('click','#agregar',BotonAgregar);
     $(document).on('click','#modificar',modificarEmpresa);
-    $(document).on('click','#volverAct',BotonCancelar);
-    $(document).on('click','#btn-volver',volverTabs);
+    $(document).on('click','#volverAct',volverTabs); 
     $('#FormEmpresa').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',

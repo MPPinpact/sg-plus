@@ -6,8 +6,7 @@
 	}
 </style>
 <div class="row">
-	@include('menu.mantenedores')
-	<div class="col-md-10 divDetalles">
+	<div class="col-md-12 divDetalles">
 	    <div class="card">
 	        <div class="card-header">
 	        	<center>
@@ -15,7 +14,7 @@
                 </center>
 	        </div>
 	        <div class="card-block">
-				<div class="col-md-12 divForm">
+				<div class="col-md-12">
 					<div class="row">
 						<div class="col-md-12">
 							<button style="float:right;" name="agregar" id="agregar" type="button" class="btn btn-primary waves-effect waves-light">
@@ -29,73 +28,11 @@
 							<table id="tablaLocales" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 						</div>
 					</div>
-		        </div>
-				<div style="display:none;" class="col-md-12 divForm">
-					<div class="row">
-						<div id="divVolver" class="col-md-12">
-							<a style="float:right;" id="volverAct" href="#"><u>volver</u></a>
-						</div>
-					</div>
-					{!! Form::open(['id'=>'FormLocal','autocomplete' => 'off']) !!}
-					{!! Form::hidden('IdLocal', '', [
-					'id'            => 'IdLocal',
-					'class'         => 'form-control'])!!}
-					<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
-					<div class="row">
-						<div class="col-sm-2"></div>
-						<div class="col-sm-4">
-	                        <div class="md-input-wrapper">
-                                <input id="NombreLocal" name="NombreLocal" type="text" class="md-form-control" maxlength="250" readonly />
-	                            <label for="NombreLocal">Nombre Local</label>
-	                        </div>
-						</div>
-	                    <div class="col-sm-4">
-	                        <div class="md-input-wrapper">
-	                        	<select name="IdEmpresa" id="IdEmpresa" class="md-disable md-valid" disabled></select>
-                                <label for="IdEmpresa">Empresa</label>
-	                        </div>
-	                    </div>
-					</div>
-					<br>
-					<div class="row">
-						<div class="col-sm-2"></div>
-						<div class="col-sm-4">
-	                        <div class="md-input-wrapper">
-								<select name="IdEncargadoLocal" id="IdEncargadoLocal" class="md-disable md-valid" disabled></select>
-                                <label for="IdEncargadoLocal">Encargado</label>
-							</div>
-	                    </div>
-	                    <div class="col-sm-4">
-	                        <div class="md-input-wrapper">
-								<select name="EstadoLocal" id="EstadoLocal" class="md-disable md-valid" disabled></select>
-                                <label for="EstadoLocal">Estado</label>
-							</div>
-	                    </div>
-					</div>
-					<br>
-					<div align="center">
-						<div class="pull-rigth">
-							<div id="divBtnModificar">
-								<button id="modificar" type="button" class="btn btn-primary waves-effect waves-light">
-									Modificar
-								</button>
-							</div>
-							<div id="divBtnAceptar">
-								<button id="cancelar" type="button" class="btn btn-inverse-primary waves-effect waves-light">
-									Cancelar
-								</button> 
-	                			<button id="guardar"  type="button" class="btn btn-primary waves-effect waves-light">
-									Guardar
-	                			</button>
-							</div>
-						</div>
-					</div>
-					{!! Form::close() !!}
-				</div>            
+		        </div>         
 	        </div>
 	    </div>
 	</div>
-	<div class="col-md-10 divDetalles" style="display:none;">
+	<div class="col-md-12 divDetalles" style="display:none;">
 		<div class="card">
 		    <div class="card-header">
 		    	<center>
@@ -106,62 +43,92 @@
 		        <div class="row">
 		            <div class="col-sm-12">
 		                <div class="product-edit">
-		                    <ul class="nav nav-tabs nav-justified md-tabs " role="tablist">
-		                        <li class="nav-item">
-		                            <a class="nav-link active" data-toggle="tab" href="#detalles" role="tab">
-		                                <div class="f-26">
-		                                    <i class="icofont icofont-document-search"></i>
-		                                </div>
-		                                Detalles de Local
-		                            </a>
-		                            <div class="slide"></div>
-		                        </li>
-		                        <li class="nav-item">
-		                            <a class="nav-link" data-toggle="tab" href="#bodegas" role="tab">
-		                                <div class="f-26">
-		                                    <i class="icofont icofont-document-search"></i>
-		                                </div>
-		                                Locales Asociados
-		                           	</a>
-		                            <div class="slide"></div>
-		                        </li>
-		                    </ul>
+				        	<div class="row">
+								<div id="divVolver" class="col-md-12">
+									<a style="float:right;" id="volverAct" href="#"><u>volver</u></a>
+								</div>
+							</div>
+							<div id="divTabs">
+			                    <ul class="nav nav-tabs nav-justified md-tabs " role="tablist">
+			                        <li class="nav-item">
+			                            <a id="adetalles" class="nav-link active" data-toggle="tab" href="#detalles" role="tab">
+			                                <div class="f-26">
+			                                    <i class="icofont icofont-document-search"></i>
+			                                </div>
+			                                Detalles de Local
+			                            </a>
+			                            <div class="slide"></div>
+			                        </li>
+			                        <li class="nav-item">
+			                            <a id="abodegas" class="nav-link" data-toggle="tab" href="#bodegas" role="tab">
+			                                <div class="f-26">
+			                                    <i class="icofont icofont-document-search"></i>
+			                                </div>
+			                                Bodegas Asociadas
+			                           	</a>
+			                            <div class="slide"></div>
+			                        </li>
+			                    </ul>
+							</div>
 		                    <!-- Tab panes -->
 		                    <div class="tab-content">
 		                        <div class="tab-pane active" id="detalles" role="tabpanel">
-		                            <form class="md-float-material card-block">
-										<div class="row">
-											<div class="col-sm-2"></div>
-											<div class="col-sm-4">
-						                        <div class="md-input-wrapper">
-					                                <input id="NombreLocald" name="NombreLocald" type="text" class="md-form-control md-valid" maxlength="250" readonly />
-						                            <label for="NombreLocal">Nombre Local</label>
-						                        </div>
+                   					<br><br>
+                   					{!! Form::open(['id'=>'FormLocal','autocomplete' => 'off']) !!}
+									{!! Form::hidden('IdLocal', '', [
+									'id'            => 'IdLocal',
+									'class'         => 'form-control'])!!}
+									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
+									<div class="row">
+										<div class="col-sm-2"></div>
+										<div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+				                                <input id="NombreLocal" name="NombreLocal" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="NombreLocal">Nombre Local</label>
+					                        </div>
+										</div>
+					                    <div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+					                        	<select name="IdEmpresa" id="IdEmpresa" class="md-disable md-valid" disabled></select>
+				                                <label for="IdEmpresa">Empresa</label>
+					                        </div>
+					                    </div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-sm-2"></div>
+										<div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+												<select name="IdEncargadoLocal" id="IdEncargadoLocal" class="md-disable md-valid" disabled></select>
+				                                <label for="IdEncargadoLocal">Encargado</label>
 											</div>
-						                    <div class="col-sm-4">
-						                        <div class="md-input-wrapper">
-						                        	<select name="IdEmpresad" id="IdEmpresad" class="md-disable md-valid" disabled></select>
-					                                <label for="IdEmpresa">Empresa</label>
-						                        </div>
-						                    </div>
+					                    </div>
+					                    <div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+												<select name="EstadoLocal" id="EstadoLocal" class="md-disable md-valid" disabled></select>
+				                                <label for="EstadoLocal">Estado</label>
+											</div>
+					                    </div>
+									</div>
+									<br>
+									<div align="center">
+										<div class="pull-rigth">
+											<div class="divBotones">
+												<button id="modificar" type="button" class="btn btn-primary waves-effect waves-light">
+													Modificar
+												</button>
+											</div>
+											<div class="divBotones" style="display:none;">
+												<button id="cancelar" type="button" class="btn btn-inverse-primary waves-effect waves-light">
+													Cancelar
+												</button> 
+					                			<button id="guardar"  type="button" class="btn btn-primary waves-effect waves-light">
+													Guardar
+					                			</button>
+											</div>
 										</div>
-										<br>
-										<div class="row">
-											<div class="col-sm-2"></div>
-											<div class="col-sm-4">
-						                        <div class="md-input-wrapper">
-													<select name="IdEncargadoLocald" id="IdEncargadoLocald" class="md-disable md-valid" disabled></select>
-					                                <label for="IdEncargadoLocal">Encargado</label>
-												</div>
-						                    </div>
-						                    <div class="col-sm-4">
-						                        <div class="md-input-wrapper">
-													<select name="EstadoLocald" id="EstadoLocald" class="md-disable md-valid" disabled></select>
-					                                <label for="EstadoLocal">Estado</label>
-												</div>
-						                    </div>
-										</div>
-		                            </form>
+									</div>
+									{!! Form::close() !!} 
 		                        </div>
 		                        <div class="tab-pane" id="bodegas" role="tabpanel">
 									<div class="row">
@@ -169,11 +136,6 @@
 											<table id="tablaBodegas" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 										</div>
 									</div>
-		                        </div>
-		                        <div class="text-center">
-		                            <button id="btn-volver" type="button" class="btn btn-inverse-primary waves-effect waves-light m-r-10">
-		                            	Volver
-		                            </button>
 		                        </div>
 		                    </div>
 		                </div>

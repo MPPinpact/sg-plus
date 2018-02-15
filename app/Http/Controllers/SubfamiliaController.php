@@ -45,6 +45,7 @@ class SubfamiliaController extends Controller
         $model= new Subfamilia();
         $data['v_subfamilias'] = $model->listSubfamilia();
         $data['v_unidadmedida'] = $model->listUnidadmedida();
+        $data['v_familia'] = $model->listFamilia();
         $data['v_estados'] = $model->listEstados();
         return View::make('subfamilias.subfamilias',$data);
     }
@@ -66,5 +67,12 @@ class SubfamiliaController extends Controller
         $result['activar'] = $model->activarSubfamilia($subfamilia);
         $result['v_subfamilias'] = $model->listSubfamilia();
         return $result;
+    }
+
+    protected function postBuscarsubfamilia(Request $request){
+        $datos = $request->all();
+        $model= new Subfamilia();
+        $subfamilia = Subfamilia::find($datos['IdSubFamilia']);
+        return $subfamilia;
     }
 }

@@ -92,6 +92,10 @@ class ProductoController extends Controller
         return $result;
     }
 
-
-
+    protected function postBuscarsub (Request $request){
+        $datos = $request->all();
+        $model= new Producto();
+        $result = $model->getSubfamilia($datos['IdFamilia']);
+        return $result;
+    }
 }

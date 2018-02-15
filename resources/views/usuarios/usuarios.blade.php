@@ -1,8 +1,7 @@
 @extends('menu.index')
 @section('content')
 <div class="row">
-	@include('menu.mantenedores')
-	<div class="col-md-10">
+	<div class="col-md-12">
 	    <div class="card">
 	        <div class="card-header">
 	        	<center>
@@ -66,6 +65,11 @@
 		        </div>
 				<div style="display:none;" class="col-md-12 divForm">
 					{!! Form::open(['id'=>'FormUsuario','autocomplete' => 'off']) !!}
+					<div class="row">
+						<div id="divVolver" class="col-md-12">
+							<a style="float:right;" id="volverAct" href="#"><u>volver</u></a>
+						</div>
+					</div>
 					{!! Form::hidden('idUser', '', [
 					'id'            => 'idUser',
 					'class'         => 'form-control'])!!}

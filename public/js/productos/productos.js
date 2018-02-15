@@ -80,66 +80,65 @@ var ManejoRespuestaProcesar = function(respuesta){
 var cargarTablaProductos = function(data){
     if(limpiarLocales==1){destruirTabla('#tablaProductos');$('#tablaProductos thead').empty();}
         $("#tablaProductos").dataTable({ 
+            responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
             "language": LenguajeTabla,
-            "scrollX": true,
-            // "scrollY": '45vh',
-            // "scrollCollapse": false,
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
                 {"sWidth": "1px", "aTargets": [8]}
             ],
             "data": data,
             "columns":[
-            {"title": "Id","data": "IdProducto",visible:0},
-            {"title": "Codigo Barra","data": "CodigoBarra"},
-            {"title": "Codigo Proveedor","data": "CodigoProveedor"},
-            {"title": "Nombre Producto","data": "NombreProducto"},
-            {"title": "Descripcion Producto","data": "DescripcionProducto"},
-            {"title": "Ultimo Proveedor","data": "IdUltimoProveedor"},
-            {"title": "IdFamilia","data": "IdFamilia", visible:0},
-            {"title": "Familia","data": "NombreFamilia"},
-            {"title": "IdSubFamilia","data": "IdSubFamilia",visible:0},
-            {"title": "Subfamilia","data": "NombreSubFamilia"},
-            {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
-            {"title": "Unidad Medida","data": "NombreUnidadMedida"},
-            {"title": "Se Compra","data": "SeCompra",visible:0},
-            {"title": "Se Compra","data": "DesCompra"},
-            {"title": "Se Vende","data": "SeVende", visible:0},
-            {"title": "Se Vende","data": "DesVende"},
-            {"title": "Se Combo","data": "EsProductoCombo", visible:0},
-            {"title": "Producto Combo","data": "DesProductoCombo"},
-            {"title": "Descontinuado","data": "Descontinuado",visible:0},
-            {"title": "Descontinuado","data": "DesDescontinuado"},
-            {"title": "Stock Minimo","data": "StockMinimo"},
-            {"title": "Stock Maximo","data": "StockMaximo"},
-            {"title": "Stock Recomendado","data": "StockRecomendado"},
-            {"title": "Precio Ultima Compra","data": "PrecioUltimaCompra"},
-            {"title": "Precio Venta Sugerido","data": "PrecioVentaSugerido"},
-            {"title": "Id Bodega","data": "IdBodega",visible:0},
-            {"title": "Bodega","data": "NombreBodega"},
-            {"title": "EstadoProducto","data": "EstadoProducto",visible:0},
-            {"title": "Estado","data": "DesEstadoProducto"},
-            {
-                "title": "Opciones", 
-                "data": "IdProducto",
-                "render": function(data, type, row, meta){
-                    var result = `
-                    <center>
-                    <a href="#" onclick="verDetallesProducto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
-                        <i class="icofont icofont-search"></i>
-                    </a>
-                    <a href="#" onclick="cambiarEstatusProducto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
-                        <i class="icofont icofont-ui-delete"></i>
-                    </a>
-                    <a href="#" onclick="descontinuarProducto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Descontinuar Producto" data-original-title="Delete">
-                        <i class="icofont icofont-close"></i>
-                    </a>
-                    </center>`;
-                    return result; 
-                }
-            }],
+                {
+                    "title": "", 
+                    "data": "IdProducto",
+                    "render": function(data, type, row, meta){
+                        var result = `
+                        <center>
+                        <a href="#" onclick="verDetallesProducto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
+                            <i class="icofont icofont-search"></i>
+                        </a>
+                        <a href="#" onclick="cambiarEstatusProducto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                            <i class="icofont icofont-ui-delete"></i>
+                        </a>
+                        <a href="#" onclick="descontinuarProducto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Descontinuar Producto" data-original-title="Delete">
+                            <i class="icofont icofont-close"></i>
+                        </a>
+                        </center>`;
+                        return result; 
+                    }
+                },
+                {"title": "Id","data": "IdProducto",visible:0},
+                {"title": "Codigo Barra","data": "CodigoBarra"},
+                {"title": "Codigo Proveedor","data": "CodigoProveedor"},
+                {"title": "Nombre Producto","data": "NombreProducto"},
+                {"title": "Descripcion Producto","data": "DescripcionProducto"},
+                {"title": "Ultimo Proveedor","data": "IdUltimoProveedor"},
+                {"title": "IdFamilia","data": "IdFamilia", visible:0},
+                {"title": "Familia","data": "NombreFamilia"},
+                {"title": "IdSubFamilia","data": "IdSubFamilia",visible:0},
+                {"title": "Subfamilia","data": "NombreSubFamilia"},
+                {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
+                {"title": "Unidad Medida","data": "NombreUnidadMedida"},
+                {"title": "Se Compra","data": "SeCompra",visible:0},
+                {"title": "Se Compra","data": "DesCompra"},
+                {"title": "Se Vende","data": "SeVende", visible:0},
+                {"title": "Se Vende","data": "DesVende"},
+                {"title": "Se Combo","data": "EsProductoCombo", visible:0},
+                {"title": "Producto Combo","data": "DesProductoCombo"},
+                {"title": "Descontinuado","data": "Descontinuado",visible:0},
+                {"title": "Descontinuado","data": "DesDescontinuado"},
+                {"title": "Stock Minimo","data": "StockMinimo"},
+                {"title": "Stock Maximo","data": "StockMaximo"},
+                {"title": "Stock Recomendado","data": "StockRecomendado"},
+                {"title": "Precio Ultima Compra","data": "PrecioUltimaCompra"},
+                {"title": "Precio Venta Sugerido","data": "PrecioVentaSugerido"},
+                {"title": "Id Bodega","data": "IdBodega",visible:0},
+                {"title": "Bodega","data": "NombreBodega"},
+                {"title": "EstadoProducto","data": "EstadoProducto",visible:0},
+                {"title": "Estado","data": "DesEstadoProducto"}
+            ],
         });
         limpiarLocales=1;
     if (data.length>0){seleccionarTablaProductos();}
@@ -288,7 +287,7 @@ var desbloquearInuts = function(){
     $("#StockMinimo").prop('readonly', false);
     $("#StockMaximo").prop('readonly', false);
     $("#StockRecomendado").prop('readonly', false);
-    $("#PrecioUltimaCompra").prop('readonly', false);
+    // $("#PrecioUltimaCompra").prop('readonly', false);
     $("#PrecioVentaSugerido").prop('readonly', false);
     $("#IdUltimoProveedor").prop('disabled', false);
     $("#IdFamilia").prop('disabled', false);
@@ -312,6 +311,15 @@ var volverTabs = function(){
     $(".divDetalles").toggle();   
 }
 
+var buscarSubfamilia = function(IdFamilia){
+    parametroAjax.ruta=rutaB;
+    parametroAjax.data = {IdFamilia:IdFamilia};
+    respuesta=procesarajax(parametroAjax);
+    if (respuesta.code==200){
+        crearselect(respuesta.respuesta,"IdSubFamilia");
+    }
+}
+
 var crearAllSelect = function(data){
     var v_proveedor =[{"id":1,"text":"proveedor 1"},{"id":2,"text":"proveedor 2"}];
     var secompra=[{"id":1,"text":"SI"},{"id":0,"text":"NO"}];  
@@ -322,7 +330,6 @@ var crearAllSelect = function(data){
     crearselect(secompra,"SeCompra");
     crearselect(v_proveedor,"IdUltimoProveedor");
     crearselect(data.v_familias,"IdFamilia");
-    crearselect(data.v_subfamilias,"IdSubFamilia");
     crearselect(data.v_unidad,"IdUnidadMedida");
     crearselect(data.v_bodegas,"IdBodega");
     crearselect(data.v_estados,"EstadoProducto");    
@@ -338,6 +345,13 @@ $(document).ready(function(){
     $(document).on('click','#modificar',modificarBodega);
     $(document).on('click','#volverAct',BotonCancelar);
     $(document).on('click','#btn-volver',volverTabs);
+
+    
+    $("#IdFamilia").change(function() {
+        buscarSubfamilia($("#IdFamilia").val());
+    });
+
+
     $('#FormProducto').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',

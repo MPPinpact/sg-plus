@@ -106,6 +106,14 @@ class Producto extends Authenticatable
 
     public function getOneDetalle($IdBodega){
         return DB::table('v_bodegas')->where('IdBodega',$IdBodega)->get(); 
-    }  
+    }
+
+    public function getSubfamilia($IdFamilia){
+        $result = DB::table('v_subfamilias_combo')
+        ->where('IdFamilia',$IdFamilia)
+        ->get();
+        return $result;
+    }
+
 
 }

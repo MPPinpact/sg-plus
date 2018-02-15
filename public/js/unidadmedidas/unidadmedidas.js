@@ -9,6 +9,19 @@ var parametroAjax = {
     'async': false
 };
 
+var ManejoRespuestaBuscar = function(respuesta){
+    if(respuesta.code==200){
+        bloquearInuts();
+        $("#divVolver").show();
+        $("#divBtnModificar").show();
+        $("#divBtnAceptar").hide();  
+        cargarFormulario();
+        pintarDatosActualizar(respuesta.respuesta);
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+    }
+}
+
 var ManejoRespuestaProcesarD = function(respuesta){
     if(respuesta.code==200){
         $(".divDetalles").toggle();
@@ -17,7 +30,6 @@ var ManejoRespuestaProcesarD = function(respuesta){
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
     }
-
 }
 // Manejo Activar / Desactivar empresa
 var ManejoRespuestaProcesarI = function(respuesta){
@@ -62,41 +74,42 @@ var ManejoRespuestaProcesar = function(respuesta){
 var cargarTablaUnidades = function(data){
     if(limpiarUnidades==1){destruirTabla('#tablaUnidades');$('#tablaUnidades thead').empty();}
         $("#tablaUnidades").dataTable({ 
+            responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
             "language": LenguajeTabla,
-            "scrollX": true,
-            "scrollY": '45vh',
-            "scrollCollapse": true,
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
                 {"sWidth": "1px", "aTargets": [8]}
             ],
             "data": data,
             "columns":[
-            {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
-            {"title": "Nombre","data": "NombreUnidadMedida"},
-            {"title": "fecha de creacion","data": "auFechaCreacion"},
-            {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
-            {"title": "Creado por","data": "creador"},
-            {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
-            {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0},
-            {"title": "Modificado por","data": "modificador"},
-            {"title": "Estado","data": "DesEstadoUnidadMedida"},
-            {
-                "title": "Opciones", 
-                "data": "IdUnidadMedida",
-                "render": function(data, type, row, meta){
-                    var result = `
-                    <center>
-                    <a href="#" onclick="cambiarEstatusUnidad(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
-                        <i class="icofont icofont-ui-delete"></i>
-                    </a>
-                    </center>`;
-                    return result; 
-                }
-            }
-                ],
+                {
+                    "title": "", 
+                    "data": "IdUnidadMedida",
+                    "render": function(data, type, row, meta){
+                        var result = `
+                        <center>
+                        <a href="#" onclick="verDetallesunidad(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
+                            <i class="icofont icofont-search"></i>
+                        </a>
+                        <a href="#" onclick="cambiarEstatusUnidad(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                            <i class="icofont icofont-ui-delete"></i>
+                        </a>
+                        </center>`;
+                        return result; 
+                    }
+                },
+                {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
+                {"title": "Nombre","data": "NombreUnidadMedida"},
+                {"title": "fecha de creacion","data": "auFechaCreacion"},
+                {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
+                {"title": "Creado por","data": "creador"},
+                {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
+                {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0},
+                {"title": "Modificado por","data": "modificador"},
+                {"title": "Estado","data": "DesEstadoUnidadMedida"}
+            ],
         });
         limpiarUnidades=1;
     if (data.length>0){seleccionarTablaUnidades();}
@@ -109,14 +122,13 @@ var seleccionarTablaUnidades = function(data){
         $(this).addClass('selected');
         RegistroUnidades = TablaTraerCampo('tablaUnidades',this);
     });
-    $('#tablaUnidades tbody').on('dblclick', 'tr', function () {
-        bloquearInuts();
-        $("#divVolver").show();
-        $("#divBtnModificar").show();
-        $("#divBtnAceptar").hide();  
-        cargarFormulario();
-        pintarDatosActualizar(RegistroUnidades);
-    }); 
+}
+
+var verDetallesunidad = function(data){
+    parametroAjax.ruta=rutaB;
+    parametroAjax.data = {"IdUnidadMedida":data} ;
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaBuscar(respuesta);    
 }
 
 var cargarFormulario= function(){
@@ -199,7 +211,6 @@ var crearAllSelect = function(data){
 }
 
 $(document).ready(function(){
-    console.log(d);
     $("#spanTitulo").text("Unidades de Medida registradas");
     cargarTablaUnidades(d.v_unidades);
     crearAllSelect(d);

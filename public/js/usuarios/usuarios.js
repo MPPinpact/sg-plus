@@ -125,26 +125,35 @@ var ManejoRespuestaProcesarPerfil = function(respuesta){
 var cargarTablaUsuarios = function(data){
     if(limpiarUsuarios==1){destruirTabla('#tablaUsuarios');$('#tablaUsuarios thead').empty();}
         $("#tablaUsuarios").dataTable({ 
+            responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
             "language": LenguajeTabla,
-            "scrollX": true,
-            "scrollY": '45vh',
-            "scrollCollapse": true,
             "columnDefs": [
-            {
-                "targets": [ 1 ],
-                "searchable": true
-            },
-            {"sWidth": "20%", "aTargets": [1]},
-            {"sWidth": "15%", "aTargets": [2]},
-            {"sWidth": "20%", "aTargets": [5]},
-            {"sWidth": "20%", "aTargets": [8]},
-            {"sWidth": "10%", "aTargets": [9]},
-            {"sWidth": "15%", "aTargets": [10]},
+                {
+                    "targets": [ 1 ],
+                    "searchable": true
+                }
             ],
             "data": data,
             "columns":[
+            {
+                "title": "", 
+                "data": "idUser",
+                "render": function(data, type, row, meta){
+                    var result = `
+                    <a href="#!" onclick="reiniciarClave(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Reiniciar Contraseña" data-original-title="Delete">
+                        <i class="icon-reload"></i>
+                    </a>
+                    <a href="#!" onclick="cambiarEstatusUsuario(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                        <i class="icon-refresh"></i>
+                    </a>
+                    <a href="#!" onclick="desbloquearCuenta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Desbloquear Cuenta" data-original-title="Delete">
+                        <i class="icon-lock-open"></i>
+                    </a>`;
+                    return result; 
+                }
+            },
             {"title": "Id","data": "idUser",visible:0},
             {"title": "Nombres","data": "usrNombreFull"},
             {
@@ -166,24 +175,7 @@ var cargarTablaUsuarios = function(data){
             {"title": "Modificado por","data": "modificador",visible:0},
             {"title": "Estado","data": "des_estado"},
             {"title": "Última visita","data": "usrUltimaVisita"},
-            {"title": "Estatus Bloqueo","data": "DescripcionBloqueo"},
-            {
-                "title": "Optiones", 
-                "data": "idUser",
-                "render": function(data, type, row, meta){
-                    var result = `
-                    <a href="#!" onclick="reiniciarClave(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Reiniciar Contraseña" data-original-title="Delete">
-                        <i class="icon-reload"></i>
-                    </a>
-                    <a href="#!" onclick="cambiarEstatusUsuario(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
-                        <i class="icon-refresh"></i>
-                    </a>
-                    <a href="#!" onclick="desbloquearCuenta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Desbloquear Cuenta" data-original-title="Delete">
-                        <i class="icon-lock-open"></i>
-                    </a>`;
-                    return result; 
-                }
-            }],
+            {"title": "Estatus Bloqueo","data": "DescripcionBloqueo"}],
         });
         limpiarUsuarios=1;
     if (data.length>0){seleccionarTablaUsuarios();}
@@ -464,6 +456,7 @@ $(document).ready(function(){
     crearallSelect(d);    
     $(document).on('click','#guardar',validador);
     $(document).on('click','#cancelar',BotonCancelar);
+    $(document).on('click','#volverAct',BotonCancelar);
     $(document).on('click','#agregar',BotonAgregar);
     $(document).on('click','#agregarP',validadorPerfil);
     $(document).on('click','#volverPerfiles',volverPerfiles);

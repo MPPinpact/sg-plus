@@ -49,13 +49,19 @@ class Subfamilia extends Authenticatable
     public function listUnidadmedida(){
         return DB::table('v_unidadmedida_combo')->get();
     }
+
+    // Cargar combo de familia
+    public function listFamilia(){
+        return DB::table('v_familia_combo')->get();
+    }
+    
     
 
     // registrar familia
-    public function regSubfamilia($datos){
+    public function regSubfamilia($datos){ 
         $idAdmin = Auth::id();
         $datos['IdSubFamilia']==null ? $Id=0 : $Id= $datos['IdSubFamilia'];
-        $sql="select f_registro_subfamilias(".$Id.",'".$datos['NombreSubFamilia']."',".$datos['IdUnidadMedida'].",".$datos['EstadoSubFamilia'].",".$idAdmin.")";
+        $sql="select f_registro_subfamilias(".$Id.",'".$datos['NombreSubFamilia']."',".$datos['IdUnidadMedida'].",".$datos['IdFamilia'].",".$datos['EstadoSubFamilia'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result['f_registro_subfamilias']=$value;

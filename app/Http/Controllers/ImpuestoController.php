@@ -61,9 +61,16 @@ class ImpuestoController extends Controller
     protected function postImpuestoactivo(Request $request){
         $datos = $request->all();
         $model= new Impuesto();
-        $familia = Impuesto::find($datos['IdImpuesto']);
-        $result['activar'] = $model->activarImpuesto($familia);
+        $impuesto = Impuesto::find($datos['IdImpuesto']);
+        $result['activar'] = $model->activarImpuesto($impuesto);
         $result['v_impuestos'] = $model->listImpuesto();
         return $result;
+    }
+
+    protected function postBuscarimpuesto(Request $request){
+        $datos = $request->all();
+        $model= new Impuesto();
+        $impuesto = Impuesto::find($datos['IdImpuesto']);
+        return $impuesto;
     }
 }

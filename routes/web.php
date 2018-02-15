@@ -41,21 +41,25 @@ Route::post('/detallesB', 'BodegaController@postBodegadetalle')->name('detallesB
 Route::get('/umedidas', 'UnidadmedidaController@getUnidadmedida')->name('umedidas');
 Route::post('/umedidas', 'UnidadmedidaController@postUnidadmedida')->name('umedidas');
 Route::post('/activarUm', 'UnidadmedidaController@postUnidadmedidactivo')->name('activarUm');
+Route::post('/umedidasb', 'UnidadmedidaController@postBuscarunidad')->name('umedidasb');
 
 //CRUD Familia
 Route::get('/familias', 'FamiliaController@getFamilia')->name('familias');
 Route::post('/familias', 'FamiliaController@postFamilia')->name('familias');
 Route::post('/activarF', 'FamiliaController@postFamiliactivo')->name('activarF');
+Route::post('/familiab', 'FamiliaController@postBuscarfamilia')->name('familiab');
 
 //CRUD SubFamilia
 Route::get('/subfamilias', 'SubfamiliaController@getSubamilia')->name('subfamilias');
 Route::post('/subfamilias', 'SubfamiliaController@postSubfamilia')->name('subfamilias');
 Route::post('/activarSf', 'SubfamiliaController@postSubfamiliactivo')->name('activarSf');
+Route::post('/subfamiliab', 'SubfamiliaController@postBuscarsubfamilia')->name('subfamiliab');
 
 //CRUD Impuestos
 Route::get('/impuestos', 'ImpuestoController@getImpuesto')->name('impuestos');
 Route::post('/impuestos', 'ImpuestoController@postImpuesto')->name('impuestos');
 Route::post('/activarI', 'ImpuestoController@postImpuestoactivo')->name('activarI');
+Route::post('/impuestob', 'ImpuestoController@postBuscarimpuesto')->name('impuestob');
 
 //CRUD Productos
 Route::get('/productos', 'ProductoController@getProducto')->name('productos');
@@ -63,6 +67,7 @@ Route::post('/productos', 'ProductoController@postProducto')->name('productos');
 Route::post('/activarPr', 'ProductoController@postProductoactivo')->name('activarPr');
 Route::post('/descontinuarPr', 'ProductoController@postProductodescontinuar')->name('descontinuarPr');
 Route::post('/detallesPr', 'ProductoController@postProductodetalle')->name('detallesPr');
+Route::post('/buscarSubfamilia', 'ProductoController@postBuscarsub')->name('buscarSubfamilia');
 
 Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){
 	//accesos (Seleccionar acceso para ingresar a la aplicacion)

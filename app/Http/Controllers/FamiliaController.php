@@ -66,4 +66,11 @@ class FamiliaController extends Controller
         $result['v_familias'] = $model->listFamilia();
         return $result;
     }
+
+    protected function postBuscarfamilia(Request $request){
+        $datos = $request->all();
+        $model= new Familia();
+        $familia = Familia::find($datos['IdFamilia']);
+        return $familia;
+    }
 }

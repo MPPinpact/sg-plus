@@ -1,8 +1,7 @@
 @extends('menu.index')
 @section('content')
 <div class="row">
-	@include('menu.mantenedores')
-	<div class="col-md-10 divDetalles">
+	<div class="col-md-12 divDetalles">
 		<div class="card">
 			<div class="card-header">
 				<center>
@@ -78,6 +77,7 @@
 <script Language="Javascript">
 	var ruta = "{{ URL::route('familias') }}"
 	var rutaA = "{{ URL::route('activarF') }}"
+	var rutaB = "{{ URL::route('familiab') }}"
 	var d = [];
 	d['v_familias'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_familias) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));

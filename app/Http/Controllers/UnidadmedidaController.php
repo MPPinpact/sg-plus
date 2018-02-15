@@ -67,4 +67,12 @@ class UnidadmedidaController extends Controller
         $result['v_unidades'] = $model->listUnidad();
         return $result;
     }
+
+    protected function postBuscarunidad(Request $request){
+        $datos = $request->all();
+        $model= new Unidadmedida();
+        $bodega = Unidadmedida::find($datos['IdUnidadMedida']);
+        return $bodega;
+    }
+    
 }
