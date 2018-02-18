@@ -10,7 +10,9 @@
 	    <div class="card">
 	        <div class="card-header">
 	        	<center>
-	        		<h5 id="spanTitulo" class="card-header-text"></h5>
+	        		<h5 class="card-header-text">
+	        			Listado de Locales Registrados
+	        		</h5>
                 </center>
 	        </div>
 	        <div class="card-block">
@@ -28,7 +30,7 @@
 							<table id="tablaLocales" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 						</div>
 					</div>
-		        </div>         
+		        </div>
 	        </div>
 	    </div>
 	</div>
@@ -36,7 +38,7 @@
 		<div class="card">
 		    <div class="card-header">
 		    	<center>
-			    	<h5 class="card-header-text">Cartola</h5>
+			    	<h5 id="spanTitulo" class="card-header-text"></h5>
 		    	</center>
 		    </div>
 		    <div class="card-block">
@@ -121,14 +123,14 @@
 											<div class="divBotones" style="display:none;">
 												<button id="cancelar" type="button" class="btn btn-inverse-primary waves-effect waves-light">
 													Cancelar
-												</button> 
+												</button>
 					                			<button id="guardar"  type="button" class="btn btn-primary waves-effect waves-light">
 													Guardar
 					                			</button>
 											</div>
 										</div>
 									</div>
-									{!! Form::close() !!} 
+									{!! Form::close() !!}
 		                        </div>
 		                        <div class="tab-pane" id="bodegas" role="tabpanel">
 									<div class="row">

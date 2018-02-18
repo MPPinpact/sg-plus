@@ -12,13 +12,14 @@ var parametroAjax = {
 var ManejoRespuestaBuscar = function(respuesta){
     if(respuesta.code==200){
         bloquearInuts();
+        $("#spanTitulo").text("Detalles");
         $("#divVolver").show();
         $("#divBtnModificar").show();
-        $("#divBtnAceptar").hide();  
+        $("#divBtnAceptar").hide();
         cargarFormulario();
         pintarDatosActualizar(respuesta.respuesta);
     }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 }
 
@@ -28,7 +29,7 @@ var ManejoRespuestaProcesarD = function(respuesta){
         pintarDatosDetalles(respuesta.respuesta.v_detalles[0]);
         cargarTablaBodegas(respuesta.respuesta.v_bodegas);
     }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 }
 // Manejo Activar / Desactivar empresa
@@ -65,7 +66,7 @@ var ManejoRespuestaProcesar = function(respuesta){
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
                 break;
-        } 
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -73,7 +74,7 @@ var ManejoRespuestaProcesar = function(respuesta){
 
 var cargarTablaUnidades = function(data){
     if(limpiarUnidades==1){destruirTabla('#tablaUnidades');$('#tablaUnidades thead').empty();}
-        $("#tablaUnidades").dataTable({ 
+        $("#tablaUnidades").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -85,7 +86,7 @@ var cargarTablaUnidades = function(data){
             "data": data,
             "columns":[
                 {
-                    "title": "", 
+                    "title": "",
                     "data": "IdUnidadMedida",
                     "render": function(data, type, row, meta){
                         var result = `
@@ -97,7 +98,7 @@ var cargarTablaUnidades = function(data){
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
                         </center>`;
-                        return result; 
+                        return result;
                     }
                 },
                 {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
@@ -128,7 +129,7 @@ var verDetallesunidad = function(data){
     parametroAjax.ruta=rutaB;
     parametroAjax.data = {"IdUnidadMedida":data} ;
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaBuscar(respuesta);    
+    ManejoRespuestaBuscar(respuesta);
 }
 
 var cargarFormulario= function(){
@@ -137,16 +138,15 @@ var cargarFormulario= function(){
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
-    $("#spanTitulo").text("Editar Unidades de Medida");
     $("#IdUnidadMedida").val(data.IdUnidadMedida);
     $("#NombreUnidadMedida").val(data.NombreUnidadMedida);
     $("#EstadoUnidadMedida").val(data.EstadoUnidadMedida).trigger("change");
 }
 
 var BotonCancelar = function(){
+    $("#spanTitulo").text("Listado de Unidades de Medida registradas");
     $(".md-form-control").removeClass("md-valid");
-    $("#spanTitulo").text("Unidades de Medida registradas");
-    $(".divForm").toggle();    
+    $(".divForm").toggle();
     $('#divConsulta').hide();
     $('#FormUnidad')[0].reset();
     $("#idUser").val("");
@@ -168,7 +168,7 @@ var BotonAgregar = function(){
 }
 
 var ProcesarUnidad = function(){
-    if (errorRut==0){  
+    if (errorRut==0){
         var camposNuevo = {
             'EstadoUnidadMedida': $('#EstadoUnidadMedida').val()
         }
@@ -201,9 +201,10 @@ var desbloquearInuts = function(){
 }
 
 var modificarUnidad = function(){
+    $("#spanTitulo").text("Editar Unidad de Medida");
     $("#divBtnModificar").hide();
     $("#divBtnAceptar").show();
-    desbloquearInuts();    
+    desbloquearInuts();
 }
 
 var crearAllSelect = function(data){
@@ -211,7 +212,7 @@ var crearAllSelect = function(data){
 }
 
 $(document).ready(function(){
-    $("#spanTitulo").text("Unidades de Medida registradas");
+    $("#spanTitulo").text("Listado de Unidades de Medida registradas");
     cargarTablaUnidades(d.v_unidades);
     crearAllSelect(d);
     $(document).on('click','#guardar',validador);
@@ -230,7 +231,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            }, 
+            },
             'EstadoUnidadMedida': {
                 verbose: false,
                 validators: {
@@ -238,7 +239,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            },            
+            },
         }
     })
     .on('success.form.fv', function(e){

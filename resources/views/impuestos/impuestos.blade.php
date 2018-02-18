@@ -66,7 +66,7 @@
 							<div id="divBtnAceptar">
 								<button id="cancelar" type="button" class="btn btn-inverse-primary waves-effect waves-light">
 									Cancelar
-								</button> 
+								</button>
 								<button id="guardar"  type="button" class="btn btn-primary waves-effect waves-light">
 									Guardar
 								</button>
@@ -74,7 +74,7 @@
 						</div>
 					</div>
 					{!! Form::close() !!}
-				</div>            
+				</div>
 			</div>
 		</div>
 	</div>

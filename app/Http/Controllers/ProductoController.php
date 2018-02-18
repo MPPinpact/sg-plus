@@ -45,7 +45,8 @@ class ProductoController extends Controller
     {
         $model= new Producto();
         $data['v_productos'] = $model->listProductos();
-        $data['v_estados'] = $model->listEstados();        
+        $data['v_estados'] = $model->listEstados();
+        $data['v_impuestos'] = $model->listImpuestos();
         $data['v_familias'] = $model->listFamilias();
         $data['v_subfamilias'] = $model->listSubfamilias();
         $data['v_unidad'] = $model->listUnidadmedidas();
@@ -57,7 +58,7 @@ class ProductoController extends Controller
     protected function postProducto(Request $request){
         $datos = $request->all();
         $model= new Producto();
-        $result['f_registro'] = $model->regBodega($datos);
+        $result['f_registro'] = $model->regProducto($datos);
         $result['v_productos'] = $model->listProductos();
         return $result;
     }
@@ -76,8 +77,8 @@ class ProductoController extends Controller
     protected function postProductodescontinuar (Request $request){
         $datos = $request->all();
         $model= new Producto();
-        $bodega = Producto::find($datos['IdProducto']);
-        $result['descontinuar'] = $model->descontinuarProducto($bodega);
+        $producto = Producto::find($datos['IdProducto']);
+        $result['descontinuar'] = $model->descontinuarProducto($producto);
         $result['v_productos'] = $model->listProductos();
         return $result;
     }
@@ -85,10 +86,10 @@ class ProductoController extends Controller
     // Ver detalles de los productos
     protected function postProductodetalle (Request $request){
         $datos = $request->all();
-        // $model= new Producto();
-        // $result['v_detalles'] = $model->getOneDetalle($datos['IdProducto']);
-        // $result['v_productos'] = $model->localesProducto($datos['IdProducto']);
-        $result = '';
+        $model= new Producto();
+        $result['v_detalles'] = Producto::find($datos['IdProducto']);
+        $result['v_impuestos'] = $model->impuestosProducto($datos['IdProducto']);
+        $result['v_productos'] = $model->localesProducto($datos['IdProducto']);
         return $result;
     }
 
@@ -98,4 +99,25 @@ class ProductoController extends Controller
         $result = $model->getSubfamilia($datos['IdFamilia']);
         return $result;
     }
+
+    //asignar un nuevo impuesto
+    protected function postprocesarImpuesto (Request $request){
+        $datos = $request->all();
+        $model= new Producto();
+        $result['f_registro_producto_impuesto'] = $model->regProductoImpuesto($datos);
+        $result['v_impuestos'] = $model->impuestosProducto($datos['IdProducto2']);
+        return $result;
+    }
+
+    //Activar / desactivar impuesto a producto
+    protected function postImpuestopactivo (Request $request){
+        $datos = $request->all();
+        $model= new Producto();
+        $impuesto = $model->getImpuesto($datos['IdProductoImpuesto']);
+        $result['activar'] = $model->activarImpuestoProducto($impuesto);
+        $result['v_impuestos'] = $model->impuestosProducto($impuesto[0]->IdProducto);
+        return $result;
+    }
+
+
 }

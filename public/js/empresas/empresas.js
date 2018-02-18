@@ -11,6 +11,7 @@ var parametroAjax = {
 
 var ManejoRespuestaProcesarD = function(respuesta){
     if(respuesta.code==200){
+        $("#spanTitulo").text("Detalles");
         $("#adetalles").addClass("active");
         $("#detalles").addClass("active");
         $("#locales").removeClass("active");
@@ -22,7 +23,7 @@ var ManejoRespuestaProcesarD = function(respuesta){
         pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
         cargarTablaLocales(respuesta.respuesta.v_locales);
     }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 
 }
@@ -61,7 +62,7 @@ var ManejoRespuestaProcesar = function(respuesta){
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
                 break;
-        } 
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -69,7 +70,7 @@ var ManejoRespuestaProcesar = function(respuesta){
 
 var cargarTablaEmpresas = function(data){
     if(limpiarEmpresas==1){destruirTabla('#tablaEmpresas');$('#tablaEmpresas thead').empty();}
-        $("#tablaEmpresas").dataTable({ 
+        $("#tablaEmpresas").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -81,7 +82,7 @@ var cargarTablaEmpresas = function(data){
             "data": data,
             "columns":[
                 {
-                    "title": "", 
+                    "title": "",
                     "data": "IdEmpresa",
                     "render": function(data, type, row, meta){
                         var result = `
@@ -93,14 +94,14 @@ var cargarTablaEmpresas = function(data){
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
                         </center>`;
-                        return result; 
+                        return result;
                     }
                 },
                 {"title": "IdEmpresa","data": "IdEmpresa",visible:0},
                 {"title": "IdRepresentanteLegal","data": "IdRepresentanteLegal",visible:0},
                 {"title": "Nombre","data": "NombreFantasia"},
                 {
-                    "title": "RUT", 
+                    "title": "RUT",
                     "data": "RUT",
                     "render": function(data, type, row, meta){
                         if(type === 'display'){
@@ -130,19 +131,11 @@ var seleccionarTablaEmpleados = function(data){
         $(this).addClass('selected');
         RegistroEmpresas = TablaTraerCampo('tablaEmpresas',this);
     });
-    // $('#tablaEmpresas tbody').on('dblclick', 'tr', function () {
-    //     bloquearInuts();
-    //     $("#divVolver").show();
-    //     $("#divBtnModificar").show();
-    //     $("#divBtnAceptar").hide();  
-    //     cargarFormulario();
-    //     pintarDatosActualizar(RegistroEmpresas);
-    // }); 
 }
 
 var cargarTablaLocales = function(data){
     if(limpiarLocales==1){destruirTabla('#tablaLocales');}
-        $("#tablaLocales").dataTable({ 
+        $("#tablaLocales").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -160,7 +153,7 @@ var cargarTablaLocales = function(data){
             {"title": "Estado","data": "desEstadoLocal"},
             ],
         });
-        limpiarLocales=1; 
+        limpiarLocales=1;
 };
 
 // var cargarFormulario= function(){
@@ -169,7 +162,6 @@ var cargarTablaLocales = function(data){
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
-    $("#spanTitulo").text("Editar Empresa");
     $("#IdEmpresa").val(data.IdEmpresa);
     $("#RUT").val(data.RUT);
     $("#RazonSocial").val(data.RazonSocial);
@@ -190,28 +182,21 @@ var pintarDatosDetalles = function(data){
 
 var BotonCancelar = function(){
     $("#divTabs").show();
-    $(".divDetalles").toggle();   
+    $(".divDetalles").toggle();
     $(".md-form-control").removeClass("md-valid");
     $("#spanTitulo").text("Empresas registradas");
-    $(".divBotones").toggle();    
-    $('#divConsulta').hide();
+    $(".divBotones").toggle();
     $('#FormEmpresa')[0].reset();
     $("#idUser").val("");
-    $('#divSpanPerfiles').hide();
     bloquearInuts();
 }
 
 var BotonAgregar = function(){
     $("#spanTitulo").text("Registrar Empresa");
-    // $("#divBtnModificar").hide();
-    // $("#divBtnAceptar").show();
     $("#divTabs").hide();
     $("#divVolver").hide();
-    // cargarFormulario();
     $(".divDetalles").toggle();
     $(".divBotones").toggle();
-    $("#divConsulta").hide();
-    $("#divSpanPerfiles").hide();
     $("#idUser").val("");
     $(".comboclear").val('').trigger("change");
     $('#FormEmpresa')[0].reset();
@@ -219,7 +204,7 @@ var BotonAgregar = function(){
 }
 
 var ProcesarEmpresa = function(){
-    if (errorRut==0){  
+    if (errorRut==0){
         var camposNuevo = {'IdRepresentanteLegal': $('#IdRepresentanteLegal').val(), 'EstadoEmpresa': $('#EstadoEmpresa').val()}
         parametroAjax.ruta=ruta;
         parametroAjax.data = $("#FormEmpresa").serialize() + '&' + $.param(camposNuevo);
@@ -243,7 +228,7 @@ var verDetallesEmpresa = function(IdEmpresa){
     parametroAjax.ruta=rutaD;
     parametroAjax.data = {IdEmpresa:IdEmpresa};
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaProcesarD(respuesta);    
+    ManejoRespuestaProcesarD(respuesta);
 }
 
 
@@ -251,11 +236,11 @@ var verificarRut = function(control){
     var res = Valida_Rut(control);
     var format = formateaRut(control.val(), res);
     if (format != false){
-        errorRut = 0;       
+        errorRut = 0;
         $("#ErrorRut").text("");
         return format;
     }else{
-        errorRut = 1;       
+        errorRut = 1;
         $("#ErrorRut").text("Rut invalido");
         return control.val();
     }
@@ -280,15 +265,15 @@ var desbloquearInuts = function(){
 }
 
 var modificarEmpresa = function(){
-    // $("#divBtnModificar").hide();
-    // $("#divBtnAceptar").show();
+    $("#spanTitulo").text("Editar Empresa");
     $("#divVolver").hide();
     $(".divBotones").toggle();
-    desbloquearInuts();    
+    desbloquearInuts();
 }
 
 var volverTabs = function(){
-    $(".divDetalles").toggle();   
+    $("#spanTitulo").text("");
+    $(".divDetalles").toggle();
 }
 
 var crearAllSelect = function(data){
@@ -305,7 +290,6 @@ var crearAllSelect = function(data){
 
 $(document).ready(function(){
     crearAllSelect(d);
-    $("#spanTitulo").text("Empresas registradas");
     $("#RUT").focusout(function() {
         var valid = $("#RUT").val();
         if (valid.length > 0){
@@ -318,7 +302,7 @@ $(document).ready(function(){
     $(document).on('click','#cancelar',BotonCancelar);
     $(document).on('click','#agregar',BotonAgregar);
     $(document).on('click','#modificar',modificarEmpresa);
-    $(document).on('click','#volverAct',volverTabs); 
+    $(document).on('click','#volverAct',volverTabs);
     $('#FormEmpresa').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
@@ -330,7 +314,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            }, 
+            },
             'RazonSocial': {
                 verbose: false,
                 validators: {
@@ -338,7 +322,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            },            
+            },
             'NombreFantasia': {
                 validators: {
                     notEmpty: {

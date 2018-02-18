@@ -73,6 +73,12 @@
           </a>
           <ul class="treeview-menu">
             <li>
+              <a class="waves-effect" href="{{ route('proveedores') }}">
+                <i class="icon-arrow-right"></i>
+                Proveedores
+              </a>
+            </li>
+            <li>
               <a class="waves-effect" href="#">
                 <i class="icon-arrow-right"></i>
                 Compras
@@ -92,7 +98,7 @@
               </a>
             </li>
           </ul>
-        </li>               
+        </li>
         <li class="treeview">
           <a href="#">
             <i class="icofont icofont-company"></i><span>Adminstración</span><i class="icon-arrow-down"></i>
@@ -126,7 +132,7 @@
         </li>
       </ul>
 
-          
+
       <!--horizontal Menu Ends-->
     </section>
   </aside>

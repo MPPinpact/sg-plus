@@ -4,13 +4,14 @@ var manejoRefresh=limpiarImpuestos=errorRut=0;
 var ManejoRespuestaBuscar = function(respuesta){
     if(respuesta.code==200){
         bloquearInuts();
+        $("#spanTitulo").text("Detalles");
         $("#divVolver").show();
         $("#divBtnModificar").show();
-        $("#divBtnAceptar").hide();  
+        $("#divBtnAceptar").hide();
         cargarFormulario();
         pintarDatosActualizar(respuesta.respuesta);
     }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 }
 
@@ -28,7 +29,7 @@ var ManejoRespuestaProcesarD = function(respuesta){
         pintarDatosDetalles(respuesta.respuesta.v_detalles[0]);
         cargarTablaBodegas(respuesta.respuesta.v_bodegas);
     }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 
 }
@@ -67,7 +68,7 @@ var ManejoRespuestaProcesar = function(respuesta){
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
                 break;
-        } 
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -75,7 +76,7 @@ var ManejoRespuestaProcesar = function(respuesta){
 
 var cargarTablaImpuestos = function(data){
     if(limpiarImpuestos==1){destruirTabla('#tablaImpuesto');$('#tablaImpuesto thead').empty();}
-        $("#tablaImpuesto").dataTable({ 
+        $("#tablaImpuesto").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -87,19 +88,19 @@ var cargarTablaImpuestos = function(data){
             "data": data,
             "columns":[
                 {
-                    "title": "", 
+                    "title": "",
                     "data": "IdImpuesto",
                     "render": function(data, type, row, meta){
                         var result = `
                         <center>
                         <a href="#" onclick="verDetallesimpuesto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
                             <i class="icofont icofont-search"></i>
-                        </a> 
+                        </a>
                         <a href="#" onclick="cambiarEstatusImpuesto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
                         </center>`;
-                        return result; 
+                        return result;
                     }
                 },
                 {"title": "IdImpuesto","data": "IdImpuesto",visible:0},
@@ -134,12 +135,11 @@ var verDetallesimpuesto = function(data){
     parametroAjax.ruta=rutaB;
     parametroAjax.data = {"IdImpuesto":data} ;
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaBuscar(respuesta);    
+    ManejoRespuestaBuscar(respuesta);
 }
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
-    $("#spanTitulo").text("Editar Impuesto");
     $("#IdImpuesto").val(data.IdImpuesto);
     $("#ValorImpuesto").val(data.ValorImpuesto);
     $("#NombreImpuesto").val(data.NombreImpuesto);
@@ -148,8 +148,8 @@ var pintarDatosActualizar= function(data){
 
 var BotonCancelar = function(){
     $(".md-form-control").removeClass("md-valid");
-    $("#spanTitulo").text("Impuestos registrados");
-    $(".divForm").toggle();    
+    $("#spanTitulo").text("Listado de Impuestos Registrados");
+    $(".divForm").toggle();
     $('#divConsulta').hide();
     $('#FormImpuestos')[0].reset();
     $("#IdImpuesto").val("");
@@ -171,7 +171,7 @@ var BotonAgregar = function(){
 }
 
 var Procesarimpuesto = function(){
-    if (errorRut==0){  
+    if (errorRut==0){
         var camposNuevo = {
             'EstadoImpuesto': $('#EstadoImpuesto').val()
         }
@@ -206,9 +206,10 @@ var desbloquearInuts = function(){
 }
 
 var modificarFamilia = function(){
+    $("#spanTitulo").text("Editar Impuestos");
     $("#divBtnModificar").hide();
     $("#divBtnAceptar").show();
-    desbloquearInuts();    
+    desbloquearInuts();
 }
 
 var crearAllSelect = function(data){
@@ -216,7 +217,7 @@ var crearAllSelect = function(data){
 }
 
 $(document).ready(function(){
-    $("#spanTitulo").text("Impuestos registrados");
+    $("#spanTitulo").text("Listado de Impuestos Registrados");
     cargarTablaImpuestos(d.v_impuestos);
     crearAllSelect(d);
     $(document).on('click','#guardar',validador);
@@ -243,7 +244,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            }, 
+            },
             'EstadoImpuesto': {
                 verbose: false,
                 validators: {
@@ -251,7 +252,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            },            
+            },
         }
     })
     .on('success.form.fv', function(e){
