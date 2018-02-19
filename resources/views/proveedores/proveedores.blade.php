@@ -11,7 +11,7 @@
 	        <div class="card-header">
 	        	<center>
 	        		<h5 class="card-header-text">
-	        			Listado de Bodegas Registradas
+	        			Listado de Proveedores Registrados
 	        		</h5>
                 </center>
 	        </div>
@@ -27,7 +27,7 @@
 					<br />
 					<div class="row">
 						<div class="col-md-12 table-responsive">
-							<table id="tablaBodega" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+							<table id="tablaProveedor" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 						</div>
 					</div>
 		        </div>
@@ -57,16 +57,16 @@
 			                                <div class="f-26">
 			                                    <i class="icofont icofont-document-search"></i>
 			                                </div>
-			                                Detalles de Bodega
+			                                Detalles de Proveedor
 			                            </a>
 			                            <div class="slide"></div>
 			                        </li>
 			                        <li class="nav-item">
-			                            <a id="aproductos" class="nav-link" data-toggle="tab" href="#productos" role="tab">
+			                            <a id="acompras" class="nav-link" data-toggle="tab" href="#compras" role="tab">
 			                                <div class="f-26">
 			                                    <i class="icofont icofont-document-search"></i>
 			                                </div>
-			                                Productos Asociados
+			                                Compras Realizadas
 			                           	</a>
 			                            <div class="slide"></div>
 			                        </li>
@@ -76,23 +76,49 @@
 		                    <div class="tab-content">
 		                        <div class="tab-pane active" id="detalles" role="tabpanel">
 									<br><br>
-									{!! Form::open(['id'=>'FormBodega','autocomplete' => 'off']) !!}
-									{!! Form::hidden('IdBodega', '', [
-									'id'            => 'IdBodega',
+									{!! Form::open(['id'=>'FormProveedor','autocomplete' => 'off']) !!}
+									{!! Form::hidden('IdProveedor', '', [
+									'id'            => 'IdProveedor',
 									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
-										<div class="col-sm-2"></div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="NombreBodega" name="NombreBodega" type="text" class="md-form-control" maxlength="250" readonly />
-					                            <label for="NombreBodega">Nombre Bodega</label>
+				                                <input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="RUTProveedor">RUT Proveedor</label>
+					                        </div>
+										</div>
+										<div class="col-sm-4">
+											<div class="md-input-wrapper">
+				                                <input id="CodigoProveedor" name="CodigoProveedor" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="CodigoProveedor">Codigo Proveedor</label>
 					                        </div>
 										</div>
 					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-					                        	<input id="DescripcionBodega" name="DescripcionBodega" type="text" class="md-form-control" maxlength="250" readonly />
-					                            <label for="DescripcionBodega">Descripción Bodega</label>
+				                                <input id="RazonSocialProveedor" name="RazonSocialProveedor" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="RazonSocialProveedor">Razon Social</label>
+					                        </div>
+					                    </div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-sm-4">
+											<div class="md-input-wrapper">
+				                                <input id="NombreFantasia" name="NombreFantasia" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="NombreFantasia">Nombre Fantasia</label>
+					                        </div>
+										</div>
+										<div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+				                                <input id="Direccion" name="Direccion" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="Direccion">Dirección</label>
+					                        </div>
+										</div>
+					                    <div class="col-sm-4">
+											<div class="md-input-wrapper">
+				                                <input id="Telefeno" name="Telefeno" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="Telefeno">Teléfeno</label>
 					                        </div>
 					                    </div>
 									</div>
@@ -100,15 +126,15 @@
 									<div class="row">
 										<div class="col-sm-2"></div>
 										<div class="col-sm-4">
-					                        <div class="md-input-wrapper">
-												<select name="IdLocal" id="IdLocal" class="md-disable md-valid" disabled></select>
-				                                <label for="IdLocal">Local</label>
-											</div>
+											<div class="md-input-wrapper">
+				                                <input id="Vendedor" name="Vendedor" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="Vendedor">Vendedor</label>
+					                        </div>
 					                    </div>
 					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-												<select name="EstadoBodega" id="EstadoBodega" class="md-disable md-valid" disabled></select>
-				                                <label for="EstadoBodega">Estado</label>
+												<select name="EstadoProveedor" id="EstadoProveedor" class="md-disable md-valid" disabled></select>
+				                                <label for="EstadoProveedor">Estado</label>
 											</div>
 					                    </div>
 									</div>
@@ -132,7 +158,7 @@
 									</div>
 									{!! Form::close() !!}
 		                        </div>
-		                        <div class="tab-pane" id="productos" role="tabpanel">
+		                        <div class="tab-pane" id="compras" role="tabpanel">
 									<div class="row">
 										<div class="col-md-12 table-responsive">
 											<table id="tablaProductos" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
@@ -148,13 +174,12 @@
 	</div>
 </div>
 <script Language="Javascript">
-	var ruta = "{{ URL::route('bodegas') }}"
-	var rutaA = "{{ URL::route('activarB') }}"
-	var rutaD = "{{ URL::route('detallesB') }}"
+	var ruta = "{{ URL::route('proveedores') }}"
+	var rutaA = "{{ URL::route('activarPro') }}"
+	var rutaD = "{{ URL::route('detallesP') }}"
 	var d = [];
-	d['v_bodegas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_bodegas) }}'));
-	d['v_locales'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_locales) }}'));
+	d['v_proveedores'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_proveedores) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
 </script>
-<script src="{{ asset('js/bodegas/bodegas.js') }}"></script>
+<script src="{{ asset('js/proveedores/proveedores.js') }}"></script>
 @endsection

@@ -14,11 +14,12 @@ var ManejoRespuestaBuscar = function(respuesta){
         bloquearInuts();
         $("#divVolver").show();
         $("#divBtnModificar").show();
-        $("#divBtnAceptar").hide();  
+        $("#divBtnAceptar").hide();
+        $("#spanTitulo").text("Detalles");
         cargarFormulario();
         pintarDatosActualizar(respuesta.respuesta);
     }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 }
 
@@ -28,10 +29,11 @@ var ManejoRespuestaProcesarD = function(respuesta){
         pintarDatosDetalles(respuesta.respuesta.v_detalles[0]);
         cargarTablaBodegas(respuesta.respuesta.v_bodegas);
     }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 
 }
+
 // Manejo Activar / Desactivar empresa
 var ManejoRespuestaProcesarI = function(respuesta){
     if(respuesta.code==200){
@@ -66,7 +68,7 @@ var ManejoRespuestaProcesar = function(respuesta){
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
                 break;
-        } 
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -74,7 +76,7 @@ var ManejoRespuestaProcesar = function(respuesta){
 
 var cargarTablaFamilias = function(data){
     if(limpiarUnidades==1){destruirTabla('#tablaFamilias');$('#tablaFamilias thead').empty();}
-        $("#tablaFamilias").dataTable({ 
+        $("#tablaFamilias").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -86,7 +88,7 @@ var cargarTablaFamilias = function(data){
             "data": data,
             "columns":[
                 {
-                    "title": "", 
+                    "title": "",
                     "data": "IdFamilia",
                     "render": function(data, type, row, meta){
                         var result = `
@@ -98,7 +100,7 @@ var cargarTablaFamilias = function(data){
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
                         </center>`;
-                        return result; 
+                        return result;
                     }
                 },
                 {"title": "IdFamilia","data": "IdFamilia",visible:0},
@@ -133,12 +135,11 @@ var verDetallesfamilia = function(data){
     parametroAjax.ruta=rutaB;
     parametroAjax.data = {"IdFamilia":data} ;
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaBuscar(respuesta);    
+    ManejoRespuestaBuscar(respuesta);
 }
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
-    $("#spanTitulo").text("Editar Familia");
     $("#IdFamilia").val(data.IdFamilia);
     $("#IdUnidadMedida").val(data.IdUnidadMedida);
     $("#NombreFamilia").val(data.NombreFamilia);
@@ -146,13 +147,11 @@ var pintarDatosActualizar= function(data){
 }
 
 var BotonCancelar = function(){
+    $("#spanTitulo").text("Listado de Familias registradas");
     $(".md-form-control").removeClass("md-valid");
-    $("#spanTitulo").text("Familias registradas");
-    $(".divForm").toggle();    
-    $('#divConsulta').hide();
+    $(".divForm").toggle();
     $('#FormFamilia')[0].reset();
     $("#IdFamilia").val("");
-    $('#divSpanPerfiles').hide();
 }
 
 var BotonAgregar = function(){
@@ -161,8 +160,6 @@ var BotonAgregar = function(){
     $("#divVolver").hide();
     $("#divBtnAceptar").show();
     cargarFormulario();
-    $("#divConsulta").hide();
-    $("#divSpanPerfiles").hide();
     $("#IdFamilia").val("");
     $(".comboclear").val('').trigger("change");
     $('#FormFamilia')[0].reset();
@@ -170,7 +167,7 @@ var BotonAgregar = function(){
 }
 
 var ProcesarUnidad = function(){
-    if (errorRut==0){  
+    if (errorRut==0){
         var camposNuevo = {
             'EstadoFamilia': $('#EstadoFamilia').val()
         }
@@ -203,9 +200,10 @@ var desbloquearInuts = function(){
 }
 
 var modificarFamilia = function(){
+    $("#spanTitulo").text("Editar Familia");
     $("#divBtnModificar").hide();
     $("#divBtnAceptar").show();
-    desbloquearInuts();    
+    desbloquearInuts();
 }
 
 var crearAllSelect = function(data){
@@ -213,7 +211,7 @@ var crearAllSelect = function(data){
 }
 
 $(document).ready(function(){
-    $("#spanTitulo").text("Familias registradas");
+    $("#spanTitulo").text("Listado de Familias registradas");
     cargarTablaFamilias(d.v_familias);
     crearAllSelect(d);
     $(document).on('click','#guardar',validador);
@@ -232,7 +230,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            }, 
+            },
             'EstadoFamilia': {
                 verbose: false,
                 validators: {
@@ -240,7 +238,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            },            
+            },
         }
     })
     .on('success.form.fv', function(e){

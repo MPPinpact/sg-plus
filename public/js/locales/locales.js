@@ -13,11 +13,12 @@ var ManejoRespuestaProcesarD = function(respuesta){
     if(respuesta.code==200){
         $(".divDetalles").toggle();
         $("#divVolver").show();
+        $("#spanTitulo").text("Detalles");
         bloquearInuts();
         pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
         cargarTablaBodegas(respuesta.respuesta.v_bodegas);
     }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 
 }
@@ -56,7 +57,7 @@ var ManejoRespuestaProcesar = function(respuesta){
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
                 break;
-        } 
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -64,7 +65,7 @@ var ManejoRespuestaProcesar = function(respuesta){
 
 var cargarTablaLocales = function(data){
     if(limpiarLocales==1){destruirTabla('#tablaLocales');$('#tablaLocales thead').empty();}
-        $("#tablaLocales").dataTable({ 
+        $("#tablaLocales").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -76,7 +77,7 @@ var cargarTablaLocales = function(data){
             "data": data,
             "columns":[
                 {
-                    "title": " ", 
+                    "title": " ",
                     "data": "IdLocal",
                     "render": function(data, type, row, meta){
                         var result = `
@@ -88,7 +89,7 @@ var cargarTablaLocales = function(data){
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
                         </center>`;
-                        return result; 
+                        return result;
                     }
                 },
                 {"title": "IdLocal","data": "IdLocal",visible:0},
@@ -118,15 +119,15 @@ var seleccionarTablaLocales = function(data){
     //     bloquearInuts();
     //     $("#divVolver").show();
     //     $("#divBtnModificar").show();
-    //     $("#divBtnAceptar").hide();  
+    //     $("#divBtnAceptar").hide();
     //     cargarFormulario();
     //     pintarDatosActualizar(RegistroLocales);
-    // }); 
+    // });
 }
 
 var cargarTablaBodegas = function(data){
     if(limpiarBodegas==1){destruirTabla('#tablaBodegas');}
-        $("#tablaBodegas").dataTable({ 
+        $("#tablaBodegas").dataTable({
              responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -144,12 +145,12 @@ var cargarTablaBodegas = function(data){
             {"title": "Estado","data": "desEstadoBodega"},
             ],
         });
-        limpiarBodegas=1; 
+        limpiarBodegas=1;
 };
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
-    $("#spanTitulo").text("Editar Local");
+    // $("#spanTitulo").text("Editar Local");
     $("#IdLocal").val(data.IdLocal);
     $("#NombreLocal").val(data.NombreLocal);
     $("#IdEmpresa").val(data.IdEmpresa).trigger("change");
@@ -167,22 +168,18 @@ var pintarDatosDetalles = function(data){
 
 var BotonCancelar = function(){
     $("#divTabs").show();
-    $(".divDetalles").toggle();   
+    $(".divDetalles").toggle();
     $(".md-form-control").removeClass("md-valid");
-    $("#spanTitulo").text("Locales registrados");
-    $(".divForm").toggle();    
-    $('#divConsulta').hide();
+    $("#spanTitulo").text("");
+    $(".divForm").toggle();
     $('#FormLocal')[0].reset();
     $("#idUser").val("");
-    $('#divSpanPerfiles').hide();
-    $(".divBotones").toggle();    
+    $(".divBotones").toggle();
     bloquearInuts();
 }
 
 var BotonAgregar = function(){
     $("#spanTitulo").text("Registrar Local");
-    $("#divConsulta").hide();
-    $("#divSpanPerfiles").hide();
     $("#idUser").val("");
     $(".comboclear").val('').trigger("change");
     $('#FormLocal')[0].reset();
@@ -194,9 +191,9 @@ var BotonAgregar = function(){
 }
 
 var ProcesarLocal = function(){
-    if (errorRut==0){  
+    if (errorRut==0){
         var camposNuevo = {
-            'IdEmpresa': $('#IdEmpresa').val(), 
+            'IdEmpresa': $('#IdEmpresa').val(),
             'IdEncargadoLocal': $('#IdEncargadoLocal').val(),
             'EstadoLocal': $('#EstadoLocal').val()
         }
@@ -229,7 +226,7 @@ var verDetallesLocal = function(IdLocal){
     parametroAjax.ruta=rutaD;
     parametroAjax.data = {IdLocal:IdLocal};
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaProcesarD(respuesta);    
+    ManejoRespuestaProcesarD(respuesta);
 }
 
 
@@ -237,11 +234,11 @@ var verificarRut = function(control){
     var res = Valida_Rut(control);
     var format = formateaRut(control.val(), res);
     if (format != false){
-        errorRut = 0;       
+        errorRut = 0;
         $("#ErrorRut").text("");
         return format;
     }else{
-        errorRut = 1;       
+        errorRut = 1;
         $("#ErrorRut").text("Rut invalido");
         return control.val();
     }
@@ -262,13 +259,15 @@ var desbloquearInuts = function(){
 }
 
 var modificarLocal = function(){
+    $("#spanTitulo").text("Editar Local");
     $("#divVolver").hide();
     $(".divBotones").toggle();
-    desbloquearInuts();    
+    desbloquearInuts();
 }
 
 var volverTabs = function(){
-    $(".divDetalles").toggle();          
+    $("#spanTitulo").text("");
+    $(".divDetalles").toggle();
     $("#adetalles").addClass("active");
     $("#detalles").addClass("active");
     $("#bodegas").removeClass("active");
@@ -286,14 +285,13 @@ var crearAllSelect = function(data){
 }
 
 $(document).ready(function(){
-    $("#spanTitulo").text("Locales registrados");
     cargarTablaLocales(d.v_locales);
     crearAllSelect(d);
     $(document).on('click','#guardar',validador);
     $(document).on('click','#cancelar',BotonCancelar);
     $(document).on('click','#agregar',BotonAgregar);
     $(document).on('click','#modificar',modificarLocal);
-    $(document).on('click','#volverAct',volverTabs); 
+    $(document).on('click','#volverAct',volverTabs);
     $('#FormLocal').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
@@ -305,7 +303,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            }, 
+            },
             'IdEmpresa': {
                 verbose: false,
                 validators: {
@@ -313,7 +311,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            },            
+            },
             'IdEncargadoLocal': {
                 validators: {
                     notEmpty: {

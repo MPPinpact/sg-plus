@@ -68,6 +68,14 @@ Route::post('/activarPr', 'ProductoController@postProductoactivo')->name('activa
 Route::post('/descontinuarPr', 'ProductoController@postProductodescontinuar')->name('descontinuarPr');
 Route::post('/detallesPr', 'ProductoController@postProductodetalle')->name('detallesPr');
 Route::post('/buscarSubfamilia', 'ProductoController@postBuscarsub')->name('buscarSubfamilia');
+Route::post('/procesarIm', 'ProductoController@postprocesarImpuesto')->name('procesarIm');
+Route::post('/activarIm', 'ProductoController@postImpuestopactivo')->name('activarIm');
+
+//CRUD Proveedores
+Route::get('/proveedores', 'ProveedorController@getProveedor')->name('proveedores');
+Route::post('/proveedores', 'ProveedorController@postProveedor')->name('proveedores');
+Route::post('/activarPro', 'ProveedorController@postProveedoractivo')->name('activarPro');
+Route::post('/detallesP', 'ProveedorController@postProveedordetalle')->name('detallesP');
 
 //CRUD Clientes
 Route::get('/clientes', 'ClienteController@getCliente')->name('clientes');

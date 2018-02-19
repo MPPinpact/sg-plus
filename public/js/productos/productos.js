@@ -1,5 +1,5 @@
 var RegistroEmpresas  = '';
-var manejoRefresh=limpiarLocales=errorRut=limpiarBodegas=0;
+var manejoRefresh=limpiarLocales=limpiarImpuestos=errorRut=limpiarBodegas=0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -10,18 +10,21 @@ var parametroAjax = {
 };
 
 var ManejoRespuestaProcesarD = function(respuesta){
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
-    // if(respuesta.code==200){
+    if(respuesta.code==200){
+        bloquearInuts();
         $(".divDetalles").toggle();
-        // pintarDatosDetalles(respuesta.respuesta.v_detalles[0]);
-        // cargarTablaProductos(respuesta.respuesta.v_productos);
-    // }else{
-        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
-    // }
-
+        $("#divVolver").show();
+        $("#divTabs").show();
+        $("#spanTitulo").text("Detalles");
+        $("#IdProducto2").val(respuesta.respuesta.v_detalles.IdProducto);
+        pintarDatosActualizar(respuesta.respuesta.v_detalles);
+        cargarTablaImpuestos(respuesta.respuesta.v_impuestos);
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
 }
-// Manejo Activar / Desactivar empresa  
+
+// Manejo Activar / Desactivar empresa
 var ManejoRespuestaProcesarI = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta.activar>0){
@@ -29,6 +32,20 @@ var ManejoRespuestaProcesarI = function(respuesta){
                 $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
                 cargarTablaProductos(respuesta.respuesta.v_productos);
             }
+        }else{
+            $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
+// Manejo Activar / Desactivar Impuesto a producto
+var ManejoRespuestaProcesarAI = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta.activar>0){
+            $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
+            cargarTablaImpuestos(respuesta.respuesta.v_impuestos);
         }else{
             $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
         }
@@ -54,13 +71,35 @@ var ManejoRespuestaProcesarDescontinuar = function(respuesta){
 }
 
 // Manejo Registro o actualizacion de empresa
+var ManejoRespuestaProcesarImpuesto = function(respuesta){
+    if(respuesta.code==200){
+        var res = JSON.parse(respuesta.respuesta.f_registro_producto_impuesto);
+        switch(res.code) {
+            case '200':
+                $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
+                cargarTablaImpuestos(respuesta.respuesta.v_impuestos);
+                break;
+            case '-2':
+                $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
+                break;
+            default:
+                $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+                break;
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+};
+
+// Manejo Registro o actualizacion de empresa
 var ManejoRespuestaProcesar = function(respuesta){
     if(respuesta.code==200){
         var res = JSON.parse(respuesta.respuesta.f_registro.f_registro_producto);
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
-                $(".divForm").toggle();
+                $(".divDetalles").toggle();
+                $(".divBotones").toggle();
                 $('#FormProducto')[0].reset();
                 $('#IdProducto').val("");
                 cargarTablaProductos(respuesta.respuesta.v_productos);
@@ -71,7 +110,7 @@ var ManejoRespuestaProcesar = function(respuesta){
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
                 break;
-        } 
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -79,7 +118,7 @@ var ManejoRespuestaProcesar = function(respuesta){
 
 var cargarTablaProductos = function(data){
     if(limpiarLocales==1){destruirTabla('#tablaProductos');$('#tablaProductos thead').empty();}
-        $("#tablaProductos").dataTable({ 
+        $("#tablaProductos").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -91,7 +130,7 @@ var cargarTablaProductos = function(data){
             "data": data,
             "columns":[
                 {
-                    "title": "", 
+                    "title": "",
                     "data": "IdProducto",
                     "render": function(data, type, row, meta){
                         var result = `
@@ -106,7 +145,7 @@ var cargarTablaProductos = function(data){
                             <i class="icofont icofont-close"></i>
                         </a>
                         </center>`;
-                        return result; 
+                        return result;
                     }
                 },
                 {"title": "Id","data": "IdProducto",visible:0},
@@ -134,8 +173,6 @@ var cargarTablaProductos = function(data){
                 {"title": "Stock Recomendado","data": "StockRecomendado"},
                 {"title": "Precio Ultima Compra","data": "PrecioUltimaCompra"},
                 {"title": "Precio Venta Sugerido","data": "PrecioVentaSugerido"},
-                {"title": "Id Bodega","data": "IdBodega",visible:0},
-                {"title": "Bodega","data": "NombreBodega"},
                 {"title": "EstadoProducto","data": "EstadoProducto",visible:0},
                 {"title": "Estado","data": "DesEstadoProducto"}
             ],
@@ -151,23 +188,53 @@ var seleccionarTablaProductos = function(data){
         $(this).addClass('selected');
         RegistroEmpresas = TablaTraerCampo('tablaProductos',this);
     });
-    $('#tablaProductos tbody').on('dblclick', 'tr', function () {
-        bloquearInuts();
-        $("#divVolver").show();
-        $("#divBtnModificar").show();
-        $("#divBtnAceptar").hide();  
-        cargarFormulario();
-        pintarDatosActualizar(RegistroEmpresas);
-    }); 
 }
 
-var cargarFormulario= function(){
-    $(".divForm").toggle();
-}
+var cargarTablaImpuestos = function(data){
+    if(limpiarImpuestos==1){destruirTabla('#tablaImpuestos');$('#tablaImpuestos thead').empty();}
+        $("#tablaImpuestos").dataTable({
+            responsive:false,
+            "bSort": false,
+            "scrollCollapse": false,
+            "paging": false,
+            "searching": false,
+            "info":false,
+            "columnDefs": [
+                {"targets": [ 1 ],"searchable": true},
+                {"sWidth": "1px", "aTargets": [8]}
+            ],
+            "data": data,
+            "columns":[
+                {
+                    "title": "",
+                    "data": "IdProductoImpuesto",
+                    "render": function(data, type, row, meta){
+                        var result = `
+                        <center>
+                        <a href="#" onclick="cambiarEstatusImpuesto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                            <i class="icofont icofont-ui-delete"></i>
+                        </a>
+                        </center>`;
+                        return result;
+                    }
+                },
+                {"title": "Id","data": "IdProductoImpuesto",visible:0},
+                {"title": "Nombre Impuesto","data": "NombreImpuesto"},
+                {"title": "Valor Impuesto","data": "ValorImpuesto"},
+                {"title": "Precio Venta Sugerido","data": "auFechaCreacion",visible:0},
+                {"title": "Precio Venta Sugerido","data": "auUsuarioCreacion",visible:0},
+                {"title": "Creado por","data": "creador"},
+                {"title": "Precio Venta Sugerido","data": "auFechaModificacion",visible:0},
+                {"title": "Precio Venta Sugerido","data": "auFechaModificacion",visible:0},
+                {"title": "EstadoProductoImpuesto","data": "EstadoProductoImpuesto",visible:0},
+                {"title": "Estado","data": "DesEstadoProductoImpuesto"}
+            ],
+        });
+        limpiarImpuestos=1;
+};
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
-    $("#spanTitulo").text("Editar Producto");
     $("#IdProducto").val(data.IdProducto);
     $("#CodigoBarra").val(data.CodigoBarra);
     $("#CodigoProveedor").val(data.CodigoProveedor);
@@ -186,55 +253,66 @@ var pintarDatosActualizar= function(data){
     $("#SeVende").val(data.SeVende).trigger("change");
     $("#EsProductoCombo").val(data.EsProductoCombo).trigger("change");
     $("#Descontinuado").val(data.Descontinuado).trigger("change");
-    $("#IdBodega").val(data.IdBodega).trigger("change");
     $("#EstadoProducto").val(data.EstadoProducto).trigger("change");
 }
 
-var pintarDatosDetalles = function(data){
-    $(".md-form-control").addClass("md-valid");
-    $("#IdProductod").val(data.IdProducto);
-    $("#NombreBodegad").val(data.NombreBodega);
-    $("#DescripcionBodegad").val(data.DescripcionBodega);
-    $("#IdProductod").val(data.IdProducto).trigger("change");
-    $("#EstadoBodegad").val(data.EstadoBodega).trigger("change");
-}
-
 var BotonCancelar = function(){
+    $("#spanTitulo").text("");
     $(".md-form-control").removeClass("md-valid");
-    $("#spanTitulo").text("Productos registrados");
-    $(".divForm").toggle();    
-    $('#divConsulta').hide();
     $('#FormProducto')[0].reset();
     $("#IdProducto").val("");
-    $('#divSpanPerfiles').hide();
+    $("#divTabs").show();
+    $(".divBotones").toggle();
+    $(".divDetalles").toggle();
+    bloquearInuts();
+    $("#PrecioUltimaCompra").prop('readonly', true);
 }
 
 var BotonAgregar = function(){
     $("#spanTitulo").text("Registrar Producto");
-    $("#divBtnModificar").hide();
+    desbloquearInuts();
+    $(".divDetalles").toggle();
     $("#divVolver").hide();
-    $("#divBtnAceptar").show();
-    cargarFormulario();
-    $("#divConsulta").hide();
-    $("#divSpanPerfiles").hide();
     $("#IdProducto").val("");
     $(".comboclear").val('').trigger("change");
     $('#FormProducto')[0].reset();
-    desbloquearInuts();
+    $("#divTabs").hide();
+    $(".divBotones").toggle();
+    $("#PrecioUltimaCompra").prop('readonly', false);
 }
 
+var ProcesarImpuesto = function(){
+    parametroAjax.ruta=rutaPI;
+    parametroAjax.data = $("#FormImpuesto").serialize();
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaProcesarImpuesto(respuesta);
+};
+
 var ProcesarProducto = function(){
-    if (errorRut==0){  
         parametroAjax.ruta=ruta;
-        parametroAjax.data = $("#FormProducto").serialize();
+        var camposNuevo = {
+            'IdUltimoProveedor': $('#IdUltimoProveedor').val(),
+            'IdFamilia': $('#IdFamilia').val(),
+            'IdSubFamilia': $('#IdSubFamilia').val(),
+            'IdUnidadMedida': $('#IdUnidadMedida').val(),
+            'SeCompra': $('#SeCompra').val(),
+            'SeVende': $('#SeVende').val(),
+            'EsProductoCombo': $('#EsProductoCombo').val(),
+            'Descontinuado': $('#Descontinuado').val(),
+            'EstadoProducto': $('#EstadoProducto').val()
+        }
+        parametroAjax.data = $("#FormProducto").serialize() + '&' + $.param(camposNuevo);
         respuesta=procesarajax(parametroAjax);
         ManejoRespuestaProcesar(respuesta);
-    }
 };
 
 var validador = function(){
     $('#FormProducto').formValidation('validate');
 };
+
+var validadorI = function(){
+    $('#FormImpuesto').formValidation('validate');
+}
 
 var cambiarEstatusProducto = function(IdProducto){
     parametroAjax.ruta=rutaA;
@@ -243,18 +321,25 @@ var cambiarEstatusProducto = function(IdProducto){
     ManejoRespuestaProcesarI(respuesta);
 }
 
+var cambiarEstatusImpuesto = function(IdProductoImpuesto){
+    parametroAjax.ruta=rutaAI;
+    parametroAjax.data = {IdProductoImpuesto:IdProductoImpuesto};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaProcesarAI(respuesta);
+}
+
 var descontinuarProducto = function(IdProducto){
     parametroAjax.ruta=rutaDes;
     parametroAjax.data = {IdProducto:IdProducto};
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaProcesarDescontinuar(respuesta);   
+    ManejoRespuestaProcesarDescontinuar(respuesta);
 }
 
 var verDetallesProducto = function(IdProducto){
     parametroAjax.ruta=rutaD;
     parametroAjax.data = {IdProducto:IdProducto};
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaProcesarD(respuesta);    
+    ManejoRespuestaProcesarD(respuesta);
 }
 
 var bloquearInuts = function(){
@@ -275,7 +360,6 @@ var bloquearInuts = function(){
     $("#SeVende").prop('disabled', true);
     $("#EsProductoCombo").prop('disabled', true);
     $("#Descontinuado").prop('disabled', true);
-    $("#IdBodega").prop('disabled', true);
     $("#EstadoProducto").prop('disabled', true);
 }
 
@@ -287,7 +371,6 @@ var desbloquearInuts = function(){
     $("#StockMinimo").prop('readonly', false);
     $("#StockMaximo").prop('readonly', false);
     $("#StockRecomendado").prop('readonly', false);
-    // $("#PrecioUltimaCompra").prop('readonly', false);
     $("#PrecioVentaSugerido").prop('readonly', false);
     $("#IdUltimoProveedor").prop('disabled', false);
     $("#IdFamilia").prop('disabled', false);
@@ -297,18 +380,27 @@ var desbloquearInuts = function(){
     $("#SeVende").prop('disabled', false);
     $("#EsProductoCombo").prop('disabled', false);
     $("#Descontinuado").prop('disabled', false);
-    $("#IdBodega").prop('disabled', false);
     $("#EstadoProducto").prop('disabled', false);
 }
 
-var modificarBodega = function(){
-    $("#divBtnModificar").hide();
-    $("#divBtnAceptar").show();
-    desbloquearInuts();    
+var modificarProducto = function(){
+    $("#spanTitulo").text("Editar Producto");
+    $("#divVolver").hide();
+    $(".divBotones").toggle();
+    desbloquearInuts();
 }
 
 var volverTabs = function(){
-    $(".divDetalles").toggle();   
+    $("#spanTitulo").text("");
+    $(".divDetalles").toggle();
+    $("#aimpuestos").removeClass("active");
+    $("#astock").removeClass("active");
+    $("#akardex").removeClass("active");
+    $("#TabImpuestos").removeClass("active");
+    $("#TabStock").removeClass("active");
+    $("#TabKardex").removeClass("active");
+    $("#Tabdetalles").addClass("active");
+    $("#adetalles").addClass("active");
 }
 
 var buscarSubfamilia = function(IdFamilia){
@@ -322,7 +414,7 @@ var buscarSubfamilia = function(IdFamilia){
 
 var crearAllSelect = function(data){
     var v_proveedor =[{"id":1,"text":"proveedor 1"},{"id":2,"text":"proveedor 2"}];
-    var secompra=[{"id":1,"text":"SI"},{"id":0,"text":"NO"}];  
+    var secompra=[{"id":1,"text":"SI"},{"id":0,"text":"NO"}];
     var escombo=[{"id":1,"text":"SI"},{"id":2,"text":"NO"}];
     crearselect(escombo,"Descontinuado");
     crearselect(escombo,"EsProductoCombo");
@@ -331,24 +423,43 @@ var crearAllSelect = function(data){
     crearselect(v_proveedor,"IdUltimoProveedor");
     crearselect(data.v_familias,"IdFamilia");
     crearselect(data.v_unidad,"IdUnidadMedida");
-    crearselect(data.v_bodegas,"IdBodega");
-    crearselect(data.v_estados,"EstadoProducto");    
+    crearselect(data.v_estados,"EstadoProducto");
+    crearselect(data.v_impuestos,"IdImpuesto");
+
 }
 
 $(document).ready(function(){
-    $("#spanTitulo").text("Productos registrados");
     cargarTablaProductos(d.v_productos);
     crearAllSelect(d);
     $(document).on('click','#guardar',validador);
+    $(document).on('click','#guardarI',validadorI);
     $(document).on('click','#cancelar',BotonCancelar);
     $(document).on('click','#agregar',BotonAgregar);
-    $(document).on('click','#modificar',modificarBodega);
-    $(document).on('click','#volverAct',BotonCancelar);
-    $(document).on('click','#btn-volver',volverTabs);
-
-    
+    $(document).on('click','#modificar',modificarProducto);
+    $(document).on('click','#volverAct',volverTabs);
     $("#IdFamilia").change(function() {
         buscarSubfamilia($("#IdFamilia").val());
+    });
+
+    $('#FormImpuesto').formValidation({
+        excluded:[':disabled'],
+        // message: 'El módulo le falta un campo para ser completado',
+        fields: {
+            'IdImpuesto': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+        }
+    })
+    .on('success.form.fv', function(e){
+        ProcesarImpuesto();
+    })
+    .on('status.field.fv', function(e, data){
+        data.element.parents('.form-group').removeClass('has-success');
     });
 
 
@@ -363,7 +474,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            }, 
+            },
             'CodigoProveedor': {
                 verbose: false,
                 validators: {
@@ -371,7 +482,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            },            
+            },
             'NombreProducto': {
                 validators: {
                     notEmpty: {
@@ -484,14 +595,6 @@ $(document).ready(function(){
                 }
             },
             'Descontinuado': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
-            'IdBodega': {
                 verbose: false,
                 validators: {
                     notEmpty: {

@@ -42,6 +42,11 @@ class Producto extends Authenticatable
         return DB::table('v_estados')->get();
     }
 
+    // Cargar combo de impuestos activos
+    public function listImpuestos(){
+        return DB::table('v_impuestos_combo')->get();
+    }
+
     // Cargar combo Familia
     public function listFamilias(){
         return DB::table('v_familias_combo')->get();
@@ -62,15 +67,27 @@ class Producto extends Authenticatable
         return DB::table('v_bodegas_combo')->get();
     }
 
-    // registrar una nueva producto
-    public function regBodega($datos){
-        log::info($datos);
+    // registrar un nueva producto
+    public function regProducto($datos){
         $idAdmin = Auth::id();
         $datos['IdProducto']==null ? $Id=0 : $Id= $datos['IdProducto'];
-        $sql="select f_registro_producto(".$Id.",'".$datos['CodigoBarra']."','".$datos['CodigoProveedor']."','".$datos['NombreProducto']."','".$datos['DescripcionProducto']."',".$datos['IdUltimoProveedor'].",".$datos['IdFamilia'].",".$datos['IdSubFamilia'].",".$datos['IdUnidadMedida'].",".$datos['SeCompra'].",".$datos['SeVende'].",".$datos['EsProductoCombo'].",".$datos['Descontinuado'].",".$datos['StockMinimo'].",".$datos['StockMaximo'].",".$datos['StockRecomendado'].",'".$datos['PrecioUltimaCompra']."','".$datos['PrecioVentaSugerido']."',".$datos['IdBodega'].",".$datos['EstadoProducto'].",".$idAdmin.")";
+        $sql="select f_registro_producto(".$Id.",'".$datos['CodigoBarra']."','".$datos['CodigoProveedor']."','".$datos['NombreProducto']."','".$datos['DescripcionProducto']."',".$datos['IdUltimoProveedor'].",".$datos['IdFamilia'].",".$datos['IdSubFamilia'].",".$datos['IdUnidadMedida'].",".$datos['SeCompra'].",".$datos['SeVende'].",".$datos['EsProductoCombo'].",".$datos['Descontinuado'].",".$datos['StockMinimo'].",".$datos['StockMaximo'].",".$datos['StockRecomendado'].",'".$datos['PrecioUltimaCompra']."','".$datos['PrecioVentaSugerido']."',".$datos['EstadoProducto'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result['f_registro_producto']=$value;
+        }
+        return $result;
+    }
+
+
+    // registrar un nuevo impuesto a un producto
+    public function regProductoImpuesto($datos){
+        log::info($datos);
+        $idAdmin = Auth::id();
+        $sql="select f_registro_productoimpuesto(".$datos['IdProducto2'].",".$datos['IdImpuesto'].",".$idAdmin.")";
+        $execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
         }
         return $result;
     }
@@ -88,6 +105,20 @@ class Producto extends Authenticatable
                 ->update($values);
     }
 
+    // Activar / Desactivar impuesto a producto
+    public function activarImpuestoProducto($datos){
+        $idAdmin = Auth::id();
+        if ($datos[0]->EstadoProductoImpuesto>0){
+            $values=array('EstadoProductoImpuesto'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        }else{
+            $values=array('EstadoProductoImpuesto'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        }
+        return DB::table('productos_impuestos')
+                ->where('IdProductoImpuesto', $datos[0]->IdProductoImpuesto)
+                ->update($values);
+    }
+
+    // Descontinuar producto
     public function descontinuarProducto($datos){
         $idAdmin = Auth::id();
         if ($datos['Descontinuado']>1){
@@ -100,20 +131,25 @@ class Producto extends Authenticatable
                 ->update($values);
     }
 
-    // public function localesProducto($IdBodega){    
-    //     return DB::table('v_productos')->where('IdBodega',$IdBodega)->get(); 
-    // }
+    public function localesProducto($IdBodega){
+        return '';
+        // return DB::table('v_productos')->where('IdBodega',$IdBodega)->get();
+    }
 
-    public function getOneDetalle($IdBodega){
-        return DB::table('v_bodegas')->where('IdBodega',$IdBodega)->get(); 
+    public function impuestosProducto($IdProducto){
+        return DB::table('v_productos_impuestos')->where('IdProducto',$IdProducto)->get();
     }
 
     public function getSubfamilia($IdFamilia){
-        $result = DB::table('v_subfamilias_combo')
-        ->where('IdFamilia',$IdFamilia)
-        ->get();
-        return $result;
+        return DB::table('v_subfamilias_combo')
+            ->where('IdFamilia',$IdFamilia)
+            ->get();
     }
 
+    public function getImpuesto($IdProductoImpuesto){
+        return DB::table('v_productos_impuestos')
+            ->where('IdProductoImpuesto', $IdProductoImpuesto)
+            ->get();
+    }
 
 }

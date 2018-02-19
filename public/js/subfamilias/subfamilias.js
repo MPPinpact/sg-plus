@@ -12,13 +12,14 @@ var parametroAjax = {
 var ManejoRespuestaBuscar = function(respuesta){
     if(respuesta.code==200){
         bloquearInuts();
+        $("#spanTitulo").text("Detalles");
         $("#divVolver").show();
         $("#divBtnModificar").show();
-        $("#divBtnAceptar").hide();  
+        $("#divBtnAceptar").hide();
         cargarFormulario();
         pintarDatosActualizar(respuesta.respuesta);
     }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 }
 
@@ -56,7 +57,7 @@ var ManejoRespuestaProcesar = function(respuesta){
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
                 break;
-        } 
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -64,7 +65,7 @@ var ManejoRespuestaProcesar = function(respuesta){
 
 var cargarTablaSubfamilias = function(data){
     if(limpiarUnidades==1){destruirTabla('#tablaSubfamilias');$('#tablaSubfamilias thead').empty();}
-        $("#tablaSubfamilias").dataTable({ 
+        $("#tablaSubfamilias").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -76,7 +77,7 @@ var cargarTablaSubfamilias = function(data){
             "data": data,
             "columns":[
                 {
-                    "title": "", 
+                    "title": "",
                     "data": "IdSubFamilia",
                     "render": function(data, type, row, meta){
                         var result = `
@@ -88,7 +89,7 @@ var cargarTablaSubfamilias = function(data){
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
                         </center>`;
-                        return result; 
+                        return result;
                     }
                 },
                 {"title": "IdSubFamilia","data": "IdSubFamilia",visible:0},
@@ -113,7 +114,7 @@ var seleccionarTablaSubfamilias = function(data){
         tableB.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
         RegistroUnidades = TablaTraerCampo('tablaSubfamilias',this);
-    }); 
+    });
 }
 
 var cargarFormulario= function(){
@@ -124,13 +125,11 @@ var verDetallesubfamilia = function(data){
     parametroAjax.ruta=rutaB;
     parametroAjax.data = {"IdSubFamilia":data} ;
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaBuscar(respuesta);    
+    ManejoRespuestaBuscar(respuesta);
 }
 
 var pintarDatosActualizar= function(data){
-    console.log(data);
     $(".md-form-control").addClass("md-valid");
-    $("#spanTitulo").text("Editar Subfamilia");
     $("#IdSubFamilia").val(data.IdSubFamilia);
     $("#NombreSubFamilia").val(data.NombreSubFamilia);
     $("#IdUnidadMedida").val(data.IdUnidadMedida);
@@ -140,8 +139,8 @@ var pintarDatosActualizar= function(data){
 
 var BotonCancelar = function(){
     $(".md-form-control").removeClass("md-valid");
-    $("#spanTitulo").text("Subfamilias registradas");
-    $(".divForm").toggle();    
+    $("#spanTitulo").text("Listado Subfamilias Registradas");
+    $(".divForm").toggle();
     $('#divConsulta').hide();
     $('#FormSubfamilia')[0].reset();
     $("#IdSubFamilia").val("");
@@ -163,7 +162,7 @@ var BotonAgregar = function(){
 }
 
 var ProcesarUnidad = function(){
-    if (errorRut==0){  
+    if (errorRut==0){
         var camposNuevo = {
             'IdUnidadMedida': $('#IdUnidadMedida').val(),
             'EstadoSubFamilia': $('#EstadoSubFamilia').val()
@@ -201,20 +200,20 @@ var desbloquearInuts = function(){
 }
 
 var modificarFamilia = function(){
+    $("#spanTitulo").text("Editar Subfamilia");
     $("#divBtnModificar").hide();
     $("#divBtnAceptar").show();
-    desbloquearInuts();    
+    desbloquearInuts();
 }
 
 var crearAllSelect = function(data){
-    console.log(data);
     crearselect(data.v_unidadmedida,"IdUnidadMedida");
     crearselect(data.v_estados,"EstadoSubFamilia");
     crearselect(data.v_familia,"IdFamilia");
 }
 
 $(document).ready(function(){
-    $("#spanTitulo").text("Subfamilias registradas");
+    $("#spanTitulo").text("Listado Subfamilias Registradas");
     cargarTablaSubfamilias(d.v_subfamilias);
     crearAllSelect(d);
     $(document).on('click','#guardar',validador);
@@ -233,7 +232,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            }, 
+            },
             'IdUnidadMedida': {
                 verbose: false,
                 validators: {
@@ -249,7 +248,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            },            
+            },
         }
     })
     .on('success.form.fv', function(e){
