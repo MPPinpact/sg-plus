@@ -92,7 +92,58 @@
               </a>
             </li>
           </ul>
-        </li>               
+        </li>     
+
+		<li class="treeview">
+          <a href="#">
+            <i class="icofont icofont-company"></i><span>Clientes</span><i class="icon-arrow-down"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a class="waves-effect" href="{{ route('clientes') }}">
+                <i class="icon-arrow-right"></i>
+                Clientes
+              </a>
+            </li>
+			<li>
+              <a class="waves-effect" href="#">
+                <i class="icon-arrow-right"></i>
+                Abono Cliente
+              </a>
+            </li>
+			<li>
+              <a class="waves-effect" href="#">
+                <i class="icon-arrow-right"></i>
+                EECC
+              </a>
+            </li>
+          </ul>
+        </li>     
+		<li class="treeview">
+          <a href="#">
+            <i class="icofont icofont-company"></i><span>Créditos</span><i class="icon-arrow-down"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a class="waves-effect" href="{{ route('credito') }}">
+                <i class="icon-arrow-right"></i>
+                Preferencias de Crédito
+              </a>
+            </li>
+			<li>
+              <a class="waves-effect" href="{{ route('ventaCredito') }}">
+                <i class="icon-arrow-right"></i>
+                Venta Crédito
+              </a>
+            </li>
+			<li>
+              <a class="waves-effect" href="{{ route('cicloFacturacion') }}">
+                <i class="icon-arrow-right"></i>
+                Ciclos de Facturación
+              </a>
+            </li>
+          </ul>
+        </li>     		
         <li class="treeview">
           <a href="#">
             <i class="icofont icofont-company"></i><span>Adminstración</span><i class="icon-arrow-down"></i>

@@ -69,6 +69,15 @@ Route::post('/descontinuarPr', 'ProductoController@postProductodescontinuar')->n
 Route::post('/detallesPr', 'ProductoController@postProductodetalle')->name('detallesPr');
 Route::post('/buscarSubfamilia', 'ProductoController@postBuscarsub')->name('buscarSubfamilia');
 
+//CRUD Clientes
+Route::get('/clientes', 'ClienteController@getCliente')->name('clientes');
+
+//CRUD Creédito
+Route::get('/credito', 'CreditoController@getCreditoPreferencias')->name('credito');
+Route::get('/ventaCredito', 'VentaCreditoController@getVentaCredito')->name('ventaCredito');
+Route::get('/cicloFacturacion', 'CicloFacturacionController@getCicloFacturacionl')->name('cicloFacturacion');
+
+
 Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){
 	//accesos (Seleccionar acceso para ingresar a la aplicacion)
 	Route::get('/accesos', 'UsuarioController@getAccesos')->name('accesos');
