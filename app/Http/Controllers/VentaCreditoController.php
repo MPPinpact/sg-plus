@@ -34,8 +34,8 @@ class VentaCreditoController extends Controller
     {
         $model= new VentaCredito();
         $data['v_credito_venta'] = $model->listVentaCredito();
-        $data['v_estados'] = $model->listEstados();        
-        return View::make('ventaCredito.ventacredito',$data);
+        $data['v_estados'] = $model->listEstados();
+        return View::make('ventaCredito.ventaCredito',$data);
     }
 
     //Registrar o actualizar producto

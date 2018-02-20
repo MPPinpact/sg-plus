@@ -28,7 +28,7 @@
 							<table id="tablaVentasCredito" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 						</div>
 					</div>
-		        </div>         
+		        </div>
 	        </div>
 	    </div>
 	</div>
@@ -43,7 +43,7 @@
 									<a style="float:right;" id="volverAct" href="#"><u>volver</u></a>
 								</div>
 							</div>
-							
+
 		                    <!-- Tab panes -->
 		                    <div class="tab-content">
 		                        <div class="tab-pane active" id="detalles" role="tabpanel">
@@ -60,14 +60,14 @@
 					                            <label for="NombreLocal">Nro. Venta</label>
 					                        </div>
 										</div>
-										
+
 										 <div class="col-sm-2">
 					                        <div class="md-input-wrapper">
 					                        	<input id="RUTCliente" name="RUTCliente" type="text" class="md-form-control" maxlength="12" readonly />
 				                                <label for="RUTCliente">RUT Cliente</label>
 					                        </div>
 					                    </div>
-										
+
 					                    <div class="col-sm-8">
 					                        <div class="md-input-wrapper">
 					                        	<input id="NombreCliente" name="NombreCliente" type="text" class="md-form-control" maxlength="250" readonly />
@@ -75,7 +75,7 @@
 					                        </div>
 					                    </div>
 									</div>
-									
+
 									<div class="row">
 										<div class="col-sm-3">
 					                        <div class="md-input-wrapper">
@@ -102,7 +102,7 @@
 											</div>
 					                    </div>
 									</div>
-									
+
 									<div class="row">
 										<div class="col-sm-6">
 					                        <div class="md-input-wrapper">
@@ -117,7 +117,7 @@
 											</div>
 					                    </div>
 									</div>
-									
+
 									<div align="center">
 										<div class="pull-rigth">
 											<div class="divBotones">
@@ -128,14 +128,14 @@
 											<div class="divBotones" style="display:none;">
 												<button id="cancelar" type="button" class="btn btn-inverse-primary waves-effect waves-light">
 													Cancelar
-												</button> 
+												</button>
 					                			<button id="guardar"  type="button" class="btn btn-primary waves-effect waves-light">
 													Guardar
 					                			</button>
 											</div>
 										</div>
 									</div>
-									{!! Form::close() !!} 
+									{!! Form::close() !!}
 		                        </div>
 		                    </div>
 		                </div>
@@ -149,7 +149,7 @@
 	var ruta = "{{ URL::route('ventaCredito') }}"
 	var d = [];
 	d['v_credito_venta'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_credito_venta) }}'));
-	
+
 </script>
 <script src="{{ asset('js/credito_venta/credito_venta.js') }}"></script>
 @endsection
