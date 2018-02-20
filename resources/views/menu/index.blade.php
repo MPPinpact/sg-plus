@@ -75,7 +75,7 @@
   {{ HTML::script('theme/assets/pages/contact-detail.js') }}
   {{ HTML::script('theme/bower_components/stroll/js/stroll.js') }}
   {{ HTML::script('theme/assets/plugins/list/js/list.js') }}
- 
+
 
 
   {{ HTML::script('theme/bower_components/datatables.net/js/dataTables.select.js') }}
@@ -336,7 +336,7 @@
         <div class="col-md-12">
           <br>
           @yield('content')
-        </div> 
+        </div>
       </div>
     </div>
   </div>
