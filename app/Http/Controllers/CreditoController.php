@@ -39,7 +39,7 @@ class CreditoController extends Controller
     {
         $model= new Credito();
         $data['v_credito_preferencias'] = $model->listPreferencias();
-        $data['v_estados'] = $model->listEstados();        
+        $data['v_estados'] = $model->listEstados();
         return View::make('credito.credito',$data);
     }
 

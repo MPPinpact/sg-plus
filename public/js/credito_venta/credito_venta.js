@@ -9,18 +9,34 @@ var parametroAjax = {
     'async': false
 };
 
+var ManejoRespuestaBuscarCliente = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta.v_cliente!=null){
+            $("#IdCliente").val(respuesta.respuesta.v_cliente.IdCliente);
+            $("#NombreCliente").val(respuesta.respuesta.v_cliente.NombreCliente);
+        }else{
+            $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
 var ManejoRespuestaProcesarD = function(respuesta){
     if(respuesta.code==200){
+        bloquearInuts();
         $(".divDetalles").toggle();
         $("#divVolver").show();
-        bloquearInuts();
-        // pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
-        // cargarTablaBodegas(respuesta.respuesta.v_bodegas);
+        $("#divBtnModificar").show();
+        $("#divBtnAceptar").hide();
+        $("#spanTitulo").text("Detalles");
+        pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
     }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 
 }
+
 // Manejo Activar / Desactivar empresa
 var ManejoRespuestaProcesarI = function(respuesta){
     if(respuesta.code==200){
@@ -40,7 +56,7 @@ var ManejoRespuestaProcesarI = function(respuesta){
 // Manejo Registro o actualizacion de empresa
 var ManejoRespuestaProcesar = function(respuesta){
     if(respuesta.code==200){
-        var res = JSON.parse(respuesta.respuesta.f_registro.f_registro_local);
+        var res = JSON.parse(respuesta.respuesta.f_registro);
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
@@ -56,7 +72,7 @@ var ManejoRespuestaProcesar = function(respuesta){
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
                 break;
-        } 
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -64,7 +80,7 @@ var ManejoRespuestaProcesar = function(respuesta){
 
 var cargarTablaVentaCredito = function(data){
     if(limpiarPreferencias==1){destruirTabla('#tablaVentasCredito');$('#tablaVentasCredito thead').empty();}
-        $("#tablaVentasCredito").dataTable({ 
+        $("#tablaVentasCredito").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -76,7 +92,7 @@ var cargarTablaVentaCredito = function(data){
             "data": data,
             "columns":[
                 {
-                    "title": " ", 
+                    "title": " ",
                     "data": "IdVentaCredito",
                     "render": function(data, type, row, meta){
                         var result = `
@@ -84,11 +100,11 @@ var cargarTablaVentaCredito = function(data){
                         <a href="#" onclick="verDetalleVentaCredito(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Venta Crédito" data-original-title="Delete">
                             <i class="icofont icofont-search"></i>
                         </a>
-                        <a href="#" onclick="cambiarEstatusLocal(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                        <a href="#" onclick="cambiarEstatusVenta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
                         </center>`;
-                        return result; 
+                        return result;
                     }
                 },
                 {"title": "Id Venta Crédito","data": "IdVentaCredito",visible:0},
@@ -96,71 +112,48 @@ var cargarTablaVentaCredito = function(data){
                 {"title": "Monto Crédito","data": "MontoCredito"},
 				{"title": "Nro. Cuotas","data": "NumeroCuotas"},
 				{"title": "Monto Cuota","data": "MontoCuota"},
-				{"title": "Primera Cuota","data": "PrimeraCuota"},
-				
+                {"title": "Primera Cuota","data": "PrimeraCuota"},
+				{"title": "Estado","data": "DesEstadoVentaCredito"},
                 {"title": "Fecha de creacion","data": "auFechaCreacion",visible:0},
                 {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
                 {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
                 {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0}
-                
+
             ],
         });
         limpiarPreferencias=1;
-    if (data.length>0){seleccionartablaVentasCredito();}
 };
-
-var seleccionartablaVentasCredito = function(data){
-    var tableB = $('#tablaVentasCredito').dataTable();
-    $('#tablaVentasCredito tbody').on('click', 'tr', function (e) {
-        tableB.$('tr.selected').removeClass('selected');
-        $(this).addClass('selected');
-        // RegistroLocales = TablaTraerCampo('tablaVentasCredito',this);
-    });
-    // $('#tablaVentasCredito tbody').on('dblclick', 'tr', function () {
-    //     bloquearInuts();
-    //     $("#divVolver").show();
-    //     $("#divBtnModificar").show();
-    //     $("#divBtnAceptar").hide();  
-    //     cargarFormulario();
-    //     pintarDatosActualizar(RegistroLocales);
-    // }); 
-}
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
-    $("#spanTitulo").text("Editar Venta a Crédito");
     $("#IdVentaCredito").val(data.IdVentaCredito);
-    // $("#NombreLocal").val(data.NombreLocal);
-    // $("#IdEmpresa").val(data.IdEmpresa).trigger("change");
-    // $("#IdEncargadoLocal").val(data.IdEncargadoLocal).trigger("change");
-    // $("#EstadoLocal").val(data.EstadoLocal).trigger("change");
-}
-
-var pintarDatosDetalles = function(data){
-    $("#IdVentaCredito").val(data.IdVentaCredito);
-    // $("#NombreLocald").val(data.NombreLocal);
-    // $("#IdEmpresad").val(data.IdEmpresa).trigger("change");
-    // $("#IdEncargadoLocald").val(data.IdEncargadoLocal).trigger("change");
-    // $("#EstadoLocald").val(data.EstadoLocal).trigger("change");
+    $("#IdVenta").val(data.IdVenta);
+    $("#RUTCliente").val(data.RUTCliente);
+    $("#NombreCliente").val(data.NombreCliente);
+    $("#MontoCredito").val(data.MontoCredito);
+    $("#NumeroCuotas").val(data.NumeroCuotas);
+    $("#InteresMensual").val(data.InteresMensual);
+    $("#MontoFinal").val(data.MontoFinal);
+    $("#MontoCuota").val(data.MontoCuota);
+    $("#PrimeraCuota").val(data.PrimeraCuota);
 }
 
 var BotonCancelar = function(){
     $("#divTabs").show();
-    $(".divDetalles").toggle();   
+    $(".divDetalles").toggle();
     $(".md-form-control").removeClass("md-valid");
     $("#spanTitulo").text("Ventas a Crédito Registrados");
-    $(".divForm").toggle();    
+    $(".divForm").toggle();
     $('#divConsulta').hide();
     $('#FormVentaCredito')[0].reset();
     $("#idUser").val("");
     $('#divSpanPerfiles').hide();
-    $(".divBotones").toggle();    
+    $(".divBotones").toggle();
     bloquearInuts();
 }
 
 var BotonAgregar = function(){
     $("#spanTitulo").text("Registrar Venta a Crédito");
-    $("#divConsulta").hide();
     $('#FormVentaCredito')[0].reset();
     $("#divTabs").hide();
     $("#divVolver").hide();
@@ -170,12 +163,9 @@ var BotonAgregar = function(){
 }
 
 var ProcesarVentaCredito = function(){
-    if (errorRut==0){  
-        var camposNuevo = {
-            'IdVentaCredito': $('#IdVentaCredito').val() 
-        }
+    if (errorRut==0){
         parametroAjax.ruta=ruta;
-        parametroAjax.data = $("#FormVentaCredito").serialize() + '&' + $.param(camposNuevo);
+        parametroAjax.data = $("#FormVentaCredito").serialize();
         respuesta=procesarajax(parametroAjax);
         ManejoRespuestaProcesar(respuesta);
     }
@@ -185,41 +175,56 @@ var validador = function(){
     $('#FormVentaCredito').formValidation('validate');
 };
 
-var verDetalleVentaCredito = function(IdVentaCredito){
-    parametroAjax.ruta=ruta;
+var cambiarEstatusVenta = function(IdVentaCredito){
+    parametroAjax.ruta=rutaA;
     parametroAjax.data = {IdVentaCredito:IdVentaCredito};
-	alert(ruta +  " - " + IdVentaCredito);
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaProcesarD(respuesta);    
+    ManejoRespuestaProcesarI(respuesta);
 }
 
+var verDetalleVentaCredito = function(IdVentaCredito){
+    parametroAjax.ruta=rutaB;
+    parametroAjax.data = {IdVentaCredito:IdVentaCredito};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaProcesarD(respuesta);
+}
 
 var bloquearInuts = function(){
-    $("#NombreCliente").prop('readonly', true);
-    // $("#IdEmpresa").prop('disabled', true);
-    // $("#IdEncargadoLocal").prop('disabled', true);
-    // $("#EstadoLocal").prop('disabled', true);
+    $("#IdVenta").prop('readonly', true);
+    $("#RUTCliente").prop('readonly', true);
+    $("#MontoCredito").prop('readonly', true);
+    $("#NumeroCuotas").prop('readonly', true);
+    $("#InteresMensual").prop('readonly', true);
+    $("#MontoFinal").prop('readonly', true);
+    $("#MontoCuota").prop('readonly', true);
+    $("#PrimeraCuota").prop('readonly', true);
 }
 
 var desbloquearInuts = function(){
-    $("#NombreCliente").prop('readonly', false);
-    // $("#IdEmpresa").prop('disabled', false);
-    // $("#IdEncargadoLocal").prop('disabled', false);
-    // $("#EstadoLocal").prop('disabled', false);
+    $("#IdVenta").prop('readonly', false);
+    $("#RUTCliente").prop('readonly', false);
+    $("#MontoCredito").prop('readonly', false);
+    $("#NumeroCuotas").prop('readonly', false);
+    $("#InteresMensual").prop('readonly', false);
+    $("#MontoFinal").prop('readonly', false);
+    $("#MontoCuota").prop('readonly', false);
+    $("#PrimeraCuota").prop('readonly', false);
 }
 
-var modificarPreferencia = function(){
+var modificarForm = function(){
     $("#divVolver").hide();
     $(".divBotones").toggle();
-    desbloquearInuts();    
+    $("#spanTitulo").text("Editar Venta a Crédito");
+    desbloquearInuts();
 }
 
 var volverTabs = function(){
-    $(".divDetalles").toggle();          
+    $(".divDetalles").toggle();
     $("#adetalles").addClass("active");
     $("#detalles").addClass("active");
     $("#bodegas").removeClass("active");
     $("#abodegas").removeClass("active");
+    $("#spanTitulo").text("")
 }
 
 var crearAllSelect = function(data){
@@ -232,27 +237,115 @@ var crearAllSelect = function(data){
     // crearselect(data.v_estados,"EstadoLocald");
 }
 
+var verificarRut = function(control){
+    var res = Valida_Rut(control);
+    var format = formateaRut(control.val(), res);
+    if (format != false){
+        errorRut = 0;
+        $("#ErrorRut").text("");
+        buscarCliente(format);
+        return format;
+    }else{
+        errorRut = 1;
+        $("#ErrorRut").text("Rut invalido");
+        return control.val();
+    }
+}
+
+var buscarCliente = function(RUTCliente){
+    parametroAjax.ruta=rutaC;
+    parametroAjax.data = {RUTCliente:RUTCliente};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaBuscarCliente(respuesta);
+}
+
 $(document).ready(function(){
+    $("#RUTCliente").focusout(function() {
+        var valid = $("#RUTCliente").val();
+        if (valid.length > 0){
+            var res = verificarRut($("#RUTCliente"));
+            $("#RUTCliente").val(res);
+        }else{
+            $("#ErrorRut").text("");
+            console.log("voy a validar");
+        }
+    });
     $("#spanTitulo").text("Ventas a Crédito Registradas");
     cargarTablaVentaCredito(d.v_credito_venta);
     // crearAllSelect(d);
     $(document).on('click','#guardar',validador);
     $(document).on('click','#cancelar',BotonCancelar);
-    $(document).on('cick','#agregar',BotonAgregar);
-    // $(document).on('click','#modificar',modificarLocal);
-    $(document).on('click','#volverAct',volverTabs); 
+    $(document).on('click','#agregar',BotonAgregar);
+    $(document).on('click','#modificar',modificarForm);
+    $(document).on('click','#volverAct',volverTabs);
     $('#FormVentaCredito').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
         fields: {
-            'NombreCliente': {
+            'IdVenta': {
                 verbose: false,
                 validators: {
                     notEmpty: {
                         message: 'El campo es requerido.'
                     },
                 }
-            }, 
+            },
+            'RUTCliente': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'MontoCredito': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'NumeroCuotas': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'InteresMensual': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'MontoFinal': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'MontoCuota': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'PrimeraCuota': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
         }
     })
     .on('success.form.fv', function(e){
@@ -261,4 +354,14 @@ $(document).ready(function(){
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');
     });
+
+
+
+
+
+
+
+
+
+
 });

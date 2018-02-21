@@ -82,7 +82,18 @@ Route::get('/clientes', 'ClienteController@getCliente')->name('clientes');
 
 //CRUD Creédito
 Route::get('/credito', 'CreditoController@getCreditoPreferencias')->name('credito');
+// Route::post('/credito', 'CreditoController@postCreditoPreferencias')->name('credito');
+// Route::post('/activarCr', 'CreditoController@postCreditoPreferenciaactivo')->name('activarCr');
+// Route::post('/ventaCreditob', 'CreditoController@postBuscarCreditoPreferencia')->name('ventaCreditob');
+
 Route::get('/ventaCredito', 'VentaCreditoController@getVentaCredito')->name('ventaCredito');
+Route::post('/ventaCredito', 'VentaCreditoController@postVentaCredito')->name('ventaCredito');
+Route::post('/activarCr', 'VentaCreditoController@postVentaCreditoactivo')->name('activarCr');
+Route::post('/ventaCreditob', 'VentaCreditoController@postBuscarVentaCredito')->name('ventaCreditob');
+Route::post('/ventaCliente', 'VentaCreditoController@postBuscarCliente')->name('ventaCliente');
+
+
+
 Route::get('/cicloFacturacion', 'CicloFacturacionController@getCicloFacturacionl')->name('cicloFacturacion');
 
 
