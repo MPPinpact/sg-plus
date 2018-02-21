@@ -10,7 +10,9 @@
 	    <div class="card">
 	        <div class="card-header">
 	        	<center>
-	        		<h5 id="spanTitulo" class="card-header-text"></h5>
+	        		<h5 class="card-header-text">
+	        			Ventas a Crédito Registradas
+	        		</h5>
                 </center>
 	        </div>
 	        <div class="card-block">
@@ -28,12 +30,17 @@
 							<table id="tablaVentasCredito" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 						</div>
 					</div>
-		        </div>         
+		        </div>
 	        </div>
 	    </div>
 	</div>
-	<div class="col-md-12 divDetalles" style="display:;">
+	<div class="col-md-12 divDetalles" style="display:none;">
 		<div class="card">
+		    <div class="card-header">
+		    	<center>
+			    	<h5 id="spanTitulo" class="card-header-text"></h5>
+		    	</center>
+		    </div>
 		    <div class="card-block">
 		        <div class="row">
 		            <div class="col-sm-12">
@@ -43,7 +50,7 @@
 									<a style="float:right;" id="volverAct" href="#"><u>volver</u></a>
 								</div>
 							</div>
-							
+
 		                    <!-- Tab panes -->
 		                    <div class="tab-content">
 		                        <div class="tab-pane active" id="detalles" role="tabpanel">
@@ -52,30 +59,33 @@
 									{!! Form::hidden('IdVentaCredito', '', [
 									'id'            => 'IdVentaCredito',
 									'class'         => 'form-control'])!!}
+									{!! Form::hidden('IdCliente', '', [
+									'id'            => 'IdCliente',
+									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
 										<div class="col-sm-2">
 					                        <div class="md-input-wrapper">
 				                                <input id="IdVenta" name="IdVenta" type="text" class="md-form-control" maxlength="11" readonly />
-					                            <label for="NombreLocal">Nro. Venta</label>
+					                            <label for="IdVenta">Nro. Venta</label>
 					                        </div>
 										</div>
-										
+
 										 <div class="col-sm-2">
 					                        <div class="md-input-wrapper">
 					                        	<input id="RUTCliente" name="RUTCliente" type="text" class="md-form-control" maxlength="12" readonly />
 				                                <label for="RUTCliente">RUT Cliente</label>
+		                        				<small id="ErrorRut" class="rut-error"></small>
 					                        </div>
 					                    </div>
-										
+
 					                    <div class="col-sm-8">
 					                        <div class="md-input-wrapper">
-					                        	<input id="NombreCliente" name="NombreCliente" type="text" class="md-form-control" maxlength="250" readonly />
+					                        	<input id="NombreCliente" name="NombreCliente" type="text" class="md-form-control md-static" maxlength="250" readonly />
 				                                <label for="NombreCliente">Cliente</label>
 					                        </div>
 					                    </div>
 									</div>
-									
 									<div class="row">
 										<div class="col-sm-3">
 					                        <div class="md-input-wrapper">
@@ -86,13 +96,13 @@
 					                    <div class="col-sm-3">
 					                        <div class="md-input-wrapper">
 												<input id="NumeroCuotas" name="NumeroCuotas" type="text" class="md-form-control" maxlength="3" readonly />
-				                                <label for="EstadoLocal">Nro. Cuotas</label>
+				                                <label for="NumeroCuotas">Nro. Cuotas</label>
 											</div>
 					                    </div>
 										<div class="col-sm-3">
 					                        <div class="md-input-wrapper">
 												<input id="InteresMensual" name="InteresMensual" type="text" class="md-form-control" maxlength="5" readonly />
-				                                <label for="EstadoLocal">Interes Mensual</label>
+				                                <label for="InteresMensual">Interes Mensual</label>
 											</div>
 					                    </div>
 										<div class="col-sm-3">
@@ -102,7 +112,7 @@
 											</div>
 					                    </div>
 									</div>
-									
+
 									<div class="row">
 										<div class="col-sm-6">
 					                        <div class="md-input-wrapper">
@@ -117,7 +127,7 @@
 											</div>
 					                    </div>
 									</div>
-									
+
 									<div align="center">
 										<div class="pull-rigth">
 											<div class="divBotones">
@@ -128,14 +138,14 @@
 											<div class="divBotones" style="display:none;">
 												<button id="cancelar" type="button" class="btn btn-inverse-primary waves-effect waves-light">
 													Cancelar
-												</button> 
+												</button>
 					                			<button id="guardar"  type="button" class="btn btn-primary waves-effect waves-light">
 													Guardar
 					                			</button>
 											</div>
 										</div>
 									</div>
-									{!! Form::close() !!} 
+									{!! Form::close() !!}
 		                        </div>
 		                    </div>
 		                </div>
@@ -147,9 +157,13 @@
 </div>
 <script Language="Javascript">
 	var ruta = "{{ URL::route('ventaCredito') }}"
+	var rutaA = "{{ URL::route('activarCr') }}"
+	var rutaB = "{{ URL::route('ventaCreditob') }}"
+	var rutaC = "{{ URL::route('ventaCliente') }}"
 	var d = [];
 	d['v_credito_venta'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_credito_venta) }}'));
-	
+	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
+	d['v_clientes'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_clientes) }}'));
 </script>
 <script src="{{ asset('js/credito_venta/credito_venta.js') }}"></script>
 @endsection

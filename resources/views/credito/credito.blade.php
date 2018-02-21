@@ -28,7 +28,7 @@
 							<table id="tablaPreferencias" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 						</div>
 					</div>
-		        </div>         
+		        </div>
 	        </div>
 	    </div>
 	</div>
@@ -107,14 +107,14 @@
 											<div class="divBotones" style="display:none;">
 												<button id="cancelar" type="button" class="btn btn-inverse-primary waves-effect waves-light">
 													Cancelar
-												</button> 
+												</button>
 					                			<button id="guardar"  type="button" class="btn btn-primary waves-effect waves-light">
 													Guardar
 					                			</button>
 											</div>
 										</div>
 									</div>
-									{!! Form::close() !!} 
+									{!! Form::close() !!}
 		                        </div>
 		                        <div class="tab-pane" id="bodegas" role="tabpanel">
 									<div class="row">
@@ -133,9 +133,10 @@
 </div>
 <script Language="Javascript">
 	var ruta = "{{ URL::route('credito') }}"
+	var rutaA = "{{ URL::route('activarCr') }}"
+	var rutaB = "{{ URL::route('ventaCreditob') }}"
 	var d = [];
 	d['v_credito_preferencias'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_credito_preferencias) }}'));
-	
 </script>
 <script src="{{ asset('js/credito/credito.js') }}"></script>
 @endsection
