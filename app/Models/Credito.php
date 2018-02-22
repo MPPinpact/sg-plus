@@ -21,12 +21,12 @@ class Credito extends Authenticatable
      * @var array
      */
 
-    protected $table = 'credito';
+    protected $table = 'credito_preferencias';
 
     protected $primaryKey = 'IdCreditoPreferencia';
 
     protected $fillable = [
-		'FechaInicio', 'FechaFin', 'InteresMensual', 'NumeroMaxCuotas', 'TolenranciaDiasPrimeraCuota', 'AdvertenciaDeudaVencida', 'MontoMantencionCuenta', 'EstadoPreferencia'
+		'FechaInicio', 'FechaFin', 'InteresMensual', 'NumeroMaxCuotas', 'TolenranciaDiasPrimeraCuota', 'AdvertenciaDeudaVencida', 'MontoMantencionCuenta', 'EstadoPreferencia','auUsuarioModificacion','auUsuarioCreacion'
     ];
 
     protected $dates = [
@@ -67,40 +67,31 @@ class Credito extends Authenticatable
     }
 
     // registrar una nuevo Cliente
-    public function regCliente($datos){
-        log::info($datos);
+    public function regPreferencias($datos){
         $idAdmin = Auth::id();
-        $datos['IdProducto']==null ? $Id=0 : $Id= $datos['IdProducto'];
-        $sql="select f_registro_producto(".$Id.",'".$datos['CodigoBarra']."','".$datos['CodigoProveedor']."','".$datos['NombreProducto']."','".$datos['DescripcionProducto']."',".$datos['IdUltimoProveedor'].",".$datos['IdFamilia'].",".$datos['IdSubFamilia'].",".$datos['IdUnidadMedida'].",".$datos['SeCompra'].",".$datos['SeVende'].",".$datos['EsProductoCombo'].",".$datos['Descontinuado'].",".$datos['StockMinimo'].",".$datos['StockMaximo'].",".$datos['StockRecomendado'].",'".$datos['PrecioUltimaCompra']."','".$datos['PrecioVentaSugerido']."',".$datos['IdBodega'].",".$datos['EstadoProducto'].",".$idAdmin.")";
+        $datos['IdCreditoPreferencia']==null ? $Id=0 : $Id= $datos['IdCreditoPreferencia'];
+        $sql="select f_registro_preferencia(".$Id.",'".$datos['FechaInicio']."','".$datos['FechaFin']."','".$datos['InteresMensual']."',".$datos['NumeroMaxCuotas'].",".$datos['TolenranciaDiasPrimeraCuota'].",".$datos['AdvertenciaDeudaVencida'].",'".$datos['MontoMantencionCuenta']."',".$datos['EstadoPreferencia'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
-            $result['f_registro_producto']=$value;
+            $result=$value;
         }
         return $result;
     }
 
     // Activar / Desactivar Cliente
-    public function activarCliente($datos){
+    public function activarCredito($datos){
         $idAdmin = Auth::id();
-        if ($datos['EstadoProducto']>0){
-            $values=array('EstadoProducto'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        if ($datos['EstadoPreferencia']>0){
+            $values=array('EstadoPreferencia'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }else{
-            $values=array('EstadoProducto'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+            $values=array('EstadoPreferencia'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }
-        return DB::table('productos')
-                ->where('IdProducto', $datos['IdProducto'])
+        return DB::table('credito_preferencias')
+                ->where('IdCreditoPreferencia', $datos['IdCreditoPreferencia'])
                 ->update($values);
     }
 
-    public function descontinuarProducto($datos){
-        $idAdmin = Auth::id();
-        if ($datos['Descontinuado']>1){
-            $values=array('Descontinuado'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
-        }else{
-            $values=array('Descontinuado'=>2,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
-        }
-        return DB::table('productos')
-                ->where('IdProducto', $datos['IdProducto'])
-                ->update($values);
+    public function getPreferenciaCredito($IdCreditoPreferencia){
+        return DB::table('v_credito_preferencias')->where('IdCreditoPreferencia',$IdCreditoPreferencia)->get();
     }
 }

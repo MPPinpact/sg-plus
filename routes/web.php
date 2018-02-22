@@ -80,12 +80,13 @@ Route::post('/detallesP', 'ProveedorController@postProveedordetalle')->name('det
 //CRUD Clientes
 Route::get('/clientes', 'ClienteController@getCliente')->name('clientes');
 
-//CRUD Creédito
+//CRUD Crédito
 Route::get('/credito', 'CreditoController@getCreditoPreferencias')->name('credito');
-// Route::post('/credito', 'CreditoController@postCreditoPreferencias')->name('credito');
-// Route::post('/activarCr', 'CreditoController@postCreditoPreferenciaactivo')->name('activarCr');
-// Route::post('/ventaCreditob', 'CreditoController@postBuscarCreditoPreferencia')->name('ventaCreditob');
+Route::post('/credito', 'CreditoController@postCreditoPreferencias')->name('credito');
+Route::post('/activarPCr', 'CreditoController@postCreditoPreferenciaactivo')->name('activarPCr');
+Route::post('/preferCreditob', 'CreditoController@postBuscarCreditoPreferencia')->name('preferCreditob');
 
+// CRUD Venta credito
 Route::get('/ventaCredito', 'VentaCreditoController@getVentaCredito')->name('ventaCredito');
 Route::post('/ventaCredito', 'VentaCreditoController@postVentaCredito')->name('ventaCredito');
 Route::post('/activarCr', 'VentaCreditoController@postVentaCreditoactivo')->name('activarCr');

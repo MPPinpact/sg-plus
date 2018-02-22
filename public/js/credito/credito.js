@@ -14,10 +14,9 @@ var ManejoRespuestaProcesarD = function(respuesta){
         $(".divDetalles").toggle();
         $("#divVolver").show();
         bloquearInuts();
-        // pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
-        // cargarTablaBodegas(respuesta.respuesta.v_bodegas);
+        pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
     }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 
 }
@@ -39,15 +38,16 @@ var ManejoRespuestaProcesarI = function(respuesta){
 
 // Manejo Registro o actualizacion de empresa
 var ManejoRespuestaProcesar = function(respuesta){
+
     if(respuesta.code==200){
-        var res = JSON.parse(respuesta.respuesta.f_registro.f_registro_local);
+        var res = JSON.parse(respuesta.respuesta.f_registro);
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
                 $(".divDetalles").toggle();
                 $(".divBotones").toggle();
                 $('#FormCredito')[0].reset();
-                $('#IdLocal').val("");
+                $("#IdCreditoPreferencia").val("");
                 cargarTablaPreferencia(respuesta.respuesta.v_credito_preferencias);
                 break;
             case '-2':
@@ -56,7 +56,7 @@ var ManejoRespuestaProcesar = function(respuesta){
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
                 break;
-        } 
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -64,7 +64,7 @@ var ManejoRespuestaProcesar = function(respuesta){
 
 var cargarTablaPreferencia = function(data){
     if(limpiarPreferencias==1){destruirTabla('#tablaPreferencias');$('#tablaPreferencias thead').empty();}
-        $("#tablaPreferencias").dataTable({ 
+        $("#tablaPreferencias").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -76,7 +76,7 @@ var cargarTablaPreferencia = function(data){
             "data": data,
             "columns":[
                 {
-                    "title": " ", 
+                    "title": " ",
                     "data": "IdCreditoPreferencia",
                     "render": function(data, type, row, meta){
                         var result = `
@@ -84,11 +84,11 @@ var cargarTablaPreferencia = function(data){
                         <a href="#" onclick="verDetallesVenta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Preferencia" data-original-title="Delete">
                             <i class="icofont icofont-search"></i>
                         </a>
-                        <a href="#" onclick="cambiarEstatusLocal(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                        <a href="#" onclick="cambiarEstatusPreferencia(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
                         </center>`;
-                        return result; 
+                        return result;
                     }
                 },
                 {"title": "Id Preferencia","data": "IdCreditoPreferencia",visible:0},
@@ -98,68 +98,30 @@ var cargarTablaPreferencia = function(data){
 				{"title": "Max de Cuotas","data": "NumeroMaxCuotas"},
 				{"title": "Primera Cuota","data": "TolenranciaDiasPrimeraCuota"},
 				{"title": "Deuda Vencida","data": "AdvertenciaDeudaVencida"},
-				{"title": "Monto Mantención","data": "MontoMantencionCuenta"}, 
+				{"title": "Monto Mantención","data": "MontoMantencionCuenta"},
 				{"title": "Estado","data": "DetalleEstadoPreferencia"},
-				
+
                 {"title": "Fecha de creacion","data": "auFechaCreacion",visible:0},
                 {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
                 {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
                 {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0}
-                
+
             ],
         });
         limpiarPreferencias=1;
-    if (data.length>0){seleccionartablaPreferencias();}
-};
-
-var seleccionartablaPreferencias = function(data){
-    var tableB = $('#tablaPreferencias').dataTable();
-    $('#tablaPreferencias tbody').on('click', 'tr', function (e) {
-        tableB.$('tr.selected').removeClass('selected');
-        $(this).addClass('selected');
-        RegistroLocales = TablaTraerCampo('tablaPreferencias',this);
-    });
-    // $('#tablaPreferencias tbody').on('dblclick', 'tr', function () {
-    //     bloquearInuts();
-    //     $("#divVolver").show();
-    //     $("#divBtnModificar").show();
-    //     $("#divBtnAceptar").hide();  
-    //     cargarFormulario();
-    //     pintarDatosActualizar(RegistroLocales);
-    // }); 
-}
-
-var cargarTablaBodegas = function(data){
-    if(limpiarBodegas==1){destruirTabla('#tablaBodegas');}
-        $("#tablaBodegas").dataTable({ 
-             responsive:false,
-            "aLengthMenu": DataTableLengthMenu,
-            "pagingType": "full_numbers",
-            "language": LenguajeTabla,
-            "columnDefs": [
-            {
-                "targets": [ 1 ],
-                "searchable": false
-            }],
-            "data": data,
-            "columns":[
-            {"title": "Id","data": "IdBodega",visible:0},
-            {"title": "Nombre","data": "NombreBodega"},
-            {"title": "Descripción","data": "DescripcionBodega"},
-            {"title": "Estado","data": "desEstadoBodega"},
-            ],
-        });
-        limpiarBodegas=1; 
 };
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
-    $("#spanTitulo").text("Editar Preferencias");
-    $("#IdLocal").val(data.IdLocal);
-    $("#NombreLocal").val(data.NombreLocal);
-    $("#IdEmpresa").val(data.IdEmpresa).trigger("change");
-    $("#IdEncargadoLocal").val(data.IdEncargadoLocal).trigger("change");
-    $("#EstadoLocal").val(data.EstadoLocal).trigger("change");
+    $("#IdCreditoPreferencia").val(data.IdCreditoPreferencia);
+    $("#FechaInicio").val(data.FechaInicio);
+    $("#FechaFin").val(data.FechaFin);
+    $("#InteresMensual").val(data.InteresMensual);
+    $("#NumeroMaxCuotas").val(data.NumeroMaxCuotas);
+    $("#TolenranciaDiasPrimeraCuota").val(data.TolenranciaDiasPrimeraCuota);
+    $("#AdvertenciaDeudaVencida").val(data.AdvertenciaDeudaVencida);
+    $("#MontoMantencionCuenta").val(data.MontoMantencionCuenta);
+    $("#EstadoPreferencia").val(data.EstadoPreferencia).trigger("change");
 }
 
 var pintarDatosDetalles = function(data){
@@ -172,25 +134,21 @@ var pintarDatosDetalles = function(data){
 
 var BotonCancelar = function(){
     $("#divTabs").show();
-    $(".divDetalles").toggle();   
+    $(".divDetalles").toggle();
     $(".md-form-control").removeClass("md-valid");
-    $("#spanTitulo").text("Locales registrados");
-    $(".divForm").toggle();    
-    $('#divConsulta').hide();
+    $("#spanTitulo").text("");
     $('#FormCredito')[0].reset();
-    $("#idUser").val("");
-    $('#divSpanPerfiles').hide();
-    $(".divBotones").toggle();    
+    $("#IdCreditoPreferencia").val("");
+    $(".divBotones").toggle();
     bloquearInuts();
 }
 
 var BotonAgregar = function(){
-    $("#spanTitulo").text("Registrar Local");
-    $("#divConsulta").hide();
-    $("#divSpanPerfiles").hide();
-    $("#idUser").val("");
+    $(".md-form-control").removeClass("md-valid");
+    $("#spanTitulo").text("Registrar Preferencias de Crédito");
     $(".comboclear").val('').trigger("change");
     $('#FormCredito')[0].reset();
+    $("#IdCreditoPreferencia").val("");
     $("#divTabs").hide();
     $("#divVolver").hide();
     $(".divDetalles").toggle();
@@ -198,14 +156,10 @@ var BotonAgregar = function(){
     desbloquearInuts();
 }
 
-var ProcesarCreditoVenta = function(){
-    if (errorRut==0){  
-        var camposNuevo = {
-            'IdCreditoVenta': $('#IdCreditoVenta').val(), 
-            'EstadoCreditoVenta': $('#EstadoCreditoVenta').val()
-        }
+var ProcesarCredito = function(){
+    if (errorRut==0){
         parametroAjax.ruta=ruta;
-        parametroAjax.data = $("#FormCreditoVenta").serialize() + '&' + $.param(camposNuevo);
+        parametroAjax.data = $("#FormCredito").serialize();
         respuesta=procesarajax(parametroAjax);
         ManejoRespuestaProcesar(respuesta);
     }
@@ -215,43 +169,51 @@ var validador = function(){
     $('#FormCredito').formValidation('validate');
 };
 
-var cambiarEstatusPreferencia = function(IdCreditoVenta){
+var cambiarEstatusPreferencia = function(IdCreditoPreferencia){
     parametroAjax.ruta=rutaA;
-    parametroAjax.data = {IdCreditoVenta:IdCreditoVenta};
+    parametroAjax.data = {IdCreditoPreferencia:IdCreditoPreferencia};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarI(respuesta);
 }
 
-var verDetallesVenta = function(IdCreditoVenta){
-    parametroAjax.ruta=rutaD;
+var verDetallesVenta = function(IdCreditoPreferencia){
+    parametroAjax.ruta=rutaPr;
     parametroAjax.data = {IdCreditoPreferencia:IdCreditoPreferencia};
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaProcesarD(respuesta);    
+    ManejoRespuestaProcesarD(respuesta);
 }
 
 
 var bloquearInuts = function(){
-    $("#NombreLocal").prop('readonly', true);
-    $("#IdEmpresa").prop('disabled', true);
-    $("#IdEncargadoLocal").prop('disabled', true);
-    $("#EstadoLocal").prop('disabled', true);
+    $("#FechaInicio").prop('readonly', true);
+    $("#FechaFin").prop('readonly', true);
+    $("#InteresMensual").prop('readonly', true);
+    $("#NumeroMaxCuotas").prop('readonly', true);
+    $("#TolenranciaDiasPrimeraCuota").prop('readonly', true);
+    $("#AdvertenciaDeudaVencida").prop('readonly', true);
+    $("#MontoMantencionCuenta").prop('readonly', true);
+    $("#EstadoPreferencia").prop('disabled', true);
 }
 
 var desbloquearInuts = function(){
-    $("#NombreLocal").prop('readonly', false);
-    $("#IdEmpresa").prop('disabled', false);
-    $("#IdEncargadoLocal").prop('disabled', false);
-    $("#EstadoLocal").prop('disabled', false);
+    $("#FechaInicio").prop('readonly', false);
+    $("#FechaFin").prop('readonly', false);
+    $("#InteresMensual").prop('readonly', false);
+    $("#NumeroMaxCuotas").prop('readonly', false);
+    $("#TolenranciaDiasPrimeraCuota").prop('readonly', false);
+    $("#AdvertenciaDeudaVencida").prop('readonly', false);
+    $("#MontoMantencionCuenta").prop('readonly', false);
+    $("#EstadoPreferencia").prop('disabled', false);
 }
 
 var modificarPreferencia = function(){
     $("#divVolver").hide();
     $(".divBotones").toggle();
-    desbloquearInuts();    
+    desbloquearInuts();
 }
 
 var volverTabs = function(){
-    $(".divDetalles").toggle();          
+    $(".divDetalles").toggle();
     $("#adetalles").addClass("active");
     $("#detalles").addClass("active");
     $("#bodegas").removeClass("active");
@@ -259,52 +221,76 @@ var volverTabs = function(){
 }
 
 var crearAllSelect = function(data){
-    var encargado =[{"id":"1","text":"Encargado 1"},{"id":"2","text":"Encargado 2"}];
-    // crearselect(encargado,"IdEncargadoLocal");
-    // crearselect(encargado,"IdEncargadoLocald");
-    // crearselect(data.v_empresas,"IdEmpresa");
-    // crearselect(data.v_estados,"EstadoLocal");
-    // crearselect(data.v_empresas,"IdEmpresad");
-    // crearselect(data.v_estados,"EstadoLocald");
+    crearselect(data.v_estados,"EstadoPreferencia");
 }
 
 $(document).ready(function(){
-    $("#spanTitulo").text("Venta a Crédito Registradas");
     cargarTablaPreferencia(d.v_credito_preferencias);
     crearAllSelect(d);
     $(document).on('click','#guardar',validador);
+    $(document).on('click','#agregar',BotonAgregar);
     $(document).on('click','#cancelar',BotonCancelar);
-    $(document).on('cick','#agregar',BotonAgregar);
-    $(document).on('click','#modificar',modificarLocal);
-    $(document).on('click','#volverAct',volverTabs); 
+    $(document).on('click','#modificar',modificarPreferencia);
+    $(document).on('click','#volverAct',volverTabs);
     $('#FormCredito').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
         fields: {
-            'NombreLocal': {
+            'FechaInicio': {
                 verbose: false,
                 validators: {
                     notEmpty: {
                         message: 'El campo es requerido.'
                     },
                 }
-            }, 
-            'IdEmpresa': {
+            },
+            'FechaFin': {
                 verbose: false,
                 validators: {
                     notEmpty: {
                         message: 'El campo es requerido.'
                     },
                 }
-            },            
-            'IdEncargadoLocal': {
+            },
+            'InteresMensual': {
                 validators: {
                     notEmpty: {
                         message: 'El campo es requerido.'
                     }
                 }
             },
-            'EstadoLocal': {
+            'NumeroMaxCuotas': {
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    }
+                }
+            },
+            'TolenranciaDiasPrimeraCuota': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'AdvertenciaDeudaVencida': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'MontoMantencionCuenta': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'EstadoPreferencia': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -315,7 +301,7 @@ $(document).ready(function(){
         }
     })
     .on('success.form.fv', function(e){
-        ProcesarCreditoVenta();
+        ProcesarCredito();
     })
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');
