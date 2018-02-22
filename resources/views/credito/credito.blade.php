@@ -2,7 +2,7 @@
 @section('content')
 <style type="text/css" media="screen">
 	.nav-tabs .slide{
-		 width: calc(100% / 2)!important;
+		 width: calc(100% / 1)!important;
 	}
 </style>
 <div class="row">
@@ -10,14 +10,16 @@
 	    <div class="card">
 	        <div class="card-header">
 	        	<center>
-	        		<h5 id="spanTitulo" class="card-header-text"></h5>
+	        		<h5 class="card-header-text">
+	        			Ventas a Crédito Registradas
+	        		</h5>
                 </center>
 	        </div>
 	        <div class="card-block">
 				<div class="col-md-12">
 					<div class="row">
 						<div class="col-md-12">
-							<button style="float:right;" name="agregar" id="agregar" type="button" class="btn btn-primary waves-effect waves-light">
+							<button style="float:right;" id="agregar" name="agregar" type="button" class="btn btn-primary waves-effect waves-light">
 								<span>Agregar</span>
                 			</button>
 						</div>
@@ -38,6 +40,11 @@
 		        <div class="row">
 		            <div class="col-sm-12">
 		                <div class="product-edit">
+							<div class="card-header">
+						    	<center>
+							    	<h5 id="spanTitulo" class="card-header-text"></h5>
+						    	</center>
+						    </div>
 				        	<div class="row">
 								<div id="divVolver" class="col-md-12">
 									<a style="float:right;" id="volverAct" href="#"><u>volver</u></a>
@@ -66,33 +73,58 @@
 									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
-										<div class="col-sm-2"></div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="NombreLocal" name="NombreLocal" type="text" class="md-form-control" maxlength="250" readonly />
-					                            <label for="NombreLocal">Nombre Local</label>
+				                                <input id="FechaInicio" name="FechaInicio" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="FechaInicio">Fecha Inicio</label>
+					                        </div>
+										</div>
+										<div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+				                                <input id="FechaFin" name="FechaFin" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="FechaFin">Fecha Fin</label>
 					                        </div>
 										</div>
 					                    <div class="col-sm-4">
-					                        <div class="md-input-wrapper">
-					                        	<select name="IdEmpresa" id="IdEmpresa" class="md-disable md-valid" disabled></select>
-				                                <label for="IdEmpresa">Empresa</label>
+					                       	<div class="md-input-wrapper">
+				                                <input id="InteresMensual" name="InteresMensual" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="InteresMensual">Interes Mensual</label>
 					                        </div>
 					                    </div>
 									</div>
 									<br>
 									<div class="row">
-										<div class="col-sm-2"></div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-												<select name="IdEncargadoLocal" id="IdEncargadoLocal" class="md-disable md-valid" disabled></select>
-				                                <label for="IdEncargadoLocal">Encargado</label>
-											</div>
+				                                <input id="NumeroMaxCuotas" name="NumeroMaxCuotas" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="NumeroMaxCuotas">Numero Max Cuotas</label>
+					                        </div>
+										</div>
+										<div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+				                                <input id="TolenranciaDiasPrimeraCuota" name="TolenranciaDiasPrimeraCuota" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="TolenranciaDiasPrimeraCuota">Tolenrancia de Dias</label>
+					                        </div>
+										</div>
+					                    <div class="col-sm-4">
+					                       	<div class="md-input-wrapper">
+				                                <input id="AdvertenciaDeudaVencida" name="AdvertenciaDeudaVencida" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="AdvertenciaDeudaVencida">Advertencia Deuda Vencida</label>
+					                        </div>
+					                    </div>
+									</div>
+									<div class="row">
+										<div class="col-sm-2"></div>
+										<div class="col-sm-4">
+											<div class="md-input-wrapper">
+				                                <input id="MontoMantencionCuenta" name="MontoMantencionCuenta" type="text" class="md-form-control" maxlength="250" readonly />
+					                            <label for="MontoMantencionCuenta">Monto Mantencion</label>
+					                        </div>
 					                    </div>
 					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-												<select name="EstadoLocal" id="EstadoLocal" class="md-disable md-valid" disabled></select>
-				                                <label for="EstadoLocal">Estado</label>
+												<select name="EstadoPreferencia" id="EstadoPreferencia" class="md-disable md-valid" disabled></select>
+				                                <label for="EstadoPreferencia">Estado</label>
 											</div>
 					                    </div>
 									</div>
@@ -133,9 +165,11 @@
 </div>
 <script Language="Javascript">
 	var ruta = "{{ URL::route('credito') }}"
-	var rutaA = "{{ URL::route('activarCr') }}"
-	var rutaB = "{{ URL::route('ventaCreditob') }}"
+	var rutaA = "{{ URL::route('activarPCr') }}"
+	var rutaPr = "{{ URL::route('preferCreditob') }}"
 	var d = [];
+
+	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
 	d['v_credito_preferencias'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_credito_preferencias) }}'));
 </script>
 <script src="{{ asset('js/credito/credito.js') }}"></script>

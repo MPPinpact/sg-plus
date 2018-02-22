@@ -44,48 +44,49 @@ class CreditoController extends Controller
     }
 
     //Registrar o actualizar producto
-    protected function postProducto(Request $request){
+    protected function postCreditoPreferencias(Request $request){
         $datos = $request->all();
-        $model= new Producto();
-        $result['f_registro'] = $model->regBodega($datos);
-        $result['v_productos'] = $model->listProductos();
+        $model= new Credito();
+        $result['f_registro'] = $model->regPreferencias($datos);
+        $result['v_credito_preferencias'] = $model->listPreferencias();
         return $result;
     }
 
     //Activar / desactivar producto
-    protected function postProductoactivo (Request $request){
+    protected function postCreditoPreferenciaactivo (Request $request){
         $datos = $request->all();
-        $model= new Producto();
-        $bodega = Producto::find($datos['IdProducto']);
-        $result['activar'] = $model->activarProducto($bodega);
-        $result['v_productos'] = $model->listProductos();
+        $model= new Credito();
+        $credito = Credito::find($datos['IdCreditoPreferencia']);
+        $result['activar'] = $model->activarCredito($credito);
+        $result['v_credito_preferencias'] = $model->listPreferencias();
+        return $result;
+    }
+
+    protected function postBuscarCreditoPreferencia (Request $request){
+        $datos = $request->all();
+        $model= new Credito();
+        $result['v_detalles'] = $model->getPreferenciaCredito($datos['IdCreditoPreferencia']);
         return $result;
     }
 
     // Descontiniar producto
-    protected function postProductodescontinuar (Request $request){
-        $datos = $request->all();
-        $model= new Producto();
-        $bodega = Producto::find($datos['IdProducto']);
-        $result['descontinuar'] = $model->descontinuarProducto($bodega);
-        $result['v_productos'] = $model->listProductos();
-        return $result;
-    }
+    // protected function postProductodescontinuar (Request $request){
+    //     $datos = $request->all();
+    //     $model= new Producto();
+    //     $bodega = Producto::find($datos['IdProducto']);
+    //     $result['descontinuar'] = $model->descontinuarProducto($bodega);
+    //     $result['v_productos'] = $model->listProductos();
+    //     return $result;
+    // }
 
     // Ver detalles de los productos
-    protected function postProductodetalle (Request $request){
-        $datos = $request->all();
-        // $model= new Producto();
-        // $result['v_detalles'] = $model->getOneDetalle($datos['IdProducto']);
-        // $result['v_productos'] = $model->localesProducto($datos['IdProducto']);
-        $result = '';
-        return $result;
-    }
+    // protected function postProductodetalle (Request $request){
+    //     $datos = $request->all();
+    //     // $model= new Producto();
+    //     // $result['v_detalles'] = $model->getOneDetalle($datos['IdProducto']);
+    //     // $result['v_productos'] = $model->localesProducto($datos['IdProducto']);
+    //     $result = '';
+    //     return $result;
+    // }
 
-    protected function postBuscarsub (Request $request){
-        $datos = $request->all();
-        $model= new Producto();
-        $result = $model->getSubfamilia($datos['IdFamilia']);
-        return $result;
-    }
 }
