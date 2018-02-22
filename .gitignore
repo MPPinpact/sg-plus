@@ -2,7 +2,7 @@
 /storage
 /.idea
 /.vagrant
-/storage
+/storage/
 Homestead.json
 Homestead.yaml
 npm-debug.log
