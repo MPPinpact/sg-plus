@@ -45,57 +45,36 @@ class ClienteController extends Controller
     {
         $model= new Cliente();
         $data['v_clientes'] = $model->listClientes();
-        $data['v_estados'] = $model->listEstados();        
-        $data['v_familias'] = $model->listFamilias();
-        $data['v_subfamilias'] = $model->listSubfamilias();
-        $data['v_unidad'] = $model->listUnidadmedidas();
-        $data['v_bodegas'] = $model->listBodegas();
+        $data['v_estados'] = $model->listEstados();
+        $data['v_ciclos'] = $model->listCiclos();
         return View::make('clientes.clientes',$data);
     }
 
-    //Registrar o actualizar producto
-    protected function postProducto(Request $request){
+    //Registrar o actualizar cliente
+    protected function postCliente(Request $request){
         $datos = $request->all();
-        $model= new Producto();
-        $result['f_registro'] = $model->regBodega($datos);
-        $result['v_productos'] = $model->listProductos();
+        $model= new Cliente();
+        $result['f_registro'] = $model->regCliente($datos);
+        $result['v_clientes'] = $model->listClientes();
         return $result;
     }
 
-    //Activar / desactivar producto
-    protected function postProductoactivo (Request $request){
+    //Activar / desactivar cliente
+    protected function postClienteactivo (Request $request){
         $datos = $request->all();
-        $model= new Producto();
-        $bodega = Producto::find($datos['IdProducto']);
-        $result['activar'] = $model->activarProducto($bodega);
-        $result['v_productos'] = $model->listProductos();
+        $model= new Cliente();
+        $cliente = Cliente::find($datos['IdCliente']);
+        $result['activar'] = $model->activarCliente($cliente);
+        $result['v_clientes'] = $model->listClientes();
         return $result;
     }
 
-    // Descontiniar producto
-    protected function postProductodescontinuar (Request $request){
+    // Ver detalles de los cliente
+    protected function postClientedetalle (Request $request){
         $datos = $request->all();
-        $model= new Producto();
-        $bodega = Producto::find($datos['IdProducto']);
-        $result['descontinuar'] = $model->descontinuarProducto($bodega);
-        $result['v_productos'] = $model->listProductos();
-        return $result;
-    }
-
-    // Ver detalles de los productos
-    protected function postProductodetalle (Request $request){
-        $datos = $request->all();
-        // $model= new Producto();
-        // $result['v_detalles'] = $model->getOneDetalle($datos['IdProducto']);
-        // $result['v_productos'] = $model->localesProducto($datos['IdProducto']);
-        $result = '';
-        return $result;
-    }
-
-    protected function postBuscarsub (Request $request){
-        $datos = $request->all();
-        $model= new Producto();
-        $result = $model->getSubfamilia($datos['IdFamilia']);
+        $model= new Cliente();
+        $result['v_detalles'] = $model->getDetallesClientes($datos['IdCliente']);
+        // $result['v_productos'] = $model->localesProducto($datos['IdCliente']);
         return $result;
     }
 }

@@ -79,6 +79,9 @@ Route::post('/detallesP', 'ProveedorController@postProveedordetalle')->name('det
 
 //CRUD Clientes
 Route::get('/clientes', 'ClienteController@getCliente')->name('clientes');
+Route::post('/clientes', 'ClienteController@postCliente')->name('clientes');
+Route::post('/activarCli', 'ClienteController@postClienteactivo')->name('activarCli');
+Route::post('/detallesCli', 'ClienteController@postClientedetalle')->name('detallesCli');
 
 //CRUD Crédito
 Route::get('/credito', 'CreditoController@getCreditoPreferencias')->name('credito');

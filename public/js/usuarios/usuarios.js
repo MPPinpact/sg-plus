@@ -22,7 +22,7 @@ var ManejoRespuestaDesbloquearcuenta = function(respuesta){
     if(respuesta.code==200){
         var res = JSON.parse(respuesta.respuesta.v_desbloqueo);
         if(res.code==200){
-            $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});    
+            $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
             cargarTablaUsuarios(respuesta.respuesta.v_usuarios);
         }else{
             $.growl({message:"Ocurrio un error al tratar de desbloquear la cuenta."},{type: "warning", allow_dismiss: true,});
@@ -70,7 +70,7 @@ var ManejoRespuestaProcesarR = function(respuesta){
                 break;
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-        } 
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -93,7 +93,7 @@ var ManejoRespuestaProcesar = function(respuesta){
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
                 break;
-        } 
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -106,7 +106,7 @@ var ManejoRespuestaProcesarPerfil = function(respuesta){
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
-                $(".comboclear").val('').trigger("change");  
+                $(".comboclear").val('').trigger("change");
                 cargarTablaPerfiles(respuesta.respuesta.v_perfiles);
                 manejoRefresh=1;
                 break;
@@ -116,7 +116,7 @@ var ManejoRespuestaProcesarPerfil = function(respuesta){
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
                 break;
-        } 
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -124,7 +124,7 @@ var ManejoRespuestaProcesarPerfil = function(respuesta){
 
 var cargarTablaUsuarios = function(data){
     if(limpiarUsuarios==1){destruirTabla('#tablaUsuarios');$('#tablaUsuarios thead').empty();}
-        $("#tablaUsuarios").dataTable({ 
+        $("#tablaUsuarios").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -138,7 +138,7 @@ var cargarTablaUsuarios = function(data){
             "data": data,
             "columns":[
             {
-                "title": "", 
+                "title": "",
                 "data": "idUser",
                 "render": function(data, type, row, meta){
                     var result = `
@@ -151,13 +151,13 @@ var cargarTablaUsuarios = function(data){
                     <a href="#!" onclick="desbloquearCuenta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Desbloquear Cuenta" data-original-title="Delete">
                         <i class="icon-lock-open"></i>
                     </a>`;
-                    return result; 
+                    return result;
                 }
             },
             {"title": "Id","data": "idUser",visible:0},
             {"title": "Nombres","data": "usrNombreFull"},
             {
-                "title": "Login", 
+                "title": "Login",
                 "data": "usrUserName",
                 "render": function(data, type, row, meta){
                     if(type === 'display'){
@@ -191,16 +191,16 @@ var seleccionarTablaUsuarios = function(data){
     $('#tablaUsuarios tbody').on('dblclick', 'tr', function () {
         bloquearInuts();
         $("#divBtnModificar").show();
-        $("#divBtnAceptar").hide();  
+        $("#divBtnAceptar").hide();
         cargarFormulario();
         pintarDatosActualizar(RegistroUsuario);
-    }); 
+    });
 }
 
 var cargarTablaPerfiles = function(data){
     if(limpiarPerfiles==1){destruirTabla('#tablaPerfiles');}
         $("#divTablaPerfiles").show();
-        $("#tablaPerfiles").dataTable({ 
+        $("#tablaPerfiles").dataTable({
             "aLengthMenu": DataTableLengthMenu,
             'bSort': false,
             "scrollCollapse": false,
@@ -222,7 +222,7 @@ var cargarTablaPerfiles = function(data){
             ],
         });
         limpiarPerfiles=1;
-    if (data.length>0){seleccionarTablaPerfiles();}   
+    if (data.length>0){seleccionarTablaPerfiles();}
 };
 
 var seleccionarTablaPerfiles = function(data){
@@ -243,7 +243,6 @@ var seleccionarTablaPerfiles = function(data){
                 switch(key) {
                     case "1":
                         cambiarEstatusPerfil(RegistroPerfiles);
-                        // cambiarEstatusUsuario(RegistroUsuario);
                     break;
                 }
             },
@@ -252,7 +251,7 @@ var seleccionarTablaPerfiles = function(data){
             }
         });
     });
-}; 
+};
 
 var crearallSelect = function(data){
     crearselect(data.v_perfiles,'idPerfil');
@@ -272,7 +271,7 @@ var volverPerfiles = function(){
         $(".divPerfiles").toggle();
         $("#spanAlert").text("");
         $("#divTablaPerfiles").hide();
-        $(".comboclear").val('').trigger("change");  
+        $(".comboclear").val('').trigger("change");
         $("#idUser2").val("")
     }
 }
@@ -295,13 +294,6 @@ var pintarDatosActualizar= function(data){
     $("#usrUserName").val(data.usrUserName);
     $("#usrEmail").val(data.usrEmail);
     $("#usrNombreFull").val(data.usrNombreFull);
-    // if(data.des_Perfil!=null){
-    //     var res = data.des_Perfil.split(",");
-    //     var des='';
-    //     res.length>1 ? des="Perfiles" : des="Perfil"
-    //     $("#labelPerfil").text(des);
-    //     $("#perfiles").text(res);
-    // }
     $("#usrEstado").val(data.usrEstado).trigger("change");
     $("#idPerfil").val(data.idPerfil).trigger("change");
     if(data.usrUltimaVisita!=null){$("#usrUltimaVisita").val(data.usrUltimaVisita);}
@@ -314,7 +306,7 @@ var pintarDatosActualizar= function(data){
 var BotonCancelar = function(){
     $(".md-form-control").removeClass("md-valid");
     $("#spanTitulo").text("Usuarios registrados");
-    $(".divForm").toggle();    
+    $(".divForm").toggle();
     $('#divConsulta').hide();
     $('#FormUsuario')[0].reset();
     $("#idUser").val("");
@@ -354,7 +346,7 @@ var BotonAgregarPerfil = function(){
 
 
 var ProcesarUsuario = function(){
-    if (errorRut==0){  
+    if (errorRut==0){
         var camposNuevo = {'usrEstado': $('#usrEstado').val(), 'idPerfil': $('#idPerfil').val()}
         parametroAjax.ruta=ruta;
         parametroAjax.data = $("#FormUsuario").serialize() + '&' + $.param(camposNuevo);
@@ -411,11 +403,11 @@ var verificarRut = function(control){
     var res = Valida_Rut(control);
     var format = formateaRut(control.val(), res);
     if (format != false){
-        errorRut = 0;       
+        errorRut = 0;
         $("#ErrorRut").text("");
         return format;
     }else{
-        errorRut = 1;       
+        errorRut = 1;
         $("#ErrorRut").text("Rut invalido");
         return control.val();
     }
@@ -440,7 +432,7 @@ var desbloquearInuts = function(){
 var modificarUsuario = function(){
     $("#divBtnModificar").hide();
     $("#divBtnAceptar").show();
-    desbloquearInuts();    
+    desbloquearInuts();
 }
 
 $(document).ready(function(){
@@ -453,7 +445,7 @@ $(document).ready(function(){
         }else{$("#ErrorRut").text("");}
     });
     cargarTablaUsuarios(d.v_usuarios);
-    crearallSelect(d);    
+    crearallSelect(d);
     $(document).on('click','#guardar',validador);
     $(document).on('click','#cancelar',BotonCancelar);
     $(document).on('click','#volverAct',BotonCancelar);
@@ -472,7 +464,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            }, 
+            },
             'usrNombreFull': {
                 verbose: false,
                 validators: {
@@ -480,7 +472,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            },            
+            },
             'usrEmail': {
                 validators: {
                     notEmpty: {
@@ -516,7 +508,7 @@ $(document).ready(function(){
         data.element.parents('.form-group').removeClass('has-success');
     });
 
-    
+
     $('#FormPerfil').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
