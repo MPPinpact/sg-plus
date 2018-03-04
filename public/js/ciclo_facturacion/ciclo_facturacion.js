@@ -63,7 +63,6 @@ var ManejoRespuestaProcesar = function(respuesta){
 };
 
 var cargartablaCicloFacturacions = function(data){
-    console.log(data);
     if(limpiarLocales==1){destruirTabla('#tablaCicloFacturacion');$('#tablaCicloFacturacion thead').empty();}
         $("#tablaCicloFacturacion").dataTable({ 
             responsive:false,

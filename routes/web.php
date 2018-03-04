@@ -71,6 +71,8 @@ Route::post('/detallesPr', 'ProductoController@postProductodetalle')->name('deta
 Route::post('/buscarSubfamilia', 'ProductoController@postBuscarsub')->name('buscarSubfamilia');
 Route::post('/procesarIm', 'ProductoController@postprocesarImpuesto')->name('procesarIm');
 Route::post('/activarIm', 'ProductoController@postImpuestopactivo')->name('activarIm');
+Route::post('/buscarProveedor', 'ProductoController@postBuscarProveedor')->name('buscarProveedor');
+
 
 //CRUD Proveedores
 Route::get('/proveedores', 'ProveedorController@getProveedor')->name('proveedores');
