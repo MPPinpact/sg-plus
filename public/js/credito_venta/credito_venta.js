@@ -11,9 +11,6 @@ var parametroAjax = {
 };
 
 var ManejoRespuestaBuscarCliente = function(respuesta){
-    console.log("hola");
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         if(respuesta.respuesta.v_cliente!=null){
             $("#IdCliente").val(respuesta.respuesta.v_cliente[0].IdCliente);
@@ -207,8 +204,8 @@ var bloquearInuts = function(){
     $("#MontoCredito").prop('readonly', true);
     $("#NumeroCuotas").prop('readonly', true);
     //$("#InteresMensual").prop('readonly', true);
-    $("#MontoFinal").prop('readonly', true);
-    $("#MontoCuota").prop('readonly', true);
+    //$("#MontoFinal").prop('readonly', true);
+    //$("#MontoCuota").prop('readonly', true);
     $("#PrimeraCuota").prop('readonly', true);
 }
 
@@ -218,8 +215,8 @@ var desbloquearInuts = function(){
     $("#MontoCredito").prop('readonly', false);
     $("#NumeroCuotas").prop('readonly', false);
     //$("#InteresMensual").prop('readonly', false);
-    $("#MontoFinal").prop('readonly', false);
-    $("#MontoCuota").prop('readonly', false);
+    //$("#MontoFinal").prop('readonly', false);
+    //$("#MontoCuota").prop('readonly', false);
     $("#PrimeraCuota").prop('readonly', false);
 }
 
@@ -256,8 +253,8 @@ var verificarRut = function(control){
 var calcularCuotas = function(montoCredito, numeroCuotas, interesMensual){
     var montoFinalCredito = montoCredito * ( 1 + (numeroCuotas * interesMensual/100));
     var montoCuota = montoFinalCredito / numeroCuotas;
-    $("#MontoFinal").val(montoFinalCredito);
-    $("#MontoCuota").val(montoCuota);
+    $("#MontoFinal").val(Math.round(montoFinalCredito));
+    $("#MontoCuota").val(Math.round(montoCuota));
 }
 
 var buscarCliente = function(RUTCliente){
@@ -281,7 +278,6 @@ $(document).ready(function(){
             $("#RUTCliente").val(res);
         }else{
             $("#ErrorRut").text("");
-            console.log("voy a validar");
         }
     });
    $("#NumeroCuotas").focusout(function () {
@@ -290,11 +286,9 @@ $(document).ready(function(){
         var InteresMensual = $("#InteresMensual").val();
         if (montoCredito.length > 0){
             if (parseInt(numeroCuotas) > parseInt(CuotaMax)){
-                console.log("No se va a guardar");
                 ErrorCuotas=1; 
             }else{
                 ErrorCuotas=0; 
-                console.log("SE VA A GUARDAR");
             }
             var res = calcularCuotas(montoCredito, numeroCuotas, InteresMensual);
         }else{
