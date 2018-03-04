@@ -52,18 +52,15 @@ class Compra extends Authenticatable
 
     // registrar impuesto
     public function regCompra($datos){
-        log::info($datos);
         $idAdmin = Auth::id();
         $datos['IdCompra']==null ? $Id=0 : $Id= $datos['IdCompra'];
-        $sql="select f_registro_compra(".$Id.",".$datos['IdOrdenCompra'].",".$datos['IdProveedor'].",".$datos['IdBodega'].",".$datos['TipoDTE'].",'".$datos['FolioDTE']."','".$datos['FechaDTE']."','".$datos['FechaVencimiento']."','".$datos['FechaPago']."','".$datos['TotalDescuentos']."','".$datos['TotalNeto']."','".$datos['TotalImpuestos']."','".$datos['TotalCompra']."',".$datos['EstadoCompra'].",".$idAdmin.")";
-        log::info($sql);
-        /*$execute=DB::select($sql);
+        $sql="select f_registro_compra(".$Id.",".$datos['IdOrdenCompra'].",".$datos['IdProveedor'].",".$datos['IdBodega'].",".$datos['TipoDTE'].",'".$datos['FolioDTE']."','".$datos['FechaDTE']."','".$datos['FechaVencimiento']."','".$datos['FechaPago']."','".$datos['TotalNeto']."','".$datos['TotalDescuentos']."','".$datos['TotalImpuestos']."','".$datos['TotalCompra']."',".$datos['EstadoCompra'].",".$idAdmin.")";
+        $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
-        }*/
+        }
         return $result;
     }
-
 
     // Activar / Desactivar Impuesto
     public function activarCompra($datos){

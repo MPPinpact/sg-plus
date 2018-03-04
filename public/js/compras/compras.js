@@ -9,15 +9,13 @@ var parametroAjax = {
 };
 
 var ManejoRespuestaProcesarD = function(respuesta){
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         bloquearInuts();
         $(".divDetalles").toggle();
         $("#divVolver").show();
         $("#divTabs").show();
         $("#spanTitulo").text("Detalles");
-        $("#IdProducto2").val(respuesta.respuesta.v_detalles.IdProducto);
+        $("#IdCompra2").val(respuesta.respuesta.v_detalles.IdCompra);
         pintarDatosActualizar(respuesta.respuesta.v_cabecera[0]);
         cargarTablaDetalles(respuesta.respuesta.v_detalles);
     }else{
@@ -95,14 +93,14 @@ var ManejoRespuestaProcesarImpuesto = function(respuesta){
 // Manejo Registro o actualizacion de empresa
 var ManejoRespuestaProcesar = function(respuesta){
     if(respuesta.code==200){
-        var res = JSON.parse(respuesta.respuesta.f_registro.f_registro_producto);
+        var res = JSON.parse(respuesta.respuesta.f_registro);
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
                 $(".divDetalles").toggle();
                 $(".divBotones").toggle();
                 $('#FormCompras')[0].reset();
-                $('#IdProducto').val("");
+                $('#IdCompra').val("");
                 cargarTablaCompras(respuesta.respuesta.v_compras);
                 break;
             case '-2':
@@ -165,7 +163,6 @@ var cargarTablaCompras = function(data){
 };
 
 var cargarTablaDetalles = function(data){
-    console.log(data);
     if(limpiarImpuestos==1){destruirTabla('#tablaDetalles');$('#tablaDetalles thead').empty();}
         $("#tablaDetalles").dataTable({
             responsive:false,
@@ -239,7 +236,7 @@ var BotonCancelar = function(){
     $("#spanTitulo").text("");
     $(".md-form-control").removeClass("md-valid");
     $('#FormCompras')[0].reset();
-    $("#IdProducto").val("");
+    $("#IdCompra").val("");
     $("#divTabs").show();
     $(".divBotones").toggle();
     $(".divDetalles").toggle();
@@ -252,7 +249,7 @@ var BotonAgregar = function(){
     desbloquearInuts();
     $(".divDetalles").toggle();
     $("#divVolver").hide();
-    $("#IdProducto").val("");
+    $("#IdCompra").val("");
     $(".comboclear").val('').trigger("change");
     $('#FormCompras')[0].reset();
     $("#divTabs").hide();
@@ -362,7 +359,7 @@ var volverTabs = function(){
 }
 
 var crearAllSelect = function(data){
-    var v_TipoDtes =[{"id":1,"text":"DTE 1"},{"id":2,"text":"DTE 2"},{"id":2,"text":"DTE 3"}];
+    var v_TipoDtes =[{"id":1,"text":"DTE 1"},{"id":2,"text":"DTE 2"},{"id":3,"text":"DTE 3"},{"id":4,"text":"DTE 4"}];
     crearselect(v_TipoDtes,"TipoDTE");
     crearselect(data.v_estados,"EstadoCompra");
     crearselect(data.v_bodegas,"IdBodega");
@@ -386,6 +383,13 @@ var verificarRut = function(control){
 $(document).ready(function(){
     cargarTablaCompras(d.v_compras);
     crearAllSelect(d);
+    $("#RUTProveedor").focusout(function() {
+        var valid = $("#RUTProveedor").val();
+        if (valid.length > 0){
+            var res = verificarRut($("#RUTProveedor"));
+            $("#RUTProveedor").val(res);
+        }else{$("#ErrorRut").text("");}
+    });
     $(document).on('click','#guardar',validador);
     $(document).on('click','#guardarI',validadorI);
     $(document).on('click','#cancelar',BotonCancelar);

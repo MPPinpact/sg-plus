@@ -400,9 +400,11 @@ var modificarProducto = function(){
 var volverTabs = function(){
     $("#spanTitulo").text("");
     $(".divDetalles").toggle();
+    $("#areceta").removeClass("active");
     $("#aimpuestos").removeClass("active");
     $("#astock").removeClass("active");
     $("#akardex").removeClass("active");
+    $("#Tabreceta").removeClass("active");
     $("#TabImpuestos").removeClass("active");
     $("#TabStock").removeClass("active");
     $("#TabKardex").removeClass("active");

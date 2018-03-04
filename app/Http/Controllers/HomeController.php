@@ -26,7 +26,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        log::info("hola");
         if (Auth::check()){
             return view('menu.home');
         }else{

@@ -93,6 +93,7 @@
 											<div class="md-input-wrapper">
 												<input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control" maxlength="250" readonly />
 												<label for="RUTProveedor">RUT Proveedor</label>
+							                    <small id="ErrorRut" class="rut-error"></small>
 											</div>
 										</div>
 										<div class="col-sm-3">
