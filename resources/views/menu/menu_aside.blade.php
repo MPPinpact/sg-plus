@@ -121,7 +121,7 @@
             </a>
           </li>
           <li>
-            <a class="waves-effect" href="#">
+            <a class="waves-effect" href="{{ route('compras') }}">
               <i class="icon-arrow-right"></i>
               Compras
             </a>

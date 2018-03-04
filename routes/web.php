@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    //return view('auth.login');
+     return redirect('/login');
 });
 
 Auth::routes();
@@ -99,6 +100,12 @@ Route::post('/ventaCliente', 'VentaCreditoController@postBuscarCliente')->name('
 
 
 Route::get('/cicloFacturacion', 'CicloFacturacionController@getCicloFacturacionl')->name('cicloFacturacion');
+
+//CRUD Impuestos
+Route::get('/compras', 'CompraController@getCompras')->name('compras');
+Route::post('/compras', 'CompraController@postCompras')->name('compras');
+Route::post('/activarCom', 'CompraController@postCompractiva')->name('activarCom');
+Route::post('/comprab', 'CompraController@postBuscarcompra')->name('comprab');
 
 
 Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){
