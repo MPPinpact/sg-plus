@@ -17,7 +17,7 @@ var ManejoRespuestaProcesarD = function(respuesta){
         $("#divTabs").show();
         $("#spanTitulo").text("Detalles");
         $("#IdProducto2").val(respuesta.respuesta.v_detalles.IdProducto);
-        pintarDatosActualizar(respuesta.respuesta.v_detalles);
+        pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
         cargarTablaImpuestos(respuesta.respuesta.v_impuestos);
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
@@ -235,6 +235,8 @@ var cargarTablaImpuestos = function(data){
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
+    $("#RUTProveedor").val(data.RUTProveedor);
+    $("#NombreProveedor").val(data.NombreProveedor);
     $("#IdProducto").val(data.IdProducto);
     $("#CodigoBarra").val(data.CodigoBarra);
     $("#CodigoProveedor").val(data.CodigoProveedor);
@@ -292,7 +294,7 @@ var ProcesarProducto = function(){
     if(errorRut == 0){
         parametroAjax.ruta=ruta;
         var camposNuevo = {
-            'RutProveedor': $('#RutProveedor').val(),
+            'IdUltimoProveedor': $('#IdUltimoProveedor').val(),
             'IdFamilia': $('#IdFamilia').val(),
             'IdSubFamilia': $('#IdSubFamilia').val(),
             'IdUnidadMedida': $('#IdUnidadMedida').val(),
@@ -302,6 +304,7 @@ var ProcesarProducto = function(){
             'Descontinuado': $('#Descontinuado').val(),
             'EstadoProducto': $('#EstadoProducto').val()
         }
+
         parametroAjax.data = $("#FormProducto").serialize() + '&' + $.param(camposNuevo);
         respuesta=procesarajax(parametroAjax);
         ManejoRespuestaProcesar(respuesta);
@@ -355,6 +358,8 @@ var bloquearInuts = function(){
     $("#PrecioUltimaCompra").prop('readonly', true);
     $("#PrecioVentaSugerido").prop('readonly', true);
     $("#IdUltimoProveedor").prop('disabled', true);
+    $("#NombreProveedor").prop('readonly', true);
+    $("#RUTProveedor").prop('readonly', true);
     $("#IdFamilia").prop('disabled', true);
     $("#IdSubFamilia").prop('disabled', true);
     $("#IdUnidadMedida").prop('disabled', true);
@@ -430,6 +435,25 @@ var crearAllSelect = function(data){
 
 }
 
+var ManejoRespuestaBuscarProveedor = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta.v_proveedor!=null){
+            $("#IdUltimoProveedor").val(respuesta.respuesta.v_proveedor.IdProveedor);
+            $("#NombreProveedor").val(respuesta.respuesta.v_proveedor.NombreFantasia);
+        }else{
+            $.growl({message:"Proveedor no encontrado"},{type: "warning", allow_dismiss: true,});
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
+var buscarProveedor = function(RUTProveedor){
+    parametroAjax.ruta=rutaPP;
+    parametroAjax.data = {RUTProveedor:RUTProveedor};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaBuscarProveedor(respuesta);
+}
 
 var verificarRut = function(control){
     var res = Valida_Rut(control);
@@ -437,6 +461,7 @@ var verificarRut = function(control){
     if (format != false){
         errorRut = 0;
         $("#ErrorRut").text("");
+        buscarProveedor(format);
         return format;
     }else{
         errorRut = 1;

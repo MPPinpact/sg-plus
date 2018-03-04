@@ -93,6 +93,9 @@
 									{!! Form::hidden('IdProducto', '', [
 									'id'            => 'IdProducto',
 									'class'         => 'form-control'])!!}
+									{!! Form::hidden('IdUltimoProveedor', '', [
+									'id'            => 'IdUltimoProveedor',
+									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
 										<div class="col-sm-4">
@@ -133,13 +136,46 @@
 					                    </div>
 					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-												<select name="IdFamilia" id="IdFamilia" class="md-disable md-valid" disabled></select>
-				                                <label for="IdFamilia">Familia</label>
+					                        	<input id="NombreProveedor" name="NombreProveedor" type="text" class="md-form-control md-static" maxlength="250" readonly />
+				                                <label for="NombreProveedor">Nombre del Último Proveedor</label>
+					                        </div>
+					                    </div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-sm-3">
+											<div class="md-input-wrapper">
+												<select name="SeVende" id="SeVende" class="md-disable md-valid" disabled></select>
+					                            <label for="SeVende">Se Vende</label>
+											</div>
+										</div>
+										<div class="col-sm-3">
+					                        <div class="md-input-wrapper">
+												<select name="EsProductoCombo" id="EsProductoCombo" class="md-disable md-valid" disabled></select>
+				                                <label for="EsProductoCombo">Es combo</label>
+											</div>
+					                    </div>
+					                    <div class="col-sm-3">
+					                        <div class="md-input-wrapper">
+												<select name="Descontinuado" id="Descontinuado" class="md-disable md-valid" disabled></select>
+				                                <label for="Descontinuado">Producto Descontinuado</label>
+											</div>
+					                    </div>
+					                    <div class="col-sm-3">
+					                        <div class="md-input-wrapper">
+												<select name="SeCompra" id="SeCompra" class="md-disable md-valid" disabled></select>
+					                            <label for="SeCompra">Se compra</label>
 											</div>
 					                    </div>
 									</div>
 									<br>
 									<div class="row">
+										  <div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+												<select name="IdFamilia" id="IdFamilia" class="md-disable md-valid" disabled></select>
+				                                <label for="IdFamilia">Familia</label>
+											</div>
+					                    </div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
 												<select name="IdSubFamilia" id="IdSubFamilia" class="md-disable md-valid" disabled></select>
@@ -152,75 +188,51 @@
 				                                <label for="IdUnidadMedida">Unidad Medida</label>
 											</div>
 					                    </div>
-					                    <div class="col-sm-4">
-					                        <div class="md-input-wrapper">
-												<select name="SeCompra" id="SeCompra" class="md-disable md-valid" disabled></select>
-					                            <label for="SeCompra">Se compra</label>
-											</div>
-					                    </div>
+					                
 									</div>
 									<br>
 									<div class="row">
-										<div class="col-sm-4">
-											<div class="md-input-wrapper">
-												<select name="SeVende" id="SeVende" class="md-disable md-valid" disabled></select>
-					                            <label for="SeVende">Se Vende</label>
-											</div>
-										</div>
-										<div class="col-sm-4">
-					                        <div class="md-input-wrapper">
-												<select name="EsProductoCombo" id="EsProductoCombo" class="md-disable md-valid" disabled></select>
-				                                <label for="EsProductoCombo">Es combo</label>
-											</div>
-					                    </div>
-					                    <div class="col-sm-4">
-					                        <div class="md-input-wrapper">
-												<select name="Descontinuado" id="Descontinuado" class="md-disable md-valid" disabled></select>
-				                                <label for="Descontinuado">Producto Descontinuado</label>
-											</div>
-					                    </div>
-									</div>
-									<br>
-									<div class="row">
-										<div class="col-sm-4">
+										<div class="col-sm-2">
 											<div class="md-input-wrapper">
 												<input id="StockMinimo" name="StockMinimo" type="text" class="md-form-control" maxlength="5" readonly />
 												<label for="StockMinimo">Stock Minimo</label>
 											</div>
 										</div>
-										<div class="col-sm-4">
+										<div class="col-sm-2">
 					                        <div class="md-input-wrapper">
 												<input id="StockMaximo" name="StockMaximo" type="text" class="md-form-control" maxlength="5" readonly />
 												<label for="StockMaximo">Stock Maximo</label>
 											</div>
 					                    </div>
-					                    <div class="col-sm-4">
+					                    <div class="col-sm-2">
 					                        <div class="md-input-wrapper">
 												<input id="StockRecomendado" name="StockRecomendado" type="text" class="md-form-control" maxlength="5" readonly />
 												<label for="StockRecomendado">Stock Recomendado</label>
 											</div>
 					                    </div>
-									</div>
-									<br>
-									<div class="row">
-					                    <div class="col-sm-4">
-											<div class="md-input-wrapper">
-												<input id="PrecioUltimaCompra" name="PrecioUltimaCompra" type="text" class="md-form-control" maxlength="15" readonly />
-												<label for="PrecioUltimaCompra">Precio Ultima Compra</label>
-											</div>
-					                    </div>
-										<div class="col-sm-4">
+					                    <div class="col-sm-3">
 					                        <div class="md-input-wrapper">
 												<input id="PrecioVentaSugerido" name="PrecioVentaSugerido" type="text" class="md-form-control" maxlength="15" readonly />
 												<label for="PrecioVentaSugerido">Precio Venta Sugerido</label>
 											</div>
 										</div>
+										<div class="col-sm-3">
+											<div class="md-input-wrapper">
+												<input id="PrecioUltimaCompra" name="PrecioUltimaCompra" type="text" class="md-form-control" maxlength="15" readonly />
+												<label for="PrecioUltimaCompra">Precio Ultima Compra</label>
+											</div>
+					                    </div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-sm-4"></div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
 												<select name="EstadoProducto" id="EstadoProducto" class="md-disable md-valid" disabled></select>
 				                                <label for="EstadoProducto">Estado Producto</label>
 											</div>
 					                    </div>
+										<div class="col-sm-4"></div>
 									</div>
 									<br>
 									<div align="center">
@@ -308,6 +320,7 @@
 	var rutaB = "{{ URL::route('buscarSubfamilia') }}"
 	var rutaPI = "{{ URL::route('procesarIm') }}"
 	var rutaAI = "{{ URL::route('activarIm') }}"
+	var rutaPP = "{{ URL::route('buscarProveedor') }}"
 
 	var d = [];
 	d['v_productos'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_productos) }}'));

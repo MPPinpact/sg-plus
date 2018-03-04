@@ -91,6 +91,17 @@ class Credito extends Authenticatable
                 ->update($values);
     }
 
+      // Validacion de Preferencia de Credito
+    public function validarPreferencia($IdCreditoPreferencia){
+//        $model = new Credito();
+//        $result = $model->getPreferenciaCredito($IdCreditoPreferencia);
+
+//select count(1) existe from sgp.credito_preferencias where 
+//EstadoPreferencia = 1 and date_format(FechaInicio, '%Y-%m-%d') >= '2018-01-04' 
+//and date_format(FechaFin, '%Y-%m-%d') <= '2021-03-01';
+       
+    }
+
     public function getPreferenciaCredito($IdCreditoPreferencia){
         return DB::table('v_credito_preferencias')->where('IdCreditoPreferencia',$IdCreditoPreferencia)->get();
     }

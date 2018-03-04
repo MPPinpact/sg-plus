@@ -22,6 +22,7 @@ use DB;
 
 use App\Models\Producto;
 use App\Models\Usuario;
+use App\Models\Proveedor;
 
 class ProductoController extends Controller
 {
@@ -87,7 +88,7 @@ class ProductoController extends Controller
     protected function postProductodetalle (Request $request){
         $datos = $request->all();
         $model= new Producto();
-        $result['v_detalles'] = Producto::find($datos['IdProducto']);
+        $result['v_detalles'] = $model->getProducto($datos['IdProducto']);
         $result['v_impuestos'] = $model->impuestosProducto($datos['IdProducto']);
         $result['v_productos'] = $model->localesProducto($datos['IdProducto']);
         return $result;
@@ -116,6 +117,16 @@ class ProductoController extends Controller
         $impuesto = $model->getImpuesto($datos['IdProductoImpuesto']);
         $result['activar'] = $model->activarImpuestoProducto($impuesto);
         $result['v_impuestos'] = $model->impuestosProducto($impuesto[0]->IdProducto);
+        return $result;
+    }
+
+    //Buscar el IDUltimoProveedor
+    protected function postBuscarProveedor(Request $request){
+        $datos = $request->all();
+        $usuario= new Usuario();
+        $datos['RUTProveedor'] = $usuario->LimpiarRut($datos['RUTProveedor']);
+        $model= new Proveedor();
+        $result ['v_proveedor'] = Proveedor::where('RUTProveedor', '=', $datos['RUTProveedor'])->first();
         return $result;
     }
 
