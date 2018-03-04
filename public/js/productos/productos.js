@@ -289,9 +289,10 @@ var ProcesarImpuesto = function(){
 };
 
 var ProcesarProducto = function(){
+    if(errorRut == 0){
         parametroAjax.ruta=ruta;
         var camposNuevo = {
-            'IdUltimoProveedor': $('#IdUltimoProveedor').val(),
+            'RutProveedor': $('#RutProveedor').val(),
             'IdFamilia': $('#IdFamilia').val(),
             'IdSubFamilia': $('#IdSubFamilia').val(),
             'IdUnidadMedida': $('#IdUnidadMedida').val(),
@@ -304,6 +305,7 @@ var ProcesarProducto = function(){
         parametroAjax.data = $("#FormProducto").serialize() + '&' + $.param(camposNuevo);
         respuesta=procesarajax(parametroAjax);
         ManejoRespuestaProcesar(respuesta);
+    }
 };
 
 var validador = function(){
@@ -428,6 +430,21 @@ var crearAllSelect = function(data){
 
 }
 
+
+var verificarRut = function(control){
+    var res = Valida_Rut(control);
+    var format = formateaRut(control.val(), res);
+    if (format != false){
+        errorRut = 0;
+        $("#ErrorRut").text("");
+        return format;
+    }else{
+        errorRut = 1;
+        $("#ErrorRut").text("Rut invalido");
+        return control.val();
+    }
+}
+
 $(document).ready(function(){
     cargarTablaProductos(d.v_productos);
     crearAllSelect(d);
@@ -439,6 +456,13 @@ $(document).ready(function(){
     $(document).on('click','#volverAct',volverTabs);
     $("#IdFamilia").change(function() {
         buscarSubfamilia($("#IdFamilia").val());
+    });
+    $("#RUTProveedor").focusout(function() {
+        var valid = $("#RUTProveedor").val();
+        if (valid.length > 0){
+            var res = verificarRut($("#RUTProveedor"));
+            $("#RUTProveedor").val(res);
+        }else{$("#ErrorRut").text("");}
     });
 
     $('#FormImpuesto').formValidation({
@@ -531,14 +555,6 @@ $(document).ready(function(){
                 }
             },
             'PrecioVentaSugerido': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
-            'IdUltimoProveedor': {
                 verbose: false,
                 validators: {
                     notEmpty: {

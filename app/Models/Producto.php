@@ -71,7 +71,7 @@ class Producto extends Authenticatable
     public function regProducto($datos){
         $idAdmin = Auth::id();
         $datos['IdProducto']==null ? $Id=0 : $Id= $datos['IdProducto'];
-        $sql="select f_registro_producto(".$Id.",'".$datos['CodigoBarra']."','".$datos['CodigoProveedor']."','".$datos['NombreProducto']."','".$datos['DescripcionProducto']."',".$datos['IdUltimoProveedor'].",".$datos['IdFamilia'].",".$datos['IdSubFamilia'].",".$datos['IdUnidadMedida'].",".$datos['SeCompra'].",".$datos['SeVende'].",".$datos['EsProductoCombo'].",".$datos['Descontinuado'].",".$datos['StockMinimo'].",".$datos['StockMaximo'].",".$datos['StockRecomendado'].",'".$datos['PrecioUltimaCompra']."','".$datos['PrecioVentaSugerido']."',".$datos['EstadoProducto'].",".$idAdmin.")";
+        $sql="select f_registro_producto(".$Id.",'".$datos['CodigoBarra']."','".$datos['CodigoProveedor']."','".$datos['NombreProducto']."','".$datos['DescripcionProducto']."',".$datos['RUTProveedor'].",".$datos['IdFamilia'].",".$datos['IdSubFamilia'].",".$datos['IdUnidadMedida'].",".$datos['SeCompra'].",".$datos['SeVende'].",".$datos['EsProductoCombo'].",".$datos['Descontinuado'].",".$datos['StockMinimo'].",".$datos['StockMaximo'].",".$datos['StockRecomendado'].",'".$datos['PrecioUltimaCompra']."','".$datos['PrecioVentaSugerido']."',".$datos['EstadoProducto'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result['f_registro_producto']=$value;

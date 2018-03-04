@@ -63,6 +63,7 @@ var ManejoRespuestaProcesar = function(respuesta){
 };
 
 var cargartablaCicloFacturacions = function(data){
+    console.log(data);
     if(limpiarLocales==1){destruirTabla('#tablaCicloFacturacion');$('#tablaCicloFacturacion thead').empty();}
         $("#tablaCicloFacturacion").dataTable({ 
             responsive:false,
@@ -92,7 +93,7 @@ var cargartablaCicloFacturacions = function(data){
                     }
                 },
                 {"title": "IdCicloFacturacion","data": "IdCicloFacturacion",visible:0},
-                {"title": "Dia Corte","data": "DiaCorte"},
+                {"title": "Dia Corte","data": "DiaPago"},
                 {"title": "Dia Facturación","data": "DiaFacturacion"},
                 {"title": "Estado Ciclo","data": "DetalleEstadoCiclo"},
 				

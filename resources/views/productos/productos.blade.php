@@ -124,8 +124,11 @@
 										</div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-												<select name="IdUltimoProveedor" id="IdUltimoProveedor" class="md-disable md-valid" disabled></select>
-				                                <label for="IdUltimoProveedor">Último proveedor</label>
+					                        	 <div class="md-input-wrapper">
+					                                <input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control" maxlength="14" />
+	                            					<label for="RUTProveedor">Rut Último proveedor</label>
+							                        <small id="ErrorRut" class="rut-error"></small>
+						                        </div>               
 											</div>
 					                    </div>
 					                    <div class="col-sm-4">
