@@ -2,7 +2,9 @@
 /storage
 /.idea
 /.vagrant
-/storage/
+/storage
+/vendor
+>>>>>>> def63985eb9fa5600fe8482afce94dfb6c0697b3
 Homestead.json
 Homestead.yaml
 npm-debug.log

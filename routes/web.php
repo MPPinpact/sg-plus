@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    //return view('auth.login');
+     return redirect('/login');
 });
 
 Auth::routes();
@@ -70,6 +71,8 @@ Route::post('/detallesPr', 'ProductoController@postProductodetalle')->name('deta
 Route::post('/buscarSubfamilia', 'ProductoController@postBuscarsub')->name('buscarSubfamilia');
 Route::post('/procesarIm', 'ProductoController@postprocesarImpuesto')->name('procesarIm');
 Route::post('/activarIm', 'ProductoController@postImpuestopactivo')->name('activarIm');
+Route::post('/buscarProveedor', 'ProductoController@postBuscarProveedor')->name('buscarProveedor');
+
 
 //CRUD Proveedores
 Route::get('/proveedores', 'ProveedorController@getProveedor')->name('proveedores');
@@ -79,6 +82,9 @@ Route::post('/detallesP', 'ProveedorController@postProveedordetalle')->name('det
 
 //CRUD Clientes
 Route::get('/clientes', 'ClienteController@getCliente')->name('clientes');
+Route::post('/clientes', 'ClienteController@postCliente')->name('clientes');
+Route::post('/activarCli', 'ClienteController@postClienteactivo')->name('activarCli');
+Route::post('/detallesCli', 'ClienteController@postClientedetalle')->name('detallesCli');
 
 //CRUD Crédito
 Route::get('/credito', 'CreditoController@getCreditoPreferencias')->name('credito');
@@ -96,6 +102,12 @@ Route::post('/ventaCliente', 'VentaCreditoController@postBuscarCliente')->name('
 
 
 Route::get('/cicloFacturacion', 'CicloFacturacionController@getCicloFacturacionl')->name('cicloFacturacion');
+
+//CRUD Impuestos
+Route::get('/compras', 'CompraController@getCompras')->name('compras');
+Route::post('/compras', 'CompraController@postCompras')->name('compras');
+Route::post('/activarCom', 'CompraController@postCompractiva')->name('activarCom');
+Route::post('/comprab', 'CompraController@postBuscarcompra')->name('comprab');
 
 
 Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){

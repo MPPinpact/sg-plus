@@ -26,7 +26,7 @@ class Producto extends Authenticatable
     protected $primaryKey = 'IdProducto';
 
     protected $fillable = [
-        'CodigoBarra','CodigoProveedor','NombreProducto','DescripcionProducto','IdUltimoProveedor','IdFamilia','IdSubFamilia','IdUnidadMedida','SeCompra','SeVende','EsProductoCombo','Descontinuado','StockMinimo','StockMaximo','StockRecomendado','PrecioUltimaCompra','PrecioVentaSugerido','IdBodega','auUsuarioModificacion','auUsuarioCreacion','EstadoProducto'
+        'CodigoBarra','CodigoProveedor','NombreProducto','DescripcionProducto','IdUltimoProveedor','IdFamilia','IdSubFamilia','IdUnidadMedida','SeCompra','SeVende','EsProductoCombo','Descontinuado','StockMinimo','StockMaximo','StockRecomendado','PrecioUltimaCompra','PrecioVentaSugerido','IdBodega','auUsuarioModificacion','auUsuarioCreacion','EstadoProducto','RUTProveedor', 'NombreProveedor'
     ];
 
     protected $dates = [
@@ -67,6 +67,10 @@ class Producto extends Authenticatable
         return DB::table('v_bodegas_combo')->get();
     }
 
+    public function getProducto($IdProducto){
+        return DB::table('v_productos')->where('IdProducto',$IdProducto)->get(); 
+    } 
+
     // registrar un nueva producto
     public function regProducto($datos){
         $idAdmin = Auth::id();
@@ -82,7 +86,6 @@ class Producto extends Authenticatable
 
     // registrar un nuevo impuesto a un producto
     public function regProductoImpuesto($datos){
-        log::info($datos);
         $idAdmin = Auth::id();
         $sql="select f_registro_productoimpuesto(".$datos['IdProducto2'].",".$datos['IdImpuesto'].",".$idAdmin.")";
         $execute=DB::select($sql);
@@ -151,5 +154,7 @@ class Producto extends Authenticatable
             ->where('IdProductoImpuesto', $IdProductoImpuesto)
             ->get();
     }
+
+
 
 }

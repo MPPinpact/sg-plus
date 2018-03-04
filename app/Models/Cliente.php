@@ -14,6 +14,9 @@ use Session;
 use Exception;
 use Auth;
 
+use App\Models\Usuario;
+
+
 class Cliente extends Authenticatable
 {
     /**
@@ -26,7 +29,7 @@ class Cliente extends Authenticatable
     protected $primaryKey = 'IdCliente';
 
     protected $fillable = [
-		'RUTCliente', 'NombreCliente', 'DireccionCliente', 'DiaPago', 'CupoAutorizado', 'CupoUtilizado', 'EstadoCliente', 'auUsuarioModificacion', 'auUsuarioCreacion'
+        'RUTCliente', 'NombreCliente', 'DireccionCliente', 'DiaPago', 'CupoAutorizado', 'CupoUtilizado', 'EstadoCliente', 'auUsuarioModificacion', 'auUsuarioCreacion','IdCicloFacturacion'
     ];
 
     protected $dates = [
@@ -43,34 +46,20 @@ class Cliente extends Authenticatable
     }
 
     // Cargar combo Familia
-    public function listFamilias(){
-        return DB::table('v_familias_combo')->get();
-    }
-
-    // Cargar combo SubFamilia
-    public function listSubfamilias(){
-        return DB::table('v_subfamilias_combo')->get();
-    }
-
-    // Cargar combo Unidad de medida
-    public function listUnidadmedidas(){
-        return DB::table('v_unidadmedida_combo')->get();
-    }
-
-    // Cargar combo de Bodega
-    public function listBodegas(){
-        return DB::table('v_bodegas_combo')->get();
+    public function listCiclos(){
+        return DB::table('v_ciclos_facturacion_combo')->get();
     }
 
     // registrar una nuevo Cliente
     public function regCliente($datos){
-        log::info($datos);
+        $model = new Usuario();
+        $datos['RUTCliente'] = $model->LimpiarRut($datos['RUTCliente']);
         $idAdmin = Auth::id();
-        $datos['IdProducto']==null ? $Id=0 : $Id= $datos['IdProducto'];
-        $sql="select f_registro_producto(".$Id.",'".$datos['CodigoBarra']."','".$datos['CodigoProveedor']."','".$datos['NombreProducto']."','".$datos['DescripcionProducto']."',".$datos['IdUltimoProveedor'].",".$datos['IdFamilia'].",".$datos['IdSubFamilia'].",".$datos['IdUnidadMedida'].",".$datos['SeCompra'].",".$datos['SeVende'].",".$datos['EsProductoCombo'].",".$datos['Descontinuado'].",".$datos['StockMinimo'].",".$datos['StockMaximo'].",".$datos['StockRecomendado'].",'".$datos['PrecioUltimaCompra']."','".$datos['PrecioVentaSugerido']."',".$datos['IdBodega'].",".$datos['EstadoProducto'].",".$idAdmin.")";
+        $datos['IdCliente']==null ? $Id=0 : $Id= $datos['IdCliente'];
+        $sql="select f_registro_cliente(".$Id.",'".$datos['RUTCliente']."','".$datos['NombreCliente']."','".$datos['DireccionCliente']."','".$datos['CupoAutorizado']."','".$datos['CupoUtilizado']."',".$datos['IdCicloFacturacion'].",".$datos['EstadoCliente'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
-            $result['f_registro_producto']=$value;
+            $result=$value;
         }
         return $result;
     }
@@ -78,25 +67,17 @@ class Cliente extends Authenticatable
     // Activar / Desactivar Cliente
     public function activarCliente($datos){
         $idAdmin = Auth::id();
-        if ($datos['EstadoProducto']>0){
-            $values=array('EstadoProducto'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        if ($datos['EstadoCliente']>0){
+            $values=array('EstadoCliente'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }else{
-            $values=array('EstadoProducto'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+            $values=array('EstadoCliente'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }
-        return DB::table('productos')
-                ->where('IdProducto', $datos['IdProducto'])
+        return DB::table('clientes')
+                ->where('IdCliente', $datos['IdCliente'])
                 ->update($values);
     }
 
-    public function descontinuarProducto($datos){
-        $idAdmin = Auth::id();
-        if ($datos['Descontinuado']>1){
-            $values=array('Descontinuado'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
-        }else{
-            $values=array('Descontinuado'=>2,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
-        }
-        return DB::table('productos')
-                ->where('IdProducto', $datos['IdProducto'])
-                ->update($values);
+    public function getDetallesClientes($IdCliente){
+        return DB::table('v_clientes')->where('IdCliente',$IdCliente)->get();
     }
 }

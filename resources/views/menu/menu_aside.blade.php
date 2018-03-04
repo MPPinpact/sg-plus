@@ -17,6 +17,25 @@
       </li>
       <li class="treeview">
         <a href="#">
+          <i class="icofont icofont-company"></i><span>Ventas</span><i class="icon-arrow-down"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li>
+            <a class="waves-effect" href="#">
+              <i class="icon-arrow-right"></i>
+             Preventa
+            </a>
+          </li>
+          <li>
+            <a class="waves-effect" href="#">
+              <i class="icon-arrow-right"></i>
+             Venta
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a href="#">
           <i class="icofont icofont-company"></i><span>Clientes </span><i class="icon-arrow-down"></i>
         </a>
         <ul class="treeview-menu">
@@ -34,6 +53,12 @@
         </a>
         <ul class="treeview-menu">
           <li>
+            <a class="waves-effect" href="{{ route('cicloFacturacion') }}">
+              <i class="icon-arrow-right"></i>
+              Ciclos de facturación
+            </a>
+          </li>
+          <li>
             <a class="waves-effect" href="{{ route('credito') }}">
               <i class="icon-arrow-right"></i>
               Preferencia de Credito
@@ -43,12 +68,6 @@
             <a class="waves-effect" href="{{ route('ventaCredito') }}">
               <i class="icon-arrow-right"></i>
               Venta Credito
-            </a>
-          </li>
-          <li>
-            <a class="waves-effect" href="{{ route('cicloFacturacion') }}">
-              <i class="icon-arrow-right"></i>
-              Ciclos de facturación
             </a>
           </li>
         </ul>
@@ -92,7 +111,7 @@
       </li>
       <li class="treeview">
         <a href="#">
-          <i class="icofont icofont-company"></i><span>Crédito </span><i class="icon-arrow-down"></i>
+          <i class="icofont icofont-company"></i><span>Compras</span><i class="icon-arrow-down"></i>
         </a>
         <ul class="treeview-menu">
           <li>
@@ -102,7 +121,7 @@
             </a>
           </li>
           <li>
-            <a class="waves-effect" href="#">
+            <a class="waves-effect" href="{{ route('compras') }}">
               <i class="icon-arrow-right"></i>
               Compras
             </a>

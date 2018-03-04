@@ -1,5 +1,10 @@
 @extends('menu.index')
 @section('content')
+<style type="text/css" media="screen">
+	.nav-tabs .slide{
+		 width: calc(100% / 5)!important;
+	}
+</style>
 <div class="row">
 	<div class="col-md-12 divDetalles">
 	    <div class="card">
@@ -52,6 +57,15 @@
 			                                <div class="f-26">
 			                                    <i class="icofont icofont-document-search"></i>
 			                                </div>
+			                                Detalles
+			                            </a>
+			                            <div class="slide"></div>
+			                        </li>
+			                        <li class="nav-item">
+			                            <a id="areceta" class="nav-link" data-toggle="tab" href="#Tabreceta" role="tab">
+			                                <div class="f-26">
+			                                    <i class="icofont icofont-document-search"></i>
+			                                </div>
 			                                Receta
 			                            </a>
 			                            <div class="slide"></div>
@@ -93,6 +107,9 @@
 									{!! Form::hidden('IdProducto', '', [
 									'id'            => 'IdProducto',
 									'class'         => 'form-control'])!!}
+									{!! Form::hidden('IdUltimoProveedor', '', [
+									'id'            => 'IdUltimoProveedor',
+									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
 										<div class="col-sm-4">
@@ -124,19 +141,55 @@
 										</div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-												<select name="IdUltimoProveedor" id="IdUltimoProveedor" class="md-disable md-valid" disabled></select>
-				                                <label for="IdUltimoProveedor">Último proveedor</label>
+					                        	 <div class="md-input-wrapper">
+					                                <input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control" maxlength="14" />
+	                            					<label for="RUTProveedor">Rut Último proveedor</label>
+							                        <small id="ErrorRut" class="rut-error"></small>
+						                        </div>               
 											</div>
 					                    </div>
 					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-												<select name="IdFamilia" id="IdFamilia" class="md-disable md-valid" disabled></select>
-				                                <label for="IdFamilia">Familia</label>
+					                        	<input id="NombreProveedor" name="NombreProveedor" type="text" class="md-form-control md-static" maxlength="250" readonly />
+				                                <label for="NombreProveedor">Nombre del Último Proveedor</label>
+					                        </div>
+					                    </div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-sm-3">
+											<div class="md-input-wrapper">
+												<select name="SeVende" id="SeVende" class="md-disable md-valid" disabled></select>
+					                            <label for="SeVende">Se Vende</label>
+											</div>
+										</div>
+										<div class="col-sm-3">
+					                        <div class="md-input-wrapper">
+												<select name="EsProductoCombo" id="EsProductoCombo" class="md-disable md-valid" disabled></select>
+				                                <label for="EsProductoCombo">Es combo</label>
+											</div>
+					                    </div>
+					                    <div class="col-sm-3">
+					                        <div class="md-input-wrapper">
+												<select name="Descontinuado" id="Descontinuado" class="md-disable md-valid" disabled></select>
+				                                <label for="Descontinuado">Producto Descontinuado</label>
+											</div>
+					                    </div>
+					                    <div class="col-sm-3">
+					                        <div class="md-input-wrapper">
+												<select name="SeCompra" id="SeCompra" class="md-disable md-valid" disabled></select>
+					                            <label for="SeCompra">Se compra</label>
 											</div>
 					                    </div>
 									</div>
 									<br>
 									<div class="row">
+										  <div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+												<select name="IdFamilia" id="IdFamilia" class="md-disable md-valid" disabled></select>
+				                                <label for="IdFamilia">Familia</label>
+											</div>
+					                    </div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
 												<select name="IdSubFamilia" id="IdSubFamilia" class="md-disable md-valid" disabled></select>
@@ -149,75 +202,51 @@
 				                                <label for="IdUnidadMedida">Unidad Medida</label>
 											</div>
 					                    </div>
-					                    <div class="col-sm-4">
-					                        <div class="md-input-wrapper">
-												<select name="SeCompra" id="SeCompra" class="md-disable md-valid" disabled></select>
-					                            <label for="SeCompra">Se compra</label>
-											</div>
-					                    </div>
+					                
 									</div>
 									<br>
 									<div class="row">
-										<div class="col-sm-4">
-											<div class="md-input-wrapper">
-												<select name="SeVende" id="SeVende" class="md-disable md-valid" disabled></select>
-					                            <label for="SeVende">Se Vende</label>
-											</div>
-										</div>
-										<div class="col-sm-4">
-					                        <div class="md-input-wrapper">
-												<select name="EsProductoCombo" id="EsProductoCombo" class="md-disable md-valid" disabled></select>
-				                                <label for="EsProductoCombo">Es combo</label>
-											</div>
-					                    </div>
-					                    <div class="col-sm-4">
-					                        <div class="md-input-wrapper">
-												<select name="Descontinuado" id="Descontinuado" class="md-disable md-valid" disabled></select>
-				                                <label for="Descontinuado">Producto Descontinuado</label>
-											</div>
-					                    </div>
-									</div>
-									<br>
-									<div class="row">
-										<div class="col-sm-4">
+										<div class="col-sm-2">
 											<div class="md-input-wrapper">
 												<input id="StockMinimo" name="StockMinimo" type="text" class="md-form-control" maxlength="5" readonly />
 												<label for="StockMinimo">Stock Minimo</label>
 											</div>
 										</div>
-										<div class="col-sm-4">
+										<div class="col-sm-2">
 					                        <div class="md-input-wrapper">
 												<input id="StockMaximo" name="StockMaximo" type="text" class="md-form-control" maxlength="5" readonly />
 												<label for="StockMaximo">Stock Maximo</label>
 											</div>
 					                    </div>
-					                    <div class="col-sm-4">
+					                    <div class="col-sm-2">
 					                        <div class="md-input-wrapper">
 												<input id="StockRecomendado" name="StockRecomendado" type="text" class="md-form-control" maxlength="5" readonly />
 												<label for="StockRecomendado">Stock Recomendado</label>
 											</div>
 					                    </div>
-									</div>
-									<br>
-									<div class="row">
-					                    <div class="col-sm-4">
-											<div class="md-input-wrapper">
-												<input id="PrecioUltimaCompra" name="PrecioUltimaCompra" type="text" class="md-form-control" maxlength="15" readonly />
-												<label for="PrecioUltimaCompra">Precio Ultima Compra</label>
-											</div>
-					                    </div>
-										<div class="col-sm-4">
+					                    <div class="col-sm-3">
 					                        <div class="md-input-wrapper">
 												<input id="PrecioVentaSugerido" name="PrecioVentaSugerido" type="text" class="md-form-control" maxlength="15" readonly />
 												<label for="PrecioVentaSugerido">Precio Venta Sugerido</label>
 											</div>
 										</div>
+										<div class="col-sm-3">
+											<div class="md-input-wrapper">
+												<input id="PrecioUltimaCompra" name="PrecioUltimaCompra" type="text" class="md-form-control" maxlength="15" readonly />
+												<label for="PrecioUltimaCompra">Precio Ultima Compra</label>
+											</div>
+					                    </div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-sm-4"></div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
 												<select name="EstadoProducto" id="EstadoProducto" class="md-disable md-valid" disabled></select>
 				                                <label for="EstadoProducto">Estado Producto</label>
 											</div>
 					                    </div>
+										<div class="col-sm-4"></div>
 									</div>
 									<br>
 									<div align="center">
@@ -271,23 +300,21 @@
 										<div class="col-md-2"></div>
 									</div>
 		                        </div>
+		                        
+		                        <div class="tab-pane" id="Tabreceta" role="tabpanel">
+		                        	<h1>
+		                        		Receta
+		                        	</h1>
+		                        </div>
 		                        <div class="tab-pane" id="TabStock" role="tabpanel">
-		                        	222222222222222222222222222222222222222222222222222222222222222222
-		                        	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		                        	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		                        	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		                        	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-		                        	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-		                        	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		                        	<h1>
+		                        		Stock
+		                        	</h1>
 		                        </div>
 		                        <div class="tab-pane" id="TabKardex" role="tabpanel">
-		                        	333333333333333333333333333333333333333333333333333333333333333333333
-		                        	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		                        	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		                        	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		                        	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-		                        	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-		                        	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		                        	<h1>
+		                        		Kardex
+		                        	</h1>
 		                        </div>
 		                    </div>
 		                </div>
@@ -305,6 +332,7 @@
 	var rutaB = "{{ URL::route('buscarSubfamilia') }}"
 	var rutaPI = "{{ URL::route('procesarIm') }}"
 	var rutaAI = "{{ URL::route('activarIm') }}"
+	var rutaPP = "{{ URL::route('buscarProveedor') }}"
 
 	var d = [];
 	d['v_productos'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_productos) }}'));
