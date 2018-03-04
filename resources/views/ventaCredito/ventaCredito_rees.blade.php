@@ -95,19 +95,19 @@
 					                    </div>
 					                    <div class="col-sm-3">
 					                        <div class="md-input-wrapper">
-												<input id="NumeroCuotas" name="NumeroCuotas" type="text" class="md-form-control md-static" maxlength="13" readonly />
-				                                <label for="NumeroCuotas">Nro de Cuotas</label>
+												<input id="NumeroCuotas" name="NumeroCuotas" type="text" class="md-form-control" maxlength="3" readonly />
+				                                <label for="NumeroCuotas">Nro. Cuotas</label>
 											</div>
 					                    </div>
 										<div class="col-sm-3">
 					                        <div class="md-input-wrapper">
-												<input id="InteresMensual" name="InteresMensual" type="text" class="md-form-control md-static" maxlength="5" readonly value="3" />
+												<input id="InteresMensual" name="InteresMensual" type="text" class="md-form-control" maxlength="5" readonly />
 				                                <label for="InteresMensual">Interes Mensual</label>
 											</div>
 					                    </div>
 										<div class="col-sm-3">
 					                        <div class="md-input-wrapper">
-												<input id="MontoFinal" name="MontoFinal" type="text" class="md-form-control md-static" maxlength="13" readonly />
+												<input id="MontoFinal" name="MontoFinal" type="text" class="md-form-control" maxlength="13" readonly />
 				                                <label for="MontoFinal">Monto Final Crédito</label>
 											</div>
 					                    </div>
@@ -116,13 +116,13 @@
 									<div class="row">
 										<div class="col-sm-6">
 					                        <div class="md-input-wrapper">
-												<input id="MontoCuota" name="MontoCuota" type="text" class="md-form-control md-static" maxlength="13" readonly />
+												<input id="MontoCuota" name="MontoCuota" type="text" class="md-form-control" maxlength="13" readonly />
 				                                <label for="MontoCuota">Monto Cuota</label>
 											</div>
 					                    </div>
 					                    <div class="col-sm-6">
 					                        <div class="md-input-wrapper">
-												<input id="PrimeraCuota" name="PrimeraCuota" type="text" class="md-form-control md-static" maxlength="20" readonly />
+												<input id="PrimeraCuota" name="PrimeraCuota" type="text" class="md-form-control" maxlength="20" readonly />
 				                                <label for="PrimeraCuota">Fecha Primera Cuota</label>
 											</div>
 					                    </div>
@@ -164,7 +164,6 @@
 	d['v_credito_venta'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_credito_venta) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
 	d['v_clientes'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_clientes) }}'));
-	d['v_prefencias'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_prefencias) }}'));
 </script>
 <script src="{{ asset('js/credito_venta/credito_venta.js') }}"></script>
 @endsection
