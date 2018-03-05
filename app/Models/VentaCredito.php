@@ -116,8 +116,8 @@ class VentaCredito extends Authenticatable
     }
 
     public function calcularFechaPago($cliente){
-        //$date = Carbon::now();
-        $date  = Carbon::createFromDate(2018,01,27);
+        $date = Carbon::now();
+        //$date  = Carbon::createFromDate(2018,01,27);
         $fechaVenta = $date->format('d/m/Y');
         $diaVenta = $date->format('d');
         $diaPago = $cliente[0]->DiaPago;
