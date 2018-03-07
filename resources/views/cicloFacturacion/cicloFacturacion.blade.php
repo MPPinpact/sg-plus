@@ -2,7 +2,7 @@
 @section('content')
 <style type="text/css" media="screen">
 	.nav-tabs .slide{
-		 width: calc(100% / 2)!important;
+		 width: calc(100% / 1)!important;
 	}
 </style>
 <div class="row">
@@ -66,16 +66,22 @@
 									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
-										<div class="col-sm-6">
+										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
 				                                <input id="DiaCorte" name="DiaCorte" type="text" class="md-form-control" maxlength="2" readonly />
 					                            <label for="DiaCorte">Dia de Corte</label>
 					                        </div>
 										</div>
-					                    <div class="col-sm-6">
+					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
 					                        	<input id="DiaFacturacion" name="DiaFacturacion" type="text" class="md-form-control" maxlength="2" readonly />
-					                            <label for="DiaFacturacion">Dia de Facturación Bodega</label>
+					                            <label for="DiaFacturacion">Dia de Facturación</label>
+					                        </div>
+					                    </div>
+					                    <div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+					                        	<select name="EstadoCiclo" id="EstadoCiclo" class="md-disable md-valid" disabled></select>
+                                				<label for="EstadoCiclo">Estado</label>
 					                        </div>
 					                    </div>
 									</div>
@@ -116,10 +122,11 @@
 </div>
 <script Language="Javascript">
 	var ruta = "{{ URL::route('cicloFacturacion') }}"
-	var rutaA = "{{ URL::route('activarB') }}"
-	var rutaD = "{{ URL::route('detallesB') }}"
+	var rutaA = "{{ URL::route('activarCF') }}"
+	var rutaD = "{{ URL::route('detallesCF') }}"
 	var d = [];
 	d['v_ciclos_facturacion'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_ciclos_facturacion) }}'));
+	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
 </script>
 <script src="{{ asset('js/ciclo_facturacion/ciclo_facturacion.js') }}"></script>
 @endsection

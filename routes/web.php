@@ -101,7 +101,10 @@ Route::post('/ventaCliente', 'VentaCreditoController@postBuscarCliente')->name('
 
 
 
-Route::get('/cicloFacturacion', 'CicloFacturacionController@getCicloFacturacionl')->name('cicloFacturacion');
+Route::get('/cicloFacturacion', 'CicloFacturacionController@getCicloFacturacion')->name('cicloFacturacion');
+Route::post('/cicloFacturacion', 'CicloFacturacionController@postCicloFacturacion')->name('cicloFacturacion');
+Route::post('/activarCF', 'CicloFacturacionController@postCicloactivo')->name('activarCF');
+Route::post('/detallesCF', 'CicloFacturacionController@postCiclodetalle')->name('detallesCF');
 
 //CRUD Impuestos
 Route::get('/compras', 'CompraController@getCompras')->name('compras');
