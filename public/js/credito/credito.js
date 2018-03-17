@@ -29,7 +29,7 @@ var ManejoRespuestaProcesarI = function(respuesta){
                 cargarTablaPreferencia(respuesta.respuesta.v_credito_preferencias);
             }
         }else{
-            $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
+            $.growl({message:"No se puede tener activa dos \n preferencias de crédito en el mismo rango de fechas"},{type: "warning", allow_dismiss: true,});
         }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});

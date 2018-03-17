@@ -80,26 +80,39 @@ class Credito extends Authenticatable
 
     // Activar / Desactivar Cliente
     public function activarCredito($datos){
-        $idAdmin = Auth::id();
-        if ($datos['EstadoPreferencia']>0){
-            $values=array('EstadoPreferencia'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        $model = new Credito();
+        $validador = 0;
+        log::info($datos['EstadoPreferencia']);
+        if($datos['EstadoPreferencia'] == 0){
+            $validador = $model->validarPreferencia($datos['FechaInicio'],$datos['FechaFin']);
+        }        
+
+        if($validador > 0){
+             return '{"code":"-2"}'; 
         }else{
-            $values=array('EstadoPreferencia'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+            $idAdmin = Auth::id();
+            if ($datos['EstadoPreferencia']>0){
+                $values=array('EstadoPreferencia'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+            }else{
+                $values=array('EstadoPreferencia'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+            }
+            return DB::table('credito_preferencias')
+                    ->where('IdCreditoPreferencia', $datos['IdCreditoPreferencia'])
+                    ->update($values);
         }
-        return DB::table('credito_preferencias')
-                ->where('IdCreditoPreferencia', $datos['IdCreditoPreferencia'])
-                ->update($values);
     }
 
-      // Validacion de Preferencia de Credito
-    public function validarPreferencia($IdCreditoPreferencia){
-//        $model = new Credito();
-//        $result = $model->getPreferenciaCredito($IdCreditoPreferencia);
-
-//select count(1) existe from sgp.credito_preferencias where 
-//EstadoPreferencia = 1 and date_format(FechaInicio, '%Y-%m-%d') >= '2018-01-04' 
-//and date_format(FechaFin, '%Y-%m-%d') <= '2021-03-01';
-       
+      // Validacion de Preferencia de Credito activa para ese rango de fecha
+    public function validarPreferencia($fInicio, $fFin){
+        $sql = "select count(1) existe from sgp.credito_preferencias where  
+                EstadoPreferencia = 1 and (
+                FechaInicio between '".$fInicio."' and '".$fFin."')
+                and (FechaFin between '".$fInicio."' and '".$fFin."')";
+        
+        log::info( $sql);
+        $execute=DB::select($sql);
+        log::info( $execute[0]->existe);
+        return $execute[0]->existe;
     }
 
     public function getPreferenciaCredito($IdCreditoPreferencia){
