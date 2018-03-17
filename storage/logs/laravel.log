@@ -1,48 +1,27 @@
-[2018-03-04 20:13:29] local.INFO: no valida  
-[2018-03-04 20:13:30] local.INFO: validarrrr  
-[2018-03-04 20:13:31] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-03-01 00:00:00' and FechaFin <= '2019-04-05 00:00:00'  
-[2018-03-04 20:16:10] local.INFO: no valida  
-[2018-03-04 20:16:11] local.INFO: no valida  
-[2018-03-04 20:16:13] local.INFO: validarrrr  
-[2018-03-04 20:16:13] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-03-01 00:00:00' and FechaFin <= '2019-04-05 00:00:00'  
-[2018-03-04 20:16:14] local.INFO: validarrrr  
-[2018-03-04 20:16:14] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-02 00:00:00' and FechaFin <= '2019-05-05 00:00:00'  
-[2018-03-04 20:16:18] local.INFO: validarrrr  
-[2018-03-04 20:16:18] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-02 00:00:00' and FechaFin <= '2019-05-05 00:00:00'  
-[2018-03-04 20:16:19] local.INFO: validarrrr  
-[2018-03-04 20:16:19] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-02 00:00:00' and FechaFin <= '2019-05-05 00:00:00'  
-[2018-03-04 20:24:14] local.INFO: validarrrr  
-[2018-03-04 20:24:14] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-02 00:00:00' and FechaFin <= '2019-05-05 00:00:00'  
-[2018-03-04 20:24:15] local.INFO: validarrrr  
-[2018-03-04 20:24:15] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-02 00:00:00' and FechaFin <= '2019-05-05 00:00:00'  
-[2018-03-04 20:24:26] local.INFO: validarrrr  
-[2018-03-04 20:24:26] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-01 12:00:00' and FechaFin <= '2018-03-01 12:00:00'  
-[2018-03-04 20:24:49] local.INFO: no valida  
-[2018-03-04 20:25:04] local.INFO: validarrrr  
-[2018-03-04 20:25:04] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-02 00:00:00' and FechaFin <= '2019-05-05 00:00:00'  
-[2018-03-04 20:25:12] local.INFO: validarrrr  
-[2018-03-04 20:25:12] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-01 12:00:00' and FechaFin <= '2018-03-01 12:00:00'  
-[2018-03-04 20:25:17] local.INFO: validarrrr  
-[2018-03-04 20:25:17] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-02 00:00:00' and FechaFin <= '2019-05-05 00:00:00'  
-[2018-03-04 20:25:32] local.INFO: no valida  
-[2018-03-04 20:25:35] local.INFO: no valida  
-[2018-03-04 20:25:47] local.INFO: validarrrr  
-[2018-03-04 20:25:47] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-02 00:00:00' and FechaFin <= '2019-05-05 00:00:00'  
-[2018-03-04 20:25:58] local.INFO: validarrrr  
-[2018-03-04 20:25:58] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-03-01 00:00:00' and FechaFin <= '2019-04-05 00:00:00'  
-[2018-03-04 20:26:18] local.INFO: validarrrr  
-[2018-03-04 20:26:18] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-01 12:00:00' and FechaFin <= '2018-03-01 12:00:00'  
-[2018-03-04 20:26:21] local.INFO: validarrrr  
-[2018-03-04 20:26:21] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2015-02-01 12:00:00' and FechaFin <= '2016-03-01 12:00:00'  
-[2018-03-04 20:26:24] local.INFO: no valida  
-[2018-03-04 20:26:26] local.INFO: no valida  
-[2018-03-04 20:26:27] local.INFO: no valida  
-[2018-03-04 20:26:29] local.INFO: no valida  
-[2018-03-04 20:26:34] local.INFO: validarrrr  
-[2018-03-04 20:26:34] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-02 00:00:00' and FechaFin <= '2019-05-05 00:00:00'  
-[2018-03-04 20:26:36] local.INFO: validarrrr  
-[2018-03-04 20:26:36] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-03-01 00:00:00' and FechaFin <= '2019-04-05 00:00:00'  
-[2018-03-04 20:26:38] local.INFO: validarrrr  
-[2018-03-04 20:26:38] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2018-02-01 12:00:00' and FechaFin <= '2018-03-01 12:00:00'  
-[2018-03-04 20:26:40] local.INFO: validarrrr  
-[2018-03-04 20:26:40] local.INFO: select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '2015-02-01 12:00:00' and FechaFin <= '2016-03-01 12:00:00'  
+[2018-03-04 21:35:52] local.INFO: 0  
+[2018-03-04 21:35:53] local.INFO: select count(1) existe from sgp.credito_preferencias where  
+                EstadoPreferencia = 1 and (
+                FechaInicio between '2018-02-02 00:00:00' and '2019-05-05 00:00:00')
+                and (FechaFin between '2018-02-02 00:00:00' and '2019-05-05 00:00:00')  
+[2018-03-04 21:35:53] local.INFO: 1  
+[2018-03-04 21:35:57] local.INFO: 1  
+[2018-03-04 21:35:59] local.INFO: 0  
+[2018-03-04 21:35:59] local.INFO: select count(1) existe from sgp.credito_preferencias where  
+                EstadoPreferencia = 1 and (
+                FechaInicio between '2018-02-02 00:00:00' and '2019-05-05 00:00:00')
+                and (FechaFin between '2018-02-02 00:00:00' and '2019-05-05 00:00:00')  
+[2018-03-04 21:35:59] local.INFO: 1  
+[2018-03-04 21:36:01] local.INFO: 1  
+[2018-03-04 21:36:03] local.INFO: 1  
+[2018-03-04 21:36:16] local.INFO: 0  
+[2018-03-04 21:36:16] local.INFO: select count(1) existe from sgp.credito_preferencias where  
+                EstadoPreferencia = 1 and (
+                FechaInicio between '2018-02-01 12:00:00' and '2018-03-01 12:00:00')
+                and (FechaFin between '2018-02-01 12:00:00' and '2018-03-01 12:00:00')  
+[2018-03-04 21:36:16] local.INFO: 0  
+[2018-03-04 21:36:22] local.INFO: 0  
+[2018-03-04 21:36:22] local.INFO: select count(1) existe from sgp.credito_preferencias where  
+                EstadoPreferencia = 1 and (
+                FechaInicio between '2018-03-01 00:00:00' and '2019-04-05 00:00:00')
+                and (FechaFin between '2018-03-01 00:00:00' and '2019-04-05 00:00:00')  
+[2018-03-04 21:36:22] local.INFO: 0  

@@ -2,13 +2,8 @@
 /storage
 /.idea
 /.vagrant
-<<<<<<< HEAD
-/storage/
-/vendor/
-=======
 /storage
 /vendor
->>>>>>> 72b1dfda9e46bbad3ab5b34cbb41f712ffc78648
 Homestead.json
 Homestead.yaml
 npm-debug.log

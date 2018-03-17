@@ -1,4 +1,3 @@
-var RegistroEmpresas  = '';
 var manejoRefresh=limpiarLocales=limpiarImpuestos=errorRut=limpiarBodegas=0;
 
 var parametroAjax = {
@@ -16,9 +15,9 @@ var ManejoRespuestaProcesarD = function(respuesta){
         $("#divVolver").show();
         $("#divTabs").show();
         $("#spanTitulo").text("Detalles");
-        $("#IdProducto2").val(respuesta.respuesta.v_detalles.IdProducto);
-        pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
-        cargarTablaImpuestos(respuesta.respuesta.v_impuestos);
+        $("#IdCompra2").val(respuesta.respuesta.v_detalles.IdCompra);
+        pintarDatosActualizar(respuesta.respuesta.v_cabecera[0]);
+        cargarTablaDetalles(respuesta.respuesta.v_detalles);
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -28,9 +27,9 @@ var ManejoRespuestaProcesarD = function(respuesta){
 var ManejoRespuestaProcesarI = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta.activar>0){
-            if(respuesta.respuesta.v_productos.length>0){
+            if(respuesta.respuesta.v_compras.length>0){
                 $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
-                cargarTablaProductos(respuesta.respuesta.v_productos);
+                cargarTablaCompras(respuesta.respuesta.v_compras);
             }
         }else{
             $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
@@ -45,7 +44,7 @@ var ManejoRespuestaProcesarAI = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta.activar>0){
             $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
-            cargarTablaImpuestos(respuesta.respuesta.v_impuestos);
+            cargarTablaDetalles(respuesta.respuesta.v_impuestos);
         }else{
             $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
         }
@@ -58,9 +57,9 @@ var ManejoRespuestaProcesarAI = function(respuesta){
 var ManejoRespuestaProcesarDescontinuar = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta.descontinuar>0){
-            if(respuesta.respuesta.v_productos.length>0){
+            if(respuesta.respuesta.v_compras.length>0){
                 $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
-                cargarTablaProductos(respuesta.respuesta.v_productos);
+                cargarTablaCompras(respuesta.respuesta.v_compras);
             }
         }else{
             $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
@@ -77,7 +76,7 @@ var ManejoRespuestaProcesarImpuesto = function(respuesta){
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
-                cargarTablaImpuestos(respuesta.respuesta.v_impuestos);
+                cargarTablaDetalles(respuesta.respuesta.v_impuestos);
                 break;
             case '-2':
                 $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
@@ -94,15 +93,15 @@ var ManejoRespuestaProcesarImpuesto = function(respuesta){
 // Manejo Registro o actualizacion de empresa
 var ManejoRespuestaProcesar = function(respuesta){
     if(respuesta.code==200){
-        var res = JSON.parse(respuesta.respuesta.f_registro.f_registro_producto);
+        var res = JSON.parse(respuesta.respuesta.f_registro);
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
                 $(".divDetalles").toggle();
                 $(".divBotones").toggle();
-                $('#FormProducto')[0].reset();
-                $('#IdProducto').val("");
-                cargarTablaProductos(respuesta.respuesta.v_productos);
+                $('#FormCompras')[0].reset();
+                $('#IdCompra').val("");
+                cargarTablaCompras(respuesta.respuesta.v_compras);
                 break;
             case '-2':
                 $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
@@ -116,9 +115,9 @@ var ManejoRespuestaProcesar = function(respuesta){
     }
 };
 
-var cargarTablaProductos = function(data){
-    if(limpiarLocales==1){destruirTabla('#tablaProductos');$('#tablaProductos thead').empty();}
-        $("#tablaProductos").dataTable({
+var cargarTablaCompras = function(data){
+    if(limpiarLocales==1){destruirTabla('#tablaCompras');$('#tablaCompras thead').empty();}
+        $("#tablaCompras").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
@@ -131,68 +130,41 @@ var cargarTablaProductos = function(data){
             "columns":[
                 {
                     "title": "",
-                    "data": "IdProducto",
+                    "data": "IdCompra",
                     "render": function(data, type, row, meta){
                         var result = `
                         <center>
-                        <a href="#" onclick="verDetallesProducto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
+                        <a href="#" onclick="verDetallesCompras(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
                             <i class="icofont icofont-search"></i>
                         </a>
-                        <a href="#" onclick="cambiarEstatusProducto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                        <a href="#" onclick="cambiarEstatusCompra(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
                             <i class="icofont icofont-ui-delete"></i>
-                        </a>
-                        <a href="#" onclick="descontinuarProducto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Descontinuar Producto" data-original-title="Delete">
-                            <i class="icofont icofont-close"></i>
                         </a>
                         </center>`;
                         return result;
                     }
                 },
-                {"title": "Id","data": "IdProducto",visible:0},
-                {"title": "Codigo Barra","data": "CodigoBarra"},
-                {"title": "Codigo Proveedor","data": "CodigoProveedor"},
-                {"title": "Nombre Producto","data": "NombreProducto"},
-                {"title": "Descripcion Producto","data": "DescripcionProducto"},
-                {"title": "Ultimo Proveedor","data": "IdUltimoProveedor"},
-                {"title": "IdFamilia","data": "IdFamilia", visible:0},
-                {"title": "Familia","data": "NombreFamilia"},
-                {"title": "IdSubFamilia","data": "IdSubFamilia",visible:0},
-                {"title": "Subfamilia","data": "NombreSubFamilia"},
-                {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
-                {"title": "Unidad Medida","data": "NombreUnidadMedida"},
-                {"title": "Se Compra","data": "SeCompra",visible:0},
-                {"title": "Se Compra","data": "DesCompra"},
-                {"title": "Se Vende","data": "SeVende", visible:0},
-                {"title": "Se Vende","data": "DesVende"},
-                {"title": "Se Combo","data": "EsProductoCombo", visible:0},
-                {"title": "Producto Combo","data": "DesProductoCombo"},
-                {"title": "Descontinuado","data": "Descontinuado",visible:0},
-                {"title": "Descontinuado","data": "DesDescontinuado"},
-                {"title": "Stock Minimo","data": "StockMinimo"},
-                {"title": "Stock Maximo","data": "StockMaximo"},
-                {"title": "Stock Recomendado","data": "StockRecomendado"},
-                {"title": "Precio Ultima Compra","data": "PrecioUltimaCompra"},
-                {"title": "Precio Venta Sugerido","data": "PrecioVentaSugerido"},
-                {"title": "EstadoProducto","data": "EstadoProducto",visible:0},
-                {"title": "Estado","data": "DesEstadoProducto"}
+                {"title": "Id","data": "IdCompra",visible:0},
+                {"title": "OC.","data": "IdOrdenCompra"},
+                {"title": "IdProveedor","data": "IdProveedor",visible:0},
+                {"title": "IdBodega","data": "IdBodega",visible:0},
+                {"title": "RUT Proveedor","data": "RUTProveedor"},
+                {"title": "Tipo DTE","data": "TipoDTE"},
+                {"title": "Folio DTE","data": "FolioDTE"},
+                {"title": "Total Neto","data": "TotalNeto"},
+                {"title": "Total Descuentos","data": "TotalDescuentos"},
+                {"title": "Total Impuestos","data": "TotalImpuestos"},
+                {"title": "Total Compra","data": "TotalCompra"},
+                {"title": "EstadoCompra","data": "EstadoCompra",visible:0},
+                {"title": "Estado","data": "DesEstadoCompra"}
             ],
         });
         limpiarLocales=1;
-    if (data.length>0){seleccionarTablaProductos();}
 };
 
-var seleccionarTablaProductos = function(data){
-    var tableB = $('#tablaProductos').dataTable();
-    $('#tablaProductos tbody').on('click', 'tr', function (e) {
-        tableB.$('tr.selected').removeClass('selected');
-        $(this).addClass('selected');
-        RegistroEmpresas = TablaTraerCampo('tablaProductos',this);
-    });
-}
-
-var cargarTablaImpuestos = function(data){
-    if(limpiarImpuestos==1){destruirTabla('#tablaImpuestos');$('#tablaImpuestos thead').empty();}
-        $("#tablaImpuestos").dataTable({
+var cargarTablaDetalles = function(data){
+    if(limpiarImpuestos==1){destruirTabla('#tablaDetalles');$('#tablaDetalles thead').empty();}
+        $("#tablaDetalles").dataTable({
             responsive:false,
             "bSort": false,
             "scrollCollapse": false,
@@ -207,27 +179,36 @@ var cargarTablaImpuestos = function(data){
             "columns":[
                 {
                     "title": "",
-                    "data": "IdProductoImpuesto",
+                    "data": "IdDetalleCompra",
                     "render": function(data, type, row, meta){
                         var result = `
                         <center>
-                        <a href="#" onclick="cambiarEstatusImpuesto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                        <a href="#" onclick="cambiarEstatusDetalles(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
                         </center>`;
                         return result;
                     }
                 },
-                {"title": "Id","data": "IdProductoImpuesto",visible:0},
-                {"title": "Nombre Impuesto","data": "NombreImpuesto"},
-                {"title": "Valor Impuesto","data": "ValorImpuesto"},
+                {"title": "Id","data": "IdDetalleCompra",visible:0},
+                {"title": "IdCompra","data": "IdCompra",visible:0},
+                {"title": "IdProducto","data": "IdProducto",visible:0},
+                {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
+                {"title": "Nombre Producto","data": "NombreProducto"},
+                {"title": "Nombre Unidad Medida","data": "NombreUnidadMedida"},
+                {"title": "Cantidad Comprada","data": "CantidadComprada"},
+                {"title": "Valor Unitario","data": "ValorUnitario"},
+                {"title": "Factor Impuesto","data": "FactorImpuesto"},
+                {"title": "Valor Impuestos","data": "ValorImpuestos"},
+                {"title": "Monto Descuento","data": "MontoDescuento"},
+                {"title": "Valor Unitario Final","data": "ValorUnitarioFinal"},
+                {"title": "Total Linea","data": "TotalLinea"},
+                {"title": "Estado","data": "DesEstadoCompra"},
                 {"title": "Precio Venta Sugerido","data": "auFechaCreacion",visible:0},
                 {"title": "Precio Venta Sugerido","data": "auUsuarioCreacion",visible:0},
-                {"title": "Creado por","data": "creador"},
                 {"title": "Precio Venta Sugerido","data": "auFechaModificacion",visible:0},
                 {"title": "Precio Venta Sugerido","data": "auFechaModificacion",visible:0},
-                {"title": "EstadoProductoImpuesto","data": "EstadoProductoImpuesto",visible:0},
-                {"title": "Estado","data": "DesEstadoProductoImpuesto"}
+                {"title": "EstadoDetalleCompra","data": "EstadoDetalleCompra",visible:0}
             ],
         });
         limpiarImpuestos=1;
@@ -235,34 +216,27 @@ var cargarTablaImpuestos = function(data){
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
+    $("#IdCompra").val(data.IdCompra);
+    $("#IdOrdenCompra").val(data.IdOrdenCompra);
     $("#RUTProveedor").val(data.RUTProveedor);
-    $("#NombreProveedor").val(data.NombreProveedor);
-    $("#IdProducto").val(data.IdProducto);
-    $("#CodigoBarra").val(data.CodigoBarra);
-    $("#CodigoProveedor").val(data.CodigoProveedor);
-    $("#NombreProducto").val(data.NombreProducto);
-    $("#DescripcionProducto").val(data.DescripcionProducto);
-    $("#StockMinimo").val(data.StockMinimo);
-    $("#StockMaximo").val(data.StockMaximo);
-    $("#StockRecomendado").val(data.StockRecomendado);
-    $("#PrecioUltimaCompra").val(data.PrecioUltimaCompra);
-    $("#PrecioVentaSugerido").val(data.PrecioVentaSugerido);
-    $("#IdUltimoProveedor").val(data.IdUltimoProveedor).trigger("change");
-    $("#IdFamilia").val(data.IdFamilia).trigger("change");
-    $("#IdSubFamilia").val(data.IdSubFamilia).trigger("change");
-    $("#IdUnidadMedida").val(data.IdUnidadMedida).trigger("change");
-    $("#SeCompra").val(data.SeCompra).trigger("change");
-    $("#SeVende").val(data.SeVende).trigger("change");
-    $("#EsProductoCombo").val(data.EsProductoCombo).trigger("change");
-    $("#Descontinuado").val(data.Descontinuado).trigger("change");
-    $("#EstadoProducto").val(data.EstadoProducto).trigger("change");
+    $("#FolioDTE").val(data.FolioDTE);
+    $("#FechaDTE").val(data.FechaDTE);
+    $("#FechaVencimiento").val(data.FechaVencimiento);
+    $("#FechaPago").val(data.FechaPago);
+    $("#TotalNeto").val(data.TotalNeto);
+    $("#TotalDescuentos").val(data.TotalDescuentos);
+    $("#TotalImpuestos").val(data.TotalImpuestos);
+    $("#TotalCompra").val(data.TotalCompra);
+    $("#IdBodega").val(data.IdBodega).trigger("change");
+    $("#TipoDTE").val(data.TipoDTE).trigger("change");
+    $("#EstadoCompra").val(data.EstadoCompra).trigger("change");
 }
 
 var BotonCancelar = function(){
     $("#spanTitulo").text("");
     $(".md-form-control").removeClass("md-valid");
-    $('#FormProducto')[0].reset();
-    $("#IdProducto").val("");
+    $('#FormCompras')[0].reset();
+    $("#IdCompra").val("");
     $("#divTabs").show();
     $(".divBotones").toggle();
     $(".divDetalles").toggle();
@@ -271,13 +245,13 @@ var BotonCancelar = function(){
 }
 
 var BotonAgregar = function(){
-    $("#spanTitulo").text("Registrar Producto");
+    $("#spanTitulo").text("Registrar Compra");
     desbloquearInuts();
     $(".divDetalles").toggle();
     $("#divVolver").hide();
-    $("#IdProducto").val("");
+    $("#IdCompra").val("");
     $(".comboclear").val('').trigger("change");
-    $('#FormProducto')[0].reset();
+    $('#FormCompras')[0].reset();
     $("#divTabs").hide();
     $(".divBotones").toggle();
     $("#PrecioUltimaCompra").prop('readonly', false);
@@ -290,108 +264,82 @@ var ProcesarImpuesto = function(){
     ManejoRespuestaProcesarImpuesto(respuesta);
 };
 
-var ProcesarProducto = function(){
+var ProcesarCompra = function(){
     if(errorRut == 0){
         parametroAjax.ruta=ruta;
-        var camposNuevo = {
-            'IdUltimoProveedor': $('#IdUltimoProveedor').val(),
-            'IdFamilia': $('#IdFamilia').val(),
-            'IdSubFamilia': $('#IdSubFamilia').val(),
-            'IdUnidadMedida': $('#IdUnidadMedida').val(),
-            'SeCompra': $('#SeCompra').val(),
-            'SeVende': $('#SeVende').val(),
-            'EsProductoCombo': $('#EsProductoCombo').val(),
-            'Descontinuado': $('#Descontinuado').val(),
-            'EstadoProducto': $('#EstadoProducto').val()
-        }
-
-        parametroAjax.data = $("#FormProducto").serialize() + '&' + $.param(camposNuevo);
+        parametroAjax.data = $("#FormCompras").serialize();
         respuesta=procesarajax(parametroAjax);
         ManejoRespuestaProcesar(respuesta);
     }
 };
 
 var validador = function(){
-    $('#FormProducto').formValidation('validate');
+    $('#FormCompras').formValidation('validate');
 };
 
 var validadorI = function(){
     $('#FormImpuesto').formValidation('validate');
 }
 
-var cambiarEstatusProducto = function(IdProducto){
+var cambiarEstatusCompra = function(IdCompra){
     parametroAjax.ruta=rutaA;
-    parametroAjax.data = {IdProducto:IdProducto};
+    parametroAjax.data = {IdCompra:IdCompra};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarI(respuesta);
 }
 
-var cambiarEstatusImpuesto = function(IdProductoImpuesto){
+
+var cambiarEstatusDetalles = function(IdDetalleCompra){
+/*
     parametroAjax.ruta=rutaAI;
-    parametroAjax.data = {IdProductoImpuesto:IdProductoImpuesto};
+    parametroAjax.data = {IdDetalleCompra:IdDetalleCompra};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarAI(respuesta);
+*/
 }
 
-var descontinuarProducto = function(IdProducto){
-    parametroAjax.ruta=rutaDes;
-    parametroAjax.data = {IdProducto:IdProducto};
-    respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaProcesarDescontinuar(respuesta);
-}
 
-var verDetallesProducto = function(IdProducto){
-    parametroAjax.ruta=rutaD;
-    parametroAjax.data = {IdProducto:IdProducto};
+var verDetallesCompras = function(IdCompra){
+    parametroAjax.ruta=rutaB;
+    parametroAjax.data = {IdCompra:IdCompra};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarD(respuesta);
 }
 
 var bloquearInuts = function(){
-    $("#CodigoBarra").prop('readonly', true);
-    $("#CodigoProveedor").prop('readonly', true);
-    $("#NombreProducto").prop('readonly', true);
-    $("#DescripcionProducto").prop('readonly', true);
-    $("#StockMinimo").prop('readonly', true);
-    $("#StockMaximo").prop('readonly', true);
-    $("#StockRecomendado").prop('readonly', true);
-    $("#PrecioUltimaCompra").prop('readonly', true);
-    $("#PrecioVentaSugerido").prop('readonly', true);
-    $("#IdUltimoProveedor").prop('disabled', true);
-    $("#NombreProveedor").prop('readonly', true);
+    $("#IdOrdenCompra").prop('readonly', true);
     $("#RUTProveedor").prop('readonly', true);
-    $("#IdFamilia").prop('disabled', true);
-    $("#IdSubFamilia").prop('disabled', true);
-    $("#IdUnidadMedida").prop('disabled', true);
-    $("#SeCompra").prop('disabled', true);
-    $("#SeVende").prop('disabled', true);
-    $("#EsProductoCombo").prop('disabled', true);
-    $("#Descontinuado").prop('disabled', true);
-    $("#EstadoProducto").prop('disabled', true);
+    $("#FolioDTE").prop('readonly', true);
+    $("#FechaDTE").prop('readonly', true);
+    $("#FechaVencimiento").prop('readonly', true);
+    $("#FechaPago").prop('readonly', true);
+    $("#TotalNeto").prop('readonly', true);
+    $("#TotalDescuentos").prop('readonly', true);
+    $("#TotalImpuestos").prop('readonly', true);
+    $("#TotalCompra").prop('readonly', true);
+    $("#IdBodega").prop('disabled', true);
+    $("#TipoDTE").prop('disabled', true);
+    $("#EstadoCompra").prop('disabled', true);
 }
 
 var desbloquearInuts = function(){
-    $("#CodigoBarra").prop('readonly', false);
-    $("#CodigoProveedor").prop('readonly', false);
-    $("#NombreProducto").prop('readonly', false);
-    $("#DescripcionProducto").prop('readonly', false);
-    $("#StockMinimo").prop('readonly', false);
-    $("#StockMaximo").prop('readonly', false);
-    $("#StockRecomendado").prop('readonly', false);
-    $("#PrecioVentaSugerido").prop('readonly', false);
-    $("#IdUltimoProveedor").prop('disabled', false);
-    $("#IdFamilia").prop('disabled', false);
-    $("#IdSubFamilia").prop('disabled', false);
-    $("#IdUnidadMedida").prop('disabled', false);
-    $("#SeCompra").prop('disabled', false);
-    $("#SeVende").prop('disabled', false);
-    $("#EsProductoCombo").prop('disabled', false);
-    $("#Descontinuado").prop('disabled', false);
-    $("#EstadoProducto").prop('disabled', false);
+    $("#IdOrdenCompra").prop('readonly', false);
+    $("#RUTProveedor").prop('readonly', false);
+    $("#FolioDTE").prop('readonly', false);
+    $("#FechaDTE").prop('readonly', false);
+    $("#FechaVencimiento").prop('readonly', false);
+    $("#FechaPago").prop('readonly', false);
+    $("#TotalNeto").prop('readonly', false);
+    $("#TotalDescuentos").prop('readonly', false);
+    $("#TotalImpuestos").prop('readonly', false);
+    $("#TotalCompra").prop('readonly', false);
+    $("#IdBodega").prop('disabled', false);
+    $("#TipoDTE").prop('disabled', false);
+    $("#EstadoCompra").prop('disabled', false);
 }
 
 var modificarProducto = function(){
-    $("#spanTitulo").text("Editar Producto");
+    $("#spanTitulo").text("Editar Compra");
     $("#divVolver").hide();
     $(".divBotones").toggle();
     desbloquearInuts();
@@ -400,11 +348,9 @@ var modificarProducto = function(){
 var volverTabs = function(){
     $("#spanTitulo").text("");
     $(".divDetalles").toggle();
-    $("#areceta").removeClass("active");
     $("#aimpuestos").removeClass("active");
     $("#astock").removeClass("active");
     $("#akardex").removeClass("active");
-    $("#Tabreceta").removeClass("active");
     $("#TabImpuestos").removeClass("active");
     $("#TabStock").removeClass("active");
     $("#TabKardex").removeClass("active");
@@ -412,50 +358,13 @@ var volverTabs = function(){
     $("#adetalles").addClass("active");
 }
 
-var buscarSubfamilia = function(IdFamilia){
-    parametroAjax.ruta=rutaB;
-    parametroAjax.data = {IdFamilia:IdFamilia};
-    respuesta=procesarajax(parametroAjax);
-    if (respuesta.code==200){
-        crearselect(respuesta.respuesta,"IdSubFamilia");
-    }
-}
-
 var crearAllSelect = function(data){
-    var v_proveedor =[{"id":1,"text":"proveedor 1"},{"id":2,"text":"proveedor 2"}];
-    var secompra=[{"id":1,"text":"SI"},{"id":0,"text":"NO"}];
-    var escombo=[{"id":1,"text":"SI"},{"id":2,"text":"NO"}];
-    crearselect(escombo,"Descontinuado");
-    crearselect(escombo,"EsProductoCombo");
-    crearselect(secompra,"SeVende");
-    crearselect(secompra,"SeCompra");
-    crearselect(v_proveedor,"IdUltimoProveedor");
-    crearselect(data.v_familias,"IdFamilia");
-    crearselect(data.v_unidad,"IdUnidadMedida");
-    crearselect(data.v_estados,"EstadoProducto");
-    crearselect(data.v_impuestos,"IdImpuesto");
-
+    var v_TipoDtes =[{"id":1,"text":"DTE 1"},{"id":2,"text":"DTE 2"},{"id":3,"text":"DTE 3"},{"id":4,"text":"DTE 4"}];
+    crearselect(v_TipoDtes,"TipoDTE");
+    crearselect(data.v_estados,"EstadoCompra");
+    crearselect(data.v_bodegas,"IdBodega");
 }
 
-var ManejoRespuestaBuscarProveedor = function(respuesta){
-    if(respuesta.code==200){
-        if(respuesta.respuesta.v_proveedor!=null){
-            $("#IdUltimoProveedor").val(respuesta.respuesta.v_proveedor.IdProveedor);
-            $("#NombreProveedor").val(respuesta.respuesta.v_proveedor.NombreFantasia);
-        }else{
-            $.growl({message:"Proveedor no encontrado"},{type: "warning", allow_dismiss: true,});
-        }
-    }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-    }
-}
-
-var buscarProveedor = function(RUTProveedor){
-    parametroAjax.ruta=rutaPP;
-    parametroAjax.data = {RUTProveedor:RUTProveedor};
-    respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaBuscarProveedor(respuesta);
-}
 
 var verificarRut = function(control){
     var res = Valida_Rut(control);
@@ -463,7 +372,6 @@ var verificarRut = function(control){
     if (format != false){
         errorRut = 0;
         $("#ErrorRut").text("");
-        buscarProveedor(format);
         return format;
     }else{
         errorRut = 1;
@@ -473,17 +381,22 @@ var verificarRut = function(control){
 }
 
 $(document).ready(function(){
-    cargarTablaProductos(d.v_productos);
+    cargarTablaCompras(d.v_compras);
     crearAllSelect(d);
+    $("#RUTProveedor").focusout(function() {
+        var valid = $("#RUTProveedor").val();
+        if (valid.length > 0){
+            var res = verificarRut($("#RUTProveedor"));
+            $("#RUTProveedor").val(res);
+        }else{$("#ErrorRut").text("");}
+    });
     $(document).on('click','#guardar',validador);
     $(document).on('click','#guardarI',validadorI);
     $(document).on('click','#cancelar',BotonCancelar);
     $(document).on('click','#agregar',BotonAgregar);
     $(document).on('click','#modificar',modificarProducto);
     $(document).on('click','#volverAct',volverTabs);
-    $("#IdFamilia").change(function() {
-        buscarSubfamilia($("#IdFamilia").val());
-    });
+
     $("#RUTProveedor").focusout(function() {
         var valid = $("#RUTProveedor").val();
         if (valid.length > 0){
@@ -514,7 +427,7 @@ $(document).ready(function(){
     });
 
 
-    $('#FormProducto').formValidation({
+    $('#FormCompras').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
         fields: {
@@ -656,7 +569,7 @@ $(document).ready(function(){
         }
     })
     .on('success.form.fv', function(e){
-        ProcesarProducto();
+        ProcesarCompra();
     })
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');

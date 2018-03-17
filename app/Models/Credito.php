@@ -81,16 +81,11 @@ class Credito extends Authenticatable
     // Activar / Desactivar Cliente
     public function activarCredito($datos){
         $model = new Credito();
-
-
+        $validador = 0;
+        log::info($datos['EstadoPreferencia']);
         if($datos['EstadoPreferencia'] == 0){
-            log::info("validarrrr");
             $validador = $model->validarPreferencia($datos['FechaInicio'],$datos['FechaFin']);
-        }else{
-            log::info("no valida");
-            $validador = 0;
-        }   
-        
+        }        
 
         if($validador > 0){
              return '{"code":"-2"}'; 
@@ -109,9 +104,14 @@ class Credito extends Authenticatable
 
       // Validacion de Preferencia de Credito activa para ese rango de fecha
     public function validarPreferencia($fInicio, $fFin){
-        $sql = "select count(1) existe from sgp.credito_preferencias where  EstadoPreferencia = 1 and FechaInicio >= '".$fInicio."' and FechaFin <= '".$fFin."'";
-        log::info($sql);
+        $sql = "select count(1) existe from sgp.credito_preferencias where  
+                EstadoPreferencia = 1 and (
+                FechaInicio between '".$fInicio."' and '".$fFin."')
+                and (FechaFin between '".$fInicio."' and '".$fFin."')";
+        
+        log::info( $sql);
         $execute=DB::select($sql);
+        log::info( $execute[0]->existe);
         return $execute[0]->existe;
     }
 

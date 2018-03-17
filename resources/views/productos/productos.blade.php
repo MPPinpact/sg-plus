@@ -1,5 +1,10 @@
 @extends('menu.index')
 @section('content')
+<style type="text/css" media="screen">
+	.nav-tabs .slide{
+		 width: calc(100% / 5)!important;
+	}
+</style>
 <div class="row">
 	<div class="col-md-12 divDetalles">
 	    <div class="card">
@@ -49,6 +54,15 @@
 			                    <ul class="nav nav-tabs nav-justified md-tabs " role="tablist">
 			                        <li class="nav-item">
 			                            <a id="adetalles" class="nav-link active" data-toggle="tab" href="#Tabdetalles" role="tab">
+			                                <div class="f-26">
+			                                    <i class="icofont icofont-document-search"></i>
+			                                </div>
+			                                Detalles
+			                            </a>
+			                            <div class="slide"></div>
+			                        </li>
+			                        <li class="nav-item">
+			                            <a id="areceta" class="nav-link" data-toggle="tab" href="#Tabreceta" role="tab">
 			                                <div class="f-26">
 			                                    <i class="icofont icofont-document-search"></i>
 			                                </div>
@@ -286,23 +300,21 @@
 										<div class="col-md-2"></div>
 									</div>
 		                        </div>
+		                        
+		                        <div class="tab-pane" id="Tabreceta" role="tabpanel">
+		                        	<h1>
+		                        		Receta
+		                        	</h1>
+		                        </div>
 		                        <div class="tab-pane" id="TabStock" role="tabpanel">
-		                        	222222222222222222222222222222222222222222222222222222222222222222
-		                        	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		                        	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		                        	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		                        	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-		                        	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-		                        	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		                        	<h1>
+		                        		Stock
+		                        	</h1>
 		                        </div>
 		                        <div class="tab-pane" id="TabKardex" role="tabpanel">
-		                        	333333333333333333333333333333333333333333333333333333333333333333333
-		                        	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		                        	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		                        	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		                        	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-		                        	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-		                        	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		                        	<h1>
+		                        		Kardex
+		                        	</h1>
 		                        </div>
 		                    </div>
 		                </div>
