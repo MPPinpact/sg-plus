@@ -111,6 +111,11 @@ Route::get('/compras', 'CompraController@getCompras')->name('compras');
 Route::post('/compras', 'CompraController@postCompras')->name('compras');
 Route::post('/activarCom', 'CompraController@postCompractiva')->name('activarCom');
 Route::post('/comprab', 'CompraController@postBuscarcompra')->name('comprab');
+Route::post('/comprabp', 'CompraController@postBuscarproveedor')->name('comprabp');
+Route::post('/comprabe', 'CompraController@postBuscarempresa')->name('comprabe');
+Route::post('/comprapr', 'CompraController@postRegistroproveedor')->name('comprapr');
+Route::post('/comprabb', 'CompraController@postBuscarBodega')->name('comprabb');
+
 
 
 Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){

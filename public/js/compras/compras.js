@@ -1,4 +1,4 @@
-var manejoRefresh=limpiarLocales=limpiarImpuestos=errorRut=limpiarBodegas=0;
+var manejoRefresh=limpiarLocales=limpiarImpuestos=errorRut=errorRut2=errorRut3=limpiarBodegas=0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -8,6 +8,45 @@ var parametroAjax = {
     'async': false
 };
 
+var ManejoRespuestaBuscarProveedor = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta!=null){
+            if(respuesta.respuesta.IdProveedor==0){
+                var rut = $("#RUTProveedor").val();
+                $("#RUTProveedor2").val(rut);
+                // console.log(rut),
+                $("#ModalProveedor").modal();
+            }else{
+                $("#IdProveedor").val(respuesta.respuesta.IdProveedor);
+                $("#NombreFantasia").val(respuesta.respuesta.NombreFantasia);
+            }    
+        }else{
+            $.growl({message:"Proveedor no encontrado"},{type: "warning", allow_dismiss: true,});
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
+var ManejoRespuestaBuscarEmpresa = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta!=null){
+            crearselect(respuesta.respuesta.v_locales,"IdLocal");
+            if(respuesta.respuesta.busqueda.IdEmpresa==0){
+                $("#idEmpresa").val("");
+                $("#NombreFantasiaE").val("");
+                $.growl({message:"Empresa no encontrada"},{type: "warning", allow_dismiss: true,});
+            }else{
+                $("#idEmpresa").val(respuesta.respuesta.busqueda.IdEmpresa);
+                $("#NombreFantasiaE").val(respuesta.respuesta.busqueda.NombreFantasia);
+            }    
+        }else{
+            $.growl({message:"Contacte al personal informatico"},{type: "warning", allow_dismiss: true,});
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
 var ManejoRespuestaProcesarD = function(respuesta){
     if(respuesta.code==200){
         bloquearInuts();
@@ -23,7 +62,7 @@ var ManejoRespuestaProcesarD = function(respuesta){
     }
 }
 
-// Manejo Activar / Desactivar empresa
+// Manejo Activar / Desactivar compra
 var ManejoRespuestaProcesarI = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta.activar>0){
@@ -39,51 +78,48 @@ var ManejoRespuestaProcesarI = function(respuesta){
     }
 }
 
-// Manejo Activar / Desactivar Impuesto a producto
-var ManejoRespuestaProcesarAI = function(respuesta){
-    if(respuesta.code==200){
-        if(respuesta.respuesta.activar>0){
-            $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
-            cargarTablaDetalles(respuesta.respuesta.v_impuestos);
-        }else{
-            $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
-        }
-    }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-    }
-}
+// // Manejo Activar / Desactivar Impuesto a producto
+// var ManejoRespuestaProcesarAI = function(respuesta){
+//     if(respuesta.code==200){
+//         if(respuesta.respuesta.activar>0){
+//             $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
+//             cargarTablaDetalles(respuesta.respuesta.v_impuestos);
+//         }else{
+//             $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
+//         }
+//     }else{
+//         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+//     }
+// }
 
-// Manejo respuesta descontinuar Producto
-var ManejoRespuestaProcesarDescontinuar = function(respuesta){
-    if(respuesta.code==200){
-        if(respuesta.respuesta.descontinuar>0){
-            if(respuesta.respuesta.v_compras.length>0){
-                $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
-                cargarTablaCompras(respuesta.respuesta.v_compras);
-            }
-        }else{
-            $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
-        }
-    }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-    }
-}
+// // Manejo respuesta descontinuar Producto
+// var ManejoRespuestaProcesarDescontinuar = function(respuesta){
+//     if(respuesta.code==200){
+//         if(respuesta.respuesta.descontinuar>0){
+//             if(respuesta.respuesta.v_compras.length>0){
+//                 $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
+//                 cargarTablaCompras(respuesta.respuesta.v_compras);
+//             }
+//         }else{
+//             $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
+//         }
+//     }else{
+//         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+//     }
+// }
 
-// Manejo Registro o actualizacion de empresa
-var ManejoRespuestaProcesarImpuesto = function(respuesta){
+// Manejo Registro de proveedor
+var ManejoRespuestaProcesarProveedor = function(respuesta,nombre){
+    console.log(respuesta);
+    console.log(respuesta.respuesta);
+    console.log(nombre);
     if(respuesta.code==200){
-        var res = JSON.parse(respuesta.respuesta.f_registro_producto_impuesto);
-        switch(res.code) {
-            case '200':
-                $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
-                cargarTablaDetalles(respuesta.respuesta.v_impuestos);
-                break;
-            case '-2':
-                $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
-                break;
-            default:
-                $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-                break;
+        if(respuesta.respuesta>0){
+            $("#IdProveedor").val(respuesta.respuesta);
+            $("#NombreFantasia").val(nombre);
+            $("#ModalProveedor").modal("hide");
+        }else{
+            $.growl({message:"ocurrió un error mientras se registraba el proveedor"},{type: "warning", allow_dismiss: true,}); 
         }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
@@ -276,11 +312,12 @@ var BotonAgregarCabecera = function (){
     $(".comboclear").val('').trigger("change");
 }
 
-var ProcesarImpuesto = function(){
-    parametroAjax.ruta=rutaPI;
-    parametroAjax.data = $("#FormImpuesto").serialize();
+var ProcesarProveedor = function(){
+    var nombre = $("#NombreFantasia2").val();
+    parametroAjax.ruta=rutaPR;
+    parametroAjax.data = $("#FormProveedorNew").serialize();
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaProcesarImpuesto(respuesta);
+    ManejoRespuestaProcesarProveedor(respuesta,nombre);
 };
 
 var ProcesarCompra = function(){
@@ -294,6 +331,10 @@ var ProcesarCompra = function(){
 
 var validador = function(){
     $('#FormCompras').formValidation('validate');
+};
+
+var validadorP = function(){
+    $('#FormProveedorNew').formValidation('validate');
 };
 
 var validadorI = function(){
@@ -328,6 +369,7 @@ var verDetallesCompras = function(IdCompra){
 var bloquearInuts = function(){
     $("#IdOrdenCompra").prop('readonly', true);
     $("#RUTProveedor").prop('readonly', true);
+    $("#RUT").prop('readonly', true);
     $("#FolioDTE").prop('readonly', true);
     $("#FechaDTE").prop('readonly', true);
     $("#FechaVencimiento").prop('readonly', true);
@@ -338,12 +380,14 @@ var bloquearInuts = function(){
     $("#TotalCompra").prop('readonly', true);
     $("#IdBodega").prop('disabled', true);
     $("#TipoDTE").prop('disabled', true);
+    $("#IdLocal").prop('disabled', true);
     $("#EstadoCompra").prop('disabled', true);
 }
 
 var desbloquearInuts = function(){
     $("#IdOrdenCompra").prop('readonly', false);
     $("#RUTProveedor").prop('readonly', false);
+    $("#RUT").prop('readonly', false);
     $("#FolioDTE").prop('readonly', false);
     $("#FechaDTE").prop('readonly', false);
     $("#FechaVencimiento").prop('readonly', false);
@@ -354,7 +398,9 @@ var desbloquearInuts = function(){
     $("#TotalCompra").prop('readonly', false);
     $("#IdBodega").prop('disabled', false);
     $("#TipoDTE").prop('disabled', false);
+    $("#IdLocal").prop('disabled', false);
     $("#EstadoCompra").prop('disabled', false);
+
 }
 
 var modificarProducto = function(){
@@ -378,23 +424,27 @@ var volverTabs = function(){
 }
 
 var crearAllSelect = function(data){
-    var v_TipoDtes =[{"id":1,"text":"DTE 1"},{"id":2,"text":"DTE 2"},{"id":3,"text":"DTE 3"},{"id":4,"text":"DTE 4"}];
-    crearselect(v_TipoDtes,"TipoDTE");
+    // var v_TipoDtes =[{"id":1,"text":"DTE 1"},{"id":2,"text":"DTE 2"},{"id":3,"text":"DTE 3"},{"id":4,"text":"DTE 4"}];
+    crearselect(data.v_tipo_dte,"TipoDTE");
     crearselect(data.v_estados,"EstadoCompra");
-    crearselect(data.v_bodegas,"IdBodega");
+    // crearselect(data.v_bodegas,"IdBodega");
 }
 
 
-var verificarRut = function(control){
+var verificarRut = function(control,caso){
     var res = Valida_Rut(control);
     var format = formateaRut(control.val(), res);
     if (format != false){
         errorRut = 0;
-        $("#ErrorRut").text("");
+        errorRut2 = 0;
+        if (caso==1){buscarProveedor(format);$("#ErrorRut").text("");}
+        if (caso==2){$("#ErrorRut2").text("");}
+        if (caso==3){buscarEmpresa(format);$("#ErrorRut3").text("");}
         return format;
     }else{
-        errorRut = 1;
-        $("#ErrorRut").text("Rut invalido");
+        if (caso==1){errorRut = 1;$("#ErrorRut").text("Rut invalido");}
+        if (caso==2){errorRut2 = 1;$("#ErrorRut2").text("Rut invalido");}
+        if (caso==3){errorRut3 = 1;$("#ErrorRut3").text("Rut invalido");}
         return control.val();
     }
 }
@@ -405,17 +455,57 @@ var crearFormatoFecha = function(){
     $("#FechaPago").inputmask({ mask: "99-99-9999"});
 }
 
+var buscarProveedor = function(RUTProveedor){
+    parametroAjax.ruta=rutaBP;
+    parametroAjax.data = {RUTProveedor:RUTProveedor};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaBuscarProveedor(respuesta);
+}
+
+var buscarEmpresa = function(RUTEmpresa){
+    parametroAjax.ruta=rutaBE;
+    parametroAjax.data = {RUTEmpresa:RUTEmpresa};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaBuscarEmpresa(respuesta);
+}
+
+var buscarBodegas = function(IdLocal){
+    parametroAjax.ruta=rutaBB;
+    parametroAjax.data = {IdLocal:IdLocal};
+    respuesta=procesarajax(parametroAjax);
+    if (respuesta.code==200){
+        crearselect(respuesta.respuesta,"IdBodega");
+    }
+}
 
 $(document).ready(function(){
     crearFormatoFecha();
     cargarTablaCompras(d.v_compras);
     crearAllSelect(d);
+    $("#IdLocal").change(function() {
+        buscarBodegas($("#IdLocal").val());
+    });
     $("#RUTProveedor").focusout(function() {
         var valid = $("#RUTProveedor").val();
         if (valid.length > 0){
-            var res = verificarRut($("#RUTProveedor"));
+            var res = verificarRut($("#RUTProveedor"),1);
             $("#RUTProveedor").val(res);
         }else{$("#ErrorRut").text("");}
+    });
+    $("#RUTProveedor2").focusout(function() {
+        var valid = $("#RUTProveedor2").val();
+        if (valid.length > 0){
+            var res = verificarRut($("#RUTProveedor2"),2);
+            $("#RUTProveedor2").val(res);
+        }else{$("#ErrorRut2").text("");}
+    });
+
+    $("#RUT").focusout(function() {
+        var valid = $("#RUT").val();
+        if (valid.length > 0){
+            var res = verificarRut($("#RUT"),3);
+            $("#RUT").val(res);
+        }else{$("#ErrorRut3").text("");}
     });
     $(document).on('click','#guardar',validador);
     $(document).on('click','#guardarI',validadorI);
@@ -423,23 +513,30 @@ $(document).ready(function(){
     $(document).on('click','#agregar',BotonAgregar);
     $(document).on('click','#modificar',modificarProducto);
     $(document).on('click','#volverAct',volverTabs);
-    
-
     $(document).on('click','#agregarC',BotonAgregarCabecera);
 
-    $("#RUTProveedor").focusout(function() {
-        var valid = $("#RUTProveedor").val();
-        if (valid.length > 0){
-            var res = verificarRut($("#RUTProveedor"));
-            $("#RUTProveedor").val(res);
-        }else{$("#ErrorRut").text("");}
-    });
+    $(document).on('click','#aceptarM',validadorP);
+    // $("#RUTProveedor").focusout(function() {
+    //     var valid = $("#RUTProveedor").val();
+    //     if (valid.length > 0){
+    //         var res = verificarRut($("#RUTProveedor"));
+    //         $("#RUTProveedor").val(res);
+    //     }else{$("#ErrorRut").text("");}
+    // });
 
-    $('#FormImpuesto').formValidation({
+    $('#FormProveedorNew').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
         fields: {
-            'IdImpuesto': {
+            'RUTProveedor2': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'NombreFantasia': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -450,11 +547,12 @@ $(document).ready(function(){
         }
     })
     .on('success.form.fv', function(e){
-        ProcesarImpuesto();
+        ProcesarProveedor();
     })
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');
     });
+
 
 
     $('#FormCompras').formValidation({

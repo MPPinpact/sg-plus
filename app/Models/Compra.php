@@ -50,6 +50,11 @@ class Compra extends Authenticatable
         return DB::table('v_bodegas_combo')->get();
     }
 
+    // Cargar combo de tipo de dte
+    public function listTipoDte(){
+        return DB::table('v_tipo_dte')->get();
+    }    
+
     // registrar impuesto
     public function regCompra($datos){
         $idAdmin = Auth::id();
@@ -81,6 +86,22 @@ class Compra extends Authenticatable
 
     public function getDetallesCompra($IdCompra){
         return DB::table('v_compras_detalle')->where('IdCompra',$IdCompra)->get(); 
+    }
+
+    public function regProveedor($datos){
+        $values=array('RUTProveedor' => $datos['RUTProveedor2'] , 'NombreFantasia' => $datos['NombreFantasia2']);
+        $id = DB::table('proveedores')->insertGetId($values);
+        return $id;
+    }
+
+    
+    public function buscarLocales($IdEmpresa){
+        return DB::table('v_locales_combo')->where('IdEmpresa',$IdEmpresa)->get();
+    }
+
+    
+    public function getBodegas($IdLocal){
+        return DB::table('v_bodegas_combo')->where('IdLocal',$IdLocal)->get();
     }
 
 }

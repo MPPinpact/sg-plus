@@ -21,6 +21,9 @@ use Storage;
 use DB;
 
 use App\Models\Compra;
+use App\Models\Proveedor;
+use App\Models\Usuario;
+use App\Models\Empresa;
 
 class CompraController extends Controller
 {
@@ -46,6 +49,7 @@ class CompraController extends Controller
         $data['v_compras'] = $model->listCompra();
         $data['v_bodegas'] = $model->listBodega();
         $data['v_estados'] = $model->listEstados();
+        $data['v_tipo_dte'] = $model->listTipoDte();
         return View::make('compras.compras',$data);
     }
 
@@ -75,4 +79,43 @@ class CompraController extends Controller
         $result['v_detalles'] = $model->getDetallesCompra($datos['IdCompra']);
         return $result;
     }
+
+    protected function postBuscarBodega(Request $request){
+        $datos = $request->all();
+        $model= new Compra();
+        $result= $model->getBodegas($datos['IdLocal']);
+        return $result;
+    }
+
+    protected function postBuscarproveedor(Request $request){
+        $datos = $request->all();
+        $model= new Usuario();
+        $datos['RUT']=$model->LimpiarRut($datos['RUTProveedor']);
+        $result = Proveedor::where('RUTProveedor',$datos['RUT'])->first();
+        if($result == null) { $result = '{"IdProveedor":0}'; } 
+        return $result;
+    }
+
+    protected function postBuscarempresa(Request $request){
+        $datos = $request->all();
+        $model= new Usuario();
+        $datos['RUT']=$model->LimpiarRut($datos['RUTEmpresa']);
+        $result['busqueda'] = Empresa::where('RUT',$datos['RUT'])->first();
+        if($result['busqueda'] == null) { 
+            $result['busqueda'] = '{"IdEmpresa":0}'; 
+            $result['v_locales'] = [];
+        }else{
+            $model= new Compra();
+            $result['v_locales'] = $model->buscarLocales($result['busqueda']->IdEmpresa); 
+        } 
+        return $result;
+    }
+
+    protected function postRegistroproveedor(Request $request){
+        $datos = $request->all();
+        $model= new Compra();
+        $id = $model->regProveedor($datos);
+        return $id;
+    }
+
 }

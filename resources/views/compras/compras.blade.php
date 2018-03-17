@@ -4,6 +4,10 @@
 	.nav-tabs .slide{
 		 width: calc(100% / 2)!important;
 	}
+	.ErrorRut{
+		color:#E02121;
+		font-size: 10px;
+	}
 </style>
 <div class="row">
 	<div class="col-md-12 divDetalles">
@@ -82,53 +86,83 @@
 									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
-										<div class="col-sm-2">
+										<div class="col-sm-3">
 											<div class="md-input-wrapper">
 												<input id="IdOrdenCompra" name="IdOrdenCompra" type="text" class="md-form-control" maxlength="250" readonly />
-												<label for="IdOrdenCompra">Orden de Compra</label>
+												<label for="IdOrdenCompra">Nro OC</label>
 											</div>
 										</div>
 										<div class="col-sm-3">
-											<input type="hidden" name="IdProveedor" id="IdProveedor" value="1">
+											<input type="hidden" name="IdProveedor" id="IdProveedor">
 											<div class="md-input-wrapper">
 												<input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control" maxlength="250" readonly />
 												<label for="RUTProveedor">RUT Proveedor</label>
 							                    <small id="ErrorRut" class="rut-error"></small>
 											</div>
 										</div>
+										<div class="col-sm-6">
+											<div class="md-input-wrapper">
+												<input id="NombreFantasia" name="NombreFantasia" type="text" class="md-form-control md-static" maxlength="250" readonly />
+												<label for="NombreFantasia">Nombre Proveedor</label>
+											</div>
+										</div>
+									</div>
+									<div class="row">
 										<div class="col-sm-3">
+											<input type="hidden" name="idEmpresa" id="idEmpresa">
+											<div class="md-input-wrapper">
+												<input id="RUT" name="RUT" type="text" class="md-form-control" maxlength="250" readonly />
+												<label for="RUT">RUT Comprador</label>
+							                    <small id="ErrorRut3" class="rut-error"></small>
+											</div>
+										</div>
+										<div class="col-sm-5">
+											<div class="md-input-wrapper">
+												<input id="NombreFantasiaE" name="NombreFantasiaE" type="text" class="md-form-control md-static" maxlength="250" readonly />
+												<label for="NombreFantasiaE">Nombre Comprador</label>
+											</div>
+										</div>
+
+										<div class="col-sm-2">
+											<div class="md-input-wrapper">
+												<select name="IdLocal" id="IdLocal" class="md-disable md-valid" disabled></select>
+												<label for="IdLocal">Locales</label>
+											</div>
+										</div>
+
+										<div class="col-sm-2">
 											<div class="md-input-wrapper">
 												<select name="IdBodega" id="IdBodega" class="md-disable md-valid" disabled></select>
 												<label for="IdBodega">Bodega</label>
 											</div>
 										</div>
-										<div class="col-sm-2">
+									</div>
+									<div class="row">
+										<div class="col-sm-3">
 											<div class="md-input-wrapper">
 												<select name="TipoDTE" id="TipoDTE" class="md-disable md-valid" disabled></select>
 												<label for="TipoDTE">Tipo DTE</label>
 											</div>
 										</div>
-										<div class="col-sm-2">
+										<div class="col-sm-3">
 											<div class="md-input-wrapper">
 												<input id="FolioDTE" name="FolioDTE" type="text" class="md-form-control" maxlength="250" readonly />
 												<label for="FolioDTE">Folio DTE</label>
 											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-4">
+										<div class="col-sm-2">
 											<div class="md-input-wrapper">
 												<input id="FechaDTE" name="FechaDTE" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
 												<label for="FechaDTE">Fecha DTE</label>
 											</div>
 										</div>
-										<div class="col-sm-4">
+										<div class="col-sm-2">
 											<div class="md-input-wrapper">
 												<input id="FechaVencimiento" name="FechaVencimiento" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
 												<label for="FechaVencimiento">Fecha Vencimiento</label>
 											</div>
 										</div>
-										<div class="col-sm-4">
+										<div class="col-sm-2">
 											<div class="md-input-wrapper">
 												<input id="FechaPago" name="FechaPago" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
 												<label for="FechaPago">Fecha Pago</label>
@@ -317,14 +351,57 @@
 		</div>
 	</div>
 </div>
+<!-- Modal Proveedor -->
+<div class="modal fade modal-flex" id="ModalProveedor" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h6 class="modal-title">REGISTRO PROVEEDOR</h6>
+            </div>
+            <div class="modal-body">
+            	{!! Form::open(['id'=>'FormProveedorNew','autocomplete' => 'off']) !!}
+            	<div class="row">
+					<div class="col-sm-6">
+						<div class="md-input-wrapper">
+							<input id="RUTProveedor2" name="RUTProveedor2" type="text" class="md-form-control md-static" maxlength="250" readonly/>
+							<label for="RUTProveedor2">RUT Proveedor</label>
+		                    <small id="ErrorRut2" class="rut-error"></small>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="md-input-wrapper">
+							<input id="NombreFantasia2" name="NombreFantasia2" type="text" class="md-form-control" maxlength="250"/>
+							<label for="NombreFantasia2">Nombre Fantasía</label>
+						</div>
+					</div>
+				</div>
+				{!! Form::close() !!}
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelarM" class="btn btn-inverse-primary waves-effect waves-light" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="aceptarM" class="btn btn-primary waves-effect waves-light">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script Language="Javascript">
 	var ruta = "{{ URL::route('compras') }}"
 	var rutaA = "{{ URL::route('activarCom') }}"
 	var rutaB = "{{ URL::route('comprab') }}"
+	var rutaBP = "{{ URL::route('comprabp') }}"
+	var rutaPR = "{{ URL::route('comprapr') }}"
+	var rutaBE = "{{ URL::route('comprabe') }}"
+	var rutaBB = "{{ URL::route('comprabb') }}"
+
 	var d = [];
 	d['v_compras'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_compras) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
 	d['v_bodegas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_bodegas) }}'));
+	d['v_tipo_dte'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_tipo_dte) }}'));
 </script>
 <script src="{{ asset('js/compras/compras.js') }}"></script>
 @endsection
