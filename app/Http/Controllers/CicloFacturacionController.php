@@ -30,12 +30,38 @@ class CicloFacturacionController extends Controller
         $this->middleware('auth');
     }
 
-    public function getCicloFacturacionl()
+    public function getCicloFacturacion()
     {
         $model= new CicloFacturacion();
         $data['v_ciclos_facturacion'] = $model->listCicloFacturacion();
         $data['v_estados'] = $model->listEstados();
         return View::make('cicloFacturacion.cicloFacturacion',$data);
+    }
+
+    //Registrar o actualizar impuesto
+    protected function postCicloFacturacion(Request $request){
+        $datos = $request->all();
+        $model= new CicloFacturacion();
+        $result['f_registro'] = $model->regCiclo($datos);
+        $result['v_ciclos_facturacion'] = $model->listCicloFacturacion();
+        return $result;
+    }
+
+    //Activar / desactivar impuesto
+    protected function postCicloactivo(Request $request){
+        $datos = $request->all();
+        $model= new CicloFacturacion();
+        $ciclo = CicloFacturacion::find($datos['IdCicloFacturacion']);
+        $result['activar'] = $model->activarCiclo($ciclo);
+        $result['v_ciclos_facturacion'] = $model->listCicloFacturacion();
+        return $result;
+    }
+
+    protected function postCiclodetalle(Request $request){
+        $datos = $request->all();
+        $model= new CicloFacturacion();
+        $ciclo = CicloFacturacion::find($datos['IdCicloFacturacion']);
+        return $ciclo;
     }
 	
 }

@@ -14,7 +14,7 @@ var ManejoRespuestaProcesarD = function(respuesta){
         $(".divDetalles").toggle();
         bloquearInuts();
         $("#divVolver").show();
-        pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
+        pintarDatosActualizar(respuesta.respuesta);
         //cargarTablaProductos(respuesta.respuesta.v_productos);
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
@@ -40,7 +40,7 @@ var ManejoRespuestaProcesarI = function(respuesta){
 // Manejo Registro o actualizacion de empresa
 var ManejoRespuestaProcesar = function(respuesta){
     if(respuesta.code==200){
-        var res = JSON.parse(respuesta.respuesta.f_registro.v_ciclos_facturacion);
+        var res = JSON.parse(respuesta.respuesta.f_registro);
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
@@ -84,7 +84,7 @@ var cargartablaCicloFacturacions = function(data){
                         <a href="#" onclick="verDetalleCicloFacturacion(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Ciclo de Facturación" data-original-title="Delete">
                             <i class="icofont icofont-search"></i>
                         </a>
-                        <a href="#" onclick="cambiarEstatusLocal(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                        <a href="#" onclick="cambiarEstatusCicloFacturacion(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
                         </center>`;
@@ -105,28 +105,11 @@ var cargartablaCicloFacturacions = function(data){
         limpiarLocales=1;
 };
 
-var seleccionarTablaLocales = function(data){
-    var tableB = $('#tablaCicloFacturacion').dataTable();
-    $('#tablaCicloFacturacion tbody').on('click', 'tr', function (e) {
-        tableB.$('tr.selected').removeClass('selected');
-        $(this).addClass('selected');
-        RegistroEmpresas = TablaTraerCampo('tablaCicloFacturacion',this);
-    });
-}
-
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
     $("#spanTitulo").text("Editar Ciclo de Facturación");
     $("#IdCicloFacturacion").val(data.IdCicloFacturacion);
-    $("#DiaCorte").val(data.DiaCorte);
-    $("#DiaFacturacion").val(data.DiaFacturacion);
-    $("#EstadoCiclo").val(data.EstadoCiclo).trigger("change");
-}
-
-var pintarDatosDetalles = function(data){
-    $(".md-form-control").addClass("md-valid");
-    $("#IdCicloFacturacion").val(data.IdCicloFacturacion);
-    $("#DiaCorte").val(data.DiaCorte);
+    $("#DiaCorte").val(data.DiaPago);
     $("#DiaFacturacion").val(data.DiaFacturacion);
     $("#EstadoCiclo").val(data.EstadoCiclo).trigger("change");
 }
@@ -163,7 +146,7 @@ var BotonAgregar = function(){
 var ProcesarCicloFacturacion = function(){
     if (errorRut==0){  
         var camposNuevo = {
-            'IdCicloFacturacion': $('#IdCicloFacturacion').val()
+            'EstadoCiclo': $('#EstadoCiclo').val()
         }
         parametroAjax.ruta=ruta;
         parametroAjax.data = $("#FormCicloFacturacion").serialize() + '&' + $.param(camposNuevo);
@@ -176,16 +159,16 @@ var validador = function(){
     $('#FormCicloFacturacion').formValidation('validate');
 }
 
-var cambiarEstatusLocal = function(IdBodega){
+var cambiarEstatusCicloFacturacion = function(IdCicloFacturacion){
     parametroAjax.ruta=rutaA;
-    parametroAjax.data = {IdBodega:IdBodega};
+    parametroAjax.data = {IdCicloFacturacion:IdCicloFacturacion};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarI(respuesta);
 }
 
-var verDetalleCicloFacturacion = function(IdBodega){
+var verDetalleCicloFacturacion = function(IdCicloFacturacion){
     parametroAjax.ruta=rutaD;
-    parametroAjax.data = {IdBodega:IdBodega};
+    parametroAjax.data = {IdCicloFacturacion:IdCicloFacturacion};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarD(respuesta);    
 }
@@ -217,10 +200,7 @@ var volverTabs = function(){
 }
 
 var crearAllSelect = function(data){
-    // crearselect(data.v_locales,"IdLocal");
-    // crearselect(data.v_estados,"EstadoBodega");
-    // crearselect(data.v_locales,"IdLocald");
-    // crearselect(data.v_estados,"EstadoBodegad");
+    crearselect(data.v_estados,"EstadoCiclo");
 }
 
 $(document).ready(function(){

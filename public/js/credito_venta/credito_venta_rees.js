@@ -1,7 +1,6 @@
-// var RegistroLocales  = '';
-var manejoRefresh=limpiarPreferencias=errorRut=limpiarBodegas=ErrorCuotas=0;
-var CuotaMax=0;
-var Interes='';
+/ var RegistroLocales  = '';
+var manejoRefresh=limpiarPreferencias=errorRut=limpiarBodegas=0;
+
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
     'tipo': 'POST',
@@ -13,9 +12,8 @@ var parametroAjax = {
 var ManejoRespuestaBuscarCliente = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta.v_cliente!=null){
-            $("#IdCliente").val(respuesta.respuesta.v_cliente[0].IdCliente);
-            $("#NombreCliente").val(respuesta.respuesta.v_cliente[0].NombreCliente);
-            $("#PrimeraCuota").val(respuesta.respuesta.v_fechas.fechaPago);
+            $("#IdCliente").val(respuesta.respuesta.v_cliente.IdCliente);
+            $("#NombreCliente").val(respuesta.respuesta.v_cliente.NombreCliente);
         }else{
             $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
         }
@@ -112,10 +110,10 @@ var cargarTablaVentaCredito = function(data){
                 {"title": "Id Venta Crédito","data": "IdVentaCredito",visible:0},
                 {"title": "Fecha Venta","data": "FechaVentaCredito"},
                 {"title": "Monto Crédito","data": "MontoCredito"},
-                {"title": "Nro. Cuotas","data": "NumeroCuotas"},
-                {"title": "Monto Cuota","data": "MontoCuota"},
+				{"title": "Nro. Cuotas","data": "NumeroCuotas"},
+				{"title": "Monto Cuota","data": "MontoCuota"},
                 {"title": "Primera Cuota","data": "PrimeraCuota"},
-                {"title": "Estado","data": "DesEstadoVentaCredito"},
+				{"title": "Estado","data": "DesEstadoVentaCredito"},
                 {"title": "Fecha de creacion","data": "auFechaCreacion",visible:0},
                 {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
                 {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
@@ -161,22 +159,15 @@ var BotonAgregar = function(){
     $("#divVolver").hide();
     $(".divDetalles").toggle();
     $(".divBotones").toggle();
-    $("#NumeroCuotas").val(CuotaMax);
-    $("#InteresMensual").val(Interes);
     desbloquearInuts();
-
 }
 
 var ProcesarVentaCredito = function(){
     if (errorRut==0){
-        if(ErrorCuotas==0){
-            parametroAjax.ruta=ruta;
-            parametroAjax.data = $("#FormVentaCredito").serialize();
-            respuesta=procesarajax(parametroAjax);
-            ManejoRespuestaProcesar(respuesta);
-        }else{
-            $.growl({message:"El número de cuotas no debe ser mayor al numero de coutas de la prefencia de crédito activa"},{type: "warning", allow_dismiss: true,}); 
-        }
+        parametroAjax.ruta=ruta;
+        parametroAjax.data = $("#FormVentaCredito").serialize();
+        respuesta=procesarajax(parametroAjax);
+        ManejoRespuestaProcesar(respuesta);
     }
 };
 
@@ -203,9 +194,9 @@ var bloquearInuts = function(){
     $("#RUTCliente").prop('readonly', true);
     $("#MontoCredito").prop('readonly', true);
     $("#NumeroCuotas").prop('readonly', true);
-    //$("#InteresMensual").prop('readonly', true);
-    //$("#MontoFinal").prop('readonly', true);
-    //$("#MontoCuota").prop('readonly', true);
+    $("#InteresMensual").prop('readonly', true);
+    $("#MontoFinal").prop('readonly', true);
+    $("#MontoCuota").prop('readonly', true);
     $("#PrimeraCuota").prop('readonly', true);
 }
 
@@ -214,9 +205,9 @@ var desbloquearInuts = function(){
     $("#RUTCliente").prop('readonly', false);
     $("#MontoCredito").prop('readonly', false);
     $("#NumeroCuotas").prop('readonly', false);
-    //$("#InteresMensual").prop('readonly', false);
-    //$("#MontoFinal").prop('readonly', false);
-    //$("#MontoCuota").prop('readonly', false);
+    $("#InteresMensual").prop('readonly', false);
+    $("#MontoFinal").prop('readonly', false);
+    $("#MontoCuota").prop('readonly', false);
     $("#PrimeraCuota").prop('readonly', false);
 }
 
@@ -236,6 +227,16 @@ var volverTabs = function(){
     $("#spanTitulo").text("")
 }
 
+var crearAllSelect = function(data){
+    var encargado =[{"id":"1","text":"Encargado 1"},{"id":"2","text":"Encargado 2"}];
+    // crearselect(encargado,"IdEncargadoLocal");
+    // crearselect(encargado,"IdEncargadoLocald");
+    // crearselect(data.v_empresas,"IdEmpresa");
+    // crearselect(data.v_estados,"EstadoLocal");
+    // crearselect(data.v_empresas,"IdEmpresad");
+    // crearselect(data.v_estados,"EstadoLocald");
+}
+
 var verificarRut = function(control){
     var res = Valida_Rut(control);
     var format = formateaRut(control.val(), res);
@@ -250,12 +251,6 @@ var verificarRut = function(control){
         return control.val();
     }
 }
-var calcularCuotas = function(montoCredito, numeroCuotas, interesMensual){
-    var montoFinalCredito = montoCredito * ( 1 + (numeroCuotas * interesMensual/100));
-    var montoCuota = montoFinalCredito / numeroCuotas;
-    $("#MontoFinal").val(Math.round(montoFinalCredito));
-    $("#MontoCuota").val(Math.round(montoCuota));
-}
 
 var buscarCliente = function(RUTCliente){
     parametroAjax.ruta=rutaC;
@@ -264,13 +259,7 @@ var buscarCliente = function(RUTCliente){
     ManejoRespuestaBuscarCliente(respuesta);
 }
 
-var cargarInteresCuotas = function(data){
-    CuotaMax=data.NumeroMaxCuotas;
-    Interes = data.InteresMensual;
-}
-
 $(document).ready(function(){
-    cargarInteresCuotas(d['v_prefencias'][0]);
     $("#RUTCliente").focusout(function() {
         var valid = $("#RUTCliente").val();
         if (valid.length > 0){
@@ -278,25 +267,12 @@ $(document).ready(function(){
             $("#RUTCliente").val(res);
         }else{
             $("#ErrorRut").text("");
-        }
-    });
-   $("#NumeroCuotas").focusout(function () {
-        var montoCredito = $("#MontoCredito").val();
-        var numeroCuotas = $("#NumeroCuotas").val();
-        var InteresMensual = $("#InteresMensual").val();
-        if (montoCredito.length > 0){
-            if (parseInt(numeroCuotas) > parseInt(CuotaMax)){
-                ErrorCuotas=1; 
-            }else{
-                ErrorCuotas=0; 
-            }
-            var res = calcularCuotas(montoCredito, numeroCuotas, InteresMensual);
-        }else{
-            $.growl({message:"Debe ingresar el monto a Finaciar"},{type: "warning", allow_dismiss: true,});
+            console.log("voy a validar");
         }
     });
     $("#spanTitulo").text("Ventas a Crédito Registradas");
     cargarTablaVentaCredito(d.v_credito_venta);
+    // crearAllSelect(d);
     $(document).on('click','#guardar',validador);
     $(document).on('click','#cancelar',BotonCancelar);
     $(document).on('click','#agregar',BotonAgregar);
