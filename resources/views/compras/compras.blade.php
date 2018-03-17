@@ -118,19 +118,19 @@
 									<div class="row">
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input id="FechaDTE" name="FechaDTE" type="text" class="md-form-control" maxlength="250" readonly />
+												<input id="FechaDTE" name="FechaDTE" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
 												<label for="FechaDTE">Fecha DTE</label>
 											</div>
 										</div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input id="FechaVencimiento" name="FechaVencimiento" type="text" class="md-form-control" maxlength="250" readonly />
+												<input id="FechaVencimiento" name="FechaVencimiento" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
 												<label for="FechaVencimiento">Fecha Vencimiento</label>
 											</div>
 										</div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input id="FechaPago" name="FechaPago" type="text" class="md-form-control" maxlength="250" readonly />
+												<input id="FechaPago" name="FechaPago" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
 												<label for="FechaPago">Fecha Pago</label>
 											</div>
 										</div>
@@ -192,35 +192,122 @@
 									{!! Form::close() !!}
 		                        </div>
 		                        <div class="tab-pane" id="TabImpuestos" role="tabpanel">
-									{!! Form::open(['id'=>'FormCabecera','autocomplete' => 'off']) !!}
-									{!! Form::hidden('IdCompra2', '', [
-									'id'            => 'IdCompra2',
-									'class'         => 'form-control'])!!}
-									<!--div class="row">
-										<div class="col-sm-4"></div>
-										<div class="col-sm-6">
-										<div class="row">
-											<div class="col-sm-8">
-												<div class="md-input-wrapper">
-													<select name="IdImpuesto" id="IdImpuesto" class="md-valid"></select>
-					                                <label for="IdImpuesto">Impuesto</label>
-												</div>
-						                    </div>
-						                    <div class="col-sm-4">
-												<button id="guardarI"  type="button" class="btn btn-primary waves-effect waves-light">
-													Guardar
-					                			</button>
-						                    </div>
+									
+									<div class="divCabecera">
+										<div class="col-md-12">
+											<button style="float:right;" name="agregarC" id="agregarC" type="button" class="btn btn-primary waves-effect waves-light">
+												<span>Agregar</span>
+				                			</button>
 										</div>
-										</div>
-										<div class="col-sm-2"></div>
-									</div -->
-									{!! Form::close() !!}
-									<div class="row">
+										<br />
 										<div class="col-md-12 table-responsive">
 											<table id="tablaDetalles" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 										</div>
 									</div>
+									<div class="divCabecera" style="display:none;">
+										{!! Form::open(['id'=>'FormCabecera','autocomplete' => 'off']) !!}
+											<input type="hidden" name="IdCompra2" id="IdCompra2" value="1">
+											<input type="hidden" name="IdDetalleCompra" id="IdDetalleCompra" value="1">
+											<input type="hidden" name="IdProducto" id="IdProducto" value="1">
+											
+											<div class="row">
+												<div class="col-md-4">
+													<div class="md-input-wrapper">
+														<input id="CodigoBarra" name="CodigoBarra" type="text" class="md-form-control" maxlength="250" readonly />
+														<label for="CodigoBarra">Producto</label>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="md-input-wrapper">
+														<select name="IdUnidadMedida" id="IdUnidadMedida" class="md-disable md-valid" disabled></select>
+														<label for="IdUnidadMedida">Unidad de medida</label>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="md-input-wrapper">
+														<input id="NombreProducto" name="NombreProducto" type="text" class="md-form-control" maxlength="250" readonly />
+														<label for="NombreProducto">Nombre Producto</label>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-2">
+													<div class="md-input-wrapper">
+														<input id="CantidadComprada" name="CantidadComprada" type="text" class="md-form-control" maxlength="10" readonly />
+														<label for="CantidadComprada">Cantidad Comprada</label>
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="md-input-wrapper">
+														<input id="ValorUnitario" name="ValorUnitario" type="text" class="md-form-control" maxlength="10" readonly />
+														<label for="ValorUnitario">Valor Unitario</label>
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="md-input-wrapper">
+														<input id="FactorImpuesto" name="FactorImpuesto" type="text" class="md-form-control" maxlength="10" readonly />
+														<label for="FactorImpuesto">Factor Impuesto</label>
+													</div>
+												</div>
+
+												<div class="col-md-2">
+													<div class="md-input-wrapper">
+														<input id="ValorImpuestos" name="ValorImpuestos" type="text" class="md-form-control" maxlength="10" readonly />
+														<label for="ValorImpuestos">Valor Impuestos</label>
+													</div>
+												</div>
+												<div class="col-md-2">
+													<input type="hidden" name="IdProveedor" id="IdProveedor" value="1">
+													<div class="md-input-wrapper">
+														<input id="MontoDescuento" name="MontoDescuento" type="text" class="md-form-control" maxlength="10" readonly />
+														<label for="MontoDescuento">Monto Descuento</label>
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="md-input-wrapper">
+														<input id="ValorUnitarioFinal" name="ValorUnitarioFinal" type="text" class="md-form-control" maxlength="10" readonly />
+														<label for="ValorUnitarioFinal">Valor Unitario Final</label>
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-3"></div>
+												<div class="col-md-3">
+													<div class="md-input-wrapper">
+														<input id="TotalLinea" name="TotalLinea" type="text" class="md-form-control" maxlength="10" readonly />
+														<label for="TotalLinea">Total Linea</label>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<input type="hidden" name="IdProveedor" id="IdProveedor" value="1">
+													<div class="md-input-wrapper">
+														<select name="EstadoDetalleCompra" id="EstadoDetalleCompra" class="md-valid"></select>
+											            <label for="EstadoDetalleCompra">Estado</label>
+													</div>
+												</div>
+												<div class="col-md-3"></div>
+											</div>
+											<br>
+											<div align="center">
+												<div class="pull-rigth">
+													<div class="divBotonesC">
+														<button id="modificarC" type="button" class="btn btn-primary waves-effect waves-light">
+															Modificar
+														</button>
+													</div>
+													<div class="divBotonesC" style="display:none;">
+														<button id="cancelarC" type="button" class="btn btn-inverse-primary waves-effect waves-light">
+															Cancelar
+														</button>
+														<button id="guardarC"  type="button" class="btn btn-primary waves-effect waves-light">
+															Guardar
+														</button>
+													</div>
+												</div>
+											</div>
+										{!! Form::close() !!}
+		                        	</div>
 		                        </div>
 		                    </div>
 		                </div>

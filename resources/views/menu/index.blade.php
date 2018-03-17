@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" >
 <head>
   <?php
       header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
@@ -84,6 +84,13 @@
   {{ HTML::script('theme/assets/plugins/data-table/js/vfs_fonts.js') }}
   {{ HTML::script('theme/bower_components/datatables.net-buttons/js/buttons.print.min.js') }}
   {{ HTML::script('theme/bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}
+
+  {{ HTML::script('plugins/daterangepicker/moment.js') }}
+  {{ HTML::script('plugins/daterangepicker/moment-with-locale-es.js') }}
+  {{ HTML::script('theme/assets/plugins/form-mask/js/inputmask.js') }}
+  {{ HTML::script('theme/assets/plugins/form-mask/js/jquery.inputmask.js') }}
+  {{ HTML::script('theme/assets/plugins/form-mask/js/autoNumeric.js') }}
+
   {{ HTML::script('plugins/jQuery-contextMenu-master/dist/jquery.contextMenu.min.js') }}
   {{ HTML::script('plugins/validator/valtexto.js') }}
   {{ HTML::script('js/utils/utils.js') }}

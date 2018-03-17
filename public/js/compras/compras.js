@@ -156,6 +156,16 @@ var cargarTablaCompras = function(data){
                 {"title": "Total Impuestos","data": "TotalImpuestos"},
                 {"title": "Total Compra","data": "TotalCompra"},
                 {"title": "EstadoCompra","data": "EstadoCompra",visible:0},
+                {
+                    "title": "Fecha DTE", 
+                    "data": "FechaDTE",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },
                 {"title": "Estado","data": "DesEstadoCompra"}
             ],
         });
@@ -217,11 +227,13 @@ var cargarTablaDetalles = function(data){
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
     $("#IdCompra").val(data.IdCompra);
+    $("#IdCompra2").val(data.IdCompra);
     $("#IdOrdenCompra").val(data.IdOrdenCompra);
     $("#RUTProveedor").val(data.RUTProveedor);
     $("#FolioDTE").val(data.FolioDTE);
-    $("#FechaDTE").val(data.FechaDTE);
-    $("#FechaVencimiento").val(data.FechaVencimiento);
+    $("#FechaDTE").val(moment(data.FechaDTE, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY"));
+    $("#FechaVencimiento").val(moment(data.FechaVencimiento, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY"));
+    $("#FechaPago").val(moment(data.FechaPago, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY"));
     $("#FechaPago").val(data.FechaPago);
     $("#TotalNeto").val(data.TotalNeto);
     $("#TotalDescuentos").val(data.TotalDescuentos);
@@ -255,6 +267,13 @@ var BotonAgregar = function(){
     $("#divTabs").hide();
     $(".divBotones").toggle();
     $("#PrecioUltimaCompra").prop('readonly', false);
+}
+
+var BotonAgregarCabecera = function (){
+    $(".divCabecera").toggle();
+    $('#FormCabecera')[0].reset();
+    $("#IdDetalleCompra").val("");
+    $(".comboclear").val('').trigger("change");
 }
 
 var ProcesarImpuesto = function(){
@@ -380,7 +399,15 @@ var verificarRut = function(control){
     }
 }
 
+var crearFormatoFecha = function(){
+    $("#FechaDTE").inputmask({ mask: "99-99-9999"});
+    $("#FechaVencimiento").inputmask({ mask: "99-99-9999"});
+    $("#FechaPago").inputmask({ mask: "99-99-9999"});
+}
+
+
 $(document).ready(function(){
+    crearFormatoFecha();
     cargarTablaCompras(d.v_compras);
     crearAllSelect(d);
     $("#RUTProveedor").focusout(function() {
@@ -396,6 +423,9 @@ $(document).ready(function(){
     $(document).on('click','#agregar',BotonAgregar);
     $(document).on('click','#modificar',modificarProducto);
     $(document).on('click','#volverAct',volverTabs);
+    
+
+    $(document).on('click','#agregarC',BotonAgregarCabecera);
 
     $("#RUTProveedor").focusout(function() {
         var valid = $("#RUTProveedor").val();
