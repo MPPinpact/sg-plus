@@ -105,6 +105,16 @@ var cargarTablaImpuestos = function(data){
                 },
                 {"title": "IdImpuesto","data": "IdImpuesto",visible:0},
                 {"title": "Nombre","data": "NombreImpuesto"},
+                {   
+                    "title": "Fecha de Creación", 
+                    "data": "auFechaCreacion",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },
                 {"title": "fecha de creacion","data": "auFechaCreacion"},
                 {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
                 {"title": "Creado por","data": "creador"},

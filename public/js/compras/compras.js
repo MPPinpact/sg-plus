@@ -270,7 +270,6 @@ var pintarDatosActualizar= function(data){
     $("#FechaDTE").val(moment(data.FechaDTE, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY"));
     $("#FechaVencimiento").val(moment(data.FechaVencimiento, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY"));
     $("#FechaPago").val(moment(data.FechaPago, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY"));
-    $("#FechaPago").val(data.FechaPago);
     $("#TotalNeto").val(data.TotalNeto);
     $("#TotalDescuentos").val(data.TotalDescuentos);
     $("#TotalImpuestos").val(data.TotalImpuestos);

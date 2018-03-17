@@ -75,7 +75,7 @@
 									<div class="row">
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="FechaInicio" name="FechaInicio" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="FechaInicio" name="FechaInicio" type="text" class="md-form-control" maxlength="250" data-mask="99-99-9999" readonly />
 					                            <label for="FechaInicio">Fecha Inicio</label>
 					                        </div>
 										</div>
@@ -103,7 +103,7 @@
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
 				                                <input id="TolenranciaDiasPrimeraCuota" name="TolenranciaDiasPrimeraCuota" type="text" class="md-form-control" maxlength="250" readonly />
-					                            <label for="TolenranciaDiasPrimeraCuota">Tolenrancia de Dias</label>
+					                            <label for="TolenranciaDiasPrimeraCuota">Tolerancia de Días</label>
 					                        </div>
 										</div>
 					                    <div class="col-sm-4">

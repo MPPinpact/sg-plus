@@ -158,28 +158,26 @@
 									<br>
 									<div class="row">
 										<div class="col-sm-3">
-											<div class="md-input-wrapper">
-												<select name="SeVende" id="SeVende" class="md-disable md-valid" disabled></select>
-					                            <label for="SeVende">Se Vende</label>
-											</div>
+											<div class="form-check">
+							                    <label for="chkme" class="form-check-label">
+							                    	<input type="checkbox" class="form-check-input" id="seVende"> Se vende
+							                    </label>
+						                    </div>
 										</div>
 										<div class="col-sm-3">
-					                        <div class="md-input-wrapper">
-												<select name="EsProductoCombo" id="EsProductoCombo" class="md-disable md-valid" disabled></select>
-				                                <label for="EsProductoCombo">Es combo</label>
-											</div>
+					                        	<label class="form-check-label">
+							                    	<input name="EsProductoCombo" id="EsProductoCombo" name type="checkbox" class="form-check-input" > Es Combo
+							                    </label>
 					                    </div>
 					                    <div class="col-sm-3">
-					                        <div class="md-input-wrapper">
-												<select name="Descontinuado" id="Descontinuado" class="md-disable md-valid" disabled></select>
-				                                <label for="Descontinuado">Producto Descontinuado</label>
-											</div>
+												<label class="form-check-label">
+							                    	<input name="Descontinuado" id="Descontinuado" name type="checkbox" class="form-check-input"> Producto Descontinuado
+							                    </label>
 					                    </div>
 					                    <div class="col-sm-3">
-					                        <div class="md-input-wrapper">
-												<select name="SeCompra" id="SeCompra" class="md-disable md-valid" disabled></select>
-					                            <label for="SeCompra">Se compra</label>
-											</div>
+												<label class="form-check-label">
+							                    	<input name="SeCompra" id="SeCompra" name type="checkbox" class="form-check-input"> Se compra
+							                    </label>
 					                    </div>
 									</div>
 									<br>

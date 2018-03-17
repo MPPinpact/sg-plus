@@ -96,7 +96,16 @@ var cargarTablaBodegas = function(data){
                 {"title": "Nombre Bodega","data": "NombreBodega"},
                 {"title": "Descripcion Bodega Local","data": "DescripcionBodega"},
                 {"title": "Local Asociado","data": "NombreLocal"},
-                {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
+                 {   
+                    "title": "Fecha de Creación", 
+                    "data": "auFechaCreacion",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },  
                 {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
                 {"title": "Creado por","data": "creador"},
                 {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},

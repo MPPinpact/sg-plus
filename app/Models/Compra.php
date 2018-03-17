@@ -59,6 +59,10 @@ class Compra extends Authenticatable
     public function regCompra($datos){
         $idAdmin = Auth::id();
         $datos['IdCompra']==null ? $Id=0 : $Id= $datos['IdCompra'];
+        $datos['FechaDTE'] = $this->formatearFecha($datos['FechaDTE']);
+        $datos['FechaVencimiento'] = $this->formatearFecha($datos['FechaVencimiento']);
+        $datos['FechaPago'] = $this->formatearFecha($datos['FechaPago']);
+                 
         $sql="select f_registro_compra(".$Id.",".$datos['IdOrdenCompra'].",".$datos['IdProveedor'].",".$datos['IdBodega'].",".$datos['TipoDTE'].",'".$datos['FolioDTE']."','".$datos['FechaDTE']."','".$datos['FechaVencimiento']."','".$datos['FechaPago']."','".$datos['TotalNeto']."','".$datos['TotalDescuentos']."','".$datos['TotalImpuestos']."','".$datos['TotalCompra']."',".$datos['EstadoCompra'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
@@ -88,6 +92,7 @@ class Compra extends Authenticatable
         return DB::table('v_compras_detalle')->where('IdCompra',$IdCompra)->get(); 
     }
 
+
     public function regProveedor($datos){
         $values=array('RUTProveedor' => $datos['RUTProveedor2'] , 'NombreFantasia' => $datos['NombreFantasia2']);
         $id = DB::table('proveedores')->insertGetId($values);
@@ -102,6 +107,12 @@ class Compra extends Authenticatable
     
     public function getBodegas($IdLocal){
         return DB::table('v_bodegas_combo')->where('IdLocal',$IdLocal)->get();
+    }
+
+    public function formatearFecha($d){
+        $formato = explode("-", $d);
+        $fecha = $formato[2]."-".$formato[1]."-".$formato[0];
+        return $fecha;
     }
 
 }

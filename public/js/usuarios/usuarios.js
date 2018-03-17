@@ -167,14 +167,32 @@ var cargarTablaUsuarios = function(data){
                 }
             },
             {"title": "Perfíl","data": "des_Perfil"},
-            {"title": "fecha de creacion","data": "auCreadoEl",visible:0},
+            {   
+                "title": "Fecha de Creación", 
+                "data": "auCreadoEl",
+                "render": function(data, type, row, meta){
+                    if(type === 'display'){
+                        data = moment(data, 'YYYY-MM-DD',true).format("DD-MM-YYYY HH:mm:ss");
+                    }
+                    return data;
+                }
+            }, 
             {"title": "Creado id","data": "auCreadoPor",visible:0},
             {"title": "Creado por","data": "creador"},
             {"title": "Teléfono","data": "auModificadoEl",visible:0},
             {"title": "Modificado id","data": "auModificadoPor",visible:0},
             {"title": "Modificado por","data": "modificador",visible:0},
             {"title": "Estado","data": "des_estado"},
-            {"title": "Última visita","data": "usrUltimaVisita"},
+            {   
+                "title": "Última visita", 
+                "data": "usrUltimaVisita",
+                "render": function(data, type, row, meta){
+                    if(type === 'display'){
+                        data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY HH:mm:ss");
+                    }
+                    return data;
+                }
+            },
             {"title": "Estatus Bloqueo","data": "DescripcionBloqueo"}],
         });
         limpiarUsuarios=1;

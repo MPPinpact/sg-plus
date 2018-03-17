@@ -38,7 +38,6 @@ var ManejoRespuestaProcesarI = function(respuesta){
 
 // Manejo Registro o actualizacion de empresa
 var ManejoRespuestaProcesar = function(respuesta){
-
     if(respuesta.code==200){
         var res = JSON.parse(respuesta.respuesta.f_registro);
         switch(res.code) {
@@ -51,7 +50,7 @@ var ManejoRespuestaProcesar = function(respuesta){
                 cargarTablaPreferencia(respuesta.respuesta.v_credito_preferencias);
                 break;
             case '-2':
-                $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
+                 $.growl({message:"No se puede tener activa dos \n preferencias de crédito en el mismo rango de fechas"},{type: "warning", allow_dismiss: true,});
                 break;
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
@@ -92,13 +91,31 @@ var cargarTablaPreferencia = function(data){
                     }
                 },
                 {"title": "Id Preferencia","data": "IdCreditoPreferencia",visible:0},
-                {"title": "Fecha de Inicio","data": "FechaInicio"},
-                {"title": "Fecha de Fin","data": "FechaFin"},
+                {
+                    "title": "Fecha de Inicio", 
+                    "data": "FechaInicio",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },
+                {   
+                    "title": "Fecha de Fin", 
+                    "data": "FechaFin",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },
 				{"title": "Interes Mensual","data": "InteresMensual"},
 				{"title": "Max de Cuotas","data": "NumeroMaxCuotas"},
 				{"title": "Primera Cuota","data": "TolenranciaDiasPrimeraCuota"},
 				{"title": "Deuda Vencida","data": "AdvertenciaDeudaVencida"},
-				{"title": "Monto Mantención","data": "MontoMantencionCuenta"},
+				{"title": "Monto Mantenciónnnnn","data": "MontoMantencionCuenta"},
 				{"title": "Estado","data": "DetalleEstadoPreferencia"},
 
                 {"title": "Fecha de creacion","data": "auFechaCreacion",visible:0},
@@ -114,8 +131,8 @@ var cargarTablaPreferencia = function(data){
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
     $("#IdCreditoPreferencia").val(data.IdCreditoPreferencia);
-    $("#FechaInicio").val(data.FechaInicio);
-    $("#FechaFin").val(data.FechaFin);
+    $("#FechaInicio").val(moment(data.FechaInicio, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY"));
+    $("#FechaFin").val(moment(data.FechaFin, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY"));
     $("#InteresMensual").val(data.InteresMensual);
     $("#NumeroMaxCuotas").val(data.NumeroMaxCuotas);
     $("#TolenranciaDiasPrimeraCuota").val(data.TolenranciaDiasPrimeraCuota);
@@ -224,7 +241,14 @@ var crearAllSelect = function(data){
     crearselect(data.v_estados,"EstadoPreferencia");
 }
 
+var crearFormatoFecha = function(){
+    $("#FechaInicio").inputmask({ mask: "99-99-9999"});
+    $("#FechaFin").inputmask({ mask: "99-99-9999"});
+}
+
+
 $(document).ready(function(){
+    crearFormatoFecha();
     cargarTablaPreferencia(d.v_credito_preferencias);
     crearAllSelect(d);
     $(document).on('click','#guardar',validador);

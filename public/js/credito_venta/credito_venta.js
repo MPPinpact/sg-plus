@@ -110,11 +110,29 @@ var cargarTablaVentaCredito = function(data){
                     }
                 },
                 {"title": "Id Venta Crédito","data": "IdVentaCredito",visible:0},
-                {"title": "Fecha Venta","data": "FechaVentaCredito"},
+                {   
+                    "title": "Fecha Venta", 
+                    "data": "FechaVentaCredito",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },                
                 {"title": "Monto Crédito","data": "MontoCredito"},
                 {"title": "Nro. Cuotas","data": "NumeroCuotas"},
                 {"title": "Monto Cuota","data": "MontoCuota"},
-                {"title": "Primera Cuota","data": "PrimeraCuota"},
+                {   
+                    "title": "Primera Cuota", 
+                    "data": "PrimeraCuota",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },  
                 {"title": "Estado","data": "DesEstadoVentaCredito"},
                 {"title": "Fecha de creacion","data": "auFechaCreacion",visible:0},
                 {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
@@ -137,7 +155,7 @@ var pintarDatosActualizar= function(data){
     $("#InteresMensual").val(data.InteresMensual);
     $("#MontoFinal").val(data.MontoFinal);
     $("#MontoCuota").val(data.MontoCuota);
-    $("#PrimeraCuota").val(data.PrimeraCuota);
+    $("#PrimeraCuota").val(moment(data.PrimeraCuota, 'YYYY-MM-DD',true).format("DD-MM-YYYY"));   
 }
 
 var BotonCancelar = function(){
