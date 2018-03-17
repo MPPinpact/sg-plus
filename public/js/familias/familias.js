@@ -105,7 +105,16 @@ var cargarTablaFamilias = function(data){
                 },
                 {"title": "IdFamilia","data": "IdFamilia",visible:0},
                 {"title": "Nombre","data": "NombreFamilia"},
-                {"title": "fecha de creacion","data": "auFechaCreacion"},
+                 {   
+                    "title": "Fecha de Creación", 
+                    "data": "auFechaCreacion",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },  
                 {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
                 {"title": "Creado por","data": "creador"},
                 {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},

@@ -69,7 +69,7 @@
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
 				                                <input id="DiaCorte" name="DiaCorte" type="text" class="md-form-control" maxlength="2" readonly />
-					                            <label for="DiaCorte">Dia de Corte</label>
+					                            <label for="DiaCorte">Dia de Pago</label>
 					                        </div>
 										</div>
 					                    <div class="col-sm-4">
@@ -89,6 +89,9 @@
 									<div align="center">
 										<div class="pull-rigth">
 											<div class="divBotones">
+												<button id="#" type="button" class="btn btn-primary waves-effect waves-light">
+													Generar EECC
+												</button>
 												<button id="modificar" type="button" class="btn btn-primary waves-effect waves-light">
 													Modificar
 												</button>

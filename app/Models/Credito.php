@@ -69,11 +69,26 @@ class Credito extends Authenticatable
     // registrar una nuevo Cliente
     public function regPreferencias($datos){
         $idAdmin = Auth::id();
+        
         $datos['IdCreditoPreferencia']==null ? $Id=0 : $Id= $datos['IdCreditoPreferencia'];
+
+        $datos['FechaInicio'] = $this->formatearFecha($datos['FechaInicio']);
+        $datos['FechaFin'] = $this->formatearFecha($datos['FechaFin']);
+
         $sql="select f_registro_preferencia(".$Id.",'".$datos['FechaInicio']."','".$datos['FechaFin']."','".$datos['InteresMensual']."',".$datos['NumeroMaxCuotas'].",".$datos['TolenranciaDiasPrimeraCuota'].",".$datos['AdvertenciaDeudaVencida'].",'".$datos['MontoMantencionCuenta']."',".$datos['EstadoPreferencia'].",".$idAdmin.")";
-        $execute=DB::select($sql);
-        foreach ($execute[0] as $key => $value) {
-            $result=$value;
+        //Validador de Ingreso de Fechas
+
+        $model = new Credito();
+        if($datos['EstadoPreferencia'] == 1){
+            $validador = $model->validarPreferencia($datos['FechaInicio'],$datos['FechaFin']);
+        }   
+        if($validador > 0){
+            return '{"code":"-2"}'; 
+        }else{
+            $execute=DB::select($sql);
+            foreach ($execute[0] as $key => $value) {
+                $result=$value;
+            }
         }
         return $result;
     }
@@ -82,15 +97,16 @@ class Credito extends Authenticatable
     public function activarCredito($datos){
         $model = new Credito();
         $validador = 0;
-        log::info($datos['EstadoPreferencia']);
+   
         if($datos['EstadoPreferencia'] == 0){
             $validador = $model->validarPreferencia($datos['FechaInicio'],$datos['FechaFin']);
-        }        
+        }    
 
         if($validador > 0){
              return '{"code":"-2"}'; 
         }else{
             $idAdmin = Auth::id();
+
             if ($datos['EstadoPreferencia']>0){
                 $values=array('EstadoPreferencia'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
             }else{
@@ -102,20 +118,25 @@ class Credito extends Authenticatable
         }
     }
 
-      // Validacion de Preferencia de Credito activa para ese rango de fecha
+     // Validacion de Preferencia de Credito activa para ese rango de fecha
     public function validarPreferencia($fInicio, $fFin){
-        $sql = "select count(1) existe from sgp.credito_preferencias where  
-                EstadoPreferencia = 1 and (
-                FechaInicio between '".$fInicio."' and '".$fFin."')
-                and (FechaFin between '".$fInicio."' and '".$fFin."')";
-        
-        log::info( $sql);
+        $sql = "select count(1) existe from sgp.credito_preferencias 
+            WHERE ((FechaInicio <= '".$fInicio."'  AND FechaFin >= '".$fFin."')
+            OR FechaInicio BETWEEN '".$fInicio."' AND '".$fFin."'
+            OR FechaFin BETWEEN '".$fInicio."' AND '".$fFin."') and EstadoPreferencia = 1";
+
         $execute=DB::select($sql);
-        log::info( $execute[0]->existe);
         return $execute[0]->existe;
     }
 
     public function getPreferenciaCredito($IdCreditoPreferencia){
         return DB::table('v_credito_preferencias')->where('IdCreditoPreferencia',$IdCreditoPreferencia)->get();
+    }
+
+
+    public function formatearFecha($d){
+        $formato = explode("-", $d);
+        $fecha = $formato[2]."-".$formato[1]."-".$formato[0];
+        return $fecha;
     }
 }

@@ -54,6 +54,10 @@ class Compra extends Authenticatable
     public function regCompra($datos){
         $idAdmin = Auth::id();
         $datos['IdCompra']==null ? $Id=0 : $Id= $datos['IdCompra'];
+        $datos['FechaDTE'] = $this->formatearFecha($datos['FechaDTE']);
+        $datos['FechaVencimiento'] = $this->formatearFecha($datos['FechaVencimiento']);
+        $datos['FechaPago'] = $this->formatearFecha($datos['FechaPago']);
+                 
         $sql="select f_registro_compra(".$Id.",".$datos['IdOrdenCompra'].",".$datos['IdProveedor'].",".$datos['IdBodega'].",".$datos['TipoDTE'].",'".$datos['FolioDTE']."','".$datos['FechaDTE']."','".$datos['FechaVencimiento']."','".$datos['FechaPago']."','".$datos['TotalNeto']."','".$datos['TotalDescuentos']."','".$datos['TotalImpuestos']."','".$datos['TotalCompra']."',".$datos['EstadoCompra'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
@@ -81,6 +85,12 @@ class Compra extends Authenticatable
 
     public function getDetallesCompra($IdCompra){
         return DB::table('v_compras_detalle')->where('IdCompra',$IdCompra)->get(); 
+    }
+
+    public function formatearFecha($d){
+        $formato = explode("-", $d);
+        $fecha = $formato[2]."-".$formato[1]."-".$formato[0];
+        return $fecha;
     }
 
 }

@@ -92,8 +92,8 @@ var cargartablaCicloFacturacions = function(data){
                     }
                 },
                 {"title": "IdCicloFacturacion","data": "IdCicloFacturacion",visible:0},
-                {"title": "Dia Corte","data": "DiaPago"},
-                {"title": "Dia Facturación","data": "DiaFacturacion"},
+                {"title": "Dia de Pago","data": "DiaPago"},
+                {"title": "Dia de Facturación","data": "DiaFacturacion"},
                 {"title": "Estado Ciclo","data": "DetalleEstadoCiclo"},
 				
                 {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
