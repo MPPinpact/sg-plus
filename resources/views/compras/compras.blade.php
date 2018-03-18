@@ -396,6 +396,9 @@
 	var rutaPR = "{{ URL::route('comprapr') }}"
 	var rutaBE = "{{ URL::route('comprabe') }}"
 	var rutaBB = "{{ URL::route('comprabb') }}"
+	var rutaBC = "{{ URL::route('comprabc') }}"
+
+
 
 	var d = [];
 	d['v_compras'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_compras) }}'));

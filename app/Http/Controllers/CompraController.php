@@ -118,4 +118,11 @@ class CompraController extends Controller
         return $id;
     }
 
+    protected function postBuscarcombos(Request $request){
+        $datos = $request->all();
+        $model= new Compra();
+        $result = $model->buscarCombos($datos);
+        return $result;   
+    }
+
 }
