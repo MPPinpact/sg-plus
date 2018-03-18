@@ -118,7 +118,7 @@
 					                    <div class="col-sm-4">
 											<div class="md-input-wrapper">
 				                                <input id="Telefeno" name="Telefeno" type="text" class="md-form-control" maxlength="250" readonly />
-					                            <label for="Telefeno">Teléfeno</label>
+					                            <label for="Telefeno">Teléfono</label>
 					                        </div>
 					                    </div>
 									</div>

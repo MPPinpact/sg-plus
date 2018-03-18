@@ -159,24 +159,24 @@
 									<div class="row">
 										<div class="col-sm-3">
 											<div class="form-check">
-							                    <label for="chkme" class="form-check-label">
-							                    	<input type="checkbox" class="form-check-input" id="seVende"> Se vende
+							                 	<label class="form-check-label">
+							                    	<input name="SeVende" id="SeVende" type="checkbox" class="form-check-input"> Se Vende
 							                    </label>
 						                    </div>
 										</div>
 										<div class="col-sm-3">
 					                        	<label class="form-check-label">
-							                    	<input name="EsProductoCombo" id="EsProductoCombo" name type="checkbox" class="form-check-input" > Es Combo
+							                    	<input name="EsProductoCombo" id="EsProductoCombo" type="checkbox" class="form-check-input" > Es Combo
 							                    </label>
 					                    </div>
 					                    <div class="col-sm-3">
 												<label class="form-check-label">
-							                    	<input name="Descontinuado" id="Descontinuado" name type="checkbox" class="form-check-input"> Producto Descontinuado
+							                    	<input name="Descontinuado" id="Descontinuado" type="checkbox" class="form-check-input"> Producto Descontinuado
 							                    </label>
 					                    </div>
 					                    <div class="col-sm-3">
 												<label class="form-check-label">
-							                    	<input name="SeCompra" id="SeCompra" name type="checkbox" class="form-check-input"> Se compra
+							                    	<input name="SeCompra" id="SeCompra" type="checkbox" class="form-check-input"> Se compra
 							                    </label>
 					                    </div>
 									</div>
