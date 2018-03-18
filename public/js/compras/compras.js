@@ -8,6 +8,23 @@ var parametroAjax = {
     'async': false
 };
 
+var ManejoRespuestaBuscarProducto = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta!=null){
+            if(respuesta.respuesta.IdProducto==0){
+                $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
+            }else{
+                $("#IdProducto").val(respuesta.respuesta.IdProducto);
+                $("#NombreProducto").val(respuesta.respuesta.NombreProducto);
+            }    
+        }else{
+            $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
+    }
+}
+
 var ManejoRespuestaBuscarProveedor = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
@@ -46,9 +63,42 @@ var ManejoRespuestaBuscarEmpresa = function(respuesta){
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 }
+
+var ManejoRespuestaProcesarCompraD = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta!=null){
+            $("#ModalDetalleCompra").modal();
+            $("#spanTituloModal").text("Detalle Compra");
+            $("#divBotonM").show();
+            $("#divBotonesAC").hide();
+            bloquearInputsDetalles();
+            pintarDatosActualizarDetalles(respuesta.respuesta[0]);
+        }else{
+            $.growl({message:"Contacte al personal informatico"},{type: "warning", allow_dismiss: true,});
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
+var ManejoRespuestaProcesarCD = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta.activar>0){
+            if(respuesta.respuesta.v_detalles.length>0){
+                $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
+                cargarTablaDetalles(respuesta.respuesta.v_detalles);
+            }
+        }else{
+            $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
 var ManejoRespuestaProcesarD = function(respuesta){
     if(respuesta.code==200){
-        bloquearInuts();
+        bloquearInputs();
         $(".divDetalles").toggle();
         $("#divVolver").show();
         $("#divTabs").show();
@@ -77,41 +127,8 @@ var ManejoRespuestaProcesarI = function(respuesta){
     }
 }
 
-// // Manejo Activar / Desactivar Impuesto a producto
-// var ManejoRespuestaProcesarAI = function(respuesta){
-//     if(respuesta.code==200){
-//         if(respuesta.respuesta.activar>0){
-//             $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
-//             cargarTablaDetalles(respuesta.respuesta.v_impuestos);
-//         }else{
-//             $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
-//         }
-//     }else{
-//         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-//     }
-// }
-
-// // Manejo respuesta descontinuar Producto
-// var ManejoRespuestaProcesarDescontinuar = function(respuesta){
-//     if(respuesta.code==200){
-//         if(respuesta.respuesta.descontinuar>0){
-//             if(respuesta.respuesta.v_compras.length>0){
-//                 $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
-//                 cargarTablaCompras(respuesta.respuesta.v_compras);
-//             }
-//         }else{
-//             $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
-//         }
-//     }else{
-//         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-//     }
-// }
-
 // Manejo Registro de proveedor
 var ManejoRespuestaProcesarProveedor = function(respuesta,nombre){
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
-    console.log(nombre);
     if(respuesta.code==200){
         if(respuesta.respuesta>0){
             $("#IdProveedor").val(respuesta.respuesta);
@@ -125,7 +142,7 @@ var ManejoRespuestaProcesarProveedor = function(respuesta,nombre){
     }
 };
 
-// Manejo Registro o actualizacion de empresa
+// Manejo Registro o actualizacion de cabecera de compra
 var ManejoRespuestaProcesar = function(respuesta){
     if(respuesta.code==200){
         var res = JSON.parse(respuesta.respuesta.f_registro);
@@ -149,6 +166,31 @@ var ManejoRespuestaProcesar = function(respuesta){
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 };
+
+var ManejoRespuestaProcesarDetalles = function(respuesta){
+    if(respuesta.code==200){
+        var res = JSON.parse(respuesta.respuesta.f_registro);
+        switch(res.code) {
+            case '200':
+                $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
+                $(".divBotonesC").toggle();
+                $("#ModalDetalleCompra").modal("hide");
+                $('#IdDetalleCompra').val("");
+                $('#FormDetalle')[0].reset();
+                cargarTablaDetalles(respuesta.respuesta.v_detalles);
+                break;
+            case '-2':
+                $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
+                break;
+            default:
+                $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+                break;
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+
+}
 
 var cargarTablaCompras = function(data){
     if(limpiarLocales==1){destruirTabla('#tablaCompras');$('#tablaCompras thead').empty();}
@@ -228,7 +270,10 @@ var cargarTablaDetalles = function(data){
                     "render": function(data, type, row, meta){
                         var result = `
                         <center>
-                        <a href="#" onclick="cambiarEstatusDetalles(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                        <a href="#" onclick="verDetallesCompraD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
+                            <i class="icofont icofont-search"></i>
+                        </a>
+                        <a href="#" onclick="cambiarEstatusCompraD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
                         </center>`;
@@ -287,21 +332,26 @@ var pintarDatosActualizar= function(data){
     $("#IdBodega").val(data.IdBodega).trigger("change");
 }
 
-var BotonCancelar = function(){
-    $("#spanTitulo").text("");
-    $(".md-form-control").removeClass("md-valid");
-    $('#FormCompras')[0].reset();
-    $("#IdCompra").val("");
-    $("#divTabs").show();
-    $(".divBotones").toggle();
-    $(".divDetalles").toggle();
-    bloquearInuts();
-    $("#PrecioUltimaCompra").prop('readonly', true);
+var pintarDatosActualizarDetalles = function(data){
+    $("#IdDetalleCompra").val(data.IdDetalleCompra);
+    $("#IdCompra2").val(data.IdCompra);
+    $("#IdProducto").val(data.IdProducto);
+    $("#CodigoBarra").val(data.CodigoBarra);
+    $("#NombreProducto").val(data.NombreProducto);
+    $("#IdUnidadMedida").val(data.IdUnidadMedida).trigger("change");
+    $("#CantidadComprada").val(data.CantidadComprada);
+    $("#ValorUnitario").val(data.ValorUnitario);
+    $("#FactorImpuesto").val(data.FactorImpuesto);
+    $("#ValorImpuestos").val(data.ValorImpuestos);
+    $("#MontoDescuento").val(data.MontoDescuento);
+    $("#ValorUnitarioFinal").val(data.ValorUnitarioFinal);
+    $("#TotalLinea").val(data.TotalLinea);
+    $("#EstadoDetalleCompra").val(data.EstadoDetalleCompra).trigger("change");
 }
 
 var BotonAgregar = function(){
     $("#spanTitulo").text("Registrar Compra");
-    desbloquearInuts();
+    desbloquearInputs();
     $(".divDetalles").toggle();
     $("#divVolver").hide();
     $("#IdCompra").val("");
@@ -312,11 +362,38 @@ var BotonAgregar = function(){
     $("#PrecioUltimaCompra").prop('readonly', false);
 }
 
-var BotonAgregarCabecera = function (){
-    $(".divCabecera").toggle();
-    $('#FormCabecera')[0].reset();
+var BotonCancelar = function(){
+    $("#spanTitulo").text("");
+    $(".md-form-control").removeClass("md-valid");
+    $('#FormCompras')[0].reset();
+    $("#IdCompra").val("");
+    $("#divTabs").show();
+    $(".divBotones").toggle();
+    $(".divDetalles").toggle();
+    bloquearInputs();
+    $("#PrecioUltimaCompra").prop('readonly', true);
+}
+
+var BotonAgregarDetalle = function (){
+    $("#spanTituloModal").text("Registrar Detalle");
+    $("#divBotonM").hide();
+    $("#divBotonesAC").show();
+    $('#FormDetalle')[0].reset();
     $("#IdDetalleCompra").val("");
+    $("#IdProducto").val("");
     $(".comboclear").val('').trigger("change");
+    desbloquearInputsDetalles();
+}
+
+var BotonCancelarDetalle = function(){
+    $("#ModalDetalleCompra").modal("hide");
+    $("#divBotonM").hide();
+    $("#divBotonesAC").hide();
+    $('#FormDetalle')[0].reset();
+    $("#IdDetalleCompra").val("");
+    $("#IdProducto").val("");
+    $(".comboclear").val('').trigger("change");
+    bloquearInputsDetalles();
 }
 
 var ProcesarProveedor = function(){
@@ -328,12 +405,19 @@ var ProcesarProveedor = function(){
 };
 
 var ProcesarCompra = function(){
-    if(errorRut == 0){
+    if(errorRut == 0 && errorRut2 == 0 && errorRut3==0){
         parametroAjax.ruta=ruta;
         parametroAjax.data = $("#FormCompras").serialize();
         respuesta=procesarajax(parametroAjax);
         ManejoRespuestaProcesar(respuesta);
     }
+};
+
+var ProcesarDetalleCompra = function(){
+    parametroAjax.ruta=rutaDC;
+    parametroAjax.data = $("#FormDetalle").serialize();
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaProcesarDetalles(respuesta);
 };
 
 var validador = function(){
@@ -348,23 +432,16 @@ var validadorI = function(){
     $('#FormImpuesto').formValidation('validate');
 }
 
+var validadorD = function(){
+    $('#FormDetalle').formValidation('validate');
+};
+
 var cambiarEstatusCompra = function(IdCompra){
     parametroAjax.ruta=rutaA;
     parametroAjax.data = {IdCompra:IdCompra};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarI(respuesta);
 }
-
-
-var cambiarEstatusDetalles = function(IdDetalleCompra){
-/*
-    parametroAjax.ruta=rutaAI;
-    parametroAjax.data = {IdDetalleCompra:IdDetalleCompra};
-    respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaProcesarAI(respuesta);
-*/
-}
-
 
 var verDetallesCompras = function(IdCompra){
     parametroAjax.ruta=rutaB;
@@ -373,7 +450,21 @@ var verDetallesCompras = function(IdCompra){
     ManejoRespuestaProcesarD(respuesta);
 }
 
-var bloquearInuts = function(){
+var verDetallesCompraD = function(IdDetalleCompra){
+    parametroAjax.ruta=rutaBDC;
+    parametroAjax.data = {IdDetalleCompra:IdDetalleCompra};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaProcesarCompraD(respuesta);
+}
+
+var cambiarEstatusCompraD = function(IdDetalleCompra){
+    parametroAjax.ruta=rutaCDA;
+    parametroAjax.data = {IdDetalleCompra:IdDetalleCompra};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaProcesarCD(respuesta);
+}
+
+var bloquearInputs = function(){
     $("#IdOrdenCompra").prop('readonly', true);
     $("#RUTProveedor").prop('readonly', true);
     $("#RUT").prop('readonly', true);
@@ -391,7 +482,8 @@ var bloquearInuts = function(){
     $("#EstadoCompra").prop('disabled', true);
 }
 
-var desbloquearInuts = function(){
+
+var desbloquearInputs = function(){
     $("#IdOrdenCompra").prop('readonly', false);
     $("#RUTProveedor").prop('readonly', false);
     $("#RUT").prop('readonly', false);
@@ -407,14 +499,48 @@ var desbloquearInuts = function(){
     $("#TipoDTE").prop('disabled', false);
     $("#IdLocal").prop('disabled', false);
     $("#EstadoCompra").prop('disabled', false);
-
 }
 
-var modificarProducto = function(){
+var bloquearInputsDetalles = function(){
+    $("#CodigoBarra").prop('readonly', true);
+    $("#NombreProducto").prop('readonly', true);
+    $("#CantidadComprada").prop('readonly', true);
+    $("#ValorUnitario").prop('readonly', true);
+    $("#FactorImpuesto").prop('readonly', true);
+    $("#ValorImpuestos").prop('readonly', true);
+    $("#MontoDescuento").prop('readonly', true);
+    $("#ValorUnitarioFinal").prop('readonly', true);
+    $("#TotalLinea").prop('readonly', true);
+    $("#IdUnidadMedida").prop('disabled', true);
+    $("#EstadoDetalleCompra").prop('disabled', true);
+}
+
+var desbloquearInputsDetalles = function(){
+    $("#CodigoBarra").prop('readonly', false);
+    $("#NombreProducto").prop('readonly', false);
+    $("#CantidadComprada").prop('readonly', false);
+    $("#ValorUnitario").prop('readonly', false);
+    $("#FactorImpuesto").prop('readonly', false);
+    $("#ValorImpuestos").prop('readonly', false);
+    $("#MontoDescuento").prop('readonly', false);
+    $("#ValorUnitarioFinal").prop('readonly', false);
+    $("#TotalLinea").prop('readonly', false);
+    $("#IdUnidadMedida").prop('disabled', false);
+    $("#EstadoDetalleCompra").prop('disabled', false);
+}
+
+var modificarCabeceras = function(){
     $("#spanTitulo").text("Editar Compra");
     $("#divVolver").hide();
     $(".divBotones").toggle();
-    desbloquearInuts();
+    desbloquearInputs();
+}
+
+var modificarDetalles = function(){
+    $("#spanTituloModal").text("Editar Detalle");
+    $("#divBotonM").hide();
+    $("#divBotonesAC").show();
+    desbloquearInputsDetalles();
 }
 
 var volverTabs = function(){
@@ -433,6 +559,8 @@ var volverTabs = function(){
 var crearAllSelect = function(data){
     crearselect(data.v_tipo_dte,"TipoDTE");
     crearselect(data.v_estados,"EstadoCompra");
+    crearselect(data.v_estados,"EstadoDetalleCompra");
+    crearselect(data.v_unidad_medida,"IdUnidadMedida");
 }
 
 
@@ -467,6 +595,13 @@ var buscarCombos = function(IdLocal,IdBodega){
     if(respuesta.code==200){var res = respuesta.respuesta;}
     else{ var res= 0; }
     return res;
+}
+
+var buscarProducto = function(CodigoBarra){
+    parametroAjax.ruta=rutaBPD;
+    parametroAjax.data = {CodigoBarra:CodigoBarra};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaBuscarProducto(respuesta);
 }
 
 var buscarProveedor = function(RUTProveedor){
@@ -524,7 +659,6 @@ $(document).ready(function(){
             $("#RUTProveedor2").val(res);
         }else{$("#ErrorRut2").text("");}
     });
-
     $("#RUT").focusout(function() {
         var valid = $("#RUT").val();
         if (valid.length > 0){
@@ -535,16 +669,24 @@ $(document).ready(function(){
     $("#FechaDTE").focusout(function() {
         calcularFechaPago($("#FechaDTE").val());
     });
-
+    $("#CodigoBarra").focusout(function() {
+        buscarProducto($("#CodigoBarra").val());
+    });
+    // Botones de cabecera de compra
     $(document).on('click','#guardar',validador);
     $(document).on('click','#guardarI',validadorI);
+    $(document).on('click','#aceptarM',validadorP);
     $(document).on('click','#cancelar',BotonCancelar);
     $(document).on('click','#agregar',BotonAgregar);
-    $(document).on('click','#modificar',modificarProducto);
+    $(document).on('click','#modificar',modificarCabeceras);
     $(document).on('click','#volverAct',volverTabs);
-    $(document).on('click','#agregarC',BotonAgregarCabecera);
+    // Botones de detalles de compra
+    $(document).on('click','#agregarC',BotonAgregarDetalle);
+    $(document).on('click','#guardarC',validadorD);
+    $(document).on('click','#cancelarC',BotonCancelarDetalle);
+    $(document).on('click','#closeModal',BotonCancelarDetalle);
+    $(document).on('click','#modificarC',modificarDetalles);
 
-    $(document).on('click','#aceptarM',validadorP);
     // $("#RUTProveedor").focusout(function() {
     //     var valid = $("#RUTProveedor").val();
     //     if (valid.length > 0){
@@ -727,6 +869,99 @@ $(document).ready(function(){
     })
     .on('success.form.fv', function(e){
         ProcesarCompra();
+    })
+    .on('status.field.fv', function(e, data){
+        data.element.parents('.form-group').removeClass('has-success');
+    });
+
+    $('#FormDetalle').formValidation({
+        excluded:[':disabled'],
+        // message: 'El módulo le falta un campo para ser completado',
+        fields: {
+            'CodigoBarra': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'IdUnidadMedida': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'CantidadComprada': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'ValorUnitario': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'FactorImpuesto': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'ValorImpuestos': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'MontoDescuento': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'ValorUnitarioFinal': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'TotalLinea': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'EstadoDetalleCompra': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            }
+        }
+    })
+    .on('success.form.fv', function(e){
+        ProcesarDetalleCompra();
     })
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');

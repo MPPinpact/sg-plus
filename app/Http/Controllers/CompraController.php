@@ -24,6 +24,7 @@ use App\Models\Compra;
 use App\Models\Proveedor;
 use App\Models\Usuario;
 use App\Models\Empresa;
+use App\Models\Producto;
 
 class CompraController extends Controller
 {
@@ -50,10 +51,11 @@ class CompraController extends Controller
         $data['v_bodegas'] = $model->listBodega();
         $data['v_estados'] = $model->listEstados();
         $data['v_tipo_dte'] = $model->listTipoDte();
+        $data['v_unidad_medida'] = $model->listUnidadMedida();
         return View::make('compras.compras',$data);
     }
 
-    //Registrar o actualizar impuesto
+    //Registrar o actualizar compra
     protected function postCompras(Request $request){
         $datos = $request->all();
         $model= new Compra();
@@ -62,13 +64,33 @@ class CompraController extends Controller
         return $result;
     }
 
-    //Activar / desactivar impuesto
+    //Registrar o actualizar Detalle compra
+    protected function postRegistrarDetallec(Request $request){
+        $datos = $request->all();
+        $model= new Compra();
+        $result['f_registro'] = $model->regDetalleCompra($datos);
+        $result['v_detalles'] = $model->getDetallesCompra($datos['IdCompra2']);
+        return $result;
+    }
+        
+
+    //Activar / desactivar compra
     protected function postCompractiva(Request $request){
         $datos = $request->all();
         $model= new Compra();
         $compra = Compra::find($datos['IdCompra']);
         $result['activar'] = $model->activarCompra($compra);
         $result['v_compras'] = $model->listCompra();
+        return $result;
+    }
+
+    //Activar / desactivar detalle compra
+    protected function postCompradetalleactiva(Request $request){
+        $datos = $request->all();
+        $model= new Compra();
+        $detalle = $model->getOneCompraDetalle($datos['IdDetalleCompra']);
+        $result['activar'] = $model->activarCompraDetalle($detalle);
+        $result['v_detalles'] = $model->getDetallesCompra($detalle[0]->IdCompra);
         return $result;
     }
 
@@ -125,4 +147,17 @@ class CompraController extends Controller
         return $result;   
     }
 
+    protected function postBuscarproductos(Request $request){
+        $datos = $request->all();
+        $result = Producto::where('CodigoBarra',$datos['CodigoBarra'])->first();
+        if($result == null) { $result = '{"IdProducto":0}'; } 
+        return $result;
+    }
+
+    protected function postBuscarDetallec(Request $request){
+        $datos = $request->all();
+        $model= new Compra();
+        $result = $model->getOneCompraDetalle($datos['IdDetalleCompra']);
+        return $result;
+    }
 }

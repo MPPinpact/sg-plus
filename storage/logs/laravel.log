@@ -1,0 +1,4 @@
+[2018-03-18 20:34:34] local.INFO: array (
+  'IdDetalleCompra' => '5',
+)  
+[2018-03-18 20:34:34] local.INFO: [{"IdDetalleCompra":5,"IdCompra":4,"IdProducto":5,"NombreProducto":"P5","CodigoBarra":"1234567890127","IdUnidadMedida":5,"NombreUnidadMedida":"unidad 3","CantidadComprada":5,"ValorUnitario":5000,"FactorImpuesto":0,"ValorImpuestos":0,"MontoDescuento":0,"ValorUnitarioFinal":0,"TotalLinea":50000,"auFechaModificacion":"2018-03-18 17:12:43","auUsuarioModificacion":null,"modificador":null,"auFechaCreacion":"2018-03-18 17:12:43","auUsuarioCreacion":null,"creador":null,"EstadoDetalleCompra":1,"DesEstadoCompra":"Activo"}]  

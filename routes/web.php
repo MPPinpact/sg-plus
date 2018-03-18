@@ -116,6 +116,11 @@ Route::post('/comprabe', 'CompraController@postBuscarempresa')->name('comprabe')
 Route::post('/comprapr', 'CompraController@postRegistroproveedor')->name('comprapr');
 Route::post('/comprabb', 'CompraController@postBuscarBodega')->name('comprabb');
 Route::post('/comprabc', 'CompraController@postBuscarcombos')->name('comprabc');
+Route::post('/comprabpd', 'CompraController@postBuscarproductos')->name('comprabpd');
+Route::post('/comprardc', 'CompraController@postRegistrarDetallec')->name('comprardc');
+Route::post('/comprarbdc', 'CompraController@postBuscarDetallec')->name('comprarbdc');
+Route::post('/comprada', 'CompraController@postCompradetalleactiva')->name('comprada');
+
 
 
 

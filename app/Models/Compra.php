@@ -53,9 +53,15 @@ class Compra extends Authenticatable
     // Cargar combo de tipo de dte
     public function listTipoDte(){
         return DB::table('v_tipo_dte')->get();
-    }    
+    }
 
-    // registrar impuesto
+    // Cargar combo Unidad de medida
+    public function listUnidadMedida(){
+        return DB::table('v_unidadmedida_combo')->get();
+    }
+        
+
+    // registrar compra
     public function regCompra($datos){
         $idAdmin = Auth::id();
         $datos['IdCompra']==null ? $Id=0 : $Id= $datos['IdCompra'];
@@ -70,7 +76,19 @@ class Compra extends Authenticatable
         return $result;
     }
 
-    // Activar / Desactivar Impuesto
+    // registrar Detalle compra
+    public function regDetalleCompra($datos){
+        $idAdmin = Auth::id();
+        $datos['IdDetalleCompra']==null ? $Id=0 : $Id= $datos['IdDetalleCompra'];
+        $sql="select f_registro_detalle_compra(".$Id.",".$datos['IdCompra2'].",".$datos['IdProducto'].",".$datos['IdUnidadMedida'].",'".$datos['CantidadComprada']."','".$datos['ValorUnitario']."','".$datos['FactorImpuesto']."','".$datos['ValorImpuestos']."','".$datos['MontoDescuento']."','".$datos['ValorUnitarioFinal']."','".$datos['TotalLinea']."',".$datos['EstadoDetalleCompra'].",".$idAdmin.")";
+        $execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
+
+    // Activar / Desactivar Compra
     public function activarCompra($datos){
         $idAdmin = Auth::id();
         if ($datos['EstadoCompra']>0){
@@ -80,6 +98,19 @@ class Compra extends Authenticatable
         }
         return DB::table('compras')
                 ->where('IdCompra', $datos['IdCompra'])
+                ->update($values);
+    }
+
+    // Activar / Desactivar Detalle compra
+    public function activarCompraDetalle($datos){
+        $idAdmin = Auth::id();
+        if ($datos[0]->EstadoDetalleCompra>0){
+            $values=array('EstadoDetalleCompra'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        }else{
+            $values=array('EstadoDetalleCompra'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        }
+        return DB::table('compras_detalle')
+                ->where('IdDetalleCompra', $datos[0]->IdDetalleCompra)
                 ->update($values);
     }
 
@@ -119,5 +150,11 @@ class Compra extends Authenticatable
         $result['v_bodega'] = DB::table('v_bodegas_combo')->where('id',$datos['IdBodega'])->get();
         return $result;
     }
+
+    public function getOneCompraDetalle($IdDetalleCompra){
+        return DB::table('v_compras_detalle')->where('IdDetalleCompra',$IdDetalleCompra)->get();
+    }
+
+    
 
 }
