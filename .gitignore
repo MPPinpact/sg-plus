@@ -1,8 +1,9 @@
+/storage
+/storage/logs/laravel.log
 /node_modules
 /storage
 /.idea
 /.vagrant
-/storage
 /vendor
 Homestead.json
 Homestead.yaml
