@@ -116,6 +116,15 @@ class VentaCredito extends Authenticatable
     }
 
     public function calcularFechaPago($cliente){
+
+        $sql="select f_calculo_pago(".$cliente[0]->IdCliente.")";
+        $execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        $resultado['fechaPago']=$this->formatearFecha($result);
+        return $resultado;
+        /*
         $date = Carbon::now();
         //$date  = Carbon::createFromDate(2018,01,27);
         $fechaVenta = $date->format('d/m/Y');
@@ -162,10 +171,13 @@ class VentaCredito extends Authenticatable
 
         }
 
+       log::info($fechaPago);
+       log::info($fechaFacturacion);
+       
         $result['fechaVenta'] = $date;
         $result['fechaPago'] = $fechaPago;
-        $result['fechaFacturacion'] = $fechaPago;
-        return $result;
+        $result['fechaFacturacion'] = $fechaFacturacion;
+        return $result;*/
     }
 }
 
