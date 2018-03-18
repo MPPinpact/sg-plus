@@ -115,6 +115,7 @@ Route::post('/comprabp', 'CompraController@postBuscarproveedor')->name('comprabp
 Route::post('/comprabe', 'CompraController@postBuscarempresa')->name('comprabe');
 Route::post('/comprapr', 'CompraController@postRegistroproveedor')->name('comprapr');
 Route::post('/comprabb', 'CompraController@postBuscarBodega')->name('comprabb');
+Route::post('/comprabc', 'CompraController@postBuscarcombos')->name('comprabc');
 
 
 

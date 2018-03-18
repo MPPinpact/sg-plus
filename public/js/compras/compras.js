@@ -14,7 +14,6 @@ var ManejoRespuestaBuscarProveedor = function(respuesta){
             if(respuesta.respuesta.IdProveedor==0){
                 var rut = $("#RUTProveedor").val();
                 $("#RUTProveedor2").val(rut);
-                // console.log(rut),
                 $("#ModalProveedor").modal();
             }else{
                 $("#IdProveedor").val(respuesta.respuesta.IdProveedor);
@@ -265,7 +264,12 @@ var pintarDatosActualizar= function(data){
     $("#IdCompra").val(data.IdCompra);
     $("#IdCompra2").val(data.IdCompra);
     $("#IdOrdenCompra").val(data.IdOrdenCompra);
+    $("#IdProveedor").val(data.IdProveedor);
     $("#RUTProveedor").val(data.RUTProveedor);
+    $("#NombreFantasia").val(data.NombreFantasiaProveedor);
+    $("#idEmpresa").val(data.idEmpresa);
+    $("#RUT").val(data.RUTEmpresa);
+    $("#NombreFantasiaE").val(data.NombreFantasiaEmpresa);
     $("#FolioDTE").val(data.FolioDTE);
     $("#FechaDTE").val(moment(data.FechaDTE, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY"));
     $("#FechaVencimiento").val(moment(data.FechaVencimiento, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY"));
@@ -274,9 +278,13 @@ var pintarDatosActualizar= function(data){
     $("#TotalDescuentos").val(data.TotalDescuentos);
     $("#TotalImpuestos").val(data.TotalImpuestos);
     $("#TotalCompra").val(data.TotalCompra);
-    $("#IdBodega").val(data.IdBodega).trigger("change");
+    var combos = buscarCombos(data.IdLocal,data.IdBodega);
+    crearselect(combos.v_local,"IdLocal");    
+    crearselect(combos.v_bodega,"IdBodega");
+    $("#IdLocal").val(data.IdLocal).trigger("change");
     $("#TipoDTE").val(data.TipoDTE).trigger("change");
     $("#EstadoCompra").val(data.EstadoCompra).trigger("change");
+    $("#IdBodega").val(data.IdBodega).trigger("change");
 }
 
 var BotonCancelar = function(){
@@ -423,10 +431,8 @@ var volverTabs = function(){
 }
 
 var crearAllSelect = function(data){
-    // var v_TipoDtes =[{"id":1,"text":"DTE 1"},{"id":2,"text":"DTE 2"},{"id":3,"text":"DTE 3"},{"id":4,"text":"DTE 4"}];
     crearselect(data.v_tipo_dte,"TipoDTE");
     crearselect(data.v_estados,"EstadoCompra");
-    // crearselect(data.v_bodegas,"IdBodega");
 }
 
 
@@ -454,6 +460,15 @@ var crearFormatoFecha = function(){
     $("#FechaPago").inputmask({ mask: "99-99-9999"});
 }
 
+var buscarCombos = function(IdLocal,IdBodega){
+    parametroAjax.ruta=rutaBC;
+    parametroAjax.data = {IdLocal:IdLocal,IdBodega:IdBodega};
+    respuesta=procesarajax(parametroAjax);
+    if(respuesta.code==200){var res = respuesta.respuesta;}
+    else{ var res= 0; }
+    return res;
+}
+
 var buscarProveedor = function(RUTProveedor){
     parametroAjax.ruta=rutaBP;
     parametroAjax.data = {RUTProveedor:RUTProveedor};
@@ -475,6 +490,17 @@ var buscarBodegas = function(IdLocal){
     if (respuesta.code==200){
         crearselect(respuesta.respuesta,"IdBodega");
     }
+}
+
+var calcularFechaPago = function (fecha){
+    var FechaDTE = moment(fecha, 'DD-MM-YYYY',true).format("YYYY-MM-DD");
+    var FechaSuma = moment(FechaDTE).add(1, 'month').format("YYYY-MM-DD");
+    var FechaVencimiento = moment(FechaSuma, 'YYYY-MM-DD',true).format("DD-MM-YYYY");
+    $("#FechaVencimiento").val(FechaVencimiento);
+    $("#FechaPago").val(FechaVencimiento);
+    $("#FechaVencimiento").focus();
+    $("#FechaPago").focus();
+    $("#TotalNeto").focus();
 }
 
 $(document).ready(function(){
@@ -506,6 +532,10 @@ $(document).ready(function(){
             $("#RUT").val(res);
         }else{$("#ErrorRut3").text("");}
     });
+    $("#FechaDTE").focusout(function() {
+        calcularFechaPago($("#FechaDTE").val());
+    });
+
     $(document).on('click','#guardar',validador);
     $(document).on('click','#guardarI',validadorI);
     $(document).on('click','#cancelar',BotonCancelar);
@@ -535,7 +565,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'NombreFantasia': {
+            'NombreFantasia2': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -558,7 +588,7 @@ $(document).ready(function(){
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
         fields: {
-            'CodigoBarra': {
+            'IdOrdenCompra': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -566,7 +596,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'CodigoProveedor': {
+            'RUTProveedor': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -574,14 +604,14 @@ $(document).ready(function(){
                     },
                 }
             },
-            'NombreProducto': {
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    }
-                }
-            },
-            'DescripcionProducto': {
+            // 'NombreFantasia': {
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         }
+            //     }
+            // },
+            'RUT': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -589,7 +619,15 @@ $(document).ready(function(){
                     },
                 }
             },
-            'StockMinimo': {
+            // 'NombreFantasiaE': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
+            'IdLocal': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -597,7 +635,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'StockMaximo': {
+            'IdBodega': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -605,7 +643,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'StockRecomendado': {
+            'TipoDTE': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -613,7 +651,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'PrecioUltimaCompra': {
+            'FolioDTE': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -621,7 +659,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'PrecioVentaSugerido': {
+            'FechaDTE': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -629,7 +667,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'IdFamilia': {
+            'FechaVencimiento': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -637,7 +675,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'IdSubFamilia': {
+            'FechaPago': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -645,7 +683,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'IdUnidadMedida': {
+            'TotalNeto': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -653,7 +691,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'SeCompra': {
+            'TotalDescuentos': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -661,7 +699,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'SeVende': {
+            'TotalImpuestos': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -669,7 +707,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'EsProductoCombo': {
+            'TotalCompra': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -677,15 +715,7 @@ $(document).ready(function(){
                     },
                 }
             },
-            'Descontinuado': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
-            'EstadoProducto': {
+            'EstadoCompra': {
                 verbose: false,
                 validators: {
                     notEmpty: {

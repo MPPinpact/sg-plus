@@ -62,8 +62,7 @@ class Compra extends Authenticatable
         $datos['FechaDTE'] = $this->formatearFecha($datos['FechaDTE']);
         $datos['FechaVencimiento'] = $this->formatearFecha($datos['FechaVencimiento']);
         $datos['FechaPago'] = $this->formatearFecha($datos['FechaPago']);
-                 
-        $sql="select f_registro_compra(".$Id.",".$datos['IdOrdenCompra'].",".$datos['IdProveedor'].",".$datos['IdBodega'].",".$datos['TipoDTE'].",'".$datos['FolioDTE']."','".$datos['FechaDTE']."','".$datos['FechaVencimiento']."','".$datos['FechaPago']."','".$datos['TotalNeto']."','".$datos['TotalDescuentos']."','".$datos['TotalImpuestos']."','".$datos['TotalCompra']."',".$datos['EstadoCompra'].",".$idAdmin.")";
+        $sql="select f_registro_compra(".$Id.",".$datos['IdOrdenCompra'].",".$datos['IdProveedor'].",".$datos['idEmpresa'].",".$datos['IdBodega'].",".$datos['TipoDTE'].",'".$datos['FolioDTE']."','".$datos['FechaDTE']."','".$datos['FechaVencimiento']."','".$datos['FechaPago']."','".$datos['TotalNeto']."','".$datos['TotalDescuentos']."','".$datos['TotalImpuestos']."','".$datos['TotalCompra']."',".$datos['EstadoCompra'].",".$datos['IdLocal'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -113,6 +112,12 @@ class Compra extends Authenticatable
         $formato = explode("-", $d);
         $fecha = $formato[2]."-".$formato[1]."-".$formato[0];
         return $fecha;
+    }
+
+    public function buscarCombos($datos){
+        $result['v_local'] = DB::table('v_locales_combo')->where('id',$datos['IdLocal'])->get();
+        $result['v_bodega'] = DB::table('v_bodegas_combo')->where('id',$datos['IdBodega'])->get();
+        return $result;
     }
 
 }
