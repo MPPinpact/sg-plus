@@ -1,5 +1,6 @@
 var RegistroEmpresas  = '';
 var manejoRefresh=limpiarLocales=limpiarImpuestos=errorRut=limpiarBodegas=0;
+var ckCompra = ckVenta = ckDescontinuado = ckCombo = 0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -251,10 +252,10 @@ var pintarDatosActualizar= function(data){
     $("#IdFamilia").val(data.IdFamilia).trigger("change");
     $("#IdSubFamilia").val(data.IdSubFamilia).trigger("change");
     $("#IdUnidadMedida").val(data.IdUnidadMedida).trigger("change");
-    $("#SeCompra").val(data.SeCompra).trigger("change");
-    $("#SeVende").val(data.SeVende).trigger("change");
-    $("#EsProductoCombo").val(data.EsProductoCombo).trigger("change");
-    $("#Descontinuado").val(data.Descontinuado).trigger("change");
+    if ((data.SeCompra) == 1){ $( "#SeCompra" ).prop( "checked", true );}
+    if ((data.EsProductoCombo) == 1){ $( "#EsProductoCombo" ).prop( "checked", true ); }
+    if ((data.Descontinuado) == 1){ $( "#Descontinuado" ).prop( "checked", true ); }
+    if ((data.SeVende) == 1){$( "#SeVende" ).prop( "checked", true ); }
     $("#EstadoProducto").val(data.EstadoProducto).trigger("change");
 }
 
@@ -293,6 +294,12 @@ var ProcesarImpuesto = function(){
 var ProcesarProducto = function(){
     if(errorRut == 0){
         parametroAjax.ruta=ruta;
+
+        if ($('#SeVende').is(":checked")){ $('#SeVende').val(1) }else{ $('#SeVende').val(0) }
+        if ($('#SeCompra').is(":checked")){ $('#SeCompra').val(1) }else{ $('#SeCompra').val(0) }
+        if ($('#EsProductoCombo').is(":checked")){ $('#EsProductoCombo').val(1) }else{ $('#EsProductoCombo').val(2) }
+        if ($('#Descontinuado').is(":checked")){ $('#Descontinuado').val(1) }else{ $('#Descontinuado').val(2) }
+
         var camposNuevo = {
             'IdUltimoProveedor': $('#IdUltimoProveedor').val(),
             'IdFamilia': $('#IdFamilia').val(),
@@ -304,7 +311,6 @@ var ProcesarProducto = function(){
             'Descontinuado': $('#Descontinuado').val(),
             'EstadoProducto': $('#EstadoProducto').val()
         }
-
         parametroAjax.data = $("#FormProducto").serialize() + '&' + $.param(camposNuevo);
         respuesta=procesarajax(parametroAjax);
         ManejoRespuestaProcesar(respuesta);
@@ -423,12 +429,6 @@ var buscarSubfamilia = function(IdFamilia){
 
 var crearAllSelect = function(data){
     var v_proveedor =[{"id":1,"text":"proveedor 1"},{"id":2,"text":"proveedor 2"}];
-    var secompra=[{"id":1,"text":"SI"},{"id":0,"text":"NO"}];
-    var escombo=[{"id":1,"text":"SI"},{"id":2,"text":"NO"}];
-    crearselect(escombo,"Descontinuado");
-    crearselect(escombo,"EsProductoCombo");
-    crearselect(secompra,"SeVende");
-    crearselect(secompra,"SeCompra");
     crearselect(v_proveedor,"IdUltimoProveedor");
     crearselect(data.v_familias,"IdFamilia");
     crearselect(data.v_unidad,"IdUnidadMedida");
@@ -484,6 +484,7 @@ $(document).ready(function(){
     $("#IdFamilia").change(function() {
         buscarSubfamilia($("#IdFamilia").val());
     });
+
     $("#RUTProveedor").focusout(function() {
         var valid = $("#RUTProveedor").val();
         if (valid.length > 0){
