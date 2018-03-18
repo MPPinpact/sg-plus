@@ -1,12 +1,21 @@
-<aside class="main-sidebar hidden-print ">
+@php  
+  $data = Session::get('perfiles');
+  $nroPerfiles = Session::get('nroPerfiles');
+  $avatarUser = Auth::user()->usrUrlimage;
+  (strlen($avatarUser) > 10) ? $avatar=$avatarUser : $avatar="img/default.jpg";
+@endphp
   <section class="sidebar" id="sidebar-scroll">
     <div class="user-panel">
-      <div class="f-left image"><img src="{{ asset('theme/assets/images/avatar-1.png') }}" alt="User Image" class="rounded-circle">
+      <div class="f-left image"><img src="{{ asset($avatar) }}" alt="User Image" class="rounded-circle">
       </div>
       <div class="f-left info">
-        <p>John Doe</p>
-        <p class="designation">UX Designer <i class="fa fa-sort-down m-l-5"></i>
-        </p>
+        @if (isset($data))
+          @if (strlen($data['v_detalle'][0]->usrNombreFull)>1)
+            <span>
+              <p>{{$data['v_detalle'][0]->usrNombreFull}}</p>
+            </span>
+          @endif
+        @endif
       </div>
     </div>
     <ul class="sidebar-menu">
@@ -161,4 +170,3 @@
       </li>
     </ul>
   </section>
-</aside>
