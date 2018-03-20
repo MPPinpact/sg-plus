@@ -8,14 +8,30 @@ var parametroAjax = {
     'async': false
 };
 
+var calcularMontos = function(CantidadComprada,ValorUnitario,FactorImpuesto,MontoDescuento){
+    console.log("pase a calcular montos");
+    var ValorImpuesto = (CantidadComprada * ValorUnitario * FactorImpuesto / 100)
+    $("#ValorImpuestos").val(ValorImpuesto);
+    var TotalLinea = ((CantidadComprada * ValorUnitario) + ValorImpuesto - MontoDescuento);
+    $("#TotalLinea").val(TotalLinea);
+    var ValorUnitarioFinal = (TotalLinea / CantidadComprada);
+    $("#ValorUnitarioFinal").val(ValorUnitarioFinal);
+}
+
 var ManejoRespuestaBuscarProducto = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
             if(respuesta.respuesta.IdProducto==0){
                 $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
             }else{
-                $("#IdProducto").val(respuesta.respuesta.IdProducto);
-                $("#NombreProducto").val(respuesta.respuesta.NombreProducto);
+                $("#IdProducto").val(respuesta.respuesta.producto.IdProducto);
+                $("#NombreProducto").val(respuesta.respuesta.producto.NombreProducto);
+                $("#ValorUnitario").val(respuesta.respuesta.producto.PrecioUltimaCompra);
+                $("#CantidadComprada").val(1);
+                $("#FactorImpuesto").val(respuesta.respuesta.impuesto);
+                $("#MontoDescuento").val(0);
+                $("#IdUnidadMedida").val(respuesta.respuesta.producto.IdUnidadMedida).trigger("change");
+                calcularMontos($("#CantidadComprada").val(),$("#ValorUnitario").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
             }    
         }else{
             $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
@@ -149,10 +165,17 @@ var ManejoRespuestaProcesar = function(respuesta){
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
-                $(".divDetalles").toggle();
                 $(".divBotones").toggle();
-                $('#FormCompras')[0].reset();
-                $('#IdCompra').val("");
+                $("#aimpuestos").addClass("active");
+                $("#TabImpuestos").addClass("active");
+                $("#Tabdetalles").removeClass("active");
+                $("#adetalles").removeClass("active");
+                $("#divTabs").show();
+                $("#divVolver").show();
+               
+                // $(".divDetalles").toggle();
+                // $('#FormCompras')[0].reset();
+                // $('#IdCompra').val("");
                 cargarTablaCompras(respuesta.respuesta.v_compras);
                 break;
             case '-2':
@@ -284,16 +307,16 @@ var cargarTablaDetalles = function(data){
                 {"title": "IdCompra","data": "IdCompra",visible:0},
                 {"title": "IdProducto","data": "IdProducto",visible:0},
                 {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
-                {"title": "Nombre Producto","data": "NombreProducto"},
-                {"title": "Nombre Unidad Medida","data": "NombreUnidadMedida"},
                 {"title": "Cantidad Comprada","data": "CantidadComprada"},
+                {"title": "Nombre Producto","data": "NombreProducto"},
+                {"title": "UM","data": "NombreUnidadMedida"},
                 {"title": "Valor Unitario","data": "ValorUnitario"},
-                {"title": "Factor Impuesto","data": "FactorImpuesto"},
-                {"title": "Valor Impuestos","data": "ValorImpuestos"},
                 {"title": "Monto Descuento","data": "MontoDescuento"},
                 {"title": "Valor Unitario Final","data": "ValorUnitarioFinal"},
                 {"title": "Total Linea","data": "TotalLinea"},
-                {"title": "Estado","data": "DesEstadoCompra"},
+                {"title": "Factor Impuesto","data": "FactorImpuesto",visible:0},
+                {"title": "Valor Impuestos","data": "ValorImpuestos",visible:0},
+                {"title": "Estado","data": "DesEstadoCompra",visible:0},
                 {"title": "Precio Venta Sugerido","data": "auFechaCreacion",visible:0},
                 {"title": "Precio Venta Sugerido","data": "auUsuarioCreacion",visible:0},
                 {"title": "Precio Venta Sugerido","data": "auFechaModificacion",visible:0},
@@ -346,7 +369,7 @@ var pintarDatosActualizarDetalles = function(data){
     $("#MontoDescuento").val(data.MontoDescuento);
     $("#ValorUnitarioFinal").val(data.ValorUnitarioFinal);
     $("#TotalLinea").val(data.TotalLinea);
-    $("#EstadoDetalleCompra").val(data.EstadoDetalleCompra).trigger("change");
+    // $("#EstadoDetalleCompra").val(data.EstadoDetalleCompra).trigger("change");
 }
 
 var BotonAgregar = function(){
@@ -506,13 +529,13 @@ var bloquearInputsDetalles = function(){
     $("#NombreProducto").prop('readonly', true);
     $("#CantidadComprada").prop('readonly', true);
     $("#ValorUnitario").prop('readonly', true);
-    $("#FactorImpuesto").prop('readonly', true);
-    $("#ValorImpuestos").prop('readonly', true);
+    // $("#FactorImpuesto").prop('readonly', true);
+    // $("#ValorImpuestos").prop('readonly', true);
     $("#MontoDescuento").prop('readonly', true);
-    $("#ValorUnitarioFinal").prop('readonly', true);
-    $("#TotalLinea").prop('readonly', true);
+    // $("#ValorUnitarioFinal").prop('readonly', true);
+    // $("#TotalLinea").prop('readonly', true);
     $("#IdUnidadMedida").prop('disabled', true);
-    $("#EstadoDetalleCompra").prop('disabled', true);
+    // $("#EstadoDetalleCompra").prop('disabled', true);
 }
 
 var desbloquearInputsDetalles = function(){
@@ -520,13 +543,13 @@ var desbloquearInputsDetalles = function(){
     $("#NombreProducto").prop('readonly', false);
     $("#CantidadComprada").prop('readonly', false);
     $("#ValorUnitario").prop('readonly', false);
-    $("#FactorImpuesto").prop('readonly', false);
-    $("#ValorImpuestos").prop('readonly', false);
+    // $("#FactorImpuesto").prop('readonly', false);
+    // $("#ValorImpuestos").prop('readonly', false);
     $("#MontoDescuento").prop('readonly', false);
-    $("#ValorUnitarioFinal").prop('readonly', false);
-    $("#TotalLinea").prop('readonly', false);
+    // $("#ValorUnitarioFinal").prop('readonly', false);
+    // $("#TotalLinea").prop('readonly', false);
     $("#IdUnidadMedida").prop('disabled', false);
-    $("#EstadoDetalleCompra").prop('disabled', false);
+    // $("#EstadoDetalleCompra").prop('disabled', false);
 }
 
 var modificarCabeceras = function(){
@@ -672,6 +695,19 @@ $(document).ready(function(){
     $("#CodigoBarra").focusout(function() {
         buscarProducto($("#CodigoBarra").val());
     });
+
+    $("#CantidadComprada").focusout(function() {
+        calcularMontos($("#CantidadComprada").val(),$("#ValorUnitario").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
+    });
+
+    $("#ValorUnitario").focusout(function() {
+        calcularMontos($("#CantidadComprada").val(),$("#ValorUnitario").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
+    });
+
+    $("#MontoDescuento").focusout(function() {
+        calcularMontos($("#CantidadComprada").val(),$("#ValorUnitario").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
+    });
+
     // Botones de cabecera de compra
     $(document).on('click','#guardar',validador);
     $(document).on('click','#guardarI',validadorI);
@@ -910,22 +946,22 @@ $(document).ready(function(){
                     },
                 }
             },
-            'FactorImpuesto': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
-            'ValorImpuestos': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
+            // 'FactorImpuesto': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
+            // 'ValorImpuestos': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
             'MontoDescuento': {
                 verbose: false,
                 validators: {
@@ -933,31 +969,33 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            },
-            'ValorUnitarioFinal': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
-            'TotalLinea': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
-            'EstadoDetalleCompra': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
             }
+            // ,
+            // 'ValorUnitarioFinal': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
+            // 'TotalLinea': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // }
+            // ,
+            // 'EstadoDetalleCompra': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // }
         }
     })
     .on('success.form.fv', function(e){

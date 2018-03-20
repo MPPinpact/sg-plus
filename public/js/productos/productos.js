@@ -17,7 +17,7 @@ var ManejoRespuestaProcesarD = function(respuesta){
         $("#divVolver").show();
         $("#divTabs").show();
         $("#spanTitulo").text("Detalles");
-        $("#IdProducto2").val(respuesta.respuesta.v_detalles.IdProducto);
+        $("#IdProducto2").val(respuesta.respuesta.v_detalles[0].IdProducto);
         pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
         cargarTablaImpuestos(respuesta.respuesta.v_impuestos);
     }else{

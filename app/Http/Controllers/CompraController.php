@@ -25,6 +25,7 @@ use App\Models\Proveedor;
 use App\Models\Usuario;
 use App\Models\Empresa;
 use App\Models\Producto;
+use App\Models\Impuesto;
 
 class CompraController extends Controller
 {
@@ -149,8 +150,10 @@ class CompraController extends Controller
 
     protected function postBuscarproductos(Request $request){
         $datos = $request->all();
-        $result = Producto::where('CodigoBarra',$datos['CodigoBarra'])->first();
-        if($result == null) { $result = '{"IdProducto":0}'; } 
+        $result['producto'] = Producto::where('CodigoBarra',$datos['CodigoBarra'])->first();
+        if($result['producto'] == null) { $result['producto'] = '{"IdProducto":0}'; }
+        $model= new Compra(); 
+        $result['impuesto'] = $model->buscarImpuestos($result['producto']->IdProducto);
         return $result;
     }
 

@@ -155,6 +155,21 @@ class Compra extends Authenticatable
         return DB::table('v_compras_detalle')->where('IdDetalleCompra',$IdDetalleCompra)->get();
     }
 
+    public function buscarImpuestos($IdProducto){
+        $impuestos = DB::table('v_productos_impuestos')->where('IdProducto',$IdProducto)->get();
+        $factorImpuesto = 0;
+        // ValorImpuesto
+        foreach ($impuestos as $key => $value) {
+            foreach ($value as $llave => $valor) {
+                if ($llave == 'ValorImpuesto'){ 
+                    $factorImpuesto += $valor; 
+                }    
+            }
+        }
+        $factorImpuesto = ($factorImpuesto / 100);
+        return $factorImpuesto;
+    }
+
     
 
 }

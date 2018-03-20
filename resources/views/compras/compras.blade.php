@@ -95,14 +95,14 @@
 										<div class="col-sm-3">
 											<input type="hidden" name="IdProveedor" id="IdProveedor">
 											<div class="md-input-wrapper">
-												<input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control" maxlength="250" readonly />
+												<input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control md-static" maxlength="250" readonly />
 												<label for="RUTProveedor">RUT Proveedor</label>
 							                    <small id="ErrorRut" class="rut-error"></small>
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="md-input-wrapper">
-												<input id="NombreFantasia" name="NombreFantasia" type="text" class="md-form-control md-static" maxlength="250" readonly />
+												<input id="NombreFantasia" name="NombreFantasia" type="text" class="md-form-control  md-static" maxlength="250" readonly />
 												<label for="NombreFantasia">Nombre Proveedor</label>
 											</div>
 										</div>
@@ -111,7 +111,7 @@
 										<div class="col-sm-3">
 											<input type="hidden" name="idEmpresa" id="idEmpresa">
 											<div class="md-input-wrapper">
-												<input id="RUT" name="RUT" type="text" class="md-form-control" maxlength="250" readonly />
+												<input id="RUT" name="RUT" type="text" class="md-form-control md-static" maxlength="250" readonly />
 												<label for="RUT">RUT Comprador</label>
 							                    <small id="ErrorRut3" class="rut-error"></small>
 											</div>
@@ -146,7 +146,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="md-input-wrapper">
-												<input id="FolioDTE" name="FolioDTE" type="text" class="md-form-control" maxlength="250" readonly />
+												<input id="FolioDTE" name="FolioDTE" type="text" class="md-form-control md-static" maxlength="250" readonly />
 												<label for="FolioDTE">Folio DTE</label>
 											</div>
 										</div>
@@ -172,25 +172,25 @@
 									<div class="row">
 										<div class="col-sm-3">
 											<div class="md-input-wrapper">
-												<input id="TotalNeto" name="TotalNeto" type="text" class="md-form-control" maxlength="250" readonly />
+												<input id="TotalNeto" name="TotalNeto" type="text" class="md-form-control md-static" maxlength="250" readonly />
 												<label for="TotalNeto">Total Neto</label>
 											</div>
 										</div>
 										<div class="col-sm-3">
 											<div class="md-input-wrapper">
-												<input id="TotalDescuentos" name="TotalDescuentos" type="text" class="md-form-control" maxlength="20" readonly />
+												<input id="TotalDescuentos" name="TotalDescuentos" type="text" class="md-form-control md-static" maxlength="20" readonly />
 												<label for="TotalDescuentos">Total Descuentos</label>
 											</div>
 										</div>
 										<div class="col-sm-3">
 											<div class="md-input-wrapper">
-												<input id="TotalImpuestos" name="TotalImpuestos" type="text" class="md-form-control" maxlength="250" readonly />
+												<input id="TotalImpuestos" name="TotalImpuestos" type="text" class="md-form-control md-static" maxlength="250" readonly />
 												<label for="TotalImpuestos">Total Impuestos</label>
 											</div>
 										</div>
 										<div class="col-sm-3">
 											<div class="md-input-wrapper">
-												<input id="TotalCompra" name="TotalCompra" type="text" class="md-form-control" maxlength="20" readonly />
+												<input id="TotalCompra" name="TotalCompra" type="text" class="md-form-control md-static" maxlength="20" readonly />
 												<label for="TotalCompra">Total Compra</label>
 											</div>
 										</div>
@@ -319,32 +319,32 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="md-input-wrapper">
 								<input id="CantidadComprada" name="CantidadComprada" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="CantidadComprada">Cantidad Comprada</label>
+								<label for="CantidadComprada">Cantidad</label>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="md-input-wrapper">
 								<input id="ValorUnitario" name="ValorUnitario" type="text" class="md-form-control" maxlength="10" readonly />
 								<label for="ValorUnitario">Valor Unitario</label>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="md-input-wrapper">
 								<input id="FactorImpuesto" name="FactorImpuesto" type="text" class="md-form-control" maxlength="10" readonly />
 								<label for="FactorImpuesto">Factor Impuesto</label>
 							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="md-input-wrapper">
 								<input id="ValorImpuestos" name="ValorImpuestos" type="text" class="md-form-control" maxlength="10" readonly />
 								<label for="ValorImpuestos">Valor Impuestos</label>
 							</div>
 						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
 								<input id="MontoDescuento" name="MontoDescuento" type="text" class="md-form-control" maxlength="10" readonly />
@@ -357,23 +357,13 @@
 								<label for="ValorUnitarioFinal">Valor Unitario Final</label>
 							</div>
 						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-2"></div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
 								<input id="TotalLinea" name="TotalLinea" type="text" class="md-form-control" maxlength="10" readonly />
 								<label for="TotalLinea">Total Linea</label>
 							</div>
 						</div>
-						<div class="col-md-4">
-							<div class="md-input-wrapper">
-								<select name="EstadoDetalleCompra" id="EstadoDetalleCompra" class="md-disable md-valid" disabled></select>
-					            <label for="EstadoDetalleCompra">Estado</label>
-							</div>
-						</div>
-						<div class="col-md-2"></div>
+						<input type="hidden" id="EstadoDetalleCompra" name="EstadoDetalleCompra" value="1">						
 					</div>
 				{!! Form::close() !!}
             </div>

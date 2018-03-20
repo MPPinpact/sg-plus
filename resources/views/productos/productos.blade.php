@@ -273,7 +273,6 @@
 										<div class="col-sm-4"></div>
 										<div class="col-sm-6">
 										<div class="row">
-											<input type="hidden" id="IdProducto2">
 											<div class="col-sm-8">
 												<div class="md-input-wrapper">
 													<select name="IdImpuesto" id="IdImpuesto" class="md-valid"></select>
