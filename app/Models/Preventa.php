@@ -63,9 +63,9 @@ class Preventa extends Authenticatable
     public function regPreventa($datos){
         $idAdmin = Auth::id();
         $datos['idPreVenta']==null ? $Id=0 : $Id= $datos['idPreVenta'];
-        $datos['FechaPreVenta'] = $this->formatearFecha($datos['FechaPreVenta']);        
+        $datos['FechaPreVenta'] = $this->formatearFecha($datos['FechaPreVenta']);
         $sql="select f_registro_preventa(".$Id.",".$datos['IdCliente'].",".$datos['IdVendedor'].",".$datos['IdLocal'].",".$datos['IdCaja'].",'".$datos['FechaPreVenta']."',".$idAdmin.")";
-        $execute=DB::select($sql);
+	$execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
         }
