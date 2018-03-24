@@ -93,7 +93,7 @@
 									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<input type="hidden" name="IdVendedor" id="IdVendedor" value="1">
-									<input type="hidden" name="IdLocal" id="IdLocal" value="5">
+									<input type="hidden" name="IdLocal" id="IdLocal" value="2">
 									<input type="hidden" name="IdCaja" id="IdCaja" value="1">
 									<div class="row">
 										<div class="col-sm-2">
