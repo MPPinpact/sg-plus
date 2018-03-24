@@ -15,7 +15,7 @@
 	        <div class="card-header">
 	        	<center>
 	        		<h5 class="card-header-text">
-	        			Listado de Compras Registrados
+	        			Listado de Preventas Registrados
 	        		</h5>
                 </center>
 	        </div>
@@ -31,7 +31,7 @@
 					<br />
 					<div class="row">
 						<div class="col-md-12 table-responsive">
-							<table id="tablaCompras" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+							<table id="tablaPreventas" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 						</div>
 					</div>
 		        </div>
@@ -49,7 +49,7 @@
 	        	<div class="row">
 					<div class="col-md-12">
 						<button style="float:right;" name="btn-list" id="btn-list" type="button" class="btn btn-primary waves-effect waves-light">
-							<span>Listado de Compras</span>
+							<span>Listado de Preventas</span>
             			</button>
 					</div>
 				</div>
@@ -87,131 +87,47 @@
 							<br><br>
 		                    <div class="tab-content">
 		                        <div class="tab-pane active" id="Tabdetalles" role="tabpanel">
-									{!! Form::open(['id'=>'FormCompras','autocomplete' => 'off']) !!}
-									{!! Form::hidden('IdCompra', '', [
-									'id'            => 'IdCompra',
+									{!! Form::open(['id'=>'FormPreventas','autocomplete' => 'off']) !!}
+									{!! Form::hidden('idPreVenta', '', [
+									'id'            => 'idPreVenta',
 									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
+									<input type="hidden" name="IdVendedor" id="IdVendedor" value="1">
+									<input type="hidden" name="IdLocal" id="IdLocal" value="5">
+									<input type="hidden" name="IdCaja" id="IdCaja" value="1">
 									<div class="row">
-										<div class="col-sm-3">
+										<div class="col-sm-2">
 											<div class="md-input-wrapper">
-												<input id="IdOrdenCompra" name="IdOrdenCompra" type="text" class="md-form-control" maxlength="250" readonly />
-												<label for="IdOrdenCompra">Nro OC</label>
+												<input id="FechaPreVenta" name="FechaPreVenta" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
+												<label for="FechaPreVenta">Fecha Preventa</label>
 											</div>
 										</div>
-										<div class="col-sm-3">
-											<input type="hidden" name="IdProveedor" id="IdProveedor">
+									</div>
+									<div class="row">
+										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control md-static" maxlength="250" readonly />
-												<label for="RUTProveedor">RUT Proveedor</label>
+												<input id="RUTCliente" name="RUTCliente" type="text" class="md-form-control md-static" maxlength="250" readonly />
+												<label for="RUTCliente">RUT Cliente</label>
 							                    <small id="ErrorRut" class="rut-error"></small>
 											</div>
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-8">
 											<div class="md-input-wrapper">
-												<input id="NombreFantasia" name="NombreFantasia" type="text" class="md-form-control  md-static" maxlength="250" readonly />
-												<label for="NombreFantasia">Nombre Proveedor</label>
+												<input type="text" name="IdCliente" id="IdCliente">
+												<input id="NombreCliente" name="NombreCliente" type="text" class="md-form-control  md-static" maxlength="250" readonly />
+												<label for="NombreCliente">Nombre Cliente</label>
 											</div>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-sm-3">
-											<input type="hidden" name="idEmpresa" id="idEmpresa">
-											<div class="md-input-wrapper">
-												<input id="RUT" name="RUT" type="text" class="md-form-control md-static" maxlength="250" readonly />
-												<label for="RUT">RUT Comprador</label>
-							                    <small id="ErrorRut3" class="rut-error"></small>
-											</div>
-										</div>
-										<div class="col-sm-5">
-											<div class="md-input-wrapper">
-												<input id="NombreFantasiaE" name="NombreFantasiaE" type="text" class="md-form-control md-static" maxlength="250" readonly />
-												<label for="NombreFantasiaE">Nombre Comprador</label>
-											</div>
-										</div>
-
-										<div class="col-sm-2">
-											<div class="md-input-wrapper">
-												<select name="IdLocal" id="IdLocal" class="md-disable md-valid" disabled></select>
-												<label for="IdLocal">Locales</label>
-											</div>
-										</div>
-
-										<div class="col-sm-2">
-											<div class="md-input-wrapper">
-												<select name="IdBodega" id="IdBodega" class="md-disable md-valid" disabled></select>
-												<label for="IdBodega">Bodega</label>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-3">
-											<div class="md-input-wrapper">
-												<select name="TipoDTE" id="TipoDTE" class="md-disable md-valid" disabled></select>
-												<label for="TipoDTE">Tipo DTE</label>
-											</div>
-										</div>
-										<div class="col-sm-3">
-											<div class="md-input-wrapper">
-												<input id="FolioDTE" name="FolioDTE" type="text" class="md-form-control md-static" maxlength="250" readonly />
-												<label for="FolioDTE">Folio DTE</label>
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<div class="md-input-wrapper">
-												<input id="FechaDTE" name="FechaDTE" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
-												<label for="FechaDTE">Fecha DTE</label>
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<div class="md-input-wrapper">
-												<input id="FechaVencimiento" name="FechaVencimiento" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
-												<label for="FechaVencimiento">Fecha Vencimiento</label>
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<div class="md-input-wrapper">
-												<input id="FechaPago" name="FechaPago" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
-												<label for="FechaPago">Fecha Pago</label>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-3">
-											<div class="md-input-wrapper">
-												<input id="TotalNeto" name="TotalNeto" type="text" class="md-form-control md-static" maxlength="250" readonly />
-												<label for="TotalNeto">Total Neto</label>
-											</div>
-										</div>
-										<div class="col-sm-3">
-											<div class="md-input-wrapper">
-												<input id="TotalDescuentos" name="TotalDescuentos" type="text" class="md-form-control md-static" maxlength="20" readonly />
-												<label for="TotalDescuentos">Total Descuentos</label>
-											</div>
-										</div>
-										<div class="col-sm-3">
-											<div class="md-input-wrapper">
-												<input id="TotalImpuestos" name="TotalImpuestos" type="text" class="md-form-control md-static" maxlength="250" readonly />
-												<label for="TotalImpuestos">Total Impuestos</label>
-											</div>
-										</div>
-										<div class="col-sm-3">
-											<div class="md-input-wrapper">
-												<input id="TotalCompra" name="TotalCompra" type="text" class="md-form-control md-static" maxlength="20" readonly />
-												<label for="TotalCompra">Total Compra</label>
-											</div>
-										</div>
-									</div>
-									<diw class="row">
 										<div class="col-sm-4"></div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<select name="EstadoCompra" id="EstadoCompra" class="md-disable md-valid" disabled></select>
-												<label for="EstadoCompra">Estado Compra</label>
+												<input id="TotalPreVenta" name="TotalPreVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
+												<label for="TotalPreVenta">Total Preventa</label>
 											</div>
 										</div>
-										<div class="col-sm-4"></div>
-									</diw>
+									</div>
 									<br>
 									<div align="center">
 										<div class="pull-rigth">
@@ -301,10 +217,9 @@
             </div>
             <div class="modal-body">
 				{!! Form::open(['id'=>'FormDetalle','autocomplete' => 'off']) !!}
-					<input type="hidden" name="IdDetalleCompra" id="IdDetalleCompra" value="1">
-					<input type="hidden" name="IdCompra2" id="IdCompra2" value="1">
-					<input type="hidden" name="IdProducto" id="IdProducto" value="1">
-					
+					<input type="hidden" name="IdPreVenta2" id="IdPreVenta2">
+					<input type="hidden" name="IdDetallePreVenta" id="IdDetallePreVenta">
+					<input type="hidden" name="IdProducto" id="IdProducto">					
 					<div class="row">
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
@@ -328,14 +243,14 @@
 					<div class="row">
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
-								<input id="CantidadComprada" name="CantidadComprada" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="CantidadComprada">Cantidad</label>
+								<input id="CantidadPreVenta" name="CantidadPreVenta" type="text" class="md-form-control" maxlength="10" readonly />
+								<label for="CantidadPreVenta">Cantidad</label>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
-								<input id="ValorUnitario" name="ValorUnitario" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="ValorUnitario">Valor Unitario</label>
+								<input id="ValorUnitarioVenta" name="ValorUnitarioVenta" type="text" class="md-form-control" maxlength="10" readonly />
+								<label for="ValorUnitarioVenta">Valor Unitario</label>
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -370,7 +285,6 @@
 								<label for="TotalLinea">Total Linea</label>
 							</div>
 						</div>
-						<input type="hidden" id="EstadoDetalleCompra" name="EstadoDetalleCompra" value="1">						
 					</div>
 				{!! Form::close() !!}
             </div>
@@ -398,24 +312,23 @@
 </div>
 
 <script Language="Javascript">
-	var ruta = "{{ URL::route('compras') }}"
-	var rutaA = "{{ URL::route('activarCom') }}"
-	var rutaB = "{{ URL::route('comprab') }}"
-	var rutaBP = "{{ URL::route('comprabp') }}"
+	var ruta = "{{ URL::route('preventas') }}"
+	var rutaBC = "{{ URL::route('preventabc') }}"
+	var rutaA = "{{ URL::route('activarPre') }}"
+	var rutaB = "{{ URL::route('preventab') }}"
+	var rutaBPD = "{{ URL::route('preventabpd') }}"
+	var rutaDC = "{{ URL::route('preventadc') }}"
+	var rutaBDC = "{{ URL::route('preventabdc') }}"
+	
 	var rutaPR = "{{ URL::route('comprapr') }}"
 	var rutaBE = "{{ URL::route('comprabe') }}"
 	var rutaBB = "{{ URL::route('comprabb') }}"
-	var rutaBC = "{{ URL::route('comprabc') }}"
-	var rutaBPD = "{{ URL::route('comprabpd') }}"
-	var rutaDC = "{{ URL::route('comprardc') }}"
-	var rutaBDC = "{{ URL::route('comprarbdc') }}"
+	var rutaBCs = "{{ URL::route('comprabc') }}"
 	var rutaCDA = "{{ URL::route('comprada') }}"
 	var d = [];
-	d['v_compras'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_compras) }}'));
+	d['v_preventas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_preventas) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
-	d['v_bodegas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_bodegas) }}'));
-	d['v_tipo_dte'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_tipo_dte) }}'));
 	d['v_unidad_medida'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_unidad_medida) }}'));
 </script>
-<script src="{{ asset('js/compras/compras.js') }}"></script>
+<script src="{{ asset('js/preventas/preventas.js') }}"></script>
 @endsection

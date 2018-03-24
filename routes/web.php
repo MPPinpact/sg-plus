@@ -99,14 +99,13 @@ Route::post('/activarCr', 'VentaCreditoController@postVentaCreditoactivo')->name
 Route::post('/ventaCreditob', 'VentaCreditoController@postBuscarVentaCredito')->name('ventaCreditob');
 Route::post('/ventaCliente', 'VentaCreditoController@postBuscarCliente')->name('ventaCliente');
 
-
-
+// CRUD Ciclo Facturacion
 Route::get('/cicloFacturacion', 'CicloFacturacionController@getCicloFacturacion')->name('cicloFacturacion');
 Route::post('/cicloFacturacion', 'CicloFacturacionController@postCicloFacturacion')->name('cicloFacturacion');
 Route::post('/activarCF', 'CicloFacturacionController@postCicloactivo')->name('activarCF');
 Route::post('/detallesCF', 'CicloFacturacionController@postCiclodetalle')->name('detallesCF');
 
-//CRUD Impuestos
+//CRUD Compra
 Route::get('/compras', 'CompraController@getCompras')->name('compras');
 Route::post('/compras', 'CompraController@postCompras')->name('compras');
 Route::post('/activarCom', 'CompraController@postCompractiva')->name('activarCom');
@@ -120,6 +119,21 @@ Route::post('/comprabpd', 'CompraController@postBuscarproductos')->name('comprab
 Route::post('/comprardc', 'CompraController@postRegistrarDetallec')->name('comprardc');
 Route::post('/comprarbdc', 'CompraController@postBuscarDetallec')->name('comprarbdc');
 Route::post('/comprada', 'CompraController@postCompradetalleactiva')->name('comprada');
+
+//CRUd preventa
+Route::get('/preventas', 'PreventaController@getPreventas')->name('preventas');
+Route::post('/preventas', 'PreventaController@postPreventas')->name('preventas');
+Route::post('/activarPre', 'PreventaController@postPreventactiva')->name('activarPre');
+Route::post('/preventab', 'PreventaController@postBuscarPreventa')->name('preventab');
+Route::post('/preventabc', 'PreventaController@postBuscarCliente')->name('preventabc');
+Route::post('/preventabpd', 'PreventaController@postBuscarproductos')->name('preventabpd');
+Route::post('/preventadc', 'PreventaController@postRegistrarDetallec')->name('preventadc');
+Route::post('/preventabdc', 'PreventaController@postBuscarDetallec')->name('preventabdc');
+// Route::post('/comprabe', 'PreventaController@postBuscarempresa')->name('comprabe');
+// Route::post('/comprapr', 'PreventaController@postRegistroproveedor')->name('comprapr');
+// Route::post('/comprabb', 'PreventaController@postBuscarBodega')->name('comprabb');
+// Route::post('/comprabc', 'PreventaController@postBuscarcombos')->name('comprabc');
+// Route::post('/comprada', 'PreventaController@postCompradetalleactiva')->name('comprada');
 
 
 

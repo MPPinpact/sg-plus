@@ -29,8 +29,8 @@
           <i class="icofont icofont-company"></i><span>Ventas</span><i class="icon-arrow-down"></i>
         </a>
         <ul class="treeview-menu">
-          <li>
-            <a class="waves-effect" href="#">
+          <li>  
+            <a class="waves-effect" href="{{ route('preventas') }}">
               <i class="icon-arrow-right"></i>
              Preventa
             </a>
