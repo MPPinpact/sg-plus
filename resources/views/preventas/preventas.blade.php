@@ -113,7 +113,7 @@
 										</div>
 										<div class="col-sm-8">
 											<div class="md-input-wrapper">
-												<input type="text" name="IdCliente" id="IdCliente">
+												<input type="hidden" name="IdCliente" id="IdCliente">
 												<input id="NombreCliente" name="NombreCliente" type="text" class="md-form-control  md-static" maxlength="250" readonly />
 												<label for="NombreCliente">Nombre Cliente</label>
 											</div>
