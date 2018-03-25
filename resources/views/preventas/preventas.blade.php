@@ -219,7 +219,11 @@
 				{!! Form::open(['id'=>'FormDetalle','autocomplete' => 'off']) !!}
 					<input type="hidden" name="IdPreVenta2" id="IdPreVenta2">
 					<input type="hidden" name="IdDetallePreVenta" id="IdDetallePreVenta">
-					<input type="hidden" name="IdProducto" id="IdProducto">					
+					<input type="hidden" name="IdProducto" id="IdProducto">	
+					<input type="hidden" id="FactorImpuesto" name="FactorImpuesto">
+					<input type="hidden" id="ValorImpuestos" name="ValorImpuestos">
+					<input type="hidden" id="MontoDescuento" name="MontoDescuento">
+					<input type="hidden" id="ValorUnitarioFinal" name="ValorUnitarioFinal">					
 					<div class="row">
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
@@ -251,32 +255,6 @@
 							<div class="md-input-wrapper">
 								<input id="ValorUnitarioVenta" name="ValorUnitarioVenta" type="text" class="md-form-control" maxlength="10" readonly />
 								<label for="ValorUnitarioVenta">Valor Unitario</label>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="md-input-wrapper">
-								<input id="FactorImpuesto" name="FactorImpuesto" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="FactorImpuesto">Factor Impuesto</label>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="md-input-wrapper">
-								<input id="ValorImpuestos" name="ValorImpuestos" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="ValorImpuestos">Valor Impuestos</label>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<div class="md-input-wrapper">
-								<input id="MontoDescuento" name="MontoDescuento" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="MontoDescuento">Monto Descuento</label>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="md-input-wrapper">
-								<input id="ValorUnitarioFinal" name="ValorUnitarioFinal" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="ValorUnitarioFinal">Valor Unitario Final</label>
 							</div>
 						</div>
 						<div class="col-md-4">

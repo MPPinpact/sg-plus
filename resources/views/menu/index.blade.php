@@ -2,11 +2,11 @@
 <html lang="{{ app()->getLocale() }}" >
 <head>
   <?php
-      header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
-      header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-      header("Cache-Control: no-store, no-cache, must-revalidate");
-      header("Cache-Control: post-check=0, pre-check=0", false);
-      header("Pragma: no-cache");
+  header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
+  header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+  header("Cache-Control: no-store, no-cache, must-revalidate");
+  header("Cache-Control: post-check=0, pre-check=0", false);
+  header("Pragma: no-cache");
   ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
@@ -18,12 +18,12 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script language="JavaScript" type="text/javascript">
-      var v_salir = 0;
-      var RutaSalir = "{{ URL::route('logout') }}";
-      var salir = "{{ URL::route('logout') }}";
-      var v = [];
-      v['v_perfil'] = '';
-      v['idUser'] = '';
+    var v_salir = 0;
+    var RutaSalir = "{{ URL::route('logout') }}";
+    var salir = "{{ URL::route('logout') }}";
+    var v = [];
+    v['v_perfil'] = '';
+    v['idUser'] = '';
   </script>
   {!! Html::style('theme/assets/icon/icofont/css/icofont.css') !!}
   {!! Html::style('theme/assets/icon/simple-line-icons/css/simple-line-icons.css') !!}
@@ -62,6 +62,21 @@
   {{ HTML::script('theme/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js') }}
   {{ HTML::script('theme/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}
   {{ HTML::script('theme/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}
+
+
+  {{ HTML::script('theme/bower_components/datatables.net/js/jquery.dataTables.min.js') }}
+  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js') }}
+  {{ HTML::script('theme/assets/plugins/data-table/js/jszip.min.js') }}
+  {{ HTML::script('theme/assets/plugins/data-table/js/pdfmake.min.js') }}
+  {{ HTML::script('theme/assets/plugins/data-table/js/vfs_fonts.js') }}
+  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/buttons.print.min.js') }}
+  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}
+  {{ HTML::script('theme/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}
+  {{ HTML::script('theme/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}
+  {{ HTML::script('theme/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}
+
+
+
   {{ HTML::script('theme/assets/pages/contact-detail.js') }}
   {{ HTML::script('theme/bower_components/stroll/js/stroll.js') }}
   {{ HTML::script('theme/assets/plugins/list/js/list.js') }}
@@ -89,12 +104,16 @@
     <div class="loader-bg">
       <div class="loader-bar"></div>
     </div>
+    <!-- Navbar-->
     <header class="main-header-top hidden-print">
       @include('menu.menu_navbar')
     </header>
-    <aside class="main-sidebar hidden-print ">  
+    <!-- Side-Nav--> 
+    <!-- menu mobile -->
+    <aside class="main-sidebar hidden-print ">
       @include('menu.menu_aside')
-    </aside>  
+    </aside>
+    <!-- Sidebar chat end-->
     <div class="content-wrapper">
       <div class="container-fluid">
         <br><br>
