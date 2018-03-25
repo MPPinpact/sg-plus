@@ -20,23 +20,23 @@ var calcularMontos = function(CantidadComprada,ValorUnitario,FactorImpuesto,Mont
 var ManejoRespuestaBuscarProducto = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
-            if(respuesta.respuesta.IdProducto==0){
-                $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
-            }else{
-                $("#IdProducto").val(respuesta.respuesta.producto.IdProducto);
-                $("#NombreProducto").val(respuesta.respuesta.producto.NombreProducto);
-                $("#ValorUnitario").val(respuesta.respuesta.producto.PrecioUltimaCompra);
-                $("#CantidadComprada").val(1);
-                $("#FactorImpuesto").val(respuesta.respuesta.impuesto);
-                $("#MontoDescuento").val(0);
-                $("#IdUnidadMedida").val(respuesta.respuesta.producto.IdUnidadMedida).trigger("change");
-                calcularMontos($("#CantidadComprada").val(),$("#ValorUnitario").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
+            if(respuesta.respuesta.IdProducto){
+                if(respuesta.respuesta.IdProducto==0){
+                    $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
+                }else{
+                    $("#IdProducto").val(respuesta.respuesta.producto.IdProducto);
+                    $("#NombreProducto").val(respuesta.respuesta.producto.NombreProducto);
+                    $("#ValorUnitario").val(respuesta.respuesta.producto.PrecioUltimaCompra);
+                    $("#CantidadComprada").val(1);
+                    $("#FactorImpuesto").val(respuesta.respuesta.impuesto);
+                    $("#MontoDescuento").val(0);
+                    $("#IdUnidadMedida").val(respuesta.respuesta.producto.IdUnidadMedida).trigger("change");
+                    calcularMontos($("#CantidadComprada").val(),$("#ValorUnitario").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
+                }    
             }    
         }else{
             $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
         }
-    }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
     }
 }
 
@@ -758,6 +758,14 @@ $(document).ready(function(){
     //         $("#RUTProveedor").val(res);
     //     }else{$("#ErrorRut").text("");}
     // });
+
+    $('#FormDetalle').on('keyup keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) { 
+        e.preventDefault();
+        return false;
+      }
+    });
 
     $('#FormProveedorNew').formValidation({
         excluded:[':disabled'],

@@ -20,18 +20,20 @@ var calcularMontos = function(CantidadPreVenta,ValorUnitarioVenta,FactorImpuesto
 var ManejoRespuestaBuscarProducto = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
-            if(respuesta.respuesta.IdProducto==0){
-                $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
-            }else{
-                $("#IdProducto").val(respuesta.respuesta.producto.IdProducto);
-                $("#NombreProducto").val(respuesta.respuesta.producto.NombreProducto);
-                $("#ValorUnitarioVenta").val(respuesta.respuesta.producto.PrecioVentaSugerido);
-                $("#CantidadPreVenta").val(1);
-                $("#FactorImpuesto").val(respuesta.respuesta.impuesto);
-                $("#MontoDescuento").val(0);
-                $("#IdUnidadMedida").val(respuesta.respuesta.producto.IdUnidadMedida).trigger("change");
-                calcularMontos($("#CantidadPreVenta").val(),$("#ValorUnitarioVenta").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
-            }    
+            if(respuesta.respuesta.IdProducto){
+                if(respuesta.respuesta.IdProducto==0){
+                    $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
+                }else{
+                    $("#IdProducto").val(respuesta.respuesta.producto.IdProducto);
+                    $("#NombreProducto").val(respuesta.respuesta.producto.NombreProducto);
+                    $("#ValorUnitarioVenta").val(respuesta.respuesta.producto.PrecioVentaSugerido);
+                    $("#CantidadPreVenta").val(1);
+                    $("#FactorImpuesto").val(respuesta.respuesta.impuesto);
+                    $("#MontoDescuento").val(0);
+                    $("#IdUnidadMedida").val(respuesta.respuesta.producto.IdUnidadMedida).trigger("change");
+                    calcularMontos($("#CantidadPreVenta").val(),$("#ValorUnitarioVenta").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
+                } 
+            } 
         }else{
             $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
         }
@@ -44,9 +46,9 @@ var ManejoRespuestaBuscarCliente = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
             if(respuesta.respuesta.IdCliente==0){
-                var rut = $("#RUTProveedor").val();
-                $("#RUTProveedor2").val(rut);
-                $("#ModalProveedor").modal();
+                // var rut = $("#RUTProveedor").val();
+                // $("#RUTProveedor2").val(rut);
+                // $("#ModalProveedor").modal();
             }else{
                 $("#IdCliente").val(respuesta.respuesta.IdCliente);
                 $("#NombreCliente").val(respuesta.respuesta.NombreCliente);
@@ -80,8 +82,6 @@ var ManejoRespuestaBuscarEmpresa = function(respuesta){
 }
 
 var ManejoRespuestaProcesarCompraD = function(respuesta){
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
             $("#ModalDetalleCompra").modal();
@@ -264,6 +264,7 @@ var cargarTablaPreventas = function(data){
 
 var cargarTablaDetalles = function(data){
     if(limpiarImpuestos==1){destruirTabla('#tablaDetalles');$('#tablaDetalles thead').empty();}
+        var columnReport = [[5],[6],[7],[8],[9],[10],[11],[12]];       
         $("#tablaDetalles").dataTable({
             responsive:false,
             "bSort": false,
@@ -307,7 +308,38 @@ var cargarTablaDetalles = function(data){
                 {"title": "Total Linea","data": "TotalLinea"},
                 {"title": "Estado","data": "EstadoPreVentaDetalle",visible:0},
                 {"title": "Estado","data": "desEstadoPreventaDetalle",visible:0}
-            ],
+            ],   
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'pdf',
+                    text: 'Finalizar Pre-venta',
+                    className: 'btn btn-inverse-primary waves-effect waves-light CerrarPreventa',
+                    // orientation:'landscape',  //Hoja Horizontal
+                    pageSize:'A4',
+                    title:'Detalles Preventa',
+                    exportOptions: {
+                        columns: columnReport,
+                        modifier: {
+                            page: 'all',
+                        }
+                    }
+                    ,
+                    customize : function(doc){
+                        doc.defaultStyle.fontSize = 8; 
+                        doc.pageMargins = [80, 40, 40,0];
+                        var colCount = new Array();
+                        $($("#tablaDetalles").dataTable()).find('tbody tr:first-child td').each(function(){
+                            if($(this).attr('colspan')){
+                                for(var i=1;i<=$(this).attr('colspan');$i++){
+                                    colCount.push('*');
+                                }
+                            }else{ colCount.push('*'); }
+                        });
+                        doc.content[1].table.widths = colCount;
+                    }
+                }
+            ]
         });
         limpiarImpuestos=1;
 };
@@ -497,7 +529,7 @@ var desbloquearInputs = function(){
 
 var bloquearInputsDetalles = function(){
     $("#CodigoBarra").prop('readonly', true);
-    $("#NombreProducto").prop('readonly', true);
+    // $("#NombreProducto").prop('readonly', true);
     $("#CantidadPreVenta").prop('readonly', true);
     $("#ValorUnitario").prop('readonly', true);
     // $("#FactorImpuesto").prop('readonly', true);
@@ -510,7 +542,7 @@ var bloquearInputsDetalles = function(){
 
 var desbloquearInputsDetalles = function(){
     $("#CodigoBarra").prop('readonly', false);
-    $("#NombreProducto").prop('readonly', false);
+    // $("#NombreProducto").prop('readonly', false);
     $("#CantidadPreVenta").prop('readonly', false);
     $("#ValorUnitario").prop('readonly', false);
     // $("#FactorImpuesto").prop('readonly', false);
@@ -626,6 +658,10 @@ var calcularFechaPago = function (fecha){
     $("#TotalNeto").focus();
 }
 
+var CerrarPreventa = function (){
+    console.log("Cerre preventa");
+}
+
 $(document).ready(function(){
     $("#FechaPreVenta").inputmask({ mask: "99-99-9999"});
     // $("#NombreCliente").val(now);
@@ -658,20 +694,13 @@ $(document).ready(function(){
     // $("#FechaDTE").focusout(function() {
     //     calcularFechaPago($("#FechaDTE").val());
     // });
+
     $("#CodigoBarra").focusout(function() {
         buscarProducto($("#CodigoBarra").val());
     });
 
     $("#CantidadPreVenta").focusout(function() {
-        calcularMontos($("#CantidadPreVenta").val(),$("#ValorUnitario").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
-    });
-
-    $("#ValorUnitario").focusout(function() {
-        calcularMontos($("#CantidadPreVenta").val(),$("#ValorUnitario").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
-    });
-
-    $("#MontoDescuento").focusout(function() {
-        calcularMontos($("#CantidadPreVenta").val(),$("#ValorUnitario").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
+        calcularMontos($("#CantidadPreVenta").val(),$("#ValorUnitarioVenta").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
     });
 
     // Botones de cabecera de compra
@@ -689,6 +718,7 @@ $(document).ready(function(){
     $(document).on('click','#closeModal',BotonCancelarDetalle);
     $(document).on('click','#modificarC',modificarDetalles);
     $(document).on('click','#btn-list',volverListado);
+    $(document).on('click','.CerrarPreventa',CerrarPreventa);
 
 
     // $("#RUTProveedor").focusout(function() {
@@ -698,6 +728,14 @@ $(document).ready(function(){
     //         $("#RUTProveedor").val(res);
     //     }else{$("#ErrorRut").text("");}
     // });
+
+    $('#FormDetalle').on('keyup keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) { 
+        e.preventDefault();
+        return false;
+      }
+    });
 
     $('#FormProveedorNew').formValidation({
         excluded:[':disabled'],
@@ -759,6 +797,7 @@ $(document).ready(function(){
         data.element.parents('.form-group').removeClass('has-success');
     });
 
+
     $('#FormDetalle').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
@@ -794,15 +833,16 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            },
-            'MontoDescuento': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
             }
+            // ,
+            // 'MontoDescuento': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // }
         }
     })
     .on('success.form.fv', function(e){
