@@ -1,7 +1,3 @@
-
-[2018-03-25 00:25:56] local.ERROR: Undefined index: idPreVenta {"userId":4,"exception":"[object] (ErrorException(code: 0): Undefined index: idPreVenta at /var/www/sg-plus/app/Models/Preventa.php:65)
-[stacktrace]
-#0 /var/www/sg-plus/app/Models/Preventa.php(65): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(8, 'Undefined index...', '/var/www/sg-plu...', 65, Array)
 #1 /var/www/sg-plus/app/Http/Controllers/PreventaController.php(63): App\\Models\\Preventa->regPreventa(Array)
 #2 [internal function]: App\\Http\\Controllers\\PreventaController->postPreventas(Object(Illuminate\\Http\\Request))
 #3 /var/www/sg-plus/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): call_user_func_array(Array, Array)
@@ -65,3 +61,5 @@
 [2018-03-26 00:14:21] local.INFO: select f_registro_preventa(0,3,1,7,1,'2018-03-25',4)  
 [2018-03-26 00:16:22] local.INFO: select f_registro_preventa(0,3,1,7,1,'2018-03-25',4)  
 [2018-03-26 00:53:18] local.INFO: select f_registro_preventa(0,3,1,7,1,'2018-03-25',4)  
+=======
+>>>>>>> 9dc70f1a7f9dc3d3c13315a3c9835f97038dfa8f

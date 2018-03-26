@@ -74,7 +74,8 @@ class ClienteController extends Controller
         $datos = $request->all();
         $model= new Cliente();
         $result['v_detalles'] = $model->getDetallesClientes($datos['IdCliente']);
-        // $result['v_productos'] = $model->localesProducto($datos['IdCliente']);
+        $result['v_movimientos'] = $model->listMovimientos($datos['IdCliente']);
+        $result['v_eecc'] = $model->listeecc($datos['IdCliente']);
         return $result;
     }
 }

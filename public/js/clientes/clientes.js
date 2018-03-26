@@ -1,5 +1,5 @@
 var RegistroEmpresas  = '';
-var manejoRefresh=limpiarLocales=errorRut=limpiarBodegas=0;
+var manejoRefresh=limpiarLocales=errorRut=limpiarBodegas=limpiarMovimientos=limpiarEECC=0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -16,7 +16,8 @@ var ManejoRespuestaProcesarD = function(respuesta){
         $("#spanTitulo").text("Detalles");
         bloquearInuts();
         pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
-        // cargarTablaClientes(respuesta.respuesta.v_clientes);
+        cargarTablaMovimientos(respuesta.respuesta.v_movimientos);
+        cargarTablaEECC(respuesta.respuesta.v_eecc);
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -105,6 +106,81 @@ var cargarTablaClientes = function(data){
         limpiarLocales=1;
 };
 
+var cargarTablaMovimientos = function(data){
+    if(limpiarMovimientos==1){destruirTabla('#tablaClientesMovimientos');$('#tablaClientesMovimientos thead').empty();}
+        $("#tablaClientesMovimientos").dataTable({
+            responsive:false,
+            "aLengthMenu": DataTableLengthMenu,
+            "pagingType": "full_numbers",
+            "language": LenguajeTabla,
+            "columnDefs": [
+                {"targets": [ 1 ],"searchable": true},
+                {"sWidth": "1px", "aTargets": [6]}
+            ],
+            "data": data,
+            "columns":[
+                {"title": "Id","data": "IdMovimiento",visible:0},
+                {
+                    "title": "Fecha Movimiento", 
+                    "data": "FechaMovimiento",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "title": "Fecha Vencimiento", 
+                    "data": "FechaVencimiento",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },                
+                {"title": "Tipo Movimiento","data": "TipoMovimiento"},
+                {"title": "N° Documento","data": "NumeroDocumento"},
+                {"title": "Descripción","data": "DescripcionMovimiento"},
+                {"title": "Monto","data": "MontoMovimiento"}
+            ],
+        });
+        limpiarMovimientos=1;
+};
+
+var cargarTablaEECC = function(data){
+    if(limpiarEECC==1){destruirTabla('#tablaClientesEECC');$('#tablaClientesEECC thead').empty();}
+        $("#tablaClientesEECC").dataTable({
+            responsive:false,
+            "aLengthMenu": DataTableLengthMenu,
+            "pagingType": "full_numbers",
+            "language": LenguajeTabla,
+            "columnDefs": [
+                {"targets": [ 1 ],"searchable": true},
+                {"sWidth": "1px", "aTargets": [4]}
+            ],
+            "data": data,
+            "columns":[
+                {"title": "Id","data": "IdEECC",visible:0},
+                {
+                    "title": "Fecha Vencimiento", 
+                    "data": "FechaVencimiento",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },                
+                {"title": "Monto Autorizado","data": "MontoAutorizado"},
+                {"title": "Monto Utilizado","data": "MontoUtilizado"},
+                {"title": "Monto Disponible","data": "MontoDisponible"},
+                {"title": "Monto Facturado Actual","data": "MontoFacturadoActual"}
+            ],
+        });
+        limpiarEECC=1;
+};
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
     $("#IdCliente").val(data.IdCliente);

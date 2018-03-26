@@ -80,4 +80,16 @@ class Cliente extends Authenticatable
     public function getDetallesClientes($IdCliente){
         return DB::table('v_clientes')->where('IdCliente',$IdCliente)->get();
     }
+
+    public function listMovimientos($IdCliente){
+        $sql="select * from v_clientes_movimientos where IdCliente=".$IdCliente." and EstadoMovimiento=1 and MONTH(FechaMovimiento) >= MONTH(now()) order by IdMovimiento asc";
+        $result=DB::select($sql);
+        return $result;
+    }
+
+    public function listeecc($IdCliente){
+        $sql="select * from v_clientes_eecc where IdCliente=".$IdCliente." and EstadoEECC=1 order by IdEECC desc";
+        $result=DB::select($sql);
+        return $result;
+    }
 }
