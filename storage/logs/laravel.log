@@ -59,3 +59,9 @@
 #55 /var/www/sg-plus/public/index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
 #56 {main}
 "} 
+[2018-03-26 00:09:11] local.INFO: select f_registro_preventa(0,3,1,7,1,'2018-03-25',4)  
+[2018-03-26 00:10:11] local.INFO: select f_registro_preventa(0,3,1,7,1,'2018-03-25',4)  
+[2018-03-26 00:11:50] local.INFO: select f_registro_preventa(0,3,1,7,1,'2018-03-25',4)  
+[2018-03-26 00:14:21] local.INFO: select f_registro_preventa(0,3,1,7,1,'2018-03-25',4)  
+[2018-03-26 00:16:22] local.INFO: select f_registro_preventa(0,3,1,7,1,'2018-03-25',4)  
+[2018-03-26 00:53:18] local.INFO: select f_registro_preventa(0,3,1,7,1,'2018-03-25',4)  
