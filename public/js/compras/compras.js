@@ -18,10 +18,12 @@ var calcularMontos = function(CantidadComprada,ValorUnitario,FactorImpuesto,Mont
 }
 
 var ManejoRespuestaBuscarProducto = function(respuesta){
+    console.log(respuesta);
+    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
-            if(respuesta.respuesta.IdProducto){
-                if(respuesta.respuesta.IdProducto==0){
+            if(respuesta.respuesta.producto.IdProducto){
+                if(respuesta.respuesta.producto.IdProducto==0){
                     $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
                 }else{
                     $("#IdProducto").val(respuesta.respuesta.producto.IdProducto);
