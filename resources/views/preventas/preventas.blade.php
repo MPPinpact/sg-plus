@@ -15,7 +15,7 @@
 	        <div class="card-header">
 	        	<center>
 	        		<h5 class="card-header-text">
-	        			Listado de Preventas Registrados
+	        			Listado de Preventas Registradas
 	        		</h5>
                 </center>
 	        </div>
@@ -102,7 +102,24 @@
 												<label for="FechaPreVenta">Fecha Preventa</label>
 											</div>
 										</div>
+										
+										<div class="col-sm-3">
+											<div class="md-input-wrapper">
+												<input id="RUTCliente" name="RUTCliente" type="text" class="md-form-control md-static" maxlength="250" readonly />
+												<label for="RUTCliente">RUT Cliente</label>
+							                    <small id="ErrorRut" class="rut-error"></small>
+											</div>
+										</div>
+										<div class="col-sm-7">
+											<div class="md-input-wrapper">
+												<input type="hidden" name="IdCliente" id="IdCliente">
+												<input id="NombreCliente" name="NombreCliente" type="text" class="md-form-control  md-static" maxlength="250" readonly />
+												<label for="NombreCliente">Nombre Cliente</label>
+											</div>
+										</div>
+										
 									</div>
+									<!--
 									<div class="row">
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
@@ -119,12 +136,18 @@
 											</div>
 										</div>
 									</div>
+									-->
 									<div class="row">
 										<div class="col-sm-4"></div>
+										<div class="col-sm-4"></div>
 										<div class="col-sm-4">
-											<div class="md-input-wrapper">
-												<input id="TotalPreVenta" name="TotalPreVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
-												<label for="TotalPreVenta">Total Preventa</label>
+											<div class="pull-right">
+												<div class="md-input-wrapper">
+													
+														<input id="TotalPreVenta" name="TotalPreVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
+														<label for="TotalPreVenta">Total Preventa</label>
+													
+												</div>
 											</div>
 										</div>
 									</div>
@@ -141,7 +164,7 @@
 													Cancelar
 												</button>
 					                			<button id="guardar"  type="button" class="btn btn-primary waves-effect waves-light">
-													Guardar
+													Continuar
 					                			</button>
 											</div>
 										</div>
@@ -158,6 +181,17 @@
 										<br />
 										<div class="col-md-12 table-responsive">
 											<table id="tablaDetalles" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+										</div>
+										<br />
+										<div class="row">
+											<div class="col-sm-3">
+												<div class="pull-right">
+													<div class="md-input-wrapper" >
+														<input id="TotalPreVentaDetalle" name="TotalPreVentaDetalle" type="text" class="md-form-control md-static" maxlength="250" readonly />
+														<label for="TotalPreVentaDetalle">Total Pre-Venta</label>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 		                        </div>
