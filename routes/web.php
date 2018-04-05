@@ -129,11 +129,16 @@ Route::post('/preventabc', 'PreventaController@postBuscarCliente')->name('preven
 Route::post('/preventabpd', 'PreventaController@postBuscarproductos')->name('preventabpd');
 Route::post('/preventadc', 'PreventaController@postRegistrarDetallec')->name('preventadc');
 Route::post('/preventabdc', 'PreventaController@postBuscarDetallec')->name('preventabdc');
+Route::post('/preventacp', 'PreventaController@postCerrarPreventa')->name('preventacp');
 // Route::post('/comprabe', 'PreventaController@postBuscarempresa')->name('comprabe');
 // Route::post('/comprapr', 'PreventaController@postRegistroproveedor')->name('comprapr');
 // Route::post('/comprabb', 'PreventaController@postBuscarBodega')->name('comprabb');
 // Route::post('/comprabc', 'PreventaController@postBuscarcombos')->name('comprabc');
 // Route::post('/comprada', 'PreventaController@postCompradetalleactiva')->name('comprada');
+
+
+Route::get('/ventas', 'VentaController@getVentas')->name('ventas');
+
 
 
 

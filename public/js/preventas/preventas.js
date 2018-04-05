@@ -1,4 +1,4 @@
-var manejoRefresh=limpiarLocales=limpiarImpuestos=errorRut=errorRut2=errorRut3=limpiarBodegas=0;
+var manejoRefresh=limpiarLocales=limpiarImpuestos=errorRut=errorRut2=errorRut3=limpiarBodegas=NPreventa=0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -11,10 +11,14 @@ var parametroAjax = {
 var calcularMontos = function(CantidadPreVenta,ValorUnitarioVenta,FactorImpuesto,MontoDescuento){
     var ValorImpuesto = (CantidadPreVenta * ValorUnitarioVenta * FactorImpuesto / 100)
     $("#ValorImpuestos").val(ValorImpuesto);
-    var TotalLinea = ((CantidadPreVenta * ValorUnitarioVenta) + ValorImpuesto - MontoDescuento);
+    var TotalLinea = ((CantidadPreVenta * ValorUnitarioVenta) - MontoDescuento);
     $("#TotalLinea").val(TotalLinea);
     var ValorUnitarioFinal = (TotalLinea / CantidadPreVenta);
     $("#ValorUnitarioFinal").val(ValorUnitarioFinal);
+}
+
+var calcularTotalPreVenta = function(totalPV){
+	$("#TotalPreVentaDetalle").val(totalPV);
 }
 
 var ManejoRespuestaBuscarProducto = function(respuesta){
@@ -115,15 +119,23 @@ var ManejoRespuestaProcesarCD = function(respuesta){
 
 var ManejoRespuestaProcesarD = function(respuesta){
     if(respuesta.code==200){
+        NPreventa=respuesta.respuesta.v_cabecera[0].idPreVenta;
         bloquearInputs();
         $("#div-mod").show();
         $("#div-acep").hide();
         $(".divDetalles").toggle();
         $("#divVolver").show();
         $("#divTabs").show();
-        $("#spanTitulo").text("Detalles");
+        $("#spanTitulo").text("Detalle Pre-Venta");
         pintarDatosActualizar(respuesta.respuesta.v_cabecera[0]);
         cargarTablaDetalles(respuesta.respuesta.v_detalles);
+        if(parseInt(respuesta.respuesta.v_cabecera[0].EstadoPreVenta)>1){
+            $(".CerrarPreventa").hide();
+            $("#agregarC").hide();
+        }else{
+            $(".CerrarPreventa").show();
+            $("#agregarC").show();
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -216,6 +228,7 @@ var cargarTablaPreventas = function(data){
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
+			"pageLength": 50, 
             "language": LenguajeTabla,
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
@@ -242,7 +255,7 @@ var cargarTablaPreventas = function(data){
                 {"title": "Id","data": "idPreVenta",visible:0},
                 {
                     "title": "Fecha Preventa", 
-                    "data": "FechaPreVenta",
+                    "data": "FechaPreVenta", className: "text-center", 
                     "render": function(data, type, row, meta){
                         if(type === 'display'){
                             data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
@@ -251,12 +264,14 @@ var cargarTablaPreventas = function(data){
                     }
                 },
                 {"title": "Nombre Local","data": "NombreLocal"},
-                {"title": "RUT Cliente","data": "RUTCliente"},
+                {"title": "RUT Cliente","data": "RUTCliente", className: "text-center"},
                 {"title": "Nombre Cliente","data": "NombreCliente"},
                 {"title": "Nombre Vendedor","data": "NombreVendedor"},
-                {"title": "Total","data": "TotalPreVenta"},
+                {"title": "Total","data": "TotalPreVenta",
+							render: $.fn.dataTable.render.number( '.', ',', 2 ),
+							className: "text-right"},
                 {"title": "EstadoPreVenta","data": "EstadoPreVenta",visible:0},
-                {"title": "Estado","data": "desEstadoPreventa"}
+                {"title": "Estado","data": "desEstadoPreventa", className: "text-center"}
             ],
         });
         limpiarLocales=1;
@@ -264,14 +279,33 @@ var cargarTablaPreventas = function(data){
 
 var cargarTablaDetalles = function(data){
     if(limpiarImpuestos==1){destruirTabla('#tablaDetalles');$('#tablaDetalles thead').empty();}
-        var columnReport = [[5],[6],[7],[8],[9],[10],[11],[12]];       
+        var columnReport = [[5],[6],[9],[11],[12]];       
         $("#tablaDetalles").dataTable({
+			
+			"footerCallback": function (data){
+            var api = this.api(), data;
+            // Remove the formatting to get integer data for summation
+            var intVal = function (i){
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            // Total over all pages
+            totalPV = api
+                .column(12)
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+			},
             responsive:false,
             "bSort": false,
             "scrollCollapse": false,
             "paging": false,
             "searching": false,
-            "info":false,
+            "info":false,			
+			"pageLength": 50, 
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
                 {"sWidth": "1px", "aTargets": [8]}
@@ -298,14 +332,26 @@ var cargarTablaDetalles = function(data){
                 {"title": "IdPreVenta","data": "IdPreVenta",visible:0},
                 {"title": "IdProducto","data": "IdProducto",visible:0},
                 {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
-                {"title": "Nombre Producto","data": "NombreProducto"},
-                {"title": "Cantidad","data": "CantidadPreVenta"},
-                {"title": "Valor Unitario","data": "ValorUnitarioVenta"},
-                {"title": "Factor Impuesto","data": "FactorImpuesto"},
-                {"title": "Valor Impuestos","data": "ValorImpuestos"},
-                {"title": "Monto Descuento","data": "MontoDescuento"},
-                {"title": "Valor Unitario Final","data": "ValorUnitarioFinal"},
-                {"title": "Total Linea","data": "TotalLinea"},
+                {"title": "Nombre Producto","data": "NombreProducto", 
+							width: 200},
+                {"title": "Cantidad","data": "CantidadPreVenta", 
+							width: 50,
+							render: $.fn.dataTable.render.number( '.', ',', 2 ),
+							className: "text-center"},
+                {"title": "Valor Unitario","data": "ValorUnitarioVenta", 
+							render: $.fn.dataTable.render.number( '.', ',', 2 ),
+							className: "text-right"},
+                {"title": "Factor Impuesto","data": "FactorImpuesto",visible:0},
+                {"title": "Valor Impuestos","data": "ValorImpuestos",visible:0},
+                {"title": "Monto Descuento","data": "MontoDescuento",
+							render: $.fn.dataTable.render.number( '.', ',', 2 ),
+							className: "text-right"},
+                {"title": "Valor Unitario Final","data": "ValorUnitarioFinal",
+							render: $.fn.dataTable.render.number( '.', ',', 2 ),
+							visible:0},
+                {"title": "Total Linea","data": "TotalLinea", 
+							render: $.fn.dataTable.render.number( '.', ',', 2 ),
+							className: "text-right"},
                 {"title": "Estado","data": "EstadoPreVentaDetalle",visible:0},
                 {"title": "Estado","data": "desEstadoPreventaDetalle",visible:0}
             ],   
@@ -317,7 +363,7 @@ var cargarTablaDetalles = function(data){
                     className: 'btn btn-inverse-primary waves-effect waves-light CerrarPreventa',
                     // orientation:'landscape',  //Hoja Horizontal
                     pageSize:'A4',
-                    title:'Detalles Preventa',
+                    title:'Detalles Preventa N° '+NPreventa,
                     exportOptions: {
                         columns: columnReport,
                         modifier: {
@@ -327,8 +373,8 @@ var cargarTablaDetalles = function(data){
                     ,
                     customize : function(doc){
                         doc.defaultStyle.fontSize = 8; 
-                        doc.pageMargins = [80, 40, 40,0];
-                        var colCount = new Array();
+                        doc.pageMargins = [100, 40, 40,0];
+                        var colCount = new Array();   
                         $($("#tablaDetalles").dataTable()).find('tbody tr:first-child td').each(function(){
                             if($(this).attr('colspan')){
                                 for(var i=1;i<=$(this).attr('colspan');$i++){
@@ -341,7 +387,9 @@ var cargarTablaDetalles = function(data){
                 }
             ]
         });
-        limpiarImpuestos=1;
+
+	limpiarImpuestos=1;
+	calcularTotalPreVenta(totalPV);
 };
 
 var pintarDatosActualizar= function(data){
@@ -397,6 +445,7 @@ var BotonCancelar = function(){
     $(".divDetalles").toggle();
     bloquearInputs();
     $("#PrecioUltimaCompra").prop('readonly', true);
+    NPreventa=0;
 }
 
 var volverListado = function(){
@@ -413,10 +462,12 @@ var volverListado = function(){
     $("#TabImpuestos").removeClass("active");
     $("#Tabdetalles").addClass("active");
     $("#adetalles").addClass("active");
+    NPreventa=0;
 }
 
 var BotonAgregarDetalle = function (){
     $("#spanTituloModal").text("Registrar Detalle");
+	$("#guardar").text("Continuar");
     $("#divBotonM").hide();
     $("#divBotonesAC").show();
     // $('#FormDetalle')[0].reset();
@@ -554,7 +605,8 @@ var desbloquearInputsDetalles = function(){
 }
 
 var modificarCabeceras = function(){
-    $("#spanTitulo").text("Editar Compra");
+    $("#spanTitulo").text("Editar Pre-Venta");
+	$("#guardar").text("Guardar");
     $("#divVolver").hide();
     // $(".divBotones").toggle();
     $("#div-mod").hide();
@@ -659,7 +711,14 @@ var calcularFechaPago = function (fecha){
 }
 
 var CerrarPreventa = function (){
-    console.log("Cerre preventa");
+    parametroAjax.ruta=rutaCP;
+    parametroAjax.data = {IdPreVenta:NPreventa};
+    respuesta=procesarajax(parametroAjax);
+    console.log(respuesta);
+    console.log(respuesta.respuesta);
+    // if (respuesta.code==200){
+    //     crearselect(respuesta.respuesta,"IdBodega");
+    // }
 }
 
 $(document).ready(function(){
