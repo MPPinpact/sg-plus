@@ -27,7 +27,7 @@ use App\Models\Producto;
 use App\Models\Impuesto;
 use App\Models\Empresa;
 
-class PreventaController extends Controller
+class VentaController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -45,7 +45,7 @@ class PreventaController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getPreventas()
+    public function getVentas()
     {
         $model= new Preventa();
         $data['v_preventas'] = $model->listPreventas();
@@ -53,7 +53,7 @@ class PreventaController extends Controller
         $data['v_estados'] = $model->listEstados();
         // $data['v_tipo_dte'] = $model->listTipoDte();
         $data['v_unidad_medida'] = $model->listUnidadMedida();
-        return View::make('preventas.preventas',$data);
+        return View::make('ventas.ventas',$data);
     }
 
     //Registrar o actualizar compra

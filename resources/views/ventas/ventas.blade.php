@@ -15,7 +15,7 @@
 	        <div class="card-header">
 	        	<center>
 	        		<h5 class="card-header-text">
-	        			Listado de Preventas Registradas
+	        			Listado de Ventas Registradas
 	        		</h5>
                 </center>
 	        </div>

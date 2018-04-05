@@ -90,9 +90,10 @@ class Preventa extends Authenticatable
     // Activar / Desactivar Compra
     public function activarPreventa($datos){
         $idAdmin = Auth::id();
-        if ($datos['EstadoPreVenta']>0){
+        if ($datos['EstadoPreVenta']==1){
             $values=array('EstadoPreVenta'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
-        }else{
+        }
+        if ($datos['EstadoPreVenta']==0){
             $values=array('EstadoPreVenta'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }
         return DB::table('preventas')
@@ -151,14 +152,12 @@ class Preventa extends Authenticatable
     }
 
     public function getOnePreventaDetalle($IdDetallePreVenta){
-        log::info("detalle preventa");
         return DB::table('v_preventas_detalle')->where('IdDetallePreVenta',$IdDetallePreVenta)->get();
     }
 
     public function buscarImpuestos($IdProducto){
         $impuestos = DB::table('v_productos_impuestos')->where('IdProducto',$IdProducto)->get();
         $factorImpuesto = 0;
-        // ValorImpuesto
         foreach ($impuestos as $key => $value) {
             foreach ($value as $llave => $valor) {
                 if ($llave == 'ValorImpuesto'){ 
@@ -168,6 +167,16 @@ class Preventa extends Authenticatable
         }
         $factorImpuesto = ($factorImpuesto / 100);
         return $factorImpuesto;
+    }
+
+    public function cerrarPreventa($IdPreventa){
+        log::info("llegue al modelo");
+        log::info($IdPreventa);
+        $idAdmin = Auth::id();
+        $values=array('EstadoPreVenta'=>2,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        return DB::table('preventas')
+                ->where('idPreVenta', $IdPreventa)
+                ->update($values);
     }
 
     

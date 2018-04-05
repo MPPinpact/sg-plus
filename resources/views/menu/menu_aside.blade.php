@@ -36,7 +36,7 @@
             </a>
           </li>
           <li>
-            <a class="waves-effect" href="#">
+            <a class="waves-effect" href="{{ route('ventas') }}">
               <i class="icon-arrow-right"></i>
              Venta
             </a>
