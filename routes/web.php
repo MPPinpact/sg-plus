@@ -129,17 +129,26 @@ Route::post('/preventabc', 'PreventaController@postBuscarCliente')->name('preven
 Route::post('/preventabpd', 'PreventaController@postBuscarproductos')->name('preventabpd');
 Route::post('/preventadc', 'PreventaController@postRegistrarDetallec')->name('preventadc');
 Route::post('/preventabdc', 'PreventaController@postBuscarDetallec')->name('preventabdc');
-Route::post('/preventacp', 'PreventaController@postCerrarPreventa')->name('preventacp');
+
 // Route::post('/comprabe', 'PreventaController@postBuscarempresa')->name('comprabe');
 // Route::post('/comprapr', 'PreventaController@postRegistroproveedor')->name('comprapr');
 // Route::post('/comprabb', 'PreventaController@postBuscarBodega')->name('comprabb');
 // Route::post('/comprabc', 'PreventaController@postBuscarcombos')->name('comprabc');
 // Route::post('/comprada', 'PreventaController@postCompradetalleactiva')->name('comprada');
 
-
+//CRUd venta
 Route::get('/ventas', 'VentaController@getVentas')->name('ventas');
-
-
+Route::post('/ventab', 'VentaController@postBuscarVenta')->name('ventab');
+Route::post('/ventaActivar', 'VentaController@postVentaActiva')->name('ventaActivar');
+Route::post('/ventas', 'VentaController@postVentas')->name('ventas');
+Route::post('/ventadv', 'VentaController@postRegistrarDetalleVenta')->name('ventadv');
+Route::post('/ventabdc', 'VentaController@postBuscarDetalleVenta')->name('ventabdc');
+Route::post('/ventaCerrar', 'VentaController@postCerrarVenta')->name('ventaCerrar');
+Route::post('/ventasEP', 'VentaController@postDetallePagoActiva')->name('ventasEP');
+Route::post('/ventasRP', 'VentaController@postRegistrarPagoVenta')->name('ventasRP');
+Route::post('/ventasPVC', 'VentaController@postCargaPreferenciasCredito')->name('ventasPVC');
+Route::post('/ventasBCC', 'VentaCreditoController@postBuscarCliente')->name('ventasBCC');
+Route::post('/ventasFin', 'VentaController@postFinalizarVenta')->name('ventasFin');
 
 
 

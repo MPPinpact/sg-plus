@@ -20,12 +20,13 @@ use Mail;
 use Storage;
 use DB;
 
-use App\Models\Preventa;
+use App\Models\Venta;
 use App\Models\Cliente;
 use App\Models\Usuario;
 use App\Models\Producto;
 use App\Models\Impuesto;
 use App\Models\Empresa;
+use App\Models\VentaCredito;
 
 class VentaController extends Controller
 {
@@ -47,66 +48,119 @@ class VentaController extends Controller
 
     public function getVentas()
     {
-        $model= new Preventa();
-        $data['v_preventas'] = $model->listPreventas();
-        // $data['v_bodegas'] = $model->listBodega();
+        $model= new Venta();
+        $data['v_ventas'] = $model->listVentas();
         $data['v_estados'] = $model->listEstados();
-        // $data['v_tipo_dte'] = $model->listTipoDte();
+        $data['v_tipo_dte'] = $model->listTipoDte();
         $data['v_unidad_medida'] = $model->listUnidadMedida();
         return View::make('ventas.ventas',$data);
     }
 
     //Registrar o actualizar compra
-    protected function postPreventas(Request $request){
+    protected function postVentas(Request $request){
         $datos = $request->all();
-        $model= new Preventa();
-        $result['f_registro'] = $model->regPreventa($datos);
-        $result['v_preventas'] = $model->listPreventas();
+        $model= new Venta();
+        $result['f_registro'] = $model->regVenta($datos);
+        $result['v_ventas'] = $model->listVentas();
         return $result;
     }
 
     //Registrar o actualizar Detalle compra
-    protected function postRegistrarDetallec(Request $request){
+    protected function postRegistrarDetalleVenta(Request $request){
         $datos = $request->all();
-        $model= new Preventa();
-        $result['f_registro'] = $model->regDetallePreventa($datos);
-        $result['v_detalles'] = $model->getDetallesPreventa($datos['IdPreVenta2']);
+        $model= new Venta();
+        $result['f_registro'] = $model->regDetalleVenta($datos);
+        $result['v_detalles'] = $model->getDetallesVenta($datos['IdVenta2']);
         return $result;
     }
         
 
-    //Activar / desactivar Preventa
-    protected function postPreventactiva(Request $request){
+    //Activar / desactivar Venta
+    protected function postVentaActiva(Request $request){
         $datos = $request->all();
-        $model= new Preventa();
-        $compra = Preventa::find($datos['idPreVenta']);
-        $result['activar'] = $model->activarPreventa($compra);
-        $result['v_preventas'] = $model->listPreventas();
+        $model= new Venta();
+        $compra = Venta::find($datos['IdVenta']);
+        $result['activar'] = $model->activarVenta($compra);
+        $result['v_ventas'] = $model->listVentas();
         return $result;
     }
 
     //Activar / desactivar detalle compra
     protected function postCompradetalleactiva(Request $request){
         $datos = $request->all();
-        $model= new Preventa();
-        $detalle = $model->getOneCompraDetalle($datos['IdDetalleCompra']);
+        $model= new Venta();
+        
+		$detalle = $model->getOneCompraDetalle($datos['IdDetalleCompra']);
         $result['activar'] = $model->activarCompraDetalle($detalle);
+		
         $result['v_detalles'] = $model->getDetallesCompra($detalle[0]->IdCompra);
         return $result;
     }
-
-
-    protected function postBuscarPreventa(Request $request){
+	
+	//Registrar o Actualizar Pago
+    protected function postRegistrarPagoVenta(Request $request){
         $datos = $request->all();
-        $model= new Preventa();
-        $result['v_cabecera'] = $model->getCabeceraPreventa($datos['idPreVenta']);
-        $result['v_detalles'] = $model->getDetallesPreventa($datos['idPreVenta']);
+        $model= new Venta();
+        $result['f_registro'] = $model->regPagoVenta($datos);
+        $result['v_pagos'] = $model->getDetallePago($datos['IdVentaPago']);
+        return $result;
+    }
+	
+	protected function postDetallePagoActiva(Request $request){
+        $datos = $request->all();
+		$model = new Venta();
+		
+		log::info("IdDetallePago: ". $datos['IdDetallePago']);
+		
+		$pago = $model->getOnePagoVenta($datos['IdDetallePago']);		
+        $detalle = $model->activarDetallePago($datos['IdDetallePago']);
+        $result['v_pagos'] = $model->getDetallePago($pago->IdVenta);
+		
+        return $result;
+    }
+	
+	protected function postCargaPreferenciasCredito(Request $request){
+        $datos = $request->all();
+		$modelVC = new VentaCredito();
+		
+		$pvr = $modelVC->listPrefenciActiva();	
+		$result['v_pvc'] = $pvr;
+		
+        return $result;
+    }
+	
+	protected function postFinalizarVenta(Request $request){
+        $datos = $request->all();
+		$model = new Venta();
+		
+		$IdVenta = $datos['IdVenta'];
+		
+		log::info($datos);
+		log::info("En el controller...");
+		log::info("Inicio Función Finaliza Venta: " . $IdVenta );
+		
+		$finalizaVenta = $model->regFinalizarVenta($IdVenta);
+		
+		//log::info($finalizaVenta);
+		
+		log::info("FIn Función Finaliza Venta: " . $IdVenta);
+        return;
+    }
+	
+    protected function postBuscarVenta(Request $request){
+        $datos = $request->all();
+        $model= new Venta();
+        $result['v_cabecera'] = $model->getCabeceraVenta($datos['IdVenta']);
+        $result['v_detalles'] = $model->getDetallesVenta($datos['IdVenta']);
+		$result['v_pagos'] = $model->getDetallePago($datos['IdVenta']);
+		
+		log::info($result['v_pagos']);
         return $result;
     }
 
     protected function postBuscarBodega(Request $request){
         $datos = $request->all();
-        $model= new Preventa();
+        $model= new Venta();
         $result= $model->getBodegas($datos['IdLocal']);
         return $result;
     }
@@ -129,22 +183,15 @@ class VentaController extends Controller
             $result['busqueda'] = '{"IdEmpresa":0}'; 
             $result['v_locales'] = [];
         }else{
-            $model= new Preventa();
+            $model= new Venta();
             $result['v_locales'] = $model->buscarLocales($result['busqueda']->IdEmpresa); 
         } 
         return $result;
     }
 
-    protected function postRegistroproveedor(Request $request){
-        $datos = $request->all();
-        $model= new Preventa();
-        $id = $model->regProveedor($datos);
-        return $id;
-    }
-
     protected function postBuscarcombos(Request $request){
         $datos = $request->all();
-        $model= new Preventa();
+        $model= new Venta();
         $result = $model->buscarCombos($datos);
         return $result;   
     }
@@ -155,23 +202,23 @@ class VentaController extends Controller
         if(isset($datos['CodigoBarra'])){
             $result['producto'] = Producto::where('CodigoBarra',$datos['CodigoBarra'])->first();
             if($result['producto'] == null) { $result['producto'] = '{"IdProducto":0}'; }
-            $model= new Preventa(); 
+            $model= new Venta(); 
             $result['impuesto'] = $model->buscarImpuestos($result['producto']->IdProducto);
         }
         return $result;
     }
 
-    protected function postBuscarDetallec(Request $request){
+    protected function postBuscarDetalleVenta(Request $request){
         $datos = $request->all();
-        $model= new Preventa();
-        $result = $model->getOnePreventaDetalle($datos['IdDetallePreVenta']);
+        $model= new Venta();
+        $result = $model->getOneVentaDetalle($datos['IdDetalleVenta']);
         return $result;
     }
 
-    protected function postCerrarPreventa(Request $request){
+    protected function postCerrarVenta(Request $request){
         $datos = $request->all();
-        $model= new Preventa();
-        $result = $model->cerrarPreventa($datos['IdPreVenta']);
+        $model= new Venta();
+        $result = $model->cerrarVenta($datos['IdVenta']);
         log::info($result);
         return $result;   
     }

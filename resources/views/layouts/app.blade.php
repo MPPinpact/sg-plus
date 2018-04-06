@@ -19,6 +19,7 @@
     <!-- CSS -->
     <!--ico Fonts-->
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/assets/icon/icofont/css/icofont.css') }}">
+	
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/bower_components/bootstrap/css/bootstrap.min.css') }}">
     <!-- Material icons -->

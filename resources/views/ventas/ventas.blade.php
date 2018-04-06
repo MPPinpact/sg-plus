@@ -2,7 +2,7 @@
 @section('content')
 <style type="text/css" media="screen">
 	.nav-tabs .slide{
-		 width: calc(100% / 2)!important;
+		 width: calc(100% / 3)!important;
 	}
 	.ErrorRut{
 		color:#E02121;
@@ -31,7 +31,7 @@
 					<br />
 					<div class="row">
 						<div class="col-md-12 table-responsive">
-							<table id="tablaPreventas" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+							<table id="tablaVentas" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 						</div>
 					</div>
 		        </div>
@@ -49,22 +49,17 @@
 	        	<div class="row">
 					<div class="col-md-12">
 						<button style="float:right;" name="btn-list" id="btn-list" type="button" class="btn btn-primary waves-effect waves-light">
-							<span>Listado de Preventas</span>
+							<span>Listado de Ventas</span>
             			</button>
 					</div>
 				</div>
 		        <div class="row">
 		            <div class="col-sm-12">
 		                <div class="product-edit">
-							<!-- <div class="row">
-								<div id="divVolver" class="col-md-12">
-									<a style="float:right;" id="volverAct" href="#"><u>volver</u></a>
-								</div>
-							</div> -->
 							<div id="divTabs">
 			                    <ul class="nav nav-tabs nav-justified md-tabs " role="tablist">
 			                        <li class="nav-item">
-			                            <a id="adetalles" class="nav-link active" data-toggle="tab" href="#Tabdetalles" role="tab">
+			                            <a id="aCabecera" class="nav-link active" data-toggle="tab" href="#TabCabecera" role="tab">
 			                                <div class="f-26">
 			                                    <i class="icofont icofont-document-search"></i>
 			                                </div>
@@ -73,33 +68,43 @@
 			                            <div class="slide"></div>
 			                        </li>
 			                        <li class="nav-item">
-			                            <a id="aimpuestos" class="nav-link" data-toggle="tab" href="#TabImpuestos" role="tab">
+			                            <a id="aDetalles" class="nav-link" data-toggle="tab" href="#TabDetalles" role="tab">
 			                                <div class="f-26">
 			                                    <i class="icofont icofont-document-search"></i>
 			                                </div>
-			                                Detalles
+			                                Detalle de la Venta
+			                           	</a>
+			                            <div class="slide"></div>
+			                        </li>
+									<li class="nav-item">
+			                            <a id="aPagos" class="nav-link" data-toggle="tab" href="#TabPagos" role="tab">
+			                                <div class="f-26">
+			                                    <i class="icofont icofont-document-search"></i>
+			                                </div>
+			                                Información de Pago
 			                           	</a>
 			                            <div class="slide"></div>
 			                        </li>
 			                    </ul>
 			                </div>
 		                    <!-- Tab panes -->
-							<br><br>
+							<br /><br />
 		                    <div class="tab-content">
-		                        <div class="tab-pane active" id="Tabdetalles" role="tabpanel">
-									{!! Form::open(['id'=>'FormPreventas','autocomplete' => 'off']) !!}
-									{!! Form::hidden('idPreVenta', '', [
-									'id'            => 'idPreVenta',
+		                        <div class="tab-pane active" id="TabCabecera" role="tabpanel">
+									{!! Form::open(['id'=>'FormVentas','autocomplete' => 'off']) !!}
+									{!! Form::hidden('IdVenta', '', [
+									'id'            => 'IdVenta',
 									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<input type="hidden" name="IdVendedor" id="IdVendedor" value="1">
 									<input type="hidden" name="IdLocal" id="IdLocal" value="7">
 									<input type="hidden" name="IdCaja" id="IdCaja" value="1">
+									<input type="hidden" name="IdEstadoVenta" id="IdEstadoVenta" value="0">
 									<div class="row">
 										<div class="col-sm-2">
 											<div class="md-input-wrapper">
-												<input id="FechaPreVenta" name="FechaPreVenta" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
-												<label for="FechaPreVenta">Fecha Preventa</label>
+												<input id="FechaVenta" name="FechaVenta" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
+												<label for="FechaVenta">Fecha Venta</label>
 											</div>
 										</div>
 										
@@ -110,44 +115,17 @@
 							                    <small id="ErrorRut" class="rut-error"></small>
 											</div>
 										</div>
-										<div class="col-sm-7">
+										<div class="col-sm-5">
 											<div class="md-input-wrapper">
 												<input type="hidden" name="IdCliente" id="IdCliente">
 												<input id="NombreCliente" name="NombreCliente" type="text" class="md-form-control  md-static" maxlength="250" readonly />
 												<label for="NombreCliente">Nombre Cliente</label>
 											</div>
 										</div>
-										
-									</div>
-									<!--
-									<div class="row">
-										<div class="col-sm-4">
+										<div class="col-sm-2">
 											<div class="md-input-wrapper">
-												<input id="RUTCliente" name="RUTCliente" type="text" class="md-form-control md-static" maxlength="250" readonly />
-												<label for="RUTCliente">RUT Cliente</label>
-							                    <small id="ErrorRut" class="rut-error"></small>
-											</div>
-										</div>
-										<div class="col-sm-8">
-											<div class="md-input-wrapper">
-												<input type="hidden" name="IdCliente" id="IdCliente">
-												<input id="NombreCliente" name="NombreCliente" type="text" class="md-form-control  md-static" maxlength="250" readonly />
-												<label for="NombreCliente">Nombre Cliente</label>
-											</div>
-										</div>
-									</div>
-									-->
-									<div class="row">
-										<div class="col-sm-4"></div>
-										<div class="col-sm-4"></div>
-										<div class="col-sm-4">
-											<div class="pull-right">
-												<div class="md-input-wrapper">
-													
-														<input id="TotalPreVenta" name="TotalPreVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
-														<label for="TotalPreVenta">Total Preventa</label>
-													
-												</div>
+												<input id="TotalVenta" name="TotalVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
+												<label for="TotalVenta">Total Venta</label>
 											</div>
 										</div>
 									</div>
@@ -171,10 +149,10 @@
 									</div>
 									{!! Form::close() !!}
 		                        </div>
-		                        <div class="tab-pane" id="TabImpuestos" role="tabpanel">
+		                        <div class="tab-pane" id="TabDetalles" role="tabpanel">
 									<div>
 										<div class="col-md-12">
-											<button name="agregarC" id="agregarC" style="float:right;" type="button" class="btn btn-primary btn-icon waves-effect waves-light" data-toggle="modal" data-target="#ModalDetalleCompra">
+											<button name="agregarC" id="agregarC" style="float:right;" type="button" class="btn btn-primary btn-icon waves-effect waves-light" data-toggle="modal" data-target="#ModalDetalleVenta">
 											   <i class="icofont icofont-plus"></i>
 											</button>
 										</div>
@@ -187,12 +165,73 @@
 											<div class="col-sm-3">
 												<div class="pull-right">
 													<div class="md-input-wrapper" >
-														<input id="TotalPreVentaDetalle" name="TotalPreVentaDetalle" type="text" class="md-form-control md-static" maxlength="250" readonly />
-														<label for="TotalPreVentaDetalle">Total Pre-Venta</label>
+														<input id="TotalVentaDetalle" name="TotalVentaDetalle" type="text" class="md-form-control md-static" maxlength="250" readonly />
+														<label for="TotalVentaDetalle">Total Venta</label>
 													</div>
 												</div>
 											</div>
 										</div>
+									</div>
+		                        </div>
+								<div class="tab-pane" id="TabPagos" role="tabpanel">
+									<div class="row">
+										<div class="col-sm-5">
+											<div class="row">
+												<div class="col-sm-6">
+													<button name="pagoEfectivo" id="pagoEfectivo" class="btn-xlg waves-effect waves-light btn-primary btn-block"><i class="icofont icofont-cur-dollar"></i> Efectivo / Cash </button>
+												</div>
+												<div class="col-sm-6">
+													<button name="botonPagoCredito" id="botonPagoCredito" class="btn-xlg waves-effect waves-light btn-primary btn-block"><i class="icofont icofont-ebook">	   </i> Crédito Interno</button>	
+												</div>
+											</div>
+											<br />
+											<div class="row">
+												<div class="col-sm-6">
+													<button name="botonPagoTD" id="botonPagoTD" class="btn-xlg waves-effect waves-light btn-warning btn-block"><i class="icofont icofont-credit-card"></i> Tarjeta  Debito</button>
+												</div>
+												<div class="col-sm-6">
+													<button name="botonPagoTC" id="botonPagoTC" class="btn-xlg waves-effect waves-light btn-info btn-block"><i class="icofont icofont-mastercard">    </i> Tarjeta Crédito</button>
+												</div>
+											</div>
+											
+											<br /><br /><br /><br />
+											
+											<div class="row">
+												<div class="col-sm-6">
+													<button name="botonCancelarVenta" id="botonCancelarVenta" class="btn-xlg waves-effect waves-light btn-danger btn-block"><i class="icofont icofont-ui-close"> </i> Cancelar Venta</button>
+												</div>
+												<div class="col-sm-6">
+													<button name="botonFinalizarVenta" id="botonFinalizarVenta" class="btn-xlg waves-effect waves-light btn-success btn-block"><i class="icofont icofont-ui-check"></i> Finalizar Venta</button>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-1">
+										
+										</div>
+										<div class="col-sm-6">
+											<table id="tablaPagos" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+											
+											<div class="row">
+												<div class="col-sm-4">
+													<div class="md-input-wrapper" >
+														<input id="TotalPagado" name="TotalPagado" type="text" class="md-form-control md-static" maxlength="250" />
+														<label for="TotalPagado">Total Pagado</label>
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="md-input-wrapper" >
+														<input id="TotalVentaPago" name="TotalVentaPago" type="text" class="md-form-control md-static" maxlength="250" />
+														<label for="TotalVentaPago">Total Venta</label>
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="md-input-wrapper" >
+														<input id="SaldoPago" name="SaldoPago" type="text" class="md-form-control md-static" maxlength="250"  />
+														<label for="SaldoPago">Saldo x Pagar</label>
+													</div>
+												</div>
+											</div>
+										</div>										
 									</div>
 		                        </div>
 		                    </div>
@@ -203,44 +242,9 @@
 		</div>
 	</div>
 </div>
-<!-- Modal Proveedor -->
-<div class="modal fade modal-flex" id="ModalProveedor" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            	<h6 class="modal-title">REGISTRO PROVEEDOR</h6>
-            </div>
-            <div class="modal-body">
-            	{!! Form::open(['id'=>'FormProveedorNew','autocomplete' => 'off']) !!}
-            	<div class="row">
-					<div class="col-sm-6">
-						<div class="md-input-wrapper">
-							<input id="RUTProveedor2" name="RUTProveedor2" type="text" class="md-form-control md-static" maxlength="250" readonly/>
-							<label for="RUTProveedor2">RUT Proveedor</label>
-		                    <small id="ErrorRut2" class="rut-error"></small>
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div class="md-input-wrapper">
-							<input id="NombreFantasia2" name="NombreFantasia2" type="text" class="md-form-control" maxlength="250"/>
-							<label for="NombreFantasia2">Nombre Fantasía</label>
-						</div>
-					</div>
-				</div>
-				{!! Form::close() !!}
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="cancelarM" class="btn btn-inverse-primary waves-effect waves-light" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="aceptarM" class="btn btn-primary waves-effect waves-light">Guardar</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- Modal Detalle Compra -->
-<div class="modal fade" id="ModalDetalleCompra" tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalDetalleVenta" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -251,8 +255,8 @@
             </div>
             <div class="modal-body">
 				{!! Form::open(['id'=>'FormDetalle','autocomplete' => 'off']) !!}
-					<input type="hidden" name="IdPreVenta2" id="IdPreVenta2">
-					<input type="hidden" name="IdDetallePreVenta" id="IdDetallePreVenta">
+					<input type="hidden" name="IdVenta2" id="IdVenta2">
+					<input type="hidden" name="IdDetalleVenta" id="IdDetalleVenta">
 					<input type="hidden" name="IdProducto" id="IdProducto">	
 					<input type="hidden" id="FactorImpuesto" name="FactorImpuesto">
 					<input type="hidden" id="ValorImpuestos" name="ValorImpuestos">
@@ -281,8 +285,8 @@
 					<div class="row">
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
-								<input id="CantidadPreVenta" name="CantidadPreVenta" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="CantidadPreVenta">Cantidad</label>
+								<input id="CantidadVenta" name="CantidadVenta" type="text" class="md-form-control" maxlength="10" readonly />
+								<label for="CantidadVenta">Cantidad</label>
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -323,24 +327,231 @@
     </div>
 </div>
 
+<!-- Modal Detalle Pago Efectivo -->
+<div class="modal fade" id="ModalDetallePagoEfectivo" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                	<span aria-hidden="true">×</span>
+            	</button>
+            	<h6 id="spanTituloModalPagoEfectivo" class="modal-title"></h6>
+            </div>
+            <div class="modal-body">
+				{!! Form::open(['id'=>'FormFPE','autocomplete' => 'off']) !!}
+					<input type="hidden" name="IdVentaPago" id="IdVentaPago" value="">
+					<input type="hidden" name="IdDetallePago" id="IdDetallePago" value="">
+					<input type="hidden" name="IdFormaPago" id="IdFormaPago" value="0">
+					<input type="hidden" name="IdClienteVC" id="IdClienteVC" value="0">
+					
+					<div class="row" id="InfoAddTC">
+						<div class="col-md-6">
+							<div class="md-input-wrapper">
+								<input id="NumeroTransaccionTarjeta" name="NumeroTransaccionTarjeta" type="text" class="md-form-control" maxlength="250" />
+								<label for="NumeroTransaccionTarjeta">Número Transacción</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="md-input-wrapper">
+								<input id="CodigoAprobacionTarjeta" name="CodigoAprobacionTarjeta" type="text" class="md-form-control" maxlength="250" />
+								<label for="CodigoAprobacionTarjeta">Código Aprobación</label>
+							</div>
+						</div>
+					</div>
+					<div id="InfoAddCredito">
+						<div class="row" >
+							<div class="col-md-3">
+								<div class="md-input-wrapper">
+									<input id="RUTClienteCredito" name="RUTClienteCredito" type="text" class="md-form-control" maxlength="250" />
+									<label for="RUTClienteCredito">RUT Cliente</label>
+									<small id="ErrorRutCredito" class="rut-error"></small>
+								</div>
+							</div>
+							<div class="col-md-9">
+								<div class="md-input-wrapper">
+									<input id="NombreClienteCredito" name="NombreClienteCredito" type="text" class="md-form-control" maxlength="250" readonly />
+									<label for="NombreClienteCredito">Nombre Cliente</label>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="md-input-wrapper">
+									<input id="MontoAFinanciar" name="MontoAFinanciar" type="text" class="md-form-control" maxlength="250" />
+									<label for="MontoAFinanciar">Monto A Financiar</label>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="md-input-wrapper">
+									<input id="NumeroCuotasCredito" name="NumeroCuotasCredito" type="text" class="md-form-control" maxlength="250" />
+									<label for="NumeroCuotasCredito">Nro de Cuotas</label>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="md-input-wrapper">
+									<input id="InteresMensualCredito" name="InteresMensualCredito" type="text" class="md-form-control" maxlength="250" readonly />
+									<label for="InteresMensualCredito">Interes Mensual</label>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="md-input-wrapper">
+									<input id="FechaPrimeraCuota" name="FechaPrimeraCuota" type="text" class="md-form-control" maxlength="250" readonly />
+									<label for="FechaPrimeraCuota">Primera Cuota</label>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="md-input-wrapper">
+									<input id="MontoCuotaCredito" name="MontoCuotaCredito" type="text" class="md-form-control" maxlength="250" readonly />
+									<label for="MontoCuotaCredito">Monto Cuota</label>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="md-input-wrapper">
+									<input id="MontoFinalCredito" name="MontoFinalCredito" type="text" class="md-form-control" maxlength="250" readonly />
+									<label for="MontoFinalCredito">Monto Final Crédito</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<div class="md-input-wrapper">
+								<input id="MontoPagoEfectivo" name="MontoPagoEfectivo" type="text" class="md-form-control" maxlength="250" readonly />
+								<label for="MontoPagoEfectivo">Monto Pagado</label>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row" id="divBotonM_FPE" style="display:none;">						
+						<div class="col-md-12">
+							<button id="modificaFPE" type="button" class="btn btn-primary waves-effect waves-light btn-block">
+								Modificar
+							</button>
+						</div>
+					</div>
+					<div class="row" id="divBotonAC_FPE" style="display:none;">
+						<div class="col-md-6">
+							<button id="guardarFPE"  type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
+								Guardar
+							</button>
+						</div>
+						<div class="col-md-6">
+							<button id="cancelarFPE" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
+								Cancelar
+							</button>
+						</div>
+					</div>	
+				{!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Cierre Venta -->
+<div class="modal fade" id="ModalFinalizarVenta" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            
+            <div class="modal-body">
+				{!! Form::open(['id'=>'FormCierreVenta','autocomplete' => 'off']) !!}
+					<input type="hidden" name="IdVentaPago" id="IdVentaPago" value="">
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h2>¿Esta seguro que desea finalizar esta venta?</h2>
+						</div>
+						
+					</div>
+					
+					<div class="row" id="divBotonAC_FV" style="display:none;">
+						<div class="col-md-6">
+							<button id="botonFinalizarVenta_Cancel" name="botonFinalizarVenta_Cancel" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
+								<i class="icofont icofont-ui-close"></i> 
+								Cancelar Acción
+							</button>
+						</div>
+						<div class="col-md-6">
+							<button id="botonFinalizarVenta_OK" name="botonFinalizarVenta_OK" type="button" class="btn-xlg btn-success waves-effect waves-light btn-block" >
+								<i class="icofont icofont-ui-check"></i> 
+								Finalizar Venta
+							</button>
+						</div>
+					</div>	
+				{!! Form::close() !!}
+            </div>
+        
+		</div>
+    </div>
+</div>
+
+<!-- Modal Cancelar Venta -->
+<div class="modal fade" id="ModalCancelarVenta" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            
+            <div class="modal-body">
+				{!! Form::open(['id'=>'FormCierreVenta','autocomplete' => 'off']) !!}
+					<input type="hidden" name="IdVentaPago" id="IdVentaPago" value="">
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h2>¿Esta seguro que desea cancelar esta venta?</h2>
+						</div>
+						
+					</div>
+					
+					<div class="row" id="divBotonAC_CV" style="display:none;">
+						<div class="col-md-6">
+							<button id="botonCancelarVenta_Cancel" name="botonCancelarVenta_Cancel" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
+								<i class="icofont icofont-ui-close"></i> 
+								Cancelar Acción
+							</button>
+						</div>
+						<div class="col-md-6">
+							<button id="botonCancelarVenta_OK" name="botonCancelarVenta_OK" type="button" class="btn-xlg btn-warning waves-effect waves-light btn-block" >
+								<i class="icofont icofont-ui-check"></i> 
+								Cancelar Venta
+							</button>
+						</div>
+					</div>	
+				{!! Form::close() !!}
+            </div>
+        
+		</div>
+    </div>
+</div>
+
 <script Language="Javascript">
-	var ruta = "{{ URL::route('preventas') }}"
+	var ruta = "{{ URL::route('ventas') }}"
+	var rutaB = "{{ URL::route('ventab') }}"
+	var rutaDV = "{{ URL::route('ventadv') }}"
+	var rutaBDC = "{{ URL::route('ventabdc') }}"
+	var rutaFV = "{{ URL::route('ventasFin') }}"
+	
+	var rutaCV = "{{ URL::route('ventaCerrar') }}"
+	var rutaAV = "{{ URL::route('ventaActivar') }}"
+	
 	var rutaBC = "{{ URL::route('preventabc') }}"
-	var rutaA = "{{ URL::route('activarPre') }}"
-	var rutaB = "{{ URL::route('preventab') }}"
 	var rutaBPD = "{{ URL::route('preventabpd') }}"
-	var rutaDC = "{{ URL::route('preventadc') }}"
-	var rutaBDC = "{{ URL::route('preventabdc') }}"
-	var rutaCP = "{{ URL::route('preventacp') }}"
+	
+	var rutaEP = "{{ URL::route('ventasEP') }}"
+	var rutaFP = "{{ URL::route('ventasRP')  }}"
+	var rutaPVC = "{{ URL::route('ventasPVC')  }}"
+	var rutaBCC = "{{ URL::route('ventasBCC')  }}"
+	
 	
 	var rutaBE = "{{ URL::route('comprabe') }}"
 	var rutaBB = "{{ URL::route('comprabb') }}"
 	var rutaBCs = "{{ URL::route('comprabc') }}"
 	var rutaCDA = "{{ URL::route('comprada') }}"
 	var d = [];
-	d['v_preventas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_preventas) }}'));
+	
+	d['v_ventas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_ventas) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
 	d['v_unidad_medida'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_unidad_medida) }}'));
 </script>
-<script src="{{ asset('js/preventas/preventas.js') }}"></script>
+<script src="{{ asset('js/ventas/ventas.js') }}"></script>
 @endsection
