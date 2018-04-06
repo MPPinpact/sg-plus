@@ -779,7 +779,7 @@ $(document).ready(function(){
     $(document).on('click','#closeModal',BotonCancelarDetalle);
     $(document).on('click','#modificarC',modificarDetalles);
     $(document).on('click','#btn-list',volverListado);
-    $(document).on('click','.CerrarPreventa',CerrarPreventa);
+    //$(document).on('click','.CerrarPreventa',CerrarPreventa);
 
 
     // $("#RUTProveedor").focusout(function() {

@@ -327,6 +327,47 @@
     </div>
 </div>
 
+<!-- Modal Agregar Pre-Venta -->
+<div class="modal fade" id="ModalAgregarPreVenta" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                	<span aria-hidden="true">×</span>
+            	</button>
+            	<h6 id="spanTituloModalAgregRPreVenta" class="modal-title">Agregar PreVenta</h6>
+            </div>
+            <div class="modal-body">
+				{!! Form::open(['id'=>'FormPreVenta','autocomplete' => 'off']) !!}
+					<input type="hidden" name="IdVentaPreVenta" id="IdVentaPreVenta" value="0">
+					
+					<div class="row" id="InfoPreVenta">
+						<div class="col-md-12">
+							<div class="md-input-wrapper">
+								<input id="NumeroPreVenta" name="NumeroPreVenta" type="text" class="md-form-control" maxlength="250" />
+								<label for="NumeroPreVenta">Número Pre-Venta</label>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row" >
+						<div class="col-md-6">
+							<button id="botonAgregarPreVenta_OK" name="botonAgregarPreVenta_OK"  type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
+								Agregar Productos
+							</button>
+						</div>
+						<div class="col-md-6">
+							<button id="botonCancelarPreVenta" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
+								Cancelar
+							</button>
+						</div>
+					</div>	
+				{!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal Detalle Pago Efectivo -->
 <div class="modal fade" id="ModalDetallePagoEfectivo" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">

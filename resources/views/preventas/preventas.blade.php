@@ -331,7 +331,7 @@
 	var rutaBPD = "{{ URL::route('preventabpd') }}"
 	var rutaDC = "{{ URL::route('preventadc') }}"
 	var rutaBDC = "{{ URL::route('preventabdc') }}"
-	var rutaCP = "{{ URL::route('preventacp') }}"
+	
 	
 	var rutaBE = "{{ URL::route('comprabe') }}"
 	var rutaBB = "{{ URL::route('comprabb') }}"

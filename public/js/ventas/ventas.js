@@ -389,6 +389,12 @@ var cargarTablaDetalles = function(data){
             dom: 'Bfrtip',
             buttons: [
                 {
+                    text: 'Agregar PreVenta', className: 'btn btn-inverse-primary waves-effect waves-light botonAgregarPreVenta'
+                },
+				{
+                    text: 'Agregar Producto', className: 'btn btn-inverse-primary waves-effect waves-light botonAgregarProducto'
+                },
+				{
                     text: 'Finalizar Venta', className: 'btn btn-inverse-primary waves-effect waves-light CerrarVenta'
                 },
 				 {
@@ -566,6 +572,18 @@ var volverListado = function(){
     $("#aDetalles").addClass("active");
     NVenta=0;
 }
+
+var BotonAgregarPreVenta = function(){
+	console.log("Boton Finalizar Venta...");
+	
+	$("#IdVentaPreVenta").val($("#IdVenta").val());	
+	$("#ModalAgregarPreVenta").modal();	
+	
+	$('#ModalAgregarPreVenta').on('shown.bs.modal', function() {
+		$('#NumeroPreVenta').focus().select();
+	});
+}  
+
 
 var BotonFinalizarVenta = function(){
 	console.log("Boton Finalizar Venta...");
@@ -1279,6 +1297,8 @@ $(document).ready(function(){
 	$(document).on('click','#botonCancelarVenta_OK', BotonCancelarVentaOK);
 	$(document).on('click','#botonCancelarVenta_Cancel', BotonCancelarVentaNO);
 
+	$(document).on('click','.botonAgregarPreVenta', BotonAgregarPreVenta);
+	
 	
     $('#FormDetalle').on('keyup keypress', function(e) {
       var keyCode = e.keyCode || e.which;
