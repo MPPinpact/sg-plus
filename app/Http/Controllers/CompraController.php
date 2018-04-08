@@ -85,7 +85,7 @@ class CompraController extends Controller
         return $result;
     }
 
-    //Activar / desactivar detalle compra
+    //Activar / desactivar detalle compra  
     protected function postCompradetalleactiva(Request $request){
         $datos = $request->all();
         $model= new Compra();

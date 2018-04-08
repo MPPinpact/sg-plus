@@ -35,7 +35,7 @@ class Preventa extends Authenticatable
 
     // Cargar tabla de impuesto
     public function listPreventas(){
-        return DB::table('v_preventas')->get();
+        return DB::table('v_preventas')->where('EstadoPreVenta', '<>', 0)->get();
     }
 
     // Cargar combo de estados de Estado (Activo / Inactivo)
@@ -66,7 +66,6 @@ class Preventa extends Authenticatable
         $datos['IdCliente']==null ? $datos['IdCliente']=0 : $datos['IdCliente']= $datos['IdCliente'];
         $datos['FechaPreVenta'] = $this->formatearFecha($datos['FechaPreVenta']);
         $sql="select f_registro_preventa(".$Id.",".$datos['IdCliente'].",".$datos['IdVendedor'].",".$datos['IdLocal'].",".$datos['IdCaja'].",'".$datos['FechaPreVenta']."',".$idAdmin.")";
-        log::info($sql);
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -96,21 +95,24 @@ class Preventa extends Authenticatable
         if ($datos['EstadoPreVenta']==0){
             $values=array('EstadoPreVenta'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }
+        if ($datos['EstadoPreVenta']>1){
+            return 204;
+        }
         return DB::table('preventas')
                 ->where('idPreVenta', $datos['idPreVenta'])
                 ->update($values);
     }
 
-    // Activar / Desactivar Detalle compra
-    public function activarCompraDetalle($datos){
+    // Activar / Desactivar Detalle preventa
+    public function activarPreVentaDetalle($datos){
         $idAdmin = Auth::id();
-        if ($datos[0]->EstadoDetalleCompra>0){
-            $values=array('EstadoDetalleCompra'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        if ($datos[0]->EstadoPreVentaDetalle > 0){
+            $values=array('EstadoPreVentaDetalle'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }else{
-            $values=array('EstadoDetalleCompra'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+            $values=array('EstadoPreVentaDetalle'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }
-        return DB::table('compras_detalle')
-                ->where('IdDetalleCompra', $datos[0]->IdDetalleCompra)
+        return DB::table('preventas_detalle')
+                ->where('IdDetallePreVenta', $datos[0]->IdDetallePreVenta)
                 ->update($values);
     }
 
@@ -119,7 +121,7 @@ class Preventa extends Authenticatable
     }
 
     public function getDetallesPreventa($idPreVenta){
-        return DB::table('v_preventas_detalle')->where('idPreVenta',$idPreVenta)->get(); 
+        return DB::table('v_preventas_detalle')->where('idPreVenta',$idPreVenta)->where('EstadoPreVentaDetalle',1)->get(); 
     }
 
 
@@ -170,8 +172,6 @@ class Preventa extends Authenticatable
     }
 
     public function cerrarPreventa($IdPreventa){
-        log::info("llegue al modelo");
-        log::info($IdPreventa);
         $idAdmin = Auth::id();
         $values=array('EstadoPreVenta'=>2,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         return DB::table('preventas')

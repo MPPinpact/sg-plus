@@ -124,8 +124,10 @@
 										</div>
 										<div class="col-sm-2">
 											<div class="md-input-wrapper">
-												<input id="TotalVenta" name="TotalVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
-												<label for="TotalVenta">Total Venta</label>
+												<input style="text-align:right;" id="TotalVenta" name="TotalVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
+												<div style="float: right;">
+													<label for="TotalVenta" style="text-align: right;color:#40C4FF">Total Venta</label>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -133,15 +135,15 @@
 									<div align="center">
 										<div class="pull-rigth">
 											<div id="div-mod" class="divBotones">
-												<button id="modificar" type="button" class="btn btn-primary waves-effect waves-light">
+												<button id="modificar" type="button" class="btn btn-primary waves-effect waves-light btn-block2">
 													Modificar
 												</button>
 											</div>
 											<div id="div-acep" class="divBotones" style="display:none;">
-												<button id="cancelar" type="button" class="btn btn-inverse-primary waves-effect waves-light">
+												<button id="cancelar" type="button" class="btn btn-inverse-primary waves-effect waves-light btn-block2">
 													Cancelar
 												</button>
-					                			<button id="guardar"  type="button" class="btn btn-primary waves-effect waves-light">
+					                			<button id="guardar"  type="button" class="btn btn-primary waves-effect waves-light btn-block2">
 													Continuar
 					                			</button>
 											</div>
@@ -151,22 +153,17 @@
 		                        </div>
 		                        <div class="tab-pane" id="TabDetalles" role="tabpanel">
 									<div>
-										<div class="col-md-12">
-											<button name="agregarC" id="agregarC" style="float:right;" type="button" class="btn btn-primary btn-icon waves-effect waves-light" data-toggle="modal" data-target="#ModalDetalleVenta">
-											   <i class="icofont icofont-plus"></i>
-											</button>
-										</div>
-										<br />
 										<div class="col-md-12 table-responsive">
 											<table id="tablaDetalles" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 										</div>
 										<br />
 										<div class="row">
+											<div class="col-sm-9"></div>
 											<div class="col-sm-3">
-												<div class="pull-right">
-													<div class="md-input-wrapper" >
-														<input id="TotalVentaDetalle" name="TotalVentaDetalle" type="text" class="md-form-control md-static" maxlength="250" readonly />
-														<label for="TotalVentaDetalle">Total Venta</label>
+												<div class="md-input-wrapper" >
+													<input style="text-align:right;" id="TotalVentaDetalle" name="TotalVentaDetalle" type="text" class="md-form-control md-static" maxlength="250" readonly />
+													<div style="float: right;">
+														<label style="text-align: right;color:#40C4FF" for="TotalVentaDetalle">Total Venta</label>
 													</div>
 												</div>
 											</div>
@@ -214,20 +211,26 @@
 											<div class="row">
 												<div class="col-sm-4">
 													<div class="md-input-wrapper" >
-														<input id="TotalPagado" name="TotalPagado" type="text" class="md-form-control md-static" maxlength="250" />
-														<label for="TotalPagado">Total Pagado</label>
+														<input style="text-align:right;" id="TotalPagado" name="TotalPagado" type="text" class="md-form-control md-static" maxlength="250" />
+														<div style="float: right;">
+															<label style="color:#40C4FF" for="TotalPagado">Total Pagado</label>
+														</div>
 													</div>
 												</div>
 												<div class="col-sm-4">
 													<div class="md-input-wrapper" >
-														<input id="TotalVentaPago" name="TotalVentaPago" type="text" class="md-form-control md-static" maxlength="250" />
-														<label for="TotalVentaPago">Total Venta</label>
+														<input style="text-align:right;" id="TotalVentaPago" name="TotalVentaPago" type="text" class="md-form-control md-static" maxlength="250" />
+														<div style="float: right;">
+															<label style="color:#40C4FF" for="TotalVentaPago">Total Venta</label>
+														</div>
 													</div>
 												</div>
 												<div class="col-sm-4">
 													<div class="md-input-wrapper" >
-														<input id="SaldoPago" name="SaldoPago" type="text" class="md-form-control md-static" maxlength="250"  />
-														<label for="SaldoPago">Saldo x Pagar</label>
+														<input style="text-align:right;" id="SaldoPago" name="SaldoPago" type="text" class="md-form-control md-static" maxlength="250"  />
+														<div style="float: right;">
+															<label style="color:#40C4FF" for="SaldoPago">Saldo x Pagar</label>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -265,19 +268,19 @@
 					<div class="row">
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
-								<input id="CodigoBarra" name="CodigoBarra" type="text" class="md-form-control" maxlength="250" readonly />
+								<input id="CodigoBarra" name="CodigoBarra" type="text" class="md-form-control md-static" maxlength="250" readonly />
 								<label for="CodigoBarra">Producto</label>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="md-input-wrapper">
-								<input id="NombreProducto" name="NombreProducto" type="text" class="md-form-control" maxlength="250" readonly />
+								<input id="NombreProducto" name="NombreProducto" type="text" class="md-form-control md-static" maxlength="250" readonly />
 								<label for="NombreProducto">Nombre Producto</label>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
-								<select name="IdUnidadMedida" id="IdUnidadMedida" class="md-disable md-valid" disabled></select>
+								<select name="IdUnidadMedida" id="IdUnidadMedida" class="md-disable md-valid md-static" disabled></select>
 								<label for="IdUnidadMedida">Unidad de medida</label>
 							</div>
 						</div>
@@ -285,19 +288,19 @@
 					<div class="row">
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
-								<input id="CantidadVenta" name="CantidadVenta" type="text" class="md-form-control" maxlength="10" readonly />
+								<input id="CantidadVenta" name="CantidadVenta" type="text" class="md-form-control md-static" maxlength="10" readonly />
 								<label for="CantidadVenta">Cantidad</label>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
-								<input id="ValorUnitarioVenta" name="ValorUnitarioVenta" type="text" class="md-form-control" maxlength="10" readonly />
+								<input id="ValorUnitarioVenta" name="ValorUnitarioVenta" type="text" class="md-form-control md-static" maxlength="10" readonly />
 								<label for="ValorUnitarioVenta">Valor Unitario</label>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="TotalLinea" name="TotalLinea" type="text" class="md-form-control" maxlength="10" readonly />
+								<input id="TotalLinea" name="TotalLinea" type="text" class="md-form-control md-static" maxlength="10" readonly />
 								<label for="TotalLinea">Total Linea</label>
 							</div>
 						</div>
@@ -308,15 +311,15 @@
 				<div align="center">
 					<div class="pull-rigth">
 						<div id="divBotonM" style="display:none;">
-							<button id="modificarC" type="button" class="btn btn-primary waves-effect waves-light">
+							<button id="modificarC" type="button" class="btn btn-primary waves-effect waves-light btn-block2">
 								Modificar
 							</button>
 						</div>
 						<div id="divBotonesAC" style="display:none;">
-							<button id="cancelarC" type="button" class="btn btn-inverse-primary waves-effect waves-light">
+							<button id="cancelarC" type="button" class="btn btn-inverse-primary waves-effect waves-light btn-block2">
 								Cancelar
 							</button>
-							<button id="guardarC"  type="button" class="btn btn-primary waves-effect waves-light">
+							<button id="guardarC"  type="button" class="btn btn-primary waves-effect waves-light btn-block2">
 								Guardar
 							</button>
 						</div>
@@ -344,7 +347,7 @@
 					<div class="row" id="InfoPreVenta">
 						<div class="col-md-12">
 							<div class="md-input-wrapper">
-								<input id="NumeroPreVenta" name="NumeroPreVenta" type="text" class="md-form-control" maxlength="250" />
+								<input id="NumeroPreVenta" name="NumeroPreVenta" type="text" class="md-form-control md-static" maxlength="250" />
 								<label for="NumeroPreVenta">Número Pre-Venta</label>
 							</div>
 						</div>
@@ -388,13 +391,13 @@
 					<div class="row" id="InfoAddTC">
 						<div class="col-md-6">
 							<div class="md-input-wrapper">
-								<input id="NumeroTransaccionTarjeta" name="NumeroTransaccionTarjeta" type="text" class="md-form-control" maxlength="250" />
+								<input id="NumeroTransaccionTarjeta" name="NumeroTransaccionTarjeta" type="text" class="md-form-control md-static" maxlength="250" />
 								<label for="NumeroTransaccionTarjeta">Número Transacción</label>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="md-input-wrapper">
-								<input id="CodigoAprobacionTarjeta" name="CodigoAprobacionTarjeta" type="text" class="md-form-control" maxlength="250" />
+								<input id="CodigoAprobacionTarjeta" name="CodigoAprobacionTarjeta" type="text" class="md-form-control md-static" maxlength="250" />
 								<label for="CodigoAprobacionTarjeta">Código Aprobación</label>
 							</div>
 						</div>
@@ -403,14 +406,14 @@
 						<div class="row" >
 							<div class="col-md-3">
 								<div class="md-input-wrapper">
-									<input id="RUTClienteCredito" name="RUTClienteCredito" type="text" class="md-form-control" maxlength="250" />
+									<input id="RUTClienteCredito" name="RUTClienteCredito" type="text" class="md-form-control md-static" maxlength="250" />
 									<label for="RUTClienteCredito">RUT Cliente</label>
 									<small id="ErrorRutCredito" class="rut-error"></small>
 								</div>
 							</div>
 							<div class="col-md-9">
 								<div class="md-input-wrapper">
-									<input id="NombreClienteCredito" name="NombreClienteCredito" type="text" class="md-form-control" maxlength="250" readonly />
+									<input id="NombreClienteCredito" name="NombreClienteCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
 									<label for="NombreClienteCredito">Nombre Cliente</label>
 								</div>
 							</div>
@@ -418,19 +421,19 @@
 						<div class="row">
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="MontoAFinanciar" name="MontoAFinanciar" type="text" class="md-form-control" maxlength="250" />
+									<input id="MontoAFinanciar" name="MontoAFinanciar" type="text" class="md-form-control md-static" maxlength="250" />
 									<label for="MontoAFinanciar">Monto A Financiar</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="NumeroCuotasCredito" name="NumeroCuotasCredito" type="text" class="md-form-control" maxlength="250" />
+									<input id="NumeroCuotasCredito" name="NumeroCuotasCredito" type="text" class="md-form-control md-static" maxlength="250" />
 									<label for="NumeroCuotasCredito">Nro de Cuotas</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="InteresMensualCredito" name="InteresMensualCredito" type="text" class="md-form-control" maxlength="250" readonly />
+									<input id="InteresMensualCredito" name="InteresMensualCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
 									<label for="InteresMensualCredito">Interes Mensual</label>
 								</div>
 							</div>
@@ -438,19 +441,19 @@
 						<div class="row">
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="FechaPrimeraCuota" name="FechaPrimeraCuota" type="text" class="md-form-control" maxlength="250" readonly />
+									<input id="FechaPrimeraCuota" name="FechaPrimeraCuota" type="text" class="md-form-control md-static" maxlength="250" readonly />
 									<label for="FechaPrimeraCuota">Primera Cuota</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="MontoCuotaCredito" name="MontoCuotaCredito" type="text" class="md-form-control" maxlength="250" readonly />
+									<input id="MontoCuotaCredito" name="MontoCuotaCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
 									<label for="MontoCuotaCredito">Monto Cuota</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="MontoFinalCredito" name="MontoFinalCredito" type="text" class="md-form-control" maxlength="250" readonly />
+									<input id="MontoFinalCredito" name="MontoFinalCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
 									<label for="MontoFinalCredito">Monto Final Crédito</label>
 								</div>
 							</div>
@@ -460,7 +463,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="md-input-wrapper">
-								<input id="MontoPagoEfectivo" name="MontoPagoEfectivo" type="text" class="md-form-control" maxlength="250" readonly />
+								<input id="MontoPagoEfectivo" name="MontoPagoEfectivo" type="text" class="md-form-control md-static" maxlength="250" readonly />
 								<label for="MontoPagoEfectivo">Monto Pagado</label>
 							</div>
 						</div>
@@ -582,13 +585,14 @@
 	var rutaFP = "{{ URL::route('ventasRP')  }}"
 	var rutaPVC = "{{ URL::route('ventasPVC')  }}"
 	var rutaBCC = "{{ URL::route('ventasBCC')  }}"
-	
+	var rutaCDA = "{{ URL::route('ventaDetallesActiva') }}"
+	var rutaPRE = "{{ URL::route('ventasPre')  }}"
+
 	
 	var rutaBE = "{{ URL::route('comprabe') }}"
 	var rutaBB = "{{ URL::route('comprabb') }}"
 	var rutaBCs = "{{ URL::route('comprabc') }}"
-	var rutaCDA = "{{ URL::route('comprada') }}"
-	var d = [];
+	var d = [];  
 	
 	d['v_ventas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_ventas) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));

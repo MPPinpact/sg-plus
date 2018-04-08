@@ -116,37 +116,17 @@
 												<input id="NombreCliente" name="NombreCliente" type="text" class="md-form-control  md-static" maxlength="250" readonly />
 												<label for="NombreCliente">Nombre Cliente</label>
 											</div>
-										</div>
+										</div> 
 										
 									</div>
-									<!--
-									<div class="row">
-										<div class="col-sm-4">
-											<div class="md-input-wrapper">
-												<input id="RUTCliente" name="RUTCliente" type="text" class="md-form-control md-static" maxlength="250" readonly />
-												<label for="RUTCliente">RUT Cliente</label>
-							                    <small id="ErrorRut" class="rut-error"></small>
-											</div>
-										</div>
-										<div class="col-sm-8">
-											<div class="md-input-wrapper">
-												<input type="hidden" name="IdCliente" id="IdCliente">
-												<input id="NombreCliente" name="NombreCliente" type="text" class="md-form-control  md-static" maxlength="250" readonly />
-												<label for="NombreCliente">Nombre Cliente</label>
-											</div>
-										</div>
-									</div>
-									-->
 									<div class="row">
 										<div class="col-sm-4"></div>
 										<div class="col-sm-4"></div>
 										<div class="col-sm-4">
-											<div class="pull-right">
-												<div class="md-input-wrapper">
-													
-														<input id="TotalPreVenta" name="TotalPreVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
-														<label for="TotalPreVenta">Total Preventa</label>
-													
+											<div class="md-input-wrapper">
+												<input style="text-align:right;" id="TotalPreVenta" name="TotalPreVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
+												<div style="float: right;">
+													<label for="TotalPreVenta" style="color:#40C4FF">Total Preventa</label>
 												</div>
 											</div>
 										</div>
@@ -186,7 +166,7 @@
 										<div class="row">
 											<div class="col-sm-3">
 												<div class="pull-right">
-													<div class="md-input-wrapper" >
+													<div class="md-input-wrapper">
 														<input id="TotalPreVentaDetalle" name="TotalPreVentaDetalle" type="text" class="md-form-control md-static" maxlength="250" readonly />
 														<label for="TotalPreVentaDetalle">Total Pre-Venta</label>
 													</div>
@@ -225,7 +205,7 @@
 					</div>
 					<div class="col-sm-6">
 						<div class="md-input-wrapper">
-							<input id="NombreFantasia2" name="NombreFantasia2" type="text" class="md-form-control" maxlength="250"/>
+							<input id="NombreFantasia2" name="NombreFantasia2" type="text" class="md-form-control md-static" maxlength="250"/>
 							<label for="NombreFantasia2">Nombre Fantasía</label>
 						</div>
 					</div>
@@ -261,39 +241,39 @@
 					<div class="row">
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
-								<input id="CodigoBarra" name="CodigoBarra" type="text" class="md-form-control" maxlength="250" readonly />
+								<input id="CodigoBarra" name="CodigoBarra" type="text" class="md-form-control md-static" maxlength="250" readonly />
 								<label for="CodigoBarra">Producto</label>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="md-input-wrapper">
-								<input id="NombreProducto" name="NombreProducto" type="text" class="md-form-control" maxlength="250" readonly />
+								<input id="NombreProducto" name="NombreProducto" type="text" class="md-form-control md-static" maxlength="250" readonly />
 								<label for="NombreProducto">Nombre Producto</label>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
-								<select name="IdUnidadMedida" id="IdUnidadMedida" class="md-disable md-valid" disabled></select>
+								<select name="IdUnidadMedida" id="IdUnidadMedida" class="md-disable md-valid md-static" disabled></select>
 								<label for="IdUnidadMedida">Unidad de medida</label>
 							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="CantidadPreVenta" name="CantidadPreVenta" type="text" class="md-form-control" maxlength="10" readonly />
+								<input id="CantidadPreVenta" name="CantidadPreVenta" type="text" class="md-form-control md-static" maxlength="10" readonly />
 								<label for="CantidadPreVenta">Cantidad</label>
 							</div>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="ValorUnitarioVenta" name="ValorUnitarioVenta" type="text" class="md-form-control" maxlength="10" readonly />
+								<input id="ValorUnitarioVenta" name="ValorUnitarioVenta" type="text" class="md-form-control md-static" maxlength="10" readonly />
 								<label for="ValorUnitarioVenta">Valor Unitario</label>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="TotalLinea" name="TotalLinea" type="text" class="md-form-control" maxlength="10" readonly />
+								<input id="TotalLinea" name="TotalLinea" type="text" class="md-form-control md-static" maxlength="10" readonly />
 								<label for="TotalLinea">Total Linea</label>
 							</div>
 						</div>
@@ -331,12 +311,12 @@
 	var rutaBPD = "{{ URL::route('preventabpd') }}"
 	var rutaDC = "{{ URL::route('preventadc') }}"
 	var rutaBDC = "{{ URL::route('preventabdc') }}"
-	
+	var rutaCP = "{{ URL::route('preventacp') }}"
 	
 	var rutaBE = "{{ URL::route('comprabe') }}"
 	var rutaBB = "{{ URL::route('comprabb') }}"
 	var rutaBCs = "{{ URL::route('comprabc') }}"
-	var rutaCDA = "{{ URL::route('comprada') }}"
+	var rutaCDA = "{{ URL::route('preventada') }}"
 	var d = [];
 	d['v_preventas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_preventas) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
