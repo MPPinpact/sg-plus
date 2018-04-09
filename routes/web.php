@@ -104,6 +104,8 @@ Route::get('/cicloFacturacion', 'CicloFacturacionController@getCicloFacturacion'
 Route::post('/cicloFacturacion', 'CicloFacturacionController@postCicloFacturacion')->name('cicloFacturacion');
 Route::post('/activarCF', 'CicloFacturacionController@postCicloactivo')->name('activarCF');
 Route::post('/detallesCF', 'CicloFacturacionController@postCiclodetalle')->name('detallesCF');
+Route::post('/generarEECC', 'CicloFacturacionController@postCiclodetalle')->name('generarEECC');
+
 
 //CRUD Compra
 Route::get('/compras', 'CompraController@getCompras')->name('compras');

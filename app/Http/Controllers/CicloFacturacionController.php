@@ -64,4 +64,13 @@ class CicloFacturacionController extends Controller
         return $ciclo;
     }
 	
+	 protected function postGenerarEECC(Request $request){
+        $datos = $request->all();
+        $model= new CicloFacturacion();
+		
+        $result['f_generacion'] = $model->generarEECC($datos);
+        return $result;
+    }
+	
+	
 }

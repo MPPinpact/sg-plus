@@ -46,6 +46,19 @@ class CicloFacturacion extends Authenticatable
         }
         return $result;
     }
+	
+	 public function generarEECC($datos){
+        $idAdmin = Auth::id();      
+        $Id = $datos['IdCicloFacturacion'];  
+		
+        $sql = "select f_generacion_eecc(".$Id.")";
+        $execute=DB::select($sql);
+		
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
 
     public function activarCiclo($datos){
         $idAdmin = Auth::id();
