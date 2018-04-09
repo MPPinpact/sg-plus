@@ -27,6 +27,7 @@ use App\Models\Producto;
 use App\Models\Impuesto;
 use App\Models\Empresa;
 use App\Models\VentaCredito;
+use App\Models\Preventa;
 
 class VentaController extends Controller
 {
@@ -85,15 +86,19 @@ class VentaController extends Controller
         return $result;
     }
 
-    //Activar / desactivar detalle compra
-    protected function postCompradetalleactiva(Request $request){
+    //Activar / desactivar detalle venta
+    protected function postventaDetallesActiva(Request $request){
         $datos = $request->all();
         $model= new Venta();
-        
-		$detalle = $model->getOneCompraDetalle($datos['IdDetalleCompra']);
-        $result['activar'] = $model->activarCompraDetalle($detalle);
-		
-        $result['v_detalles'] = $model->getDetallesCompra($detalle[0]->IdCompra);
+		$detalle = $model->getOneVentaDetalle($datos['IdDetalleVenta']);
+        $venta = Venta::find($detalle[0]->IdVenta);
+        if ($venta->EstadoVenta > 1){
+            $result['activar'] = 204;
+            $result['v_detalles'] = [];          
+        }else{
+            $result['activar'] = $model->activarVentaDetalle($detalle);
+            $result['v_detalles'] = $model->getDetallesVenta($detalle->IdVenta);
+        }
         return $result;
     }
 	
@@ -132,19 +137,13 @@ class VentaController extends Controller
 	protected function postFinalizarVenta(Request $request){
         $datos = $request->all();
 		$model = new Venta();
-		
 		$IdVenta = $datos['IdVenta'];
-		
 		log::info($datos);
 		log::info("En el controller...");
 		log::info("Inicio Función Finaliza Venta: " . $IdVenta );
-		
-		$finalizaVenta = $model->regFinalizarVenta($IdVenta);
-		
-		//log::info($finalizaVenta);
-		
+		$result = $model->regFinalizarVenta($IdVenta);
 		log::info("FIn Función Finaliza Venta: " . $IdVenta);
-        return;
+        return $result;
     }
 	
     protected function postBuscarVenta(Request $request){
@@ -221,5 +220,20 @@ class VentaController extends Controller
         $result = $model->cerrarVenta($datos['IdVenta']);
         log::info($result);
         return $result;   
+    }
+
+    protected function postCargarPreventa(Request $request){
+        $datos = $request->all();
+        $model= new Preventa();
+        $preventa = $model->getDetallesPreventa($datos['IdPreVenta']);
+        if(count($preventa) > 1){
+            $venta= new Venta();
+            $venta->AddPreventa($datos['IdVenta'],json_decode($preventa,true));
+            $result['v_detalles'] = $venta->getDetallesVenta($datos['IdVenta']);
+            $result['code'] = 200;
+        }else{
+            $result['code'] = 204;
+        }
+        return $result;
     }
 }

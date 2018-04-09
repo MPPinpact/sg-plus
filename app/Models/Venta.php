@@ -34,7 +34,7 @@ class Venta extends Authenticatable
 
     // Cargar tabla de impuesto
     public function listVentas(){
-        return DB::table('v_ventas')->get();
+        return DB::table('v_ventas')->where('EstadoVenta', '<>', 0)->get();
     }
 
     // Cargar combo de estados de Estado (Activo / Inactivo)
@@ -64,7 +64,6 @@ class Venta extends Authenticatable
         $datos['IdCliente']==null ? $datos['IdCliente']=0 : $datos['IdCliente']= $datos['IdCliente'];
         $datos['FechaVenta'] = $this->formatearFecha($datos['FechaVenta']);
         $sql="select f_registro_venta(".$Id.",".$datos['IdCliente'].",".$datos['IdVendedor'].",".$datos['IdLocal'].",".$datos['IdCaja'].",'".$datos['FechaVenta']."',".$idAdmin.")";
-        log::info($sql);
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -93,21 +92,24 @@ class Venta extends Authenticatable
         if ($datos['EstadoVenta']==0){
             $values=array('EstadoVenta'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }
+        if ($datos['EstadoVenta']>1){
+            return 204;
+        }
         return DB::table('ventas')
                 ->where('IdVenta', $datos['IdVenta'])
                 ->update($values);
     }
 
     // Activar / Desactivar Detalle compra
-    public function activarCompraDetalle($datos){
+    public function activarVentaDetalle($datos){
         $idAdmin = Auth::id();
-        if ($datos[0]->EstadoDetalleCompra>0){
-            $values=array('EstadoDetalleCompra'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        if ($datos[0]->EstadoVentaDetalle>0){
+            $values=array('EstadoVentaDetalle'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }else{
-            $values=array('EstadoDetalleCompra'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+            $values=array('EstadoVentaDetalle'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }
-        return DB::table('compras_detalle')
-                ->where('IdDetalleCompra', $datos[0]->IdDetalleCompra)
+        return DB::table('ventas_detalle')
+                ->where('IdDetalleVenta', $datos[0]->IdDetalleVenta)
                 ->update($values);
     }
 
@@ -116,7 +118,7 @@ class Venta extends Authenticatable
     }
 
     public function getDetallesVenta($IdVenta){
-        return DB::table('v_ventas_detalle')->where('IdVenta',$IdVenta)->get(); 
+        return DB::table('v_ventas_detalle')->where('IdVenta',$IdVenta)->where('EstadoVentaDetalle',1)->get(); 
     }
     
 	// Registrar Pago Venta
@@ -130,7 +132,6 @@ class Venta extends Authenticatable
 		
         $sql="select f_registro_pago_ventas(".$Id.",".$datos['IdVentaPago'].",".$datos['IdFormaPago'].",'".$datos['CodigoAprobacionTarjeta']."','".$datos['NumeroTransaccionTarjeta']."','".$datos['IdClienteVC']."', '".$fpc."','".$datos['NumeroCuotasCredito']."','".$datos['InteresMensualCredito']."','".$datos['MontoFinalCredito']."','".$datos['MontoCuotaCredito']."','".$datos['MontoPagoEfectivo']."',1,".$idAdmin.")";
 		log::info($sql);
-		
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -141,14 +142,10 @@ class Venta extends Authenticatable
 	public function regFinalizarVenta($IdVenta){
 		$sql="select f_finaliza_venta(".$IdVenta.")";
 		log::info($sql);
-		
 		$execute=DB::select($sql);
 		log::info($execute);
-		
-		return "{IdVenta, 1}";
-		//return DB::select($sql);
-		
-		//return DB::table('v_ventas_pagos')->where([['IdVenta', '=', $IdVenta],['IdFormaPago', '=', 3],])->get(); 
+        $result['IdVenta'] = 1;
+		return $result;
 	}
 	
 	public function getDetallePago($IdVenta){
@@ -175,7 +172,7 @@ class Venta extends Authenticatable
         $result['v_bodega'] = DB::table('v_bodegas_combo')->where('id',$datos['IdBodega'])->get();
         return $result;
     }
-
+    
     public function getOneVentaDetalle($IdDetalleVenta){
         return DB::table('v_ventas_detalle')->where('IdDetalleVenta',$IdDetalleVenta)->get();
     }
@@ -207,14 +204,23 @@ class Venta extends Authenticatable
     public function cerrarVenta($IdVenta){
         log::info("llegue al modelo");
         log::info($IdVenta);
-		
         $IdAdmin = Auth::id();
         $values=array('EstadoVenta'=>2,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$IdAdmin);
-		
 		log::info($values);
-		
         return DB::table('ventas')
                 ->where('IdVenta', $IdVenta)
                 ->update($values);
+    }
+
+    public function AddPreventa($IdVenta,$preventas){
+        $i=0;
+        foreach ($preventas as $preventa) {
+            $preventa['IdVenta2']=$IdVenta;
+            $preventa['IdDetalleVenta']=null;
+            $preventa['CantidadVenta']=$preventa['CantidadPreVenta'];
+            $result[$i]=$this->regDetalleVenta($preventa);
+            $i++;
+        }
+        return $result;
     }
 }

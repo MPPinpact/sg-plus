@@ -24,19 +24,17 @@ var calcularTotalPreVenta = function(totalPV){
 var ManejoRespuestaBuscarProducto = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
-            if(respuesta.respuesta.producto.IdProducto){
-                if(respuesta.respuesta.producto.IdProducto==0){
-                    $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
-                }else{
-                    $("#IdProducto").val(respuesta.respuesta.producto.IdProducto);
-                    $("#NombreProducto").val(respuesta.respuesta.producto.NombreProducto);
-                    $("#ValorUnitarioVenta").val(respuesta.respuesta.producto.PrecioVentaSugerido);
-                    $("#CantidadPreVenta").val(1);
-                    $("#FactorImpuesto").val(respuesta.respuesta.impuesto);
-                    $("#MontoDescuento").val(0);
-                    $("#IdUnidadMedida").val(respuesta.respuesta.producto.IdUnidadMedida).trigger("change");
-                    calcularMontos($("#CantidadPreVenta").val(),$("#ValorUnitarioVenta").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
-                } 
+            if(parseInt(respuesta.respuesta.producto.IdProducto)==0){
+                $.growl({message:respuesta.respuesta.producto.desProducto},{type: "warning", allow_dismiss: true});
+            }else{
+                $("#IdProducto").val(respuesta.respuesta.producto.IdProducto);
+                $("#NombreProducto").val(respuesta.respuesta.producto.NombreProducto);
+                $("#ValorUnitarioVenta").val(respuesta.respuesta.producto.PrecioVentaSugerido);
+                $("#CantidadPreVenta").val(1);
+                $("#FactorImpuesto").val(respuesta.respuesta.impuesto);
+                $("#MontoDescuento").val(0);
+                $("#IdUnidadMedida").val(respuesta.respuesta.producto.IdUnidadMedida).trigger("change");
+                calcularMontos($("#CantidadPreVenta").val(),$("#ValorUnitarioVenta").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
             } 
         }else{
             $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
@@ -104,13 +102,18 @@ var ManejoRespuestaProcesarCompraD = function(respuesta){
 
 var ManejoRespuestaProcesarCD = function(respuesta){
     if(respuesta.code==200){
-        if(respuesta.respuesta.activar>0){
-            if(respuesta.respuesta.v_detalles.length>0){
-                $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
-                cargarTablaDetalles(respuesta.respuesta.v_detalles);
-            }
-        }else{
-            $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
+        switch(respuesta.respuesta.activar){
+            case 1:
+                if(respuesta.respuesta.v_detalles.length>0){
+                    $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
+                    cargarTablaDetalles(respuesta.respuesta.v_detalles);
+                }
+            break;
+            case 204:
+                $.growl({message:"Esta Pre-venta la esta cerrada o finalizada"},{type: "warning", allow_dismiss: true,});
+            break;
+            default:
+                $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
         }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
@@ -144,13 +147,18 @@ var ManejoRespuestaProcesarD = function(respuesta){
 // Manejo Activar / Desactivar compra
 var ManejoRespuestaProcesarI = function(respuesta){
     if(respuesta.code==200){
-        if(respuesta.respuesta.activar>0){
-            if(respuesta.respuesta.v_preventas.length>0){
-                $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
-                cargarTablaPreventas(respuesta.respuesta.v_preventas);
-            }
-        }else{
-            $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
+        switch(respuesta.respuesta.activar){
+            case 1:
+                if(respuesta.respuesta.v_preventas.length>0){
+                    $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
+                    cargarTablaPreventas(respuesta.respuesta.v_preventas);
+                }
+            break;
+            case 204:
+                $.growl({message:"Esta preventa la esta cerrada o finalizada"},{type: "warning", allow_dismiss: true,});
+            break;
+            default:
+                $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
         }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
@@ -178,6 +186,7 @@ var ManejoRespuestaProcesar = function(respuesta){
         var res = JSON.parse(respuesta.respuesta.f_registro);
         if(res.code=="200"){ 
             $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
+            NPreventa = res.IdPreVenta;
             $("#idPreVenta").val(res.IdPreVenta);
             $("#IdPreVenta2").val(res.IdPreVenta);
             $("#div-mod").hide();
@@ -252,9 +261,7 @@ var cargarTablaPreventas = function(data){
                         return result;
                     }
                 },
-                {"title": "Id","data": "idPreVenta", 
-							render: $.fn.dataTable.render.number( '.', ',', 0 ),
-							className: "text-center"},
+                {"title": "Id","data": "idPreVenta", className: "text-center",visible:0},
                 {
                     "title": "Fecha Preventa", 
                     "data": "FechaPreVenta", className: "text-center", 
@@ -265,10 +272,10 @@ var cargarTablaPreventas = function(data){
                         return data;
                     }
                 },
-                {"title": "Nombre Local","data": "NombreLocal"},
+                {"title": "Nombre Local","data": "NombreLocal",visible:0},
                 {"title": "RUT Cliente","data": "RUTCliente", className: "text-center"},
                 {"title": "Nombre Cliente","data": "NombreCliente"},
-                {"title": "Nombre Vendedor","data": "NombreVendedor"},
+                {"title": "Nombre Vendedor","data": "NombreVendedor",visible:0},
                 {"title": "Total","data": "TotalPreVenta",
 							render: $.fn.dataTable.render.number( '.', ',', 2 ),
 							className: "text-right"},
@@ -323,7 +330,7 @@ var cargarTablaDetalles = function(data){
                         <a href="#" onclick="verDetallesPreventaD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
                             <i class="icofont icofont-search"></i>
                         </a>
-                        <a href="#" onclick="cambiarEstatusCompraD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                        <a href="#" onclick="cambiarEstatusPreventaD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
                         </center>`;
@@ -451,20 +458,23 @@ var BotonCancelar = function(){
 }
 
 var volverListado = function(){
-    $(".divDetalles").toggle();
-    $('#FormPreventas')[0].reset();
-    $('#FormProveedorNew')[0].reset();
-    $('#FormDetalle')[0].reset();
-    $("#idPreVenta").val("");
-    $("#RUTProveedor2").val("");
-    $("#IdDetalleCompra").val("");
-    $("#idPreVenta2").val("");
-    $("#IdProducto").val("");
-    $("#aimpuestos").removeClass("active");
-    $("#TabImpuestos").removeClass("active");
-    $("#Tabdetalles").addClass("active");
-    $("#adetalles").addClass("active");
+    location.reload();
     NPreventa=0;
+    // $(".CerrarPreventa").show();
+    // $("#agregarC").show();
+    // $(".divDetalles").toggle();
+    // $('#FormPreventas')[0].reset();
+    // $('#FormProveedorNew')[0].reset();
+    // $('#FormDetalle')[0].reset();
+    // $("#idPreVenta").val("");
+    // $("#RUTProveedor2").val("");
+    // $("#IdDetalleCompra").val("");
+    // $("#idPreVenta2").val("");
+    // $("#IdProducto").val("");
+    // $("#aimpuestos").removeClass("active");
+    // $("#TabImpuestos").removeClass("active");
+    // $("#Tabdetalles").addClass("active");
+    // $("#adetalles").addClass("active");
 }
 
 var BotonAgregarDetalle = function (){
@@ -560,9 +570,9 @@ var verDetallesPreventaD = function(IdDetallePreVenta){
     ManejoRespuestaProcesarCompraD(respuesta);
 }
 
-var cambiarEstatusCompraD = function(IdDetalleCompra){
+var cambiarEstatusPreventaD = function(IdDetallePreVenta){
     parametroAjax.ruta=rutaCDA;
-    parametroAjax.data = {IdDetalleCompra:IdDetalleCompra};
+    parametroAjax.data = {IdDetallePreVenta:IdDetallePreVenta};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarCD(respuesta);
 }
@@ -716,11 +726,25 @@ var CerrarPreventa = function (){
     parametroAjax.ruta=rutaCP;
     parametroAjax.data = {IdPreVenta:NPreventa};
     respuesta=procesarajax(parametroAjax);
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
-    // if (respuesta.code==200){
-    //     crearselect(respuesta.respuesta,"IdBodega");
-    // }
+    if (respuesta.code==200){
+        if (respuesta.respuesta==1){
+            $(".CerrarPreventa").hide();
+            $("#agregarC").hide();
+        }
+    }
+}
+
+var limpiarFormDetalle = function(){
+    $("#NombreProducto").val("");  
+    $("#CantidadPreVenta").val("");  
+    $("#ValorUnitarioVenta").val("");  
+    $("#TotalLinea").val("");
+    $("#IdProducto").val("");  
+    $("#FactorImpuesto").val("");  
+    $("#ValorImpuestos").val("");  
+    $("#MontoDescuento").val("");  
+    $("#ValorUnitarioFinal").val("");  
+    $("#IdUnidadMedida").val('').trigger("change");
 }
 
 $(document).ready(function(){
@@ -757,6 +781,7 @@ $(document).ready(function(){
     // });
 
     $("#CodigoBarra").focusout(function() {
+        limpiarFormDetalle();
         buscarProducto($("#CodigoBarra").val());
     });
 
@@ -779,7 +804,7 @@ $(document).ready(function(){
     $(document).on('click','#closeModal',BotonCancelarDetalle);
     $(document).on('click','#modificarC',modificarDetalles);
     $(document).on('click','#btn-list',volverListado);
-    //$(document).on('click','.CerrarPreventa',CerrarPreventa);
+    $(document).on('click','.CerrarPreventa',CerrarPreventa);
 
 
     // $("#RUTProveedor").focusout(function() {

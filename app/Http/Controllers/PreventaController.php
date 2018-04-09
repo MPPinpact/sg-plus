@@ -74,7 +74,6 @@ class PreventaController extends Controller
         return $result;
     }
         
-
     //Activar / desactivar Preventa
     protected function postPreventactiva(Request $request){
         $datos = $request->all();
@@ -85,17 +84,22 @@ class PreventaController extends Controller
         return $result;
     }
 
-    //Activar / desactivar detalle compra
-    protected function postCompradetalleactiva(Request $request){
+    //Activar / desactivar detalle venta
+    protected function postPreventadetalleactiva(Request $request){
         $datos = $request->all();
         $model= new Preventa();
-        $detalle = $model->getOneCompraDetalle($datos['IdDetalleCompra']);
-        $result['activar'] = $model->activarCompraDetalle($detalle);
-        $result['v_detalles'] = $model->getDetallesCompra($detalle[0]->IdCompra);
+        $detalle = $model->getOnePreventaDetalle($datos['IdDetallePreVenta']);
+        $preventa = Preventa::find($detalle[0]->IdPreVenta);
+        if ($preventa->EstadoPreVenta > 1){
+            $result['activar'] = 204;
+            $result['v_detalles'] = [];          
+        }else{
+            $result['activar'] = $model->activarPreVentaDetalle($detalle);
+            $result['v_detalles'] = $model->getDetallesPreVenta($detalle[0]->IdPreVenta);
+        }
         return $result;
     }
-
-
+    
     protected function postBuscarPreventa(Request $request){
         $datos = $request->all();
         $model= new Preventa();
@@ -154,7 +158,11 @@ class PreventaController extends Controller
         $result=[];
         if(isset($datos['CodigoBarra'])){
             $result['producto'] = Producto::where('CodigoBarra',$datos['CodigoBarra'])->first();
-            if($result['producto'] == null) { $result['producto'] = '{"IdProducto":0}'; }
+            if($result['producto'] == null) { 
+                $result['producto']['IdProducto'] = 0;
+                $result['producto']['desProducto'] = "Producto no encontrado";
+                return $result;
+            }
             $model= new Preventa(); 
             $result['impuesto'] = $model->buscarImpuestos($result['producto']->IdProducto);
         }
@@ -172,7 +180,6 @@ class PreventaController extends Controller
         $datos = $request->all();
         $model= new Preventa();
         $result = $model->cerrarPreventa($datos['IdPreVenta']);
-        log::info($result);
         return $result;   
     }
 }
