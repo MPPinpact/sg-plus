@@ -24,7 +24,48 @@
           <i class="icon-speedometer"></i><span>  Dashboard </span>
         </a>
       </li>
+	  <li class="treeview">
+        <a href="{{ route('ptovta') }}">
+          <i class="icon-speedometer"></i><span>  Punto Venta </span>
+        </a>
+      </li>
       <li class="treeview">
+        <a href="#">
+          <i class="icofont icofont-company"></i><span>Punto de Venta</span><i class="icon-arrow-down"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li>  
+            <a class="waves-effect" href="{{ route('ptovta') }}">
+              <i class="icon-arrow-right"></i>
+             Punto de Venta
+            </a>
+          </li>
+		  <li>  
+            <a class="waves-effect" href="{{ route('cajaDiaria') }}">
+              <i class="icon-arrow-right"></i>
+             Caja Diaria
+            </a>
+          </li>
+          <li>
+            <a class="waves-effect" href="{{ route('ventas') }}">
+              <i class="icon-arrow-right"></i>
+              Pre-Venta
+            </a>
+          </li>
+		  <li>
+            <a class="waves-effect" href="{{ route('ventas') }}">
+              <i class="icon-arrow-right"></i>
+               Venta
+            </a>
+          </li>
+		  <li>
+            <a class="waves-effect" href="{{ route('ventas') }}">
+              <i class="icon-arrow-right"></i>
+               Consulta Crédito
+            </a>
+          </li>
+        </ul>
+      </li><li class="treeview">
         <a href="#">
           <i class="icofont icofont-company"></i><span>Ventas</span><i class="icon-arrow-down"></i>
         </a>

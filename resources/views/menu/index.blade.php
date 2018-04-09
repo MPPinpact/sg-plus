@@ -32,7 +32,7 @@
   {!! Html::style('theme/assets/css/svg-weather.css') !!}
   {!! Html::style('theme/assets/css/main.css') !!}
   {!! Html::style('theme/assets/css/responsive.css') !!}
-  <link rel="stylesheet" type="text/css" href="{{ asset('theme/assets/css/color/color-1.css') }}" id="color"/>
+  <link rel="stylesheet" type="text/css" href="{{ asset('theme/assets/css/color/color-1.css') }}" id="color"/>  
   {!! Html::style('theme/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css') !!}
   {!! Html::style('theme/assets/plugins/data-table/css/buttons.dataTables.min.css') !!}
   {!! Html::style('theme/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') !!}
