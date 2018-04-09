@@ -150,6 +150,9 @@ Route::post('/ventasFin', 'VentaController@postFinalizarVenta')->name('ventasFin
 Route::post('/ventaDetallesActiva', 'VentaController@postventaDetallesActiva')->name('ventaDetallesActiva');
 Route::post('/ventasPre', 'VentaController@postCargarPreventa')->name('ventasPre');
 
+//CRUd venta
+Route::get('/ptovta', 'PuntoVentaController@getPuntoVenta')->name('ptovta');
+Route::get('/cajaDiaria', 'PuntoVentaController@getCajaDiaria')->name('cajaDiaria');
 
 
 Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){
