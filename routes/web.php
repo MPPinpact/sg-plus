@@ -157,6 +157,22 @@ Route::get('/ptovta', 'PuntoVentaController@getPuntoVenta')->name('ptovta');
 Route::get('/cajaDiaria', 'PuntoVentaController@getCajaDiaria')->name('cajaDiaria');
 
 
+
+
+
+//CRUD Vendedores
+Route::get('/vendedores', 'VendedorController@getvendedor')->name('vendedores');
+Route::post('/vendedores', 'VendedorController@postvendedor')->name('vendedores');
+Route::post('/activarVen', 'VendedorController@postVendedoractivo')->name('activarVen');
+Route::post('/detallesVen', 'VendedorController@postvendedordetalle')->name('detallesven');
+
+//CRUD Formas de Pago
+Route::get('/FormaPago', 'FormaPagoController@getFormaPago')->name('FormaPago');
+Route::post('/FormaPago', 'FormaPagoController@postFormaPago')->name('FormaPago');
+Route::post('/FormaPagoAtc', 'FormaPagoController@postFormaPagoactivo')->name('FormaPagoAtc');
+Route::post('/FormaPagoDet', 'FormaPagoController@postFormaPagodetalle')->name('FormaPagoDet');
+
+
 Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){
 	//accesos (Seleccionar acceso para ingresar a la aplicacion)
 	Route::get('/accesos', 'UsuarioController@getAccesos')->name('accesos');
