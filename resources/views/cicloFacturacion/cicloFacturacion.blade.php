@@ -89,7 +89,7 @@
 									<div align="center">
 										<div class="pull-rigth">
 											<div class="divBotones">
-												<button id="#" type="button" class="btn btn-primary waves-effect waves-light">
+												<button id="generacionEECC" name="generacionEECC" type="button" class="btn btn-primary waves-effect waves-light">
 													Generar EECC
 												</button>
 												<button id="modificar" type="button" class="btn btn-primary waves-effect waves-light">
@@ -106,6 +106,14 @@
 											</div>
 										</div>
 									</div>
+									{!! Form::close() !!}
+									
+									{!! Form::open(['id'=>'FormGeneracionEECC','autocomplete' => 'off']) !!}
+									{!! Form::hidden('IdCicloFacturacion', '', [
+									'id'            => 'IdCicloFacturacion',
+									'class'         => 'form-control'])!!}
+									
+									<input type="hidden" name="IdCicloFacturacionEECC" id="IdCicloFacturacionEECC" value="">
 									{!! Form::close() !!}
 		                        </div>
 		                        <div class="tab-pane" id="productos" role="tabpanel">
@@ -127,6 +135,8 @@
 	var ruta = "{{ URL::route('cicloFacturacion') }}"
 	var rutaA = "{{ URL::route('activarCF') }}"
 	var rutaD = "{{ URL::route('detallesCF') }}"
+	var rutaGCF = "{{ URL::route('generarEECC') }}"
+	
 	var d = [];
 	d['v_ciclos_facturacion'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_ciclos_facturacion) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));

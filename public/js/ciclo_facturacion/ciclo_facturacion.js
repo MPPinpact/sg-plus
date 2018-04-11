@@ -62,6 +62,31 @@ var ManejoRespuestaProcesar = function(respuesta){
     }
 };
 
+// Manejo Registro o actualizacion de empresa
+var ManejoRespuestaProcesarGeneracionEECC = function(respuesta){
+    if(respuesta.code==200){
+        var res = JSON.parse(respuesta.respuesta.f_generacion);
+        switch(res.code) {
+            case '200':
+                $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
+                $(".divDetalles").toggle();
+                $(".divBotones").toggle();
+                $('#FormCicloFacturacion')[0].reset();
+                $('#IdCicloFacturacion').val("");
+                cargartablaCicloFacturacions(respuesta.respuesta.v_ciclos_facturacion);
+                break;
+            case '-2':
+                $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
+                break;
+            default:
+                $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+                break;
+        } 
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+};
+
 var cargartablaCicloFacturacions = function(data){
     if(limpiarLocales==1){destruirTabla('#tablaCicloFacturacion');$('#tablaCicloFacturacion thead').empty();}
         $("#tablaCicloFacturacion").dataTable({ 
@@ -109,6 +134,7 @@ var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
     $("#spanTitulo").text("Editar Ciclo de Facturación");
     $("#IdCicloFacturacion").val(data.IdCicloFacturacion);
+	$("#IdCicloFacturacionEECC").val(data.IdCicloFacturacion);
     $("#DiaCorte").val(data.DiaPago);
     $("#DiaFacturacion").val(data.DiaFacturacion);
     $("#EstadoCiclo").val(data.EstadoCiclo).trigger("change");
@@ -155,8 +181,22 @@ var ProcesarCicloFacturacion = function(){
     }
 }
 
+var ProcesarGeneracionEECC = function(){
+    if (errorRut==0){  
+       
+        parametroAjax.ruta=rutaGCF;
+        parametroAjax.data = $("#FormGeneracionEECC").serialize();
+        respuesta=procesarajax(parametroAjax);
+        ManejoRespuestaProcesarGeneracionEECC(respuesta);
+    }
+}
+
 var validador = function(){
     $('#FormCicloFacturacion').formValidation('validate');
+}
+
+var validarGeneracionEECC = function(){
+    $('#FormGeneracionEECC').formValidation('validate');
 }
 
 var cambiarEstatusCicloFacturacion = function(IdCicloFacturacion){
@@ -208,6 +248,7 @@ $(document).ready(function(){
     cargartablaCicloFacturacions(d.v_ciclos_facturacion);
     crearAllSelect(d);
     $(document).on('click','#guardar',validador);
+	$(document).on('click','#generacionEECC',validarGeneracionEECC);
     $(document).on('click','#cancelar',BotonCancelar);
     $(document).on('click','#agregar',BotonAgregar);
     $(document).on('click','#modificar',modificarCiclo);
@@ -247,5 +288,38 @@ $(document).ready(function(){
     })
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');
+    });
+	
+	$('#FormGeneracionEECC').formValidation({
+        excluded:[':disabled'],
+        // message: 'El módulo le falta un campo para ser completado',
+        fields: {
+            'DiaCorte': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            }, 
+            'DiaFacturacion': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },            
+            'EstadoCiclo': {
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    }
+                }
+            },
+        }
+    })
+    .on('success.form.fv', function(e){
+        ProcesarGeneracionEECC();
     });
 });

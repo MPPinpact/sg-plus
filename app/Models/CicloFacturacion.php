@@ -49,9 +49,11 @@ class CicloFacturacion extends Authenticatable
 	
 	 public function generarEECC($datos){
         $idAdmin = Auth::id();      
-        $Id = $datos['IdCicloFacturacion'];  
+        $Id = $datos['IdCicloFacturacionEECC'];  
 		
         $sql = "select f_generacion_eecc(".$Id.")";
+		log::info($sql);		
+		
         $execute=DB::select($sql);
 		
         foreach ($execute[0] as $key => $value) {
@@ -67,6 +69,7 @@ class CicloFacturacion extends Authenticatable
         }else{
             $values=array('EstadoCiclo'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }
+		
         return DB::table('ciclo_facturacion')
                 ->where('IdCicloFacturacion', $datos['IdCicloFacturacion'])
                 ->update($values);
