@@ -288,7 +288,7 @@ var cargarInteresCuotas = function(data){
 }
 
 $(document).ready(function(){
-    cargarInteresCuotas(d['v_prefencias'][0]);
+    cargarInteresCuotas(d['v_prefencias']);
     $("#RUTCliente").focusout(function() {
         var valid = $("#RUTCliente").val();
         if (valid.length > 0){
