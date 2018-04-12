@@ -109,15 +109,20 @@ var cargarDetalleCajaDiaria = function(data){
 };
 
 
-
 $(document).ready(function(){
     
     cargarCajasDiarias(d.v_cajas_diarias);
 	cargarDetalleCajaDiaria(null);
+	
+	// Botones de cabecera de compra
+    // $(document).on('click','#botonCDR', BotonAgregar);
+    // $(document).on('click','#guardarI',validadorI);
+    // $(document).on('click','#aceptarM',validadorP);
+    // $(document).on('click','#cancelar',BotonCancelar);
+    // $(document).on('click','#agregar',BotonAgregar);
+    // $(document).on('click','#modificar',modificarCabeceras);
+    // $(document).on('click','#volverAct',volverTabs);
 });
-
-
-
 
 // var calcularMontos = function(CantidadVenta,ValorUnitarioVenta,FactorImpuesto,MontoDescuento){
     // var ValorImpuesto = (CantidadVenta * ValorUnitarioVenta * FactorImpuesto / 100)

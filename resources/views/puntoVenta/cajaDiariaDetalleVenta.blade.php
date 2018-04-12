@@ -30,7 +30,7 @@
                 			</button>
 						</div>
 						<div class="col-md-2">
-							<button style="float:left;" class="btn-xlg btn-primary waves-effect waves-light btn-block">
+							<button style="float:left;" name="agregar" id="agregar" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
 								<span>Cerrar Caja Actual</span>
                 			</button>
 						</div>
@@ -45,7 +45,7 @@
                 			</button>
 						</div>
 						<div class="col-md-2">
-							<button style="float:left;" href="{{ URL::route('cajaDiariaResumenVenta') }}" name="botonCDRV" id="botonCDRV" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
+							<button style="float:left;" href="{{ URL::route('cajaDiariaResumenVenta') }}" name="botonCDRV" id="botonCDRV" type="button" class="btn-xlg btn-warning waves-effect waves-light btn-block">
 								<span>Resumen Venta</span>
                 			</button>
 						</div>
@@ -67,16 +67,7 @@
 	    <div class="card">
 	        <div class="card-block">
 				<div class="col-md-12 table-responsive">
-					<table id="tablaCajaDiaria" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
-				</div>
-	        </div>
-		</div>
-	</div>
-	<div class="col-md-5">
-	    <div class="card">
-	        <div class="card-block">
-				<div class="col-md-12 table-responsive">
-					<table id="tablaDetalleCajaDiaria" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+					<table id="tablaCajaDiariaResumen" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 				</div>
 	        </div>
 		</div>
@@ -613,7 +604,7 @@
 </div>
 
 <script Language="Javascript">
-	var rutaCD = "{{ URL::route('cajaDiaria') }}";
+	var rutaCD = "{{ URL::route('cajaDiariaResumen') }}";
 	var d = [];
 	
 	d['v_cajas_diarias'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_cajas_diarias) }}'));

@@ -56,6 +56,46 @@ class PuntoVentaController extends Controller
 		
         return View::make('puntoVenta.cajaDiaria',$data);
     }
+	
+	public function getCajaDiariaResumen()
+	{
+		$modelCD = new CajaDiaria();
+        $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
+		
+		log:info($data['v_cajas_diarias']);
+		
+        return View::make('puntoVenta.cajaDiariaResumen',$data);
+	}
+	
+	public function getCajaDiariaResumenVenta()
+	{
+		$modelCD = new CajaDiaria();
+        $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
+		
+		log:info($data['v_cajas_diarias']);
+		
+        return View::make('puntoVenta.cajaDiariaResumenVenta',$data);
+	}
+	
+	public function getCajaDiariaDetalle()
+	{
+		$modelCD = new CajaDiaria();
+        $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
+		
+		log:info($data['v_cajas_diarias']);
+		
+        return View::make('puntoVenta.cajaDiariaDetalle',$data);
+	}
+	
+	public function getCajaDiariaDetalleVenta()
+	{
+		$modelCD = new CajaDiaria();
+        $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
+		
+		log:info($data['v_cajas_diarias']);
+		
+        return View::make('puntoVenta.cajaDiariaDetalleVenta',$data);
+	}
 
     //Registrar o actualizar compra
     protected function postVentas(Request $request){

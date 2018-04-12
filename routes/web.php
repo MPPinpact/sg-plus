@@ -73,7 +73,6 @@ Route::post('/procesarIm', 'ProductoController@postprocesarImpuesto')->name('pro
 Route::post('/activarIm', 'ProductoController@postImpuestopactivo')->name('activarIm');
 Route::post('/buscarProveedor', 'ProductoController@postBuscarProveedor')->name('buscarProveedor');
 
-
 //CRUD Proveedores
 Route::get('/proveedores', 'ProveedorController@getProveedor')->name('proveedores');
 Route::post('/proveedores', 'ProveedorController@postProveedor')->name('proveedores');
@@ -104,8 +103,7 @@ Route::get('/cicloFacturacion', 'CicloFacturacionController@getCicloFacturacion'
 Route::post('/cicloFacturacion', 'CicloFacturacionController@postCicloFacturacion')->name('cicloFacturacion');
 Route::post('/activarCF', 'CicloFacturacionController@postCicloactivo')->name('activarCF');
 Route::post('/detallesCF', 'CicloFacturacionController@postCiclodetalle')->name('detallesCF');
-Route::post('/generarEECC', 'CicloFacturacionController@postCiclodetalle')->name('generarEECC');
-
+Route::post('/generarEECC', 'CicloFacturacionController@postGenerarEECC')->name('generarEECC');
 
 //CRUD Compra
 Route::get('/compras', 'CompraController@getCompras')->name('compras');
@@ -134,8 +132,6 @@ Route::post('/preventabdc', 'PreventaController@postBuscarDetallec')->name('prev
 Route::post('/preventacp', 'PreventaController@postCerrarPreventa')->name('preventacp');
 Route::post('/preventada', 'PreventaController@postPreventadetalleactiva')->name('preventada');
 
-
-
 //CRUd venta
 Route::get('/ventas', 'VentaController@getVentas')->name('ventas');
 Route::post('/ventab', 'VentaController@postBuscarVenta')->name('ventab');
@@ -155,7 +151,10 @@ Route::post('/ventasPre', 'VentaController@postCargarPreventa')->name('ventasPre
 //CRUd venta
 Route::get('/ptovta', 'PuntoVentaController@getPuntoVenta')->name('ptovta');
 Route::get('/cajaDiaria', 'PuntoVentaController@getCajaDiaria')->name('cajaDiaria');
-
+Route::get('/cajaDiariaResumen', 'PuntoVentaController@getCajaDiariaResumen')->name('cajaDiariaResumen');
+Route::get('/cajaDiariaDetalle', 'PuntoVentaController@getCajaDiariaDetalle')->name('cajaDiariaDetalle');
+Route::get('/cajaDiariaResumenVenta', 'PuntoVentaController@getCajaDiariaResumenVenta')->name('cajaDiariaResumenVenta');
+Route::get('/cajaDiariaDetalleVenta', 'PuntoVentaController@getCajaDiariaDetalleVenta')->name('cajaDiariaDetalleVenta');
 
 
 
