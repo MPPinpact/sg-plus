@@ -11,115 +11,91 @@
 </style>
 
 <div class="row">
-	<div class="col-xl-4 col-md-6">
-		<div class="card social-card bg-c-red">
-			<div class="card-block">                                 
-				<div class="row align-items-center">                                 
-					<div class="col-auto">                                 
-						<i class="feather icon-mail f-34 text-c-red social-icon"></i>                                 
-					</div>                                 
-					<div class="col">                                 
-						<h6 class="m-b-0">Caja Diaria</h6>                                 
-						<p>231.2w downloads</p>                                 
-						<p class="m-b-0">Lorem Ipsum is simply dummy text of the printing</p>                                 
-					</div>                                 
-				</div>                                 
-			</div>                                 
-			<a href="{{ route('cajaDiaria') }}" class="download-icon">Ir<i class="feather icon-arrow-"></i></a>                                 
-		</div>                                 
+	
+	<div class="col-lg-4 grid-item">
+		<div class="card">
+			<div class="bg-success">
+				<div class="card-block">
+					<h5 class="counter txt-white d-inline-block">Caja Diaria</h5>
+					<h6 class="f-w-100 txt-white">231.2w downloads</h6>
+					<h6 class="f-w-100 txt-white">What's on mind?</h6>                                                   
+            		<a href="{{ route('cajaDiaria') }}" class="download-icon"><i class="feather icon-arrow-down"></i></a>                                        
+				</div>
+				<!-- <div class="card-block"></div>	 -->
+			</div>	
+		</div>	
+	</div>	
+
+	<div class="col-lg-4 grid-item">
+		<div class="card">
+			<div class="bg-warning">
+				<div class="card-block">
+					<h5 class="counter txt-white d-inline-block">Resumen Venta Día</h5>
+					<h6 class="f-w-100 txt-white">231.2w downloads</h6>
+					<h6 class="f-w-100 txt-white">What's on mind?</h6>                                                   
+            		<a href="#!" class="download-icon"><i class="feather icon-arrow-down"></i></a>                                        
+				</div>
+				<!-- <div class="card-block"></div>	 -->
+			</div>	
+		</div>	
+	</div>	
+	
+	<div class="col-lg-4 grid-item">
+		<div class="card">
+			<div class="bg-primary">
+				<div class="card-block">
+					<h5 class="counter txt-white d-inline-block">Pre-venta</h5>
+					<h6 class="f-w-100 txt-white">231.2w downloads</h6>
+					<h6 class="f-w-100 txt-white">What's on mind?</h6>                                                   
+            		<a href="#!" class="download-icon"><i class="feather icon-arrow-down"></i></a>                                        
+				</div>
+				<!-- <div class="card-block"></div>	 -->
+			</div>	
+		</div>	
+	</div>	
+	
+	<div class="col-lg-4 grid-item">
+		<div class="card">
+			<div class="bg-primary">
+				<div class="card-block">
+					<h5 class="counter txt-white d-inline-block">Venta</h5>
+					<h6 class="f-w-100 txt-white">231.2w downloads</h6>
+					<h6 class="f-w-100 txt-white">What's on mind?</h6>                                                   
+            		<a href="#!" class="download-icon"><i class="feather icon-arrow-down"></i></a>                                        
+				</div>
+				<!-- <div class="card-block"></div>	 -->
+			</div>	
+		</div>	
 	</div>
+
+	<div class="col-lg-4 grid-item">
+		<div class="card">
+			<div class="bg-danger">
+				<div class="card-block">
+					<h5 class="counter txt-white d-inline-block">Consulta Límite Crédito</h5>
+					<h6 class="f-w-100 txt-white">231.2w downloads</h6>
+					<h6 class="f-w-100 txt-white">What's on mind?</h6>                                                   
+            		<a href="#!" class="download-icon"><i class="feather icon-arrow-down"></i></a>                                        
+				</div>
+				<!-- <div class="card-block"></div>	 -->
+			</div>	
+		</div>	
+	</div>		
 	
-	<div class="col-xl-4 col-md-6">
-	    <div class="card social-card bg-c-green">										
-            <div class="card-block">                                        
-                <div class="row align-items-center">                                        
-                    <div class="col-auto">                                        
-                        <i class="feather icon-instagram f-34 text-c-green social-icon"></i>                                        
-                    </div>                                        
-                    <div class="col">                                        
-                        <h6 class="m-b-0">Resumen Venta Día</h6>                                        
-                        <p>231.2w downloads</p>                                        
-                        <p class="m-b-0">Lorem Ipsum is simply dummy text of the printing</p>                                        
-                    </div>                                        
-                </div>                                        
-            </div>                                        
-            <a href="#!" class="download-icon"><i class="feather icon-arrow-down"></i></a>                                        
-        </div>                                        
-    </div>
-	
-	<div class="col-xl-4 col-md-6">
-	    <div class="card social-card bg-c-blue">										
-            <div class="card-block">                                        
-                <div class="row align-items-center">                                        
-                    <div class="col-auto">                                        
-                        <i class="feather icon-twitter f-34 text-c-blue social-icon"></i>                                        
-                    </div>                                        
-                    <div class="col">                                        
-                        <h6 class="m-b-0">Pre-Venta</h6>                                        
-                        <p>231.2w downloads</p>                                        
-                        <p class="m-b-0">Lorem Ipsum is simply dummy text of the printing</p>                                        
-                    </div>                                        
-                </div>                                        
-            </div>                                        
-            <a href="#!" class="download-icon"><i class="feather icon-arrow-down"></i></a>                                        
-        </div>                                        
-    </div>	
-	
-	<div class="col-xl-4 col-md-6">
-	    <div class="card social-card bg-c-green">										
-            <div class="card-block">                                        
-                <div class="row align-items-center">                                        
-                    <div class="col-auto">                                        
-                        <i class="feather icon-instagram f-34 text-c-green social-icon"></i>                                        
-                    </div>                                        
-                    <div class="col">                                        
-                        <h6 class="m-b-0">Venta</h6>                                        
-                        <p>231.2w downloads</p>                                        
-                        <p class="m-b-0">Lorem Ipsum is simply dummy text of the printing</p>                                        
-                    </div>                                        
-                </div>                                        
-            </div>                                        
-            <a href="#!" class="download-icon"><i class="feather icon-arrow-down"></i></a>                                        
-        </div>                                        
-    </div>
-	
-	
-	<div class="col-xl-4 col-md-6">
-	    <div class="card social-card bg-c-green">										
-            <div class="card-block">                                        
-                <div class="row align-items-center">                                        
-                    <div class="col-auto">                                        
-                        <i class="feather icon-instagram f-34 text-c-green social-icon"></i>                                        
-                    </div>                                        
-                    <div class="col">                                        
-                        <h6 class="m-b-0">Consulta Límite Crédito</h6>                                        
-                        <p>231.2w downloads</p>                                        
-                        <p class="m-b-0">Lorem Ipsum is simply dummy text of the printing</p>                                        
-                    </div>                                        
-                </div>                                        
-            </div>                                        
-            <a href="#!" class="download-icon"><i class="feather icon-arrow-down"></i></a>                                        
-        </div>                                        
-    </div>
-	
-	<div class="col-xl-4 col-md-6">
-	    <div class="card social-card bg-c-green">										
-            <div class="card-block">                                        
-                <div class="row align-items-center">                                        
-                    <div class="col-auto">                                        
-                        <i class="feather icon-instagram f-34 text-c-green social-icon"></i>                                        
-                    </div>                                        
-                    <div class="col">                                        
-                        <h6 class="m-b-0">Pago Cuenta</h6>                                        
-                        <p>231.2w downloads</p>                                        
-                        <p class="m-b-0">Lorem Ipsum is simply dummy text of the printing</p>                                        
-                    </div>                                        
-                </div>                                        
-            </div>                                        
-            <a href="#!" class="download-icon"><i class="feather icon-arrow-down"></i></a>                                        
-        </div>                                        
-    </div>
-	
+	<div class="col-lg-4 grid-item">
+		<div class="card">
+			<div class="bg-success">
+				<div class="card-block">
+					<h5 class="counter txt-white d-inline-block">Pago Cuenta</h5>
+					<h6 class="f-w-100 txt-white">231.2w downloads</h6>
+					<h6 class="f-w-100 txt-white">What's on mind?</h6>                                                   
+            		<a href="#!" class="download-icon"><i class="feather icon-arrow-down"></i></a>                                        
+				</div>
+				<!-- <div class="card-block"></div>	 -->
+			</div>	
+		</div>	
+	</div>	
+
 </div>
 
 <!-- Modal Detalle Compra -->
@@ -443,32 +419,4 @@
 		</div>
     </div>
 </div>
-
-<script Language="Javascript">
-	var ruta = "{{ URL::route('ventas') }}"
-	var rutaB = "{{ URL::route('ventab') }}"
-	var rutaDV = "{{ URL::route('ventadv') }}"
-	var rutaBDC = "{{ URL::route('ventabdc') }}"
-	var rutaFV = "{{ URL::route('ventasFin') }}"
-	
-	var rutaCV = "{{ URL::route('ventaCerrar') }}"
-	var rutaAV = "{{ URL::route('ventaActivar') }}"
-	
-	var rutaBC = "{{ URL::route('preventabc') }}"
-	var rutaBPD = "{{ URL::route('preventabpd') }}"
-	
-	var rutaEP = "{{ URL::route('ventasEP') }}"
-	var rutaFP = "{{ URL::route('ventasRP')  }}"
-	var rutaPVC = "{{ URL::route('ventasPVC')  }}"
-	var rutaBCC = "{{ URL::route('ventasBCC')  }}"
-	
-	
-	var rutaBE = "{{ URL::route('comprabe') }}"
-	var rutaBB = "{{ URL::route('comprabb') }}"
-	var rutaBCs = "{{ URL::route('comprabc') }}"
-	var rutaCDA = "{{ URL::route('comprada') }}"
-	var d = [];
-	
-</script>
-<script src="{{ asset('js/ventas/ventas.js') }}"></script>
 @endsection

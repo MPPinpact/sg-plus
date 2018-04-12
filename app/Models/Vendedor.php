@@ -14,6 +14,7 @@ use Session;
 use Exception;
 use Auth;
 
+
 class Vendedor extends Authenticatable
 {
     /**
@@ -34,8 +35,8 @@ class Vendedor extends Authenticatable
     ];
 
     // Cargar tabla de bodega
-    public function listProveedor(){
-        return DB::table('v_proveedores')->get();
+    public function listVendedor(){
+        return DB::table('v_vendedores')->get();
     }
 
     // Cargar combo de estados de Estado (Activo / Inactivo)
@@ -43,16 +44,11 @@ class Vendedor extends Authenticatable
         return DB::table('v_estados')->get();
     }
 
-    // Cargar combo de Locales
-    // public function listLocales(){
-    //     return DB::table('v_locales_combo')->get();
-    // }
-
-    // registrar una nueva proveedor
-    public function regProveedor($datos){
+    // registrar una nueva vendedor
+    public function regVendedor($datos){
         $idAdmin = Auth::id();
-        $datos['IdProveedor']==null ? $Id=0 : $Id= $datos['IdProveedor'];
-        $sql="select f_registro_proveedor(".$Id.",'".$datos['RUTProveedor']."','".$datos['CodigoProveedor']."','".$datos['RazonSocialProveedor']."','".$datos['NombreFantasia']."','".$datos['Direccion']."','".$datos['Telefeno']."','".$datos['Vendedor']."',".$datos['EstadoProveedor'].",".$idAdmin.")";
+        $datos['IdVendedor']==null ? $Id=0 : $Id= $datos['IdVendedor'];
+        $sql="select f_registro_vendedor(".$Id.",'".$datos['RUTVendedor']."','".$datos['NombreVendedor']."','".$datos['ComisionVendedor']."',".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -60,25 +56,22 @@ class Vendedor extends Authenticatable
         return $result;
     }
 
-    // Activar / Desactivar proveedor
-    public function activarProveedor($datos){
+
+    // Activar / Desactivar vendedor
+    public function activarVendedor($datos){
         $idAdmin = Auth::id();
-        if ($datos['EstadoProveedor']>0){
-            $values=array('EstadoProveedor'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        if ($datos['EstadoVendedor']>0){
+            $values=array('EstadoVendedor'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }else{
-            $values=array('EstadoProveedor'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+            $values=array('EstadoVendedor'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }
-        return DB::table('proveedores')
-                ->where('IdProveedor', $datos['IdProveedor'])
+        return DB::table('vendedores')
+                ->where('IdVendedor', $datos['IdVendedor'])
                 ->update($values);
     }
 
-    public function localesProducto($IdBodega){
-        return DB::table('v_productos')->where('IdBodega',$IdBodega)->get();
-    }
-
-    public function getOneDetalle($IdProveedor){
-        return DB::table('v_proveedores')->where('IdProveedor',$IdProveedor)->get();
+    public function getOneDetalle($IdVendedor){
+        return DB::table('v_vendedores')->where('IdVendedor',$IdVendedor)->get();
     }
 
 }

@@ -19,7 +19,7 @@ var cargarCajasDiarias = function(data){
             "language": LenguajeTabla,
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
-                {"sWidth": "1px", "aTargets": [8]}
+                {"sWidth": "1px", "aTargets": [6]}
             ],
             "data": data,
             "columns":[
