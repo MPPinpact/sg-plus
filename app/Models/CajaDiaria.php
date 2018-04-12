@@ -37,7 +37,31 @@ class CajaDiaria extends Authenticatable
 		log::info("Modelo Cajas Diarias");
         return DB::table('v_cajas_diarias')->where('EstadoCaja', '>', 0)->get();
     }
+	
+	// 
+    public function resumenVentas($IdVenta){
+		log::info("Modelo Cajas Diarias --> resumenVentas");
+		return DB::table('v_resumen_ventas')->where('IdCaja', '=', $IdVenta)->groupBy('FormaPago')->get();
+    }
 
+	// 
+    public function resumenVentasDetallePago($IdVenta){
+		log::info("Modelo Cajas Diarias --> resumenVentasDetallePago");
+		return DB::table('v_resumen_ventas')->where('IdCaja', '=', $IdVenta)->groupBy('FormaPago')->get();
+    }
+
+	// 
+    public function resumenPagos($IdVenta){
+		log::info("Modelo Cajas Diarias --> resumenPagos");
+        return DB::table('v_resumen_ventas')->where('IdCaja', '=', $IdVenta)->get();
+    }
+	
+	// 
+    public function resumenOM($IdVenta){
+		log::info("Modelo Cajas Diarias --> resumenOM");
+        return DB::table('v_resumen_ventas')->where('IdCaja', '=', $IdVenta)->get();
+    }
+	
     // Cargar combo de estados de Estado (Activo / Inactivo)
     public function listEstados(){
         return DB::table('v_estados_ventas')->get();

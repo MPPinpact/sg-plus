@@ -1,4 +1,4 @@
-var manejoRefresh=limpiarLocales=limpiarCajaDiariaResumen=limpiarDetalleCaja=errorRut=errorRut2=errorRut3=limpiarBodegas=NVenta=0;
+var manejoRefresh=limpiarLocales=limpiarCajas=limpiarDetalleCaja=errorRut=errorRut2=errorRut3=limpiarBodegas=NVenta=0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -8,62 +8,15 @@ var parametroAjax = {
     'async': false
 };
 
-var cargarCajaDiariaResumen = function(data){
-    if(limpiarCajaDiariaResumen==1){destruirTabla('#tablaCajaDiariaResumen');$('#tablaCajaDiariaResumen thead').empty();}
-        $("#tablaCajaDiariaResumen").dataTable({
-			 "footerCallback": function ( row, data, start, end, display ) {
-            var api = this.api(), data;
-            // Remove the formatting to get integer data for summation
-            var intVal = function (i){
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };
-            // Total over all pages
-            totalRecaudado = api
-                .column(2)
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-				
-				$( api.column( 2 ).footer() ).html('$'+totalRecaudado +' ( Total Recaudado )');
-			},
-			
-			bFilter: false, 
-			searching: false,
-			paging: false, 
-            "aLengthMenu": DataTableLengthMenu,
-            "language": LenguajeTabla,
-            "data": data,
-			
-            "columns":[
-                {"title": "Id Caja","data": "IdCaja",  className: "text-center", render: $.fn.dataTable.render.number( '.', ',', 0 ), className: "text-center"},
-                {"title": "FormaPago", "data": "FormaPago", className: "text-left"},
-				{"title": "Monto Recaudado","data": "TotalFormaPago", className: "text-right"},
-				{"title": "ACC", "data": "IdCaja",
-                    "render": function(data, type, row, meta){
-                        var result = `
-                        <center>
-                        <a href="#" onclick="verDetallesVenta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Movimientos" data-original-title="Delete">
-                            <i class="icofont icofont-search"></i>
-                        </a>
-                        </center>`;
-                        return result;
-                    }
-                },
-            ],			
-        });
-        limpiarCajas=1;
-		console.log("Total Recaudado: " + totalRecaudado);
-};
-
-
-$(document).ready(function(){
-    
-    cargarCajaDiariaResumen(d.v_resumen_ventas);
-	
+$(document).ready(function(){	
+	// Botones de cabecera de compra
+    // $(document).on('click','#botonConsultaCredito', ConsultaCreditoCliente);
+    // $(document).on('click','#botonPagoCredito', PagoCreditoCliente);
+	// $(document).on('click','#botonVentaRapida',VentaRapida);
+    // $(document).on('click','#cancelar',BotonCancelar);
+    // $(document).on('click','#agregar',BotonAgregar);
+    // $(document).on('click','#modificar',modificarCabeceras);
+    // $(document).on('click','#volverAct',volverTabs);
 });
 
 // var calcularMontos = function(CantidadVenta,ValorUnitarioVenta,FactorImpuesto,MontoDescuento){
@@ -194,32 +147,13 @@ $(document).ready(function(){
     // }
 // }
 
-// var ManejoRespuestaProcesarD = function(respuesta){
-    // if(respuesta.code==200){
-        // NVenta=respuesta.respuesta.v_cabecera[0].IdVenta;
-        // bloquearInputs();
-        // $("#div-mod").show();
-        // $("#div-acep").hide();
-        // $(".divDetalles").toggle();
-        // $("#divVolver").show();
-        // $("#divTabs").show();
-        // $("#spanTitulo").text("Detalle Venta");
-		
-        // pintarDatosActualizar(respuesta.respuesta.v_cabecera[0]);
-        // cargarTablaDetalles(respuesta.respuesta.v_detalles);
-		// cargarTablaPagos(respuesta.respuesta.v_pagos);
-		
-        // if(parseInt(respuesta.respuesta.v_cabecera[0].EstadoVenta)>1){
-            // $(".CerrarVenta").hide();
-            // $("#agregarC").hide();
-        // }else{
-            // $(".CerrarVenta").show();
-            // $("#agregarC").show();
-        // }
-    // }else{
-        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-    // }
-// }
+var ManejoRespuestaProcesarD = function(respuesta){
+    if(respuesta.code==200){
+        cargarDetalleCajaDiaria(respuesta.respuesta);
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
 
 // // Manejo Activar / Desactivar compra
 // var ManejoRespuestaProcesarI = function(respuesta){
@@ -1024,12 +958,12 @@ $(document).ready(function(){
     // ManejoRespuestaProcesarI(respuesta);
 // }
 
-// var verDetallesVenta = function(IdVenta){
-    // parametroAjax.ruta=rutaB;
-    // parametroAjax.data = {IdVenta:IdVenta};
-    // respuesta=procesarajax(parametroAjax);
-    // ManejoRespuestaProcesarD(respuesta);
-// }
+var verDetallesCajaDiaria = function(IdCaja){
+    parametroAjax.ruta=rutaB;
+    parametroAjax.data = {IdCaja:IdCaja};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaProcesarD(respuesta);
+}
 
 // var verDetallesDetalleVenta = function(IdDetalleVenta){
     // parametroAjax.ruta=rutaBDC;
