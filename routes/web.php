@@ -152,6 +152,7 @@ Route::post('/ventasPre', 'VentaController@postCargarPreventa')->name('ventasPre
 Route::get('/ptovta', 'PuntoVentaController@getPuntoVenta')->name('ptovta');
 Route::get('/cajaDiaria', 'PuntoVentaController@getCajaDiaria')->name('cajaDiaria');
 Route::get('/cajaDiariaResumen', 'PuntoVentaController@getCajaDiariaResumen')->name('cajaDiariaResumen');
+Route::post('/cajaDiariaResumen', 'PuntoVentaController@postCajaDiariaResumen')->name('cajaDiariaResumen');
 Route::get('/cajaDiariaDetalle', 'PuntoVentaController@getCajaDiariaDetalle')->name('cajaDiariaDetalle');
 Route::get('/cajaDiariaResumenVenta', 'PuntoVentaController@getCajaDiariaResumenVenta')->name('cajaDiariaResumenVenta');
 Route::get('/cajaDiariaDetalleVenta', 'PuntoVentaController@getCajaDiariaDetalleVenta')->name('cajaDiariaDetalleVenta');

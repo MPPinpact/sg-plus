@@ -52,27 +52,33 @@ class PuntoVentaController extends Controller
         $modelCD = new CajaDiaria();
         $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
 		
-		log:info($data['v_cajas_diarias']);
+		log::info($data['v_cajas_diarias']);
 		
         return View::make('puntoVenta.cajaDiaria',$data);
     }
 	
-	public function getCajaDiariaResumen()
-	{
-		$modelCD = new CajaDiaria();
+    public function getCajaDiariaResumen()
+    {
+        $modelCD = new CajaDiaria();
         $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
-		
-		log:info($data['v_cajas_diarias']);
-		
+        
+        log::info($data['v_cajas_diarias']);
+        
         return View::make('puntoVenta.cajaDiariaResumen',$data);
-	}
+    }
+
+	public function postCajaDiariaResumen(Request $request){
+        $datos = $request->all();
+        log::info($datos);
+
+    }
 	
 	public function getCajaDiariaResumenVenta()
 	{
 		$modelCD = new CajaDiaria();
         $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
 		
-		log:info($data['v_cajas_diarias']);
+		log::info($data['v_cajas_diarias']);
 		
         return View::make('puntoVenta.cajaDiariaResumenVenta',$data);
 	}
@@ -82,7 +88,7 @@ class PuntoVentaController extends Controller
 		$modelCD = new CajaDiaria();
         $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
 		
-		log:info($data['v_cajas_diarias']);
+		log::info($data['v_cajas_diarias']);
 		
         return View::make('puntoVenta.cajaDiariaDetalle',$data);
 	}
@@ -92,7 +98,7 @@ class PuntoVentaController extends Controller
 		$modelCD = new CajaDiaria();
         $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
 		
-		log:info($data['v_cajas_diarias']);
+		log::info($data['v_cajas_diarias']);
 		
         return View::make('puntoVenta.cajaDiariaDetalleVenta',$data);
 	}

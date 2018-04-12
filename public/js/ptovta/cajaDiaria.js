@@ -27,7 +27,7 @@ var cargarCajasDiarias = function(data){
                     "render": function(data, type, row, meta){
                         var result = `
                         <center>
-                        <a href="#" onclick="verDetallesVenta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
+                        <a href="#" onclick="verDetallesCajaDiaria(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
                             <i class="icofont icofont-search"></i>
                         </a>
                         <a href="#" onclick="cambiarEstatusVenta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
@@ -252,32 +252,34 @@ $(document).ready(function(){
     // }
 // }
 
-// var ManejoRespuestaProcesarD = function(respuesta){
-    // if(respuesta.code==200){
-        // NVenta=respuesta.respuesta.v_cabecera[0].IdVenta;
-        // bloquearInputs();
-        // $("#div-mod").show();
-        // $("#div-acep").hide();
-        // $(".divDetalles").toggle();
-        // $("#divVolver").show();
-        // $("#divTabs").show();
-        // $("#spanTitulo").text("Detalle Venta");
+var ManejoRespuestaProcesarD = function(respuesta){
+    console.log(respuesta);
+    console.log(respuesta.respuesta);
+  //   if(respuesta.code==200){
+  //       NVenta=respuesta.respuesta.v_cabecera[0].IdVenta;
+  //       bloquearInputs();
+  //       $("#div-mod").show();
+  //       $("#div-acep").hide();
+  //       $(".divDetalles").toggle();
+  //       $("#divVolver").show();
+  //       $("#divTabs").show();
+  //       $("#spanTitulo").text("Detalle Venta");
 		
-        // pintarDatosActualizar(respuesta.respuesta.v_cabecera[0]);
-        // cargarTablaDetalles(respuesta.respuesta.v_detalles);
+  //       pintarDatosActualizar(respuesta.respuesta.v_cabecera[0]);
+  //       cargarTablaDetalles(respuesta.respuesta.v_detalles);
 		// cargarTablaPagos(respuesta.respuesta.v_pagos);
 		
-        // if(parseInt(respuesta.respuesta.v_cabecera[0].EstadoVenta)>1){
-            // $(".CerrarVenta").hide();
-            // $("#agregarC").hide();
-        // }else{
-            // $(".CerrarVenta").show();
-            // $("#agregarC").show();
-        // }
-    // }else{
-        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-    // }
-// }
+  //       if(parseInt(respuesta.respuesta.v_cabecera[0].EstadoVenta)>1){
+  //           $(".CerrarVenta").hide();
+  //           $("#agregarC").hide();
+  //       }else{
+  //           $(".CerrarVenta").show();
+  //           $("#agregarC").show();
+  //       }
+  //   }else{
+  //       $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+  //   }
+}
 
 // // Manejo Activar / Desactivar compra
 // var ManejoRespuestaProcesarI = function(respuesta){
@@ -1082,12 +1084,14 @@ $(document).ready(function(){
     // ManejoRespuestaProcesarI(respuesta);
 // }
 
-// var verDetallesVenta = function(IdVenta){
-    // parametroAjax.ruta=rutaB;
-    // parametroAjax.data = {IdVenta:IdVenta};
-    // respuesta=procesarajax(parametroAjax);
-    // ManejoRespuestaProcesarD(respuesta);
-// }
+var verDetallesCajaDiaria = function(IdCaja){
+    console.log(IdCaja);
+    console.log("voy a hacer un ajax");
+    parametroAjax.ruta=rutaB;
+    parametroAjax.data = {IdCaja:IdCaja};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaProcesarD(respuesta);
+}
 
 // var verDetallesDetalleVenta = function(IdDetalleVenta){
     // parametroAjax.ruta=rutaBDC;
