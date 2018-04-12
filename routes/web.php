@@ -152,6 +152,7 @@ Route::post('/ventasPre', 'VentaController@postCargarPreventa')->name('ventasPre
 Route::get('/ptovta', 'PuntoVentaController@getPuntoVenta')->name('ptovta');
 Route::get('/cajaDiaria', 'PuntoVentaController@getCajaDiaria')->name('cajaDiaria');
 Route::get('/cajaDiariaResumen', 'PuntoVentaController@getCajaDiariaResumen')->name('cajaDiariaResumen');
+Route::post('/cajaDiariaResumen', 'PuntoVentaController@postCajaDiariaResumen')->name('cajaDiariaResumen');
 Route::get('/cajaDiariaDetalle', 'PuntoVentaController@getCajaDiariaDetalle')->name('cajaDiariaDetalle');
 Route::get('/cajaDiariaResumenVenta', 'PuntoVentaController@getCajaDiariaResumenVenta')->name('cajaDiariaResumenVenta');
 Route::get('/cajaDiariaDetalleVenta', 'PuntoVentaController@getCajaDiariaDetalleVenta')->name('cajaDiariaDetalleVenta');
@@ -163,7 +164,8 @@ Route::get('/cajaDiariaDetalleVenta', 'PuntoVentaController@getCajaDiariaDetalle
 Route::get('/vendedores', 'VendedorController@getvendedor')->name('vendedores');
 Route::post('/vendedores', 'VendedorController@postvendedor')->name('vendedores');
 Route::post('/activarVen', 'VendedorController@postVendedoractivo')->name('activarVen');
-Route::post('/detallesVen', 'VendedorController@postvendedordetalle')->name('detallesven');
+Route::post('/detallesVen', 'VendedorController@postVendedordetalle')->name('detallesVen');
+Route::post('/buscarVen', 'VendedorController@postBuscarVen')->name('buscarVen');
 
 //CRUD Formas de Pago
 Route::get('/FormaPago', 'FormaPagoController@getFormaPago')->name('FormaPago');

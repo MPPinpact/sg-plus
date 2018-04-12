@@ -20,12 +20,12 @@ $avatarUser = Auth::user()->usrUrlimage;
   </div>
   <ul class="sidebar-menu">
     <li class="treeview">
-      <a href="#">
+      <a href="#" class="settings-menu">
         <i class="icon-speedometer"></i><span>  Dashboard </span>
       </a>
     </li>
     <li class="treeview">
-      <a href="{{ route('ptovta') }}">
+      <a href="{{ route('ptovta') }}" class="settings-menu">
         <i class="icon-speedometer"></i><span>  Punto Venta </span>
       </a>
     </li>
@@ -34,12 +34,6 @@ $avatarUser = Auth::user()->usrUrlimage;
         <i class="icofont icofont-company"></i><span>Punto de Venta</span><i class="icon-arrow-down"></i>
       </a>
       <ul class="treeview-menu">
-        <li>  
-          <a class="waves-effect" href="{{ route('ptovta') }}">
-            <i class="icon-arrow-right"></i>
-            Punto de Venta
-          </a>
-        </li>
         <li>  
           <a class="waves-effect" href="{{ route('cajaDiaria') }}">
             <i class="icon-arrow-right"></i>

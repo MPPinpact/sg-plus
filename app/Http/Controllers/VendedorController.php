@@ -21,7 +21,7 @@ use Storage;
 use DB;
 
 use App\Models\Vendedor;
-use App\Models\Proveedor;
+use App\Models\Usuario;
 
 
 class VendedorController extends Controller
@@ -44,38 +44,47 @@ class VendedorController extends Controller
 
     public function getvendedor()
     {
-        $model= new Proveedor();
-        $data['v_proveedores'] = $model->listProveedor();
-        // $data['v_locales'] = $model->listLocales();
+        $model= new Vendedor();
+        $data['v_vendedores'] = $model->listVendedor();
         $data['v_estados'] = $model->listEstados();
-        return View::make('proveedores.proveedores',$data);
+        return View::make('vendedores.vendedores',$data);
     }
 
-    //Registrar o actualizar proveedor
+    //Registrar o actualizar Vendedor
     protected function postvendedor(Request $request){
         $datos = $request->all();
-        $model= new Proveedor();
-        $result['f_registro'] = $model->regProveedor($datos);
-        $result['v_bodegas'] = $model->listProveedor();
+        $usuario= new Usuario();
+        $datos['RUTVendedor'] = $usuario->LimpiarRut($datos['RUTVendedor']);
+        $model= new Vendedor();
+        $result['f_registro'] = $model->regVendedor($datos);
+        $result['v_vendedores'] = $model->listVendedor();
         return $result;
     }
 
-    //Activar / desactivar proveedor
+    //Activar / desactivar Vendedor
     protected function postVendedoractivo (Request $request){
         $datos = $request->all();
-        $model= new Proveedor();
-        $proveedor = Proveedor::find($datos['IdProveedor']);
-        $result['activar'] = $model->activarProveedor($proveedor);
-        $result['v_proveedores'] = $model->listProveedor();
+        $model= new Vendedor();
+        $vendedor = Vendedor::find($datos['IdVendedor']);
+        $result['activar'] = $model->activarVendedor($vendedor);
+        $result['v_vendedores'] = $model->listVendedor();
         return $result;
     }
 
-    // Ver detalles de los proveedor
-    protected function postvendedordetalle (Request $request){
+    // Ver detalles de los Vendedor
+    protected function postVendedordetalle (Request $request){
         $datos = $request->all();
-        $model= new Proveedor();
-        $result['v_detalles'] = $model->getOneDetalle($datos['IdProveedor']);
-        // $result['v_productos'] = $model->localesProducto($datos['IdProveedor']);
+        $model= new Vendedor();
+        $result['v_detalles'] = $model->getOneDetalle($datos['IdVendedor']);
+        // $result['v_productos'] = $model->localesProducto($datos['IdVendedor']);
+        return $result;
+    }
+
+    protected function postBuscarVen(Request $request){
+        $datos = $request->all();
+        $usuario= new Usuario();
+        $datos['RUTVendedor'] = $usuario->LimpiarRut($datos['RUTVendedor']);
+        $result['v_usuario'] = Usuario::where('usrUserName', $datos['RUTVendedor'])->first();
         return $result;
     }
 

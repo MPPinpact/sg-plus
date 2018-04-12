@@ -49,6 +49,7 @@ $(document).ready(function() {
     $(document).on('click','.settings-menu',cambiarSalir);
     $(document).on('click','.waves-effect',cambiarSalir);
     $(document).on('click','.logo',cambiarSalir);
+    $(document).on('click','.download-icon',cambiarSalir);
     $(document).on('click','#btn-logout',Salir);
 	$(document.body).on("keydown", this, function (event) {
 	    if (event.keyCode == 116) {
