@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}" >
+
 <head>
   <?php
   header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
