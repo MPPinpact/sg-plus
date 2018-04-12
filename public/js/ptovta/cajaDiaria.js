@@ -99,10 +99,11 @@ var cargarDetalleCajaDiaria = function(data){
                         return result;
                     }
                 },
-                {"title": "Forma de Pago","data": "IdVenta"},
-                {"title": "Monto","data": "TotalVenta",
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							className: "text-right"},
+                {"title": "Id Caja","data": "IdCaja",visible:0},
+                {"title": "Id Forma Pago","data": "IdFormaPago",visible:0},
+                {"title": "Venta","data": "IdVenta"},
+                {"title": "Forma Pago","data": "FormaPago"},
+                {"title": "Total","data": "TotalFormaPago"}
             ],
         });
         limpiarDetalleCaja=1;
@@ -253,32 +254,11 @@ $(document).ready(function(){
 // }
 
 var ManejoRespuestaProcesarD = function(respuesta){
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
-  //   if(respuesta.code==200){
-  //       NVenta=respuesta.respuesta.v_cabecera[0].IdVenta;
-  //       bloquearInputs();
-  //       $("#div-mod").show();
-  //       $("#div-acep").hide();
-  //       $(".divDetalles").toggle();
-  //       $("#divVolver").show();
-  //       $("#divTabs").show();
-  //       $("#spanTitulo").text("Detalle Venta");
-		
-  //       pintarDatosActualizar(respuesta.respuesta.v_cabecera[0]);
-  //       cargarTablaDetalles(respuesta.respuesta.v_detalles);
-		// cargarTablaPagos(respuesta.respuesta.v_pagos);
-		
-  //       if(parseInt(respuesta.respuesta.v_cabecera[0].EstadoVenta)>1){
-  //           $(".CerrarVenta").hide();
-  //           $("#agregarC").hide();
-  //       }else{
-  //           $(".CerrarVenta").show();
-  //           $("#agregarC").show();
-  //       }
-  //   }else{
-  //       $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-  //   }
+    if(respuesta.code==200){
+        cargarDetalleCajaDiaria(respuesta.respuesta);
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
 }
 
 // // Manejo Activar / Desactivar compra
@@ -1085,8 +1065,6 @@ var ManejoRespuestaProcesarD = function(respuesta){
 // }
 
 var verDetallesCajaDiaria = function(IdCaja){
-    console.log(IdCaja);
-    console.log("voy a hacer un ajax");
     parametroAjax.ruta=rutaB;
     parametroAjax.data = {IdCaja:IdCaja};
     respuesta=procesarajax(parametroAjax);

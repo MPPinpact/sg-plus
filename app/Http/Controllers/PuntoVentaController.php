@@ -67,10 +67,11 @@ class PuntoVentaController extends Controller
         return View::make('puntoVenta.cajaDiariaResumen',$data);
     }
 
-	public function postCajaDiariaResumen(Request $request){
+    public function postCajaDiariaResumen(Request $request){
         $datos = $request->all();
-        log::info($datos);
-
+        $modelCD = new CajaDiaria();
+        $result = $modelCD->listCajasDiariasResumen($datos['IdCaja']);
+        return $result;
     }
 	
 	public function getCajaDiariaResumenVenta()

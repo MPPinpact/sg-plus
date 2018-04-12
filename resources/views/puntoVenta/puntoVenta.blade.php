@@ -8,6 +8,9 @@
 		color:#E02121;
 		font-size: 10px;
 	}	
+	a{
+	  color: #FFF;
+	}
 </style>
 
 <div class="row">
@@ -47,7 +50,9 @@
 					<h5 class="counter txt-white d-inline-block">Pre-venta</h5>
 					<h6 class="f-w-100 txt-white">231.2w downloads</h6>
 					<h6 class="f-w-100 txt-white">What's on mind?</h6>                                                   
-            		<a href="#!" class="download-icon"><i class="feather icon-arrow-down"></i></a>                                        
+            		<a href="#!" class="download-icon">
+            			<i class="feather icon-arrow-down"></i>
+            		</a>                                        
 				</div>
 				<!-- <div class="card-block"></div>	 -->
 			</div>	

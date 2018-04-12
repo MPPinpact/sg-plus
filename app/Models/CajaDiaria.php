@@ -57,6 +57,10 @@ class CajaDiaria extends Authenticatable
     public function listUnidadMedida(){
         return DB::table('v_unidadmedida_combo')->get();
     }
+
+    public function listCajasDiariasResumen($IdCaja){
+        return DB::table('v_resumen_ventas')->where('IdCaja', $IdCaja)->get(); 
+    }
 	
     // registrar Venta
     public function regVenta($datos){

@@ -1,6 +1,10 @@
 @extends('menu.index')
 @section('content')
 <style type="text/css" media="screen">
+	a {
+		color:#FFF;
+		background-color: #FFF;
+	}
 	.nav-tabs .slide{
 		 width: calc(100% / 3)!important;
 	}
