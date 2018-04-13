@@ -9,8 +9,9 @@ var parametroAjax = {
 };
 
 $(document).ready(function(){	
-	// Botones de cabecera de compra
-    // $(document).on('click','#botonConsultaCredito', ConsultaCreditoCliente);
+	// Botones de cabecera de VentaRapida
+	$(document).on('click','#botonVentaRapida',VentaRapida);
+    $(document).on('click','#botonContinuarVenta', ContinuarVenta);
     // $(document).on('click','#botonPagoCredito', PagoCreditoCliente);
 	// $(document).on('click','#botonVentaRapida',VentaRapida);
     // $(document).on('click','#cancelar',BotonCancelar);
@@ -18,6 +19,25 @@ $(document).ready(function(){
     // $(document).on('click','#modificar',modificarCabeceras);
     // $(document).on('click','#volverAct',volverTabs);
 });
+
+var VentaRapida = function(){
+    $("#VentaRapidaStep_1").show();
+	$("#VentaRapidaStep_2").hide();
+	
+	$("#spanTituloModalVentaRapida").text("Venta Rápida");
+    $("#ModalVentaRapida").modal();
+	
+	$('#ModalVentaRapida').on('shown.bs.modal', function() {
+		$('#CodigoProducto').focus().select();
+	});
+}
+
+var ContinuarVenta = function(){
+	$("#VentaRapidaStep_1").hide();
+	$("#VentaRapidaStep_2").show();
+	
+	
+}
 
 // var calcularMontos = function(CantidadVenta,ValorUnitarioVenta,FactorImpuesto,MontoDescuento){
     // var ValorImpuesto = (CantidadVenta * ValorUnitarioVenta * FactorImpuesto / 100)

@@ -12,7 +12,6 @@ $(document).ready(function(){
 	// Botones de cabecera de compra
     $(document).on('click','#botonConsultaCredito', ConsultaCreditoCliente);
     $(document).on('click','#botonPagoCredito', PagoCreditoCliente);
-	$(document).on('click','#botonVentaRapida',VentaRapida);
     // $(document).on('click','#cancelar',BotonCancelar);
     // $(document).on('click','#agregar',BotonAgregar);
     // $(document).on('click','#modificar',modificarCabeceras);
@@ -30,12 +29,6 @@ var PagoCreditoCliente = function(){
     
 	$("#spanTituloModalPagoCredito").text("Pago/Abono Crédito Interno de Cliente");
     $("#ModalPagoCreditoCliente").modal();
-}
-
-var VentaRapida = function(){
-    
-	$("#spanTituloModalVentaRapida").text("Venta Rápida");
-    $("#ModalVentaRapida").modal();
 }
 
 // var calcularMontos = function(CantidadVenta,ValorUnitarioVenta,FactorImpuesto,MontoDescuento){

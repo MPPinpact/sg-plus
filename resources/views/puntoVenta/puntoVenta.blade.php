@@ -216,7 +216,7 @@
             	<h6 id="spanTituloModalPagoCredito" class="modal-title"></h6>
             </div>
             <div class="modal-body">
-				{!! Form::open(['id'=>'FormDetalle','autocomplete' => 'off']) !!}
+				{!! Form::open(['id'=>'FormPagoCredito','autocomplete' => 'off']) !!}
 					<input type="hidden" name="IdClientePagoCredito" id="IdClientePagoCredito" value="">
 					
 					<div class="row" >
@@ -305,30 +305,174 @@
             	<h6 id="spanTituloModalVentaRapida" class="modal-title">Venta Rádipa</h6>
             </div>
             <div class="modal-body">
-				{!! Form::open(['id'=>'FormPreVenta','autocomplete' => 'off']) !!}
+				{!! Form::open(['id'=>'FormVentaRapida','autocomplete' => 'off']) !!}
 					<input type="hidden" name="IdVentaPreVenta" id="IdVentaPreVenta" value="0">
 					
-					<div class="row" id="InfoPreVenta">
-						<div class="col-md-12">
-							<div class="md-input-wrapper">
-								<input id="NumeroPreVenta" name="NumeroPreVenta" type="text" class="md-form-control" maxlength="250" />
-								<label for="NumeroPreVenta">Número Pre-Venta</label>
+					<div id="VentaRapidaStep_1" style="display: none;">
+						<div class="row">
+							<div class="col-md-2">
+								<div class="md-input-wrapper">
+									<input id="CodigoProducto" name="CodigoProducto" type="text" class="md-form-control" maxlength="250" />
+									<label for="NumeroPreVenta">Código</label>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<div class="md-input-wrapper">
+									<input id="CodigoProducto" name="CodigoProducto" type="text" class="md-form-control" maxlength="250" />
+									<label for="NumeroPreVenta">Producto</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="md-input-wrapper">
+									<input id="CodigoProducto" name="CodigoProducto" type="text" class="md-form-control" maxlength="250" />
+									<label for="NumeroPreVenta">Precio</label>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<button id="botonAgregarProducto" name="botonAgregarProducto" type="button" class="btn btn-success waves-effect waves-light btn-block">
+									Agregar<i class="icon-check"></i> 
+								</button>
+							</div>
+						</div>	
+						
+						<div class="row">
+							<div class="col-md-12">
+								<div id="wizard">
+									<section>	
+										<form class="wizard-form wizard clearfix" id="basic-forms" action="#" role="application">
+											<div class="content clearfix">
+												<!-- Shopping cart field et start -->
+												<h3 id="basic-forms-h-0" tabindex="-1" class="title current"> Listado de Compras </h3>
+												<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0" class="body current" aria-hidden="false">
+													<table id="e-product-list" class="table table-striped table-responsive nowrap dataTable no-footer dtr-inline cart-page" role="grid" style="width: 100%;">
+														<thead>
+															<tr>
+																<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 1023px;">Producto</th>
+																<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 153px;">Precio</th>
+																<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 100px;">Cantidad</th>
+																<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 134px;text-align:center">Action</th>
+															 </tr>
+														  </thead>
+														<tbody>
+															<tr class="odd">
+																<td class="pro-name">
+																	<h6>Man's cloth</h6>
+																	<span>Lorem ipsum dolor sit consec te imperdiet iaculis ipsum..</span>
+																</td>
+																<td>$456</td>
+																<td class="text-center">1</td>
+																<td class="action-icon text-center">
+																	<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
+																</td>
+															</tr>
+															<tr class="even">
+																<td class="pro-name">
+																	<h6> Cosmetic </h6>
+																	<span>Interchargebla lens Digital Camera with APS-C-X Trans CMOS Sens</span>
+																</td>
+																<td>$689</td>
+																<td class="text-center">1</td>
+																<td class="action-icon text-center">
+																	<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
+																</td>
+															</tr>
+															<tr class="odd">
+																<td class="pro-name">
+																	<h6> Jacket man </h6>
+																	<span>Lorem ipsum dolor sit consec te imperdiet iaculis ipsum..</span>
+																</td>
+																<td>$755</td>
+																<td class="text-center">1</td>
+																<td class="action-icon text-center">
+																	<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
+																</td>
+															</tr>
+															<tr class="even">
+																<td class="pro-name">
+																	<h6> Footwear Man </h6>
+																	<span>Lorem ipsum dolor sit consec te imperdiet iaculis ipsum..</span>
+																</td>
+																<td>$989</td>
+																<td class="text-center">2</td>
+																<td class="action-icon text-center">
+																	<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</fieldset>                               <!-- Shopping cart fieldset end -->
+											</div> 
+										</form>
+									</section>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row" >
+							<div class="col-md-6">
+								<button id="botonCancelarPreVenta" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
+									<i class="icofont icofont-ui-close"> </i> Cancelar
+								</button>
+							</div>
+							<div class="col-md-6">
+								<button id="botonContinuarVenta" name="botonContinuarVenta"  type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
+									<i class="icofont icofont-ui-play"> </i> Continuar Venta
+								</button>
+								
 							</div>
 						</div>
 					</div>
 					
-					<div class="row" >
-						<div class="col-md-6">
-							<button id="botonAgregarPreVenta_OK" name="botonAgregarPreVenta_OK"  type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
-								Agregar Productos
-							</button>
+					<div id="VentaRapidaStep_2" style="display: none;" >
+						<div class="row">
+							<div class="col-md-12">
+								<div class="md-input-wrapper">
+									<input id="TotalVentaVR" name="TotalVentaVR" type="text" class="md-form-control text-right form-control-lg" maxlength="250" />
+									
+									<label for="TotalVentaVR">Total Venta</label>
+								</div>
+							</div>
 						</div>
-						<div class="col-md-6">
-							<button id="botonCancelarPreVenta" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
-								Cancelar
-							</button>
+						
+						<div class="row"> <br /> </div>	
+						
+						<div class="row">
+							<div class="col-md-4">
+								<label for="botonVendedor"> Ingrese Vendedor <i class="icofont icofont-business-man"> </i></label>
+								<button id="botonVendedor" name="botonVendedor" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
+									<i class="icofont icofont-business-man"> </i>  Vendedor
+								</button>
+							</div>
+							<div class="col-md-4">
+								<label for="botonCliente"> Seleccione Cliente <i class="icofont icofont-ui-user"> </i></label>
+								<button id="botonCliente" name="botonCliente" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
+									<i class="icofont icofont-ui-user"> </i> Cliente
+								</button>
+							</div>
+							<div class="col-md-4">
+								<label for="botonCliente"> Forma de Pago <i class="icofont icofont-coins"> </i></label>
+								<button id="botonCliente" name="botonCliente" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
+									<i class="icofont icofont-coins"> </i> Forma de Pago
+								</button>
+							</div>
 						</div>
-					</div>	
+						
+						<div class="row"> <br /> <br /> <br /> </div>						
+						
+						<div class="row" >
+							<div class="col-md-6">
+								<button id="botonCancelarVenta_2" name="botonCancelarVenta_2" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
+									<i class="icofont icofont-ui-close"> </i> Cancelar
+								</button>
+							</div>
+							<div class="col-md-6">
+								<button id="botonFinalizarVenta" name="botonFinalizarVenta"  type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
+									<i class="icofont icofont-ui-check"></i> Finalizar Venta
+								</button>
+							</div>
+						</div>
+					</div>
+					
 				{!! Form::close() !!}
             </div>
         </div>
