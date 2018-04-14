@@ -162,8 +162,8 @@
             </div>
             <div class="modal-body">
             	{!! Form::open(['id'=>'FormMetas','autocomplete' => 'off']) !!}
-            	<input type="text" name="IdMeta" id="IdMeta">
-            	<input type="text" name="IdVendedor2" id="IdVendedor2">
+            	<input type="hidden" name="IdMeta" id="IdMeta">
+            	<input type="hidden" name="IdVendedor2" id="IdVendedor2">
             	<div class="row">
 					<div class="col-sm-4">
 						<div class="md-input-wrapper">
