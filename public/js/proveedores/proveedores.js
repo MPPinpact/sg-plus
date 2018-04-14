@@ -100,7 +100,6 @@ var cargarTablaProveedores = function(data){
                 {"title": "Dirección","data": "Direccion"},
                 {"title": "Teléfeno","data": "Telefeno"},
                 {"title": "Vendedor","data": "Vendedor"},
-
                 {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
                 {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
                 {"title": "Creado por","data": "creador"},

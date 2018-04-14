@@ -166,6 +166,10 @@ Route::post('/vendedores', 'VendedorController@postvendedor')->name('vendedores'
 Route::post('/activarVen', 'VendedorController@postVendedoractivo')->name('activarVen');
 Route::post('/detallesVen', 'VendedorController@postVendedordetalle')->name('detallesVen');
 Route::post('/buscarVen', 'VendedorController@postBuscarVen')->name('buscarVen');
+/// Registro de Metas
+Route::post('/metas', 'VendedorController@postMetas')->name('metas');
+Route::post('/metasE', 'VendedorController@postMetaselimiar')->name('metasE');
+Route::post('/metasD', 'VendedorController@postMetasdetalles')->name('metasD');
 
 //CRUD Formas de Pago
 Route::get('/FormaPago', 'FormaPagoController@getFormaPago')->name('FormaPago');
