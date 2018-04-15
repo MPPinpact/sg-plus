@@ -94,4 +94,13 @@ class Cliente extends Authenticatable
         $result=DB::select($sql);
         return $result;
     }
+
+    public function buscarClienteDetalleCredito($datos){
+        $cliente = DB::table('v_clientes')->where('RUTCliente',$datos['RUTCliente'])->get();
+        $result = [];
+        if ($cliente){
+            $result=$cliente;
+        }
+        return $result;
+    }
 }

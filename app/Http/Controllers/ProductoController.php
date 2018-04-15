@@ -91,6 +91,7 @@ class ProductoController extends Controller
         $result['v_detalles'] = $model->getProducto($datos['IdProducto']);
         $result['v_impuestos'] = $model->impuestosProducto($datos['IdProducto']);
         $result['v_productos'] = $model->localesProducto($datos['IdProducto']);
+        $result['v_stock'] = $model->listStock($datos['IdProducto']);
         return $result;
     }
 

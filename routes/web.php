@@ -158,6 +158,10 @@ Route::get('/cajaDiariaResumenVenta', 'PuntoVentaController@getCajaDiariaResumen
 Route::get('/cajaDiariaDetalleVenta', 'PuntoVentaController@getCajaDiariaDetalleVenta')->name('cajaDiariaDetalleVenta');
 
 
+Route::post('/buscarCDC', 'PuntoVentaController@postBuscarClienteDetalleCredito')->name('buscarCDC');
+Route::post('/pagarCuenta', 'PuntoVentaController@postPagarCuenta')->name('pagarCuenta');
+
+
 
 
 //CRUD Vendedores

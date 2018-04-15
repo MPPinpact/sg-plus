@@ -10,13 +10,16 @@ var parametroAjax = {
 };
 
 var ManejoRespuestaProcesarD = function(respuesta){
+    console.log(respuesta);
+    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         $("#spanTitulo").text("Detalles");
         $(".divDetalles").toggle();
         bloquearInuts();
         $("#divVolver").show();
         pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
-        cargarTablaProductos(respuesta.respuesta.v_productos);
+        cargarTablaProductos(respuesta.respuesta.v_productos.productos);
+        $("#TotalMontoValorizado").val(respuesta.respuesta.v_productos.sum[0].TotalValorizado);
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -141,34 +144,18 @@ var cargarTablaProductos = function(data){
             "data": data,
             "columns":[
                 {"title": "Id","data": "IdProducto",visible:0},
-                {"title": "Codigo Barra","data": "CodigoBarra"},
-                {"title": "Codigo Proveedor","data": "CodigoProveedor"},
-                {"title": "Nombre Producto","data": "NombreProducto"},
-                {"title": "Descripcion Producto","data": "DescripcionProducto"},
-                {"title": "Ultimo Proveedor","data": "IdUltimoProveedor"},
                 {"title": "IdFamilia","data": "IdFamilia", visible:0},
-                {"title": "Familia","data": "NombreFamilia"},
                 {"title": "IdSubFamilia","data": "IdSubFamilia",visible:0},
+                {"title": "Codigo Barra","data": "CodigoBarra"},
+                {"title": "Nombre Producto","data": "NombreProducto"},
+                {"title": "Familia","data": "NombreFamilia"},
                 {"title": "Subfamilia","data": "NombreSubFamilia"},
-                {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
-                {"title": "Unidad Medida","data": "NombreUnidadMedida"},
-                {"title": "Se Compra","data": "SeCompra",visible:0},
-                {"title": "Se Compra","data": "DesCompra"},
-                {"title": "Se Vende","data": "SeVende", visible:0},
-                {"title": "Se Vende","data": "DesVende"},
-                {"title": "Se Combo","data": "EsProductoCombo", visible:0},
-                {"title": "Producto Combo","data": "DesProductoCombo"},
-                {"title": "Descontinuado","data": "Descontinuado",visible:0},
-                {"title": "Descontinuado","data": "DesDescontinuado"},
+                {"title": "Stock Actual","data": "Stock"},
                 {"title": "Stock Minimo","data": "StockMinimo"},
                 {"title": "Stock Maximo","data": "StockMaximo"},
-                {"title": "Stock Recomendado","data": "StockRecomendado"},
                 {"title": "Precio Ultima Compra","data": "PrecioUltimaCompra"},
-                {"title": "Precio Venta Sugerido","data": "PrecioVentaSugerido"},
-                {"title": "Id Bodega","data": "IdBodega",visible:0},
-                {"title": "Bodega","data": "NombreBodega"},
-                {"title": "EstadoProducto","data": "EstadoProducto",visible:0},
-                {"title": "Estado","data": "DesEstadoProducto"}
+                {"title": "Precio Venta","data": "PrecioVentaSugerido"},
+                {"title": "Monto Valorizado","data": "MontoValorizado"},
             ],
         });
         limpiarBodegas=1;
@@ -297,6 +284,7 @@ var volverTabs = function(){
     $("#adetalles").addClass("active");
     $("#productos").removeClass("active");
     $("#aproductos").removeClass("active");
+    $("#TotalMontoValorizado").val("");
 }
 
 var crearAllSelect = function(data){

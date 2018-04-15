@@ -139,6 +139,11 @@ class Producto extends Authenticatable
         // return DB::table('v_productos')->where('IdBodega',$IdBodega)->get();
     }
 
+    public function listStock($IdProducto){
+        return DB::table('v_productos_stock')->where('IdProducto',$IdProducto)->get();
+
+    }
+
     public function impuestosProducto($IdProducto){
         return DB::table('v_productos_impuestos')->where('IdProducto',$IdProducto)->get();
     }

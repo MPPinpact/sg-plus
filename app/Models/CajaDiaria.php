@@ -34,8 +34,11 @@ class CajaDiaria extends Authenticatable
 
     // Cargar tabla de impuesto
     public function listCajasDiarias(){
-		log::info("Modelo Cajas Diarias");
         return DB::table('v_cajas_diarias')->where('EstadoCaja', '>', 0)->get();
+    }
+
+    public function listFormasPago(){
+        return DB::table('v_forma_pago_combo')->get();        
     }
 	
 	// 
