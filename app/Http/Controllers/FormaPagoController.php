@@ -21,7 +21,7 @@ use Storage;
 use DB;
 
 use App\Models\FormaPago;
-use App\Models\Proveedor;
+// use App\Models\Proveedor;
 
 class FormaPagoController extends Controller
 {
@@ -43,39 +43,51 @@ class FormaPagoController extends Controller
 
     public function getFormaPago()
     {
-        $model= new Proveedor();
-        $data['v_proveedores'] = $model->listProveedor();
+        $model= new FormaPago();
+        // $data['v_proveedores'] = $model->listProveedor();
         // $data['v_locales'] = $model->listLocales();
+        // $data['v_estados'] = $model->listEstados();
+        $data['v_formas_de_pago'] = $model->listFormaspago();
+        $data['v_formas_pago'] = $model->listRegFormaspago();
         $data['v_estados'] = $model->listEstados();
-        return View::make('proveedores.proveedores',$data);
+        //dd($data);
+        
+        return View::make('formaspago.formaspago',$data);
     }
 
     //Registrar o actualizar proveedor
     protected function postFormaPago(Request $request){
         $datos = $request->all();
-        $model= new Proveedor();
+        $model= new FormaPago ();
         $result['f_registro'] = $model->regProveedor($datos);
-        $result['v_bodegas'] = $model->listProveedor();
+        // $result['v_bodegas'] = $model->listProveedor();
+        var_dump($result);
         return $result;
     }
 
     //Activar / desactivar proveedor
-    protected function postFormaPagoactivo (Request $request){
+    protected function postFormaPagoactivo (Request $request){        
         $datos = $request->all();
-        $model= new Proveedor();
-        $proveedor = Proveedor::find($datos['IdProveedor']);
+        $model= new FormaPago();
+        $proveedor = FormaPago::find($datos['IdFormaPago']);
         $result['activar'] = $model->activarProveedor($proveedor);
-        $result['v_proveedores'] = $model->listProveedor();
+        $result['v_proveedores'] = $model->listRegFormaspago();
+        // var_dump($result);
         return $result;
     }
 
     // Ver detalles de los proveedor
     protected function postFormaPagodetalle (Request $request){
         $datos = $request->all();
-        $model= new Proveedor();
-        $result['v_detalles'] = $model->getOneDetalle($datos['IdProveedor']);
+        $model= new FormaPago();
+        $result['v_detalles'] = $model->getOneDetalle($datos['IdFormaPago']);
         // $result['v_productos'] = $model->localesProducto($datos['IdProveedor']);
         return $result;
     }
 
 }
+
+
+
+
+

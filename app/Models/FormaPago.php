@@ -33,7 +33,6 @@ class FormaPago extends Authenticatable
         'auFechaModificacion','auFechaCreacion'
     ];
 
-
     // Cargar tabla de bodega
     public function listProveedor(){
         return DB::table('v_proveedores')->get();
@@ -43,34 +42,51 @@ class FormaPago extends Authenticatable
     public function listEstados(){
         return DB::table('v_estados')->get();
     }
+    // Cargar combo formas de pago 
+    public function listFormaspago(){
+        return DB::table('v_formas_de_pago')->get();
+    }
+
+    public function listRegFormaspago(){
+        return DB::table('v_formas_pago')->get();
+    }
 
     // Cargar combo de Locales
-    // public function listLocales(){
-    //     return DB::table('v_locales_combo')->get();
-    // }
+    public function listLocales(){
+        return DB::table('v_locales_combo')->get();
+    }
 
     // registrar una nueva proveedor
-    public function regProveedor($datos){
+    public function regProveedor($datos){        
+        log::info($datos);
         $idAdmin = Auth::id();
-        $datos['IdProveedor']==null ? $Id=0 : $Id= $datos['IdProveedor'];
-        $sql="select f_registro_proveedor(".$Id.",'".$datos['RUTProveedor']."','".$datos['CodigoProveedor']."','".$datos['RazonSocialProveedor']."','".$datos['NombreFantasia']."','".$datos['Direccion']."','".$datos['Telefeno']."','".$datos['Vendedor']."',".$datos['EstadoProveedor'].",".$idAdmin.")";
+        $datos['IdFormaPago']==null ? $Id=0 : $Id= $datos['IdFormaPago'];
+        $sql="select f_registro_formapago(".$Id.",'".$datos['pNombreFormaPago']."',".$idAdmin.")";
+        log::info($sql);
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
         }
-        return $result;
+
+        // log::info($execute);
+        // Para probar
+        //return $result;
+        
     }
 
     // Activar / Desactivar proveedor
     public function activarProveedor($datos){
+        
         $idAdmin = Auth::id();
-        if ($datos['EstadoProveedor']>0){
-            $values=array('EstadoProveedor'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        if ($datos['EstadoFormaPago']>0){
+            $values=array('EstadoFormaPago'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        log::info('Mayor a 0'.$datos);
         }else{
-            $values=array('EstadoProveedor'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+            $values=array('EstadoFormaPago'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        log::info('Igual a 0'.$datos);
         }
-        return DB::table('proveedores')
-                ->where('IdProveedor', $datos['IdProveedor'])
+        return DB::table('formas_pago')
+                ->where('EstadoFormaPago', $datos['EstadoFormaPago'])
                 ->update($values);
     }
 
@@ -78,8 +94,11 @@ class FormaPago extends Authenticatable
         return DB::table('v_productos')->where('IdBodega',$IdBodega)->get();
     }
 
-    public function getOneDetalle($IdProveedor){
-        return DB::table('v_proveedores')->where('IdProveedor',$IdProveedor)->get();
+    public function getOneDetalle($IdFormaPago){
+        return DB::table('v_formas_pago')->where('IdFormaPago',$IdFormaPago)->get();
     }
 
 }
+
+
+
