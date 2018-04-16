@@ -159,15 +159,9 @@ Route::get('/cajaDiariaDetalle', 'PuntoVentaController@getCajaDiariaDetalle')->n
 Route::get('/cajaDiariaResumenVenta', 'PuntoVentaController@getCajaDiariaResumenVenta')->name('cajaDiariaResumenVenta');
 Route::get('/cajaDiariaDetalleVenta', 'PuntoVentaController@getCajaDiariaDetalleVenta')->name('cajaDiariaDetalleVenta');
 
-<<<<<<< HEAD
 Route::post('/addProductPV', 'PreventaController@postAddProductPreVenta')->name('addProductPV');
-=======
-
 Route::post('/buscarCDC', 'PuntoVentaController@postBuscarClienteDetalleCredito')->name('buscarCDC');
 Route::post('/pagarCuenta', 'PuntoVentaController@postPagarCuenta')->name('pagarCuenta');
-
-
->>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 
 
 //CRUD Vendedores
