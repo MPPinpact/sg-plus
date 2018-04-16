@@ -88,7 +88,7 @@
 			                           	</a>
 			                            <div class="slide"></div>
 			                        </li>
-			                        <li class="nav-item">
+			                        <!-- <li class="nav-item">
 			                            <a id="akardex" class="nav-link" data-toggle="tab" href="#TabKardex" role="tab">
 			                                <div class="f-26">
 			                                    <i class="icofont icofont-document-search"></i>
@@ -96,7 +96,7 @@
 			                                Kardex
 			                           	</a>
 			                            <div class="slide"></div>
-			                        </li>
+			                        </li> -->
 			                    </ul>
 			                </div>
 		                    <!-- Tab panes -->
@@ -304,15 +304,18 @@
 		                        	</h1>
 		                        </div>
 		                        <div class="tab-pane" id="TabStock" role="tabpanel">
-		                        	<h1>
-		                        		Stock
-		                        	</h1>
-		                        </div>
-		                        <div class="tab-pane" id="TabKardex" role="tabpanel">
+									<div class="row">
+										<div class="col-md-2"></div>
+										<div class="col-md-8">
+											<table id="tablaStock" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+										</div>
+										<div class="col-md-2"></div>
+									</div>
+		                        <!-- <div class="tab-pane" id="TabKardex" role="tabpanel">
 		                        	<h1>
 		                        		Kardex
 		                        	</h1>
-		                        </div>
+		                        </div> -->
 		                    </div>
 		                </div>
 		            </div>

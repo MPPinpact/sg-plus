@@ -26,12 +26,12 @@ $avatarUser = Auth::user()->usrUrlimage;
     </li>
     <li class="treeview">
       <a href="{{ route('ptovta') }}" class="settings-menu">
-        <i class="icon-speedometer"></i><span>  Punto Venta </span>
+        <i class="icon-calculator"></i><span>  Punto Venta </span>
       </a>
     </li>
     <li class="treeview">
       <a href="#">
-        <i class="icofont icofont-company"></i><span>Punto de Venta</span><i class="icon-arrow-down"></i>
+        <i class="icon-calculator"></i><span>Punto de Venta</span><i class="icon-arrow-down"></i>
       </a>
       <ul class="treeview-menu">
         <li>  
@@ -105,7 +105,7 @@ $avatarUser = Auth::user()->usrUrlimage;
     </li>
     <li class="treeview">
       <a href="#">
-        <i class="icofont icofont-company"></i><span>Crédito </span><i class="icon-arrow-down"></i>
+        <i class="icon-credit-card"></i><span>Crédito </span><i class="icon-arrow-down"></i>
       </a>
       <ul class="treeview-menu">
         <li>
@@ -130,7 +130,7 @@ $avatarUser = Auth::user()->usrUrlimage;
     </li>
     <li class="treeview">
       <a href="#">
-        <i class="icofont icofont-company"></i><span>Productos </span><i class="icon-arrow-down"></i>
+        <i class="icon-bag"></i><span>Productos </span><i class="icon-arrow-down"></i>
       </a>
       <ul class="treeview-menu">
         <li>
@@ -167,7 +167,7 @@ $avatarUser = Auth::user()->usrUrlimage;
     </li>
     <li class="treeview">
       <a href="#">
-        <i class="icofont icofont-company"></i><span>Compras</span><i class="icon-arrow-down"></i>
+        <i class="icon-bag"></i><span>Compras</span><i class="icon-arrow-down"></i>
       </a>
       <ul class="treeview-menu">
         <li>
@@ -186,30 +186,30 @@ $avatarUser = Auth::user()->usrUrlimage;
     </li>
     <li class="treeview">
       <a href="#">
-        <i class="icofont icofont-company"></i><span>Administración </span><i class="icon-arrow-down"></i>
+        <i class="icon-settings"></i><span>Administración </span><i class="icon-arrow-down"></i>
       </a>
       <ul class="treeview-menu">
         <li>
           <a class="waves-effect" href="{{ route('usuarios') }}">
-            <i class="icon-arrow-right"></i>
+			<i class="icon-people"></i>
             Usuarios
           </a>
         </li>
         <li>
           <a class="waves-effect" href="{{ route('empresas') }}">
-            <i class="icon-arrow-right"></i>
+            <i class="icon-briefcase"></i>
             Empresas
           </a>
         </li>
         <li>
           <a class="waves-effect" href="{{ route('locales') }}">
-            <i class="icon-arrow-right"></i>
+            <i class="icon-home"></i>
             Locales
           </a>
         </li>
         <li>
           <a class="waves-effect" href="{{ route('bodegas') }}">
-            <i class="icon-arrow-right"></i>
+            <i class="icon-grid"></i>
             Bodegas
           </a>
         </li>

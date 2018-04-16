@@ -1,5 +1,5 @@
 var RegistroEmpresas  = '';
-var manejoRefresh=limpiarLocales=limpiarImpuestos=errorRut=limpiarBodegas=0;
+var manejoRefresh=limpiarLocales=limpiarImpuestos=errorRut=limpiarBodegas=limpiarStock=0;
 var ckCompra = ckVenta = ckDescontinuado = ckCombo = 0;
 
 var parametroAjax = {
@@ -11,6 +11,8 @@ var parametroAjax = {
 };
 
 var ManejoRespuestaProcesarD = function(respuesta){
+    console.log(respuesta);
+    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         bloquearInuts();
         $(".divDetalles").toggle();
@@ -20,6 +22,7 @@ var ManejoRespuestaProcesarD = function(respuesta){
         $("#IdProducto2").val(respuesta.respuesta.v_detalles[0].IdProducto);
         pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
         cargarTablaImpuestos(respuesta.respuesta.v_impuestos);
+        cargarTablaStock(respuesta.respuesta.v_stock);
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -233,6 +236,30 @@ var cargarTablaImpuestos = function(data){
         });
         limpiarImpuestos=1;
 };
+
+var cargarTablaStock = function(data){
+    if(limpiarStock==1){destruirTabla('#tablaStock');$('#tablaStock thead').empty();}
+    $("#tablaStock").dataTable({
+        responsive:false,
+        "bSort": false,
+        "scrollCollapse": false,
+        "paging": false,
+        "searching": true,
+        "info":true,
+        "columnDefs": [
+            {"targets": [ 1 ],"searchable": true},
+        ],
+        "data": data,
+        "columns":[
+            {"title": "Empresa","data": "NombreFantasia"},
+            {"title": "Local","data": "NombreLocal"},
+            {"title": "Bodega","data": "NombreBodega"},
+            {"title": "Stock","data": "Stock"},
+            {"title": "Monto Valorizado","data": "MontoValorizado"}
+        ],
+    });
+    limpiarStock=1;
+}
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");

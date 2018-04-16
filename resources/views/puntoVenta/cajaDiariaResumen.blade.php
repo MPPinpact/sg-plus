@@ -25,32 +25,32 @@
 				<div class="col-md-12">
 					<div class="row">
 						<div class="col-md-2">
-                			<a  href="#" style="float:left;" name="agregar" id="agregar" class="btn-xlg btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
+                			<a  href="#" style="float:left;" name="agregar" id="agregar" class="btn btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
 								<span>Nueva Caja</span>
 							</a>
 						</div>
 						<div class="col-md-2">
-							<a  href="#" style="float:left;" name="agregar" id="agregar" class="btn-xlg btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
+							<a  href="#" style="float:left;" name="agregar" id="agregar" class="btn btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
 								<span>Cerrar Caja Actual</span>
 							</a>
 						</div>
 						<div class="col-md-2">
-							<a  href="{{ URL::route('cajaDiariaResumen') }}" style="float:left;" name="botonCDR" id="botonCDR" class="btn-xlg btn-warning waves-effect waves-light btn-block" href="#primary" role="button">
+							<a  href="{{ URL::route('cajaDiariaResumen') }}" style="float:left;" name="botonCDR" id="botonCDR" class="btn btn-inverse-warning waves-effect waves-light btn-block" href="#primary" role="button">
 								<span>Resumen Caja </span>
 							</a>
 						</div>
 						<div class="col-md-2">
-							<a  href="{{ URL::route('cajaDiariaDetalle') }}" style="float:left;" name="botonCDD" id="botonCDD" class="btn-xlg btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
+							<a  href="{{ URL::route('cajaDiariaDetalle') }}" style="float:left;" name="botonCDD" id="botonCDD" class="btn btn-warning waves-effect waves-light btn-block" href="#primary" role="button">
 								<span>Detalle Caja </span>
 							</a>
 						</div>
 						<div class="col-md-2">
-							<a  href="{{ URL::route('cajaDiariaResumenVenta') }}" style="float:left;" name="botonCDRV" id="botonCDRV" class="btn-xlg btn-warning waves-effect waves-light btn-block" href="#primary" role="button">
+							<a  href="{{ URL::route('cajaDiariaResumenVenta') }}" style="float:left;" name="botonCDRV" id="botonCDRV" class="btn btn-warning waves-effect waves-light btn-block" href="#primary" role="button">
 								<span>Resumen Venta</span>
 							</a>
 						</div>
 						<div class="col-md-2">
-							<a  href="{{ URL::route('cajaDiariaDetalleVenta') }}" style="float:left;" name="botonCDDV" id="botonCDDV" class="btn-xlg btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
+							<a  href="{{ URL::route('cajaDiariaDetalleVenta') }}" style="float:left;" name="botonCDDV" id="botonCDDV" class="btn btn-warning waves-effect waves-light btn-block" href="#primary" role="button">
 								<span>Detalle Venta</span>
 							</a>
 						</div>
@@ -62,12 +62,22 @@
 	</div>
 	
 </div>
+
 <div class="row">
-	<div class="col-md-7">
+	<div class="col-md-6">
 	    <div class="card">
 	        <div class="card-block">
 				<div class="col-md-12 table-responsive">
 					<table id="tablaCajaDiariaResumen" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+				</div>
+	        </div>
+		</div>
+	</div>
+	<div class="col-md-6">
+	    <div class="card">
+	        <div class="card-block">
+				<div class="col-md-12 table-responsive">
+					<table id="tablaCajaDiariaDetalle" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 				</div>
 	        </div>
 		</div>
@@ -607,8 +617,10 @@
 	var rutaCD = "{{ URL::route('cajaDiariaResumen') }}";
 	var d = [];
 	
-	d['v_cajas_diarias'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_cajas_diarias) }}'));
+	d['v_resumen_ventas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_resumen_ventas) }}'));
+	d['v_resumen_pagos'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_resumen_pagos) }}'));
+	d['v_resumen_otros_movimientos'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_resumen_otros_movimientos) }}'));
 	
 </script>
-<script src="{{ asset('js/ptovta/cajaDiaria.js') }}"></script>
+<script src="{{ asset('js/ptovta/cajaDiariaResumen.js') }}"></script>
 @endsection

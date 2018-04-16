@@ -73,8 +73,56 @@ class PreventaController extends Controller
         $result['v_detalles'] = $model->getDetallesPreventa($datos['IdPreVenta2']);
         return $result;
     }
-        
-    //Activar / desactivar Preventa
+	
+	//Registrar o Actualizar Pago
+    protected function postRegistrarPagoPreVenta(Request $request){
+        $datos = $request->all();
+        $model= new Preventa();
+        $result['f_registro'] = $model->regPagoPreVenta($datos);
+        $result['v_pagos'] = $model->getDetallePago($datos['IdPreVentaPago']);
+        return $result;
+    }
+	
+	protected function postDetallePagoActiva(Request $request){
+        $datos = $request->all();
+		$model = new Preventa();
+		
+		log::info("IdDetallePago: ". $datos['IdDetallePago']);
+		
+		$pago = $model->getOnePagoPreVenta($datos['IdDetallePago']);		
+        $detalle = $model->activarDetallePago($datos['IdDetallePago']);
+        $result['v_pagos'] = $model->getDetallePago($pago->IdPreVenta);
+		
+        return $result;
+    }
+	
+    //Registrar Pre-Venta desde el Módulo Punto de Venta
+    protected function postAddProductPreVenta(Request $request){
+        $datos = $request->all();
+        $model= new Preventa();
+		
+		/* Tengo IdPreVenta? */
+		$IdPreVenta=0;
+		$datos['IdPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['IdPreVenta'];
+		
+		log::info("IdPreVenta: " . $IdPreVenta);
+		
+		if($IdPreVenta==0) {
+			$PreVenta = $model->regPreVentaPuntoVenta($datos);
+			$obj = json_decode($PreVenta);
+			$datos['IdPreVenta']=  $obj->{'IdPreVenta'};
+			$IdPreVenta=$obj->{'IdPreVenta'};
+		}
+		
+		log::info("IdPreVenta: " . $IdPreVenta);
+		
+		$result['v_cabecera'] = $model->getCabeceraPreventa($IdPreVenta);
+        $result['f_registro'] = $model->regDetallePreVentaPuntoVenta($datos);
+        $result['v_detalles'] = $model->getDetallesPreventa($datos['IdPreVenta']);
+        return $result;
+    }
+
+	//Activar / desactivar Preventa
     protected function postPreventactiva(Request $request){
         $datos = $request->all();
         $model= new Preventa();

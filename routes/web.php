@@ -131,6 +131,8 @@ Route::post('/preventadc', 'PreventaController@postRegistrarDetallec')->name('pr
 Route::post('/preventabdc', 'PreventaController@postBuscarDetallec')->name('preventabdc');
 Route::post('/preventacp', 'PreventaController@postCerrarPreventa')->name('preventacp');
 Route::post('/preventada', 'PreventaController@postPreventadetalleactiva')->name('preventada');
+Route::post('/preventaRP', 'PreventaController@postRegistrarPagoPreVenta')->name('preventaRP');
+Route::post('/preventaEP', 'PreventaController@postDetallePagoActiva')->name('preventaEP');
 
 //CRUd venta
 Route::get('/ventas', 'VentaController@getVentas')->name('ventas');
@@ -157,7 +159,9 @@ Route::get('/cajaDiariaDetalle', 'PuntoVentaController@getCajaDiariaDetalle')->n
 Route::get('/cajaDiariaResumenVenta', 'PuntoVentaController@getCajaDiariaResumenVenta')->name('cajaDiariaResumenVenta');
 Route::get('/cajaDiariaDetalleVenta', 'PuntoVentaController@getCajaDiariaDetalleVenta')->name('cajaDiariaDetalleVenta');
 
-
+Route::post('/addProductPV', 'PreventaController@postAddProductPreVenta')->name('addProductPV');
+Route::post('/buscarCDC', 'PuntoVentaController@postBuscarClienteDetalleCredito')->name('buscarCDC');
+Route::post('/pagarCuenta', 'PuntoVentaController@postPagarCuenta')->name('pagarCuenta');
 
 
 //CRUD Vendedores
@@ -166,6 +170,10 @@ Route::post('/vendedores', 'VendedorController@postvendedor')->name('vendedores'
 Route::post('/activarVen', 'VendedorController@postVendedoractivo')->name('activarVen');
 Route::post('/detallesVen', 'VendedorController@postVendedordetalle')->name('detallesVen');
 Route::post('/buscarVen', 'VendedorController@postBuscarVen')->name('buscarVen');
+/// Registro de Metas
+Route::post('/metas', 'VendedorController@postMetas')->name('metas');
+Route::post('/metasE', 'VendedorController@postMetaselimiar')->name('metasE');
+Route::post('/metasD', 'VendedorController@postMetasdetalles')->name('metasD');
 
 //CRUD Formas de Pago
 Route::get('/FormaPago', 'FormaPagoController@getFormaPago')->name('FormaPago');

@@ -76,8 +76,11 @@ class Bodega extends Authenticatable
                 ->update($values);
     }
 
-    public function localesProducto($IdBodega){    
-        return DB::table('v_productos')->where('IdBodega',$IdBodega)->get(); 
+    public function listProductos($IdBodega){   
+        $result['productos'] =  DB::table('v_bodegas_productos')->where('IdBodega',$IdBodega)->get(); 
+        $sql="select SUM(MontoValorizado) as TotalValorizado from v_bodegas_productos where IdBodega=".$IdBodega;
+        $result['sum']=DB::select($sql);
+        return $result;
     }
 
     public function getOneDetalle($IdBodega){

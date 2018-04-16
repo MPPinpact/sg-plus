@@ -22,6 +22,8 @@ use DB;
 
 use App\Models\Vendedor;
 use App\Models\Usuario;
+use App\Models\Preventa;
+
 
 
 class VendedorController extends Controller
@@ -76,7 +78,7 @@ class VendedorController extends Controller
         $datos = $request->all();
         $model= new Vendedor();
         $result['v_detalles'] = $model->getOneDetalle($datos['IdVendedor']);
-        // $result['v_productos'] = $model->localesProducto($datos['IdVendedor']);
+        $result['v_metas'] = $model->listVendedorMetas($datos['IdVendedor']);
         return $result;
     }
 
@@ -85,6 +87,32 @@ class VendedorController extends Controller
         $usuario= new Usuario();
         $datos['RUTVendedor'] = $usuario->LimpiarRut($datos['RUTVendedor']);
         $result['v_usuario'] = Usuario::where('usrUserName', $datos['RUTVendedor'])->first();
+        return $result;
+    }
+
+    protected function postMetas(Request $request){
+        $datos = $request->all();
+        $preventa= new Preventa();
+        $datos['PeriodoVentaInicio'] = $preventa->formatearFecha($datos['PeriodoVentaInicio']);
+        $datos['PeriodoVentaFin'] = $preventa->formatearFecha($datos['PeriodoVentaFin']);
+        $model= new Vendedor();
+        $result['f_registro'] = $model->regMetas($datos);
+        $result['v_metas'] = $model->listVendedorMetas($datos['IdVendedor2']);
+        return $result;
+    }
+
+    protected function postMetaselimiar(Request $request){
+        $datos = $request->all();
+        $model= new Vendedor();
+        $result['f_delete'] = $model->delMetas($datos['IdMeta']);
+        $result['v_metas'] = $model->listVendedorMetas($datos['IdVendedor']);
+        return $result;
+    }
+
+    protected function postMetasdetalles(Request $request){
+        $datos = $request->all();
+        $model= new Vendedor();
+        $result['v_detallesM'] = $model->getOneDetalleM($datos['IdMeta']);
         return $result;
     }
 
