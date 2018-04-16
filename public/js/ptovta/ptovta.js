@@ -18,7 +18,6 @@ $(document).ready(function(){
     // $(document).on('click','#volverAct',volverTabs);
 });
 
-
 var ConsultaCreditoCliente = function(){
     
 	$("#spanTituloModalCreditoCliente").text("Consulta Crédito Interno de Clientes");
@@ -30,6 +29,8 @@ var PagoCreditoCliente = function(){
 	$("#spanTituloModalPagoCredito").text("Pago/Abono Crédito Interno de Cliente");
     $("#ModalPagoCreditoCliente").modal();
 }
+
+
 
 // var calcularMontos = function(CantidadVenta,ValorUnitarioVenta,FactorImpuesto,MontoDescuento){
     // var ValorImpuesto = (CantidadVenta * ValorUnitarioVenta * FactorImpuesto / 100)

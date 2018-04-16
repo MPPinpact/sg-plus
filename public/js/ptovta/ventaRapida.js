@@ -1,4 +1,4 @@
-var manejoRefresh=limpiarLocales=limpiarCajas=limpiarDetalleCaja=errorRut=errorRut2=errorRut3=limpiarBodegas=NVenta=0;
+var manejoRefresh=limpiarLocales=limpiarImpuestos=limpiarPagos=errorRut=errorRut2=errorRut3=limpiarBodegas=NVenta=0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -10,37 +10,950 @@ var parametroAjax = {
 
 $(document).ready(function(){	
 	// Botones de cabecera de VentaRapida
-	$(document).on('click','#botonVentaRapida',VentaRapida);
-    $(document).on('click','#botonContinuarVenta', ContinuarVenta);
-    // $(document).on('click','#botonPagoCredito', PagoCreditoCliente);
-	// $(document).on('click','#botonVentaRapida',VentaRapida);
-    // $(document).on('click','#cancelar',BotonCancelar);
-    // $(document).on('click','#agregar',BotonAgregar);
-    // $(document).on('click','#modificar',modificarCabeceras);
-    // $(document).on('click','#volverAct',volverTabs);
+	$(document).on('click','#botonConsultaStock', ConsultaStockProducto);
+	
+	$(document).on('click','#botonVendedorPreVenta', ModalVendedor);
+	$(document).on('click','#botonCancelarAsignarVendedor', CerrarModalAsignarVendedor);
+	$(document).on('click','#botonAsignarVendedor', CerrarModalAsignarVendedor);
+	
+	$(document).on('click','#botonClientePreVenta', ModalCliente);
+	$(document).on('click','#botonCancelarAsignarCliente', CerrarModalAsignarCliente);
+	$(document).on('click','#botonAsignarCliente', CerrarModalAsignarCliente);
+	
+	$(document).on('click','#botonFormaPagoPreVenta', ModalFormaPago);
+	
+	$(document).on('click','#botonPagoEfectivo', BotonPagoEfectivo);	
+	$(document).on('click','#botonPagoCreditoPreVenta', BotonPagoCredito);
+	$(document).on('click','#botonPagoTD', BotonPagoTD);
+	$(document).on('click','#botonPagoTC', BotonPagoTC);
+	
+	$(document).on('click','#botonGuardarFormaPago', validadorFormaPago);
+	$(document).on('click','#botonCancelarFormaPago', CancelarFormaPago);
+	
+	$(document).on('click','#botonCancelarFormaPagoPreVenta', CerrarModalFormaPago);
+	$(document).on('click','#botonConfirmarFormaPagoPreVenta', CerrarModalFormaPago);
+	
+
+
+	
+	$(document).on('click','#botonAgregarProductoPreVenta', AgregarProductoPreVenta);
+	$(document).on('click','#botonPreVenta',PreVenta);
+	$(document).on('click','#botonVolverPreVenta', VolverPreVenta);
+	$(document).on('click','#botonContinuarPreVenta', ContinuarPreVenta);
+	
+	
+	$(document).on('click','#botonVentaDirecta',VentaDirecta);
+	$(document).on('click','#botonContinuarVentaDirecta', ContinuarVentaDirecta);
+	
+	$(document).on('click','#botonVentaPreVenta',VentaPreVenta);
+	$(document).on('click','#botonContinuarVentaPreVenta', ContinuarVentaPreVenta);
+	
+	
+	/* focusout --> lost focus */
+	$("#CodigoProductoPreVenta").focusout(function() {
+        buscarProducto($("#CodigoProductoPreVenta").val());
+    });
+	
+	$("#CodigoVendedor").focusout(function() {
+        buscarVendedor($("#CodigoVendedor").val());
+    });
+	
+	$("#NombreVendedorPreVenta").change(function() {
+        AsignarVendedorPreVenta();
+    });
+	
+	$("#RUTCliente").focusout(function() {
+		var valid = $("#RUTCliente").val();
+		if (valid.length > 0){
+			var res = verificarRut($("#RUTCliente"),1);
+			$("#RUTCliente").val(res);
+		}else{
+			$("#ErrorRutCredito").text("");
+		}
+	});
+	
+	$("#RUTClienteCredito").focusout(function() {
+        var valid = $("#RUTClienteCredito").val();
+        if (valid.length > 0){
+            var res = verificarRut($("#RUTClienteCredito"),4);
+            $("#RUTClienteCredito").val(res);
+        }else{
+			$("#ErrorRutCredito").text("");
+		}
+    });
+
+	$("#PrecioProductoPreVenta").change(function() {
+        CalcularMontosPreVenta();
+    });
+		
+	$("#CantidadProductoPreVenta").change(function() {
+        CalcularMontosPreVenta();
+    });
+	
+	$("#TotalPagadoPreVenta").change(function() {
+		CalcularSaldoPago();
+    });
+	
+	$("#TotalPreVentaFP").change(function() {
+		CalcularSaldoPago();
+    });
+	
+	$("#NumeroCuotasCredito").change(function() {
+		CalcularMontoCuotas();
+    });
+	
+	$("#MontoAFinanciar").change(function() {
+		$("#MontoPagoEfectivo").val($("#MontoAFinanciar").val());
+		CalcularMontoCuotas();
+    });
+	
+	$("#InteresMensualCredito").change(function() {
+		CalcularMontoCuotas();
+    });	
+
+	$('#FormPreVenta').formValidation({
+        excluded:[':disabled'],
+        // message: 'El módulo le falta un campo para ser completado',
+        fields: {
+            'CodigoProductoPreVenta': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'Debe ingresar el Código del Producto.'
+                    },
+                }
+            },
+			'CantidadProductoPreVenta': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'Debe ingresar la cantidad a vender.'
+                    },
+                }
+            },
+        }
+    })
+    .on('success.form.fv', function(e){
+        ProcesarProductoPreVenta();
+    })
+    .on('status.field.fv', function(e, data){
+        data.element.parents('.form-group').removeClass('has-success');
+    });
+	
+	$('#FormIngresoFP').on('keyup keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) { 
+		 e.preventDefault();
+		 return false;
+      }
+    });
+	
+	$('#FormIngresoFP').formValidation({
+        excluded:[':disabled'],
+        // message: 'El módulo le falta un campo para ser completado',
+        fields: {
+            'MontoPagoEfectivo': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+        }
+    })
+    .on('success.form.fv', function(e){
+        ProcesarFormaPago();
+    })
+    .on('status.field.fv', function(e, data){
+        data.element.parents('.form-group').removeClass('has-success');
+    });
 });
 
-var VentaRapida = function(){
+
+var ConsultaStockProducto = function(){
+    
+	$("#spanTituloModalConsultaStockProducto").text("Consulta Sock Producto");
+    $("#ModalConsultaStockProducto").modal();
+}
+
+var ModalVendedor = function(){
+    
+	$("#spanTituloModalModalVendedor").text("Asignar Vendedor a la Pre-Venta");
+    $("#ModalAsignarVendedor").modal();
+	
+	$('#ModalAsignarVendedor').on('shown.bs.modal', function() {
+		$('#CodigoVendedor').focus().select();
+	});
+}
+
+var CerrarModalAsignarVendedor = function(){
+    
+	$("#ModalAsignarVendedor").modal("hide");
+	$('#TotalPreVenta').focus().select();
+}
+
+var AsignarVendedorPreVenta = function(){
+	$("#spanTituloModalPreVenta").text("Pre-Venta: " + $("#IdPreVenta").val() + " | Local: xxxx | Caja: xxxx | Vendedor: " +  $("#NombreVendedorPreVenta").val());
+	$("#NombreVendedor_DIV").text($("#NombreVendedorPreVenta").val());
+	$("#botonVendedorPreVenta").text($("#NombreVendedorPreVenta").val());
+}
+
+var ModalCliente = function(){
+    
+	$("#spanTituloModalCliente").text("Asignar Cliente a la Pre-Venta");
+    $("#ModalAsignarCliente").modal();
+	
+	$('#ModalAsignarCliente').on('shown.bs.modal', function() {
+		$('#RUTCliente').focus().select();
+	});
+}
+
+var ModalFormaPago = function(){
+    
+	//$("#TotalPagadoPreVenta").val(0);
+	CalcularSaldoPago();
+	
+	$("#spanTituloModalFP").text("Asignar Forma de Pago a la Pre-Venta");
+    $("#ModalAsignarFP").modal();
+}
+
+var BotonPagoEfectivo = function (){
+	console.log("Pago Efectivo");
+	
+	$("#IdPreVentaPago").val($("#IdPreVenta").val());
+	$("#IdFormaPagoPreVenta").val(0);
+	
+	var  MontoAPagar = ( parseFloat($("#SaldoPagoPreVenta").val()) * -1);
+	$("#MontoPagoEfectivo").val(MontoAPagar);
+	$("#NumeroTransaccionTarjeta").val(0);
+	$("#CodigoAprobacionTarjeta").val(0);
+	$("#FechaPrimeraCuota").val("01-01-2000");
+	$("#NumeroCuotasCredito").val(0);
+	$("#InteresMensualCredito").val(0);
+	$("#MontoFinalCredito").val(0);
+    $("#MontoCuotaCredito").val(0);
+	
+    $("#spanTituloModalFormaPago").text("Registrar Pago Efectivo");
+	$("#ModalIngresoPago").modal();	
+	
+	$("#InfoAddTC").hide();
+	$("#InfoAddCredito").hide();
+	
+	$("#divBotonM_FPE").hide();
+	$("#divBotonAC_FPE").show();
+	$("#botonGuardarFormaPago").text("Continuar");
+    //desbloquearInputsFPE();
+	
+	$('#ModalIngresoPago').on('shown.bs.modal', function() {
+		$('#MontoPagoEfectivo').focus().select();
+	});
+	
+	return false;
+}
+
+var BotonPagoCredito = function (){
+	console.log("Pago Credito");
+	ProcesarCargaPreferencias();
+	
+	$("#IdPreVentaPago").val($("#IdPreVenta").val());
+	$("#IdFormaPagoPreVenta").val(3);
+	
+	var  MontoAPagar = ( parseFloat($("#SaldoPagoPreVenta").val()) * -1);
+	$("#MontoPagoEfectivo").val(MontoAPagar);
+	$("#MontoAFinanciar").val(MontoAPagar);
+	
+	CalcularMontoCuotas();
+	
+	$("#FechaPrimeraCuota").val("");
+	$("#NumeroTransaccionTarjeta").val(0);
+	$("#CodigoAprobacionTarjeta").val(0);
+	
+	$("#InfoAddTC").hide();
+	$("#InfoAddCredito").show();
+
+	$("#divBotonM_FPE").hide();
+	$("#divBotonAC_FPE").show();
+	$("#botonGuardarFormaPago").text("Continuar");
+	
+    $("#spanTituloModalFormaPago").text("Registrar Pago Crédito Interno");
+	$("#ModalIngresoPago").modal();	
+	
+    //desbloquearInputsFPE();
+	
+	$('#ModalIngresoPago').on('shown.bs.modal', function() {
+		$('#RUTClienteCredito').focus().select();
+	});
+	return false;
+}
+
+var BotonPagoTD = function (){
+	console.log("Pago TD");
+	
+	$("#IdPreVentaPago").val($("#IdPreVenta").val());
+	$("#IdFormaPagoPreVenta").val(1);
+	
+	var  MontoAPagar = ( parseFloat($("#SaldoPagoPreVenta").val()) * -1);
+	$("#MontoPagoEfectivo").val(MontoAPagar);
+	$("#NumeroTransaccionTarjeta").val(0);
+	$("#CodigoAprobacionTarjeta").val(0);
+	$("#FechaPrimeraCuota").val("01-01-2000");
+	$("#NumeroCuotasCredito").val(0);
+	$("#InteresMensualCredito").val(0);
+	$("#MontoFinalCredito").val(0);
+    $("#MontoCuotaCredito").val(0);
+	
+    $("#spanTituloModalFormaPago").text("Registrar Pago Tarjeta de Debito / RedBanc / Tarjeta RUT");
+	$("#ModalIngresoPago").modal();	
+	
+	$("#InfoAddTC").show();
+	$("#InfoAddCredito").hide();
+	
+	$("#divBotonM_FPE").hide();
+	$("#divBotonAC_FPE").show();
+	$("#botonGuardarFormaPago").text("Continuar");
+    //desbloquearInputsFPE();
+	
+	$('#ModalIngresoPago').on('shown.bs.modal', function() {
+		$('#NumeroTransaccionTarjeta').focus().select();
+	});
+	
+	return false;
+}
+
+var BotonPagoTC = function (){
+	console.log("Pago TC");
+	
+	$("#IdPreVentaPago").val($("#IdPreVenta").val());
+	$("#IdFormaPagoPreVenta").val(2);
+	
+	var  MontoAPagar = ( parseFloat($("#SaldoPagoPreVenta").val()) * -1);
+	$("#MontoPagoEfectivo").val(MontoAPagar);
+	$("#NumeroTransaccionTarjeta").val(0);
+	$("#CodigoAprobacionTarjeta").val(0);
+	$("#FechaPrimeraCuota").val("01-01-2000");
+	$("#NumeroCuotasCredito").val(0);
+	$("#InteresMensualCredito").val(0);
+	$("#MontoFinalCredito").val(0);
+    $("#MontoCuotaCredito").val(0);
+	
+    $("#spanTituloModalFormaPago").text("Registrar Pago Tarjeta de Crédito / VISA / MASTERCARD ");
+	$("#ModalIngresoPago").modal();	
+	
+	$("#InfoAddTC").show();
+	$("#InfoAddCredito").hide();
+	
+	$("#divBotonM_FPE").hide();
+	$("#divBotonAC_FPE").show();
+	$("#botonGuardarFormaPago").text("Continuar");
+    //desbloquearInputsFPE();
+	
+	$('#ModalIngresoPago').on('shown.bs.modal', function() {
+		$('#NumeroTransaccionTarjeta').focus().select();
+	});
+	
+	return false;
+}
+
+var CancelarFormaPago = function(){
+    
+	$("#TotalPagadoPreVenta").val(0);
+	CalcularSaldoPago();
+	
+    $("#ModalIngresoPago").modal("hide");
+}
+
+var CerrarModalFormaPago = function(){
+    
+	$("#botonFormaPagoPreVenta").text("Total Pagado: " + $("#TotalPagadoPreVenta").val());
+    $("#ModalAsignarFP").modal("hide");
+	
+	$('#TotalPreVenta').focus().select();
+}
+
+var CerrarModalAsignarCliente = function(){
+    
+	$("#ModalAsignarCliente").modal("hide");
+	$('#TotalPreVenta').focus().select();
+}
+
+var AsignarClientePreVenta = function(){
+	$("#botonClientePreVenta").text($("#NombreClientePreVenta").val());
+	$("#NombreCliente_DIV").text($("#NombreClientePreVenta").val());
+	
+	var infoCliente = "Estado Cliente: " + $("#EstadoClientePreVenta").val();
+	$("#InfoCliente_DIV").text(infoCliente);
+	
+	var infoCliente2 = "Cupo Disponible: " + $("#CD_ClientePreVenta").val();
+	$("#InfoCliente2_DIV").text(infoCliente2);
+	
+	var infoCliente3 = "Primera Cuota : " + $("#PC_ClientePreVenta").val();
+	$("#InfoCliente3_DIV").text(infoCliente3);
+	
+}
+
+var AsignarIdPreVenta = function(IdVenta){
+	
+	$('#IdPreVenta').val(IdVenta);
+	$("#spanTituloModalPreVenta").text("Pre-Venta: " + $("#IdPreVenta").val() + " | Local: xxxx | Caja: xxxx | Vendedor: " +  $("#NombreVendedorPreVenta").val());
+}
+
+var PreVenta= function(){
+    $("#PreVentaStep_1").show();
+	$("#PreVentaStep_2").hide();
+	
+	//destruirTabla('#tablaDetalles');
+	$('#tablaDetalles thead').empty();
+	
+	$("#spanTituloModalPreVenta").text("Pre-Venta: xxxxx | Local: xxxx | Caja: xxxx | Vendedor: Desconocido");
+	$('#IdPreVenta').val(0);
+    $("#ModalPreVenta").modal();
+	
+	$('#ModalPreVenta').on('shown.bs.modal', function() {
+		$('#CodigoProductoPreVenta').focus().select();
+	});
+}
+
+var AgregarProductoPreVenta= function(){
+	var IdProducto = $("#IdProductoPreVenta").val();
+	
+	if(IdProducto.length > 0){
+		$('#FormPreVenta').formValidation('validate');
+	}else
+	{
+		 $.growl("Debe ingresar el Código del Producto!",{type: "warning", allow_dismiss: true,});
+		 $("#CodigoProductoPreVenta").focus();
+	}
+}
+
+var VolverPreVenta = function(){
+	$("#PreVentaStep_1").show();
+	$("#PreVentaStep_2").hide();
+}
+
+var ContinuarPreVenta = function(){
+	$("#PreVentaStep_1").hide();
+	$("#PreVentaStep_2").show();	
+}
+
+var VentaDirecta = function(){
     $("#VentaRapidaStep_1").show();
 	$("#VentaRapidaStep_2").hide();
 	
-	$("#spanTituloModalVentaRapida").text("Venta Rápida");
-    $("#ModalVentaRapida").modal();
+	$("#spanTituloModalVentaDirecta").text("Venta Directa");
+    $("#ModalVentaDirecta").modal();
 	
-	$('#ModalVentaRapida').on('shown.bs.modal', function() {
+	$('#ModalVentaDirecta').on('shown.bs.modal', function() {
 		$('#CodigoProducto').focus().select();
 	});
 }
 
-var ContinuarVenta = function(){
+var ContinuarVentaDirecta = function(){
 	$("#VentaRapidaStep_1").hide();
-	$("#VentaRapidaStep_2").show();
-	
-	
+	$("#VentaRapidaStep_2").show();	
 }
 
+var VentaPreVenta = function(){
+    $("#VentaPreVentaStep_1").show();
+	$("#VentaPreVentaStep_2").hide();
+	
+	$("#spanTituloModalVentaPreVenta").text("Venta x Pre-Venta");
+    $("#ModalVentaPreVenta").modal();
+	
+	$('#ModalVentaPreVenta').on('shown.bs.modal', function() {
+		$('#CodigoProducto').focus().select();
+	});
+}
+
+var ContinuarVentaPreVenta = function(){
+	$("#VentaPreVentaStep_1").hide();
+	$("#VentaPreVentaStep_2").show();	
+}
+
+/* Funciones Comunes de los formularios de PreVenta, Venta Directa y Venta Pre-Venta*/
+var validadorFormaPago = function(){
+	console.log("IdVenta Antes de Validar Formulario FormIngresoFP: " + $("#IdVenta").val());
+    $('#FormIngresoFP').formValidation('validate');
+};
+
+var CalcularMontosPreVenta = function(){
+    var CantidadPreVenta = $("#CantidadProductoPreVenta").val();
+	var PrecioPreVenta =  $("#PrecioProductoPreVenta").val();
+	var MontoDescuentoPreVenta = 0;
+	
+    var TotalLineaPreVenta = ((CantidadPreVenta * PrecioPreVenta) - MontoDescuentoPreVenta);
+    $("#TotalLineaPreVenta").val(TotalLineaPreVenta);
+}
+
+var CalcularSaldoPago = function(){
+	var totalPagado = parseFloat($("#TotalPagadoPreVenta").val());
+	var totalVendido = parseFloat($("#TotalPreVentaFP").val());
+	var saldoFinal = totalPagado - totalVendido;		
+	$("#SaldoPagoPreVenta").val(saldoFinal);
+	
+	console.log("Saldo Pendiente de Pago: " + saldoFinal +" - TotalPagado: " + totalPagado + " - TotalVendido: " +totalVendido);
+}
+	
+var CalcularMontoCuotas = function(){
+	var montoCredito = $("#MontoAFinanciar").val();
+	var numeroCuotas = $("#NumeroCuotasCredito").val();
+	var interesMensual = $("#InteresMensualCredito").val();
+	
+    var montoFinalCredito = montoCredito * ( 1 + (numeroCuotas * interesMensual/100));
+    var montoCuota = montoFinalCredito / numeroCuotas;
+    $("#MontoFinalCredito").val(Math.round(montoFinalCredito));
+    $("#MontoCuotaCredito").val(Math.round(montoCuota));
+}
+
+var EliminarPago = function(IdDetallePago){
+	console.log("Eliminando Pago: " + rutaEP + " - IdDetallePago: " + IdDetallePago);
+    parametroAjax.ruta=rutaEP;
+    parametroAjax.data = {IdDetallePago:IdDetallePago};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaEliminarPago(respuesta);
+}
+
+var verificarRut = function(control,caso){
+    var res = Valida_Rut(control);
+    var format = formateaRut(control.val(), res);
+    if (format != false){
+        errorRut = 0;
+        errorRut2 = 0;
+        if (caso==1){buscarCliente(format);$("#ErrorRut").text("");}
+        if (caso==2){$("#ErrorRut2").text("");}
+        if (caso==3){buscarEmpresa(format);$("#ErrorRut3").text("");}
+		if (caso==4){buscarClienteVC(format);$("#ErrorRutCredito").text("");}
+        return format;
+    }else{
+        if (caso==1){errorRut = 1;$("#ErrorRut").text("RUT Cliente inválido");}
+        if (caso==2){errorRut2 = 1;$("#ErrorRut2").text("Rut invalido");}
+        if (caso==3){errorRut3 = 1;$("#ErrorRut3").text("Rut invalido");}
+		if (caso==4){errorRut4 = 1;$("#ErrorRutCredito").text("Rut invalido");}
+        return control.val();
+    }
+}
+
+var ProcesarCargaPreferencias = function(){
+    parametroAjax.ruta=rutaPVC;
+    parametroAjax.data = $("#FormIngresoFP").serialize();
+    respuesta=procesarajax(parametroAjax);
+	console.log("Respuesta: " + respuesta);
+	
+    ManejoRespuestaProcesarCargaPreferencias(respuesta);
+};
+
+var ProcesarFormaPago = function(){
+    parametroAjax.ruta=rutaFP;
+    parametroAjax.data = $("#FormIngresoFP").serialize();
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaProcesarFormaPago(respuesta);
+};
+
+var buscarClienteVC = function(RUTCliente){
+    parametroAjax.ruta=rutaBCC;
+    parametroAjax.data = {RUTCliente:RUTCliente};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaBuscarClienteVC(respuesta);
+}
+
+var buscarCliente = function(RUTCliente){
+    parametroAjax.ruta=rutaBC;
+    parametroAjax.data = {RUTCliente:RUTCliente};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaBuscarCliente(respuesta);
+}
+
+var buscarProducto = function(CodigoBarra){
+	if(CodigoBarra.length > 0){
+		parametroAjax.ruta=rutaBPD;
+		parametroAjax.data = {CodigoBarra:CodigoBarra};
+		respuesta=procesarajax(parametroAjax);
+		
+		ManejoRespuestaBuscarProductoPreVenta(respuesta);
+	}else{
+		//$.growl("Debe ingresar el Código del Producto!",{type: "warning", allow_dismiss: true,});
+		//$("#CodigoProductoPreVenta").focus();
+	}
+}
+
+var buscarVendedor = function(CodigoVendedor){
+	if(CodigoVendedor.length > 0){
+		parametroAjax.ruta=rutaBV;
+		parametroAjax.data = {RUTVendedor:CodigoVendedor};
+		respuesta=procesarajax(parametroAjax);
+		
+		ManejoRespuestaBuscarVendedorPreVenta(respuesta);
+	}else{
+		//$.growl("Debe ingresar el Código del Producto!",{type: "warning", allow_dismiss: true,});
+		//$("#CodigoProductoPreVenta").focus();
+	}
+}
+
+var ManejoRespuestaBuscarProductoPreVenta = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta!=null){
+            if(respuesta.respuesta.producto.IdProducto){
+                if(respuesta.respuesta.producto.IdProducto==0){
+                    $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
+                }else{
+                    $("#IdProductoPreVenta").val(respuesta.respuesta.producto.IdProducto);
+                    $("#NombreProductoPreVenta").val(respuesta.respuesta.producto.NombreProducto);
+                    $("#PrecioProductoPreVenta").val(respuesta.respuesta.producto.PrecioVentaSugerido);
+                    $("#CantidadProductoPreVenta").val(1);
+					
+					CalcularMontosPreVenta();
+                } 
+            } 
+        }else{
+            $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
+    }
+}
+
+var ManejoRespuestaBuscarVendedorPreVenta = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta.v_usuario!=null){
+            if(respuesta.respuesta.v_usuario.idUser){
+                if(respuesta.respuesta.v_usuario.idUser==0){
+                    $.growl({message:"Vendedor no encontrado"},{type: "warning", allow_dismiss: true});
+					
+					$("#IdVendedorPreVenta").val(0);
+                    $("#NombreVendedorPreVenta").val("¡Vendedor No Identificado!");
+					
+                }else{
+                    $("#IdVendedorPreVenta").val(respuesta.respuesta.v_usuario.idUser);
+                    $("#NombreVendedorPreVenta").val(respuesta.respuesta.v_usuario.usrNombreFull);
+                } 
+				
+				
+            } 
+        }else{
+            $.growl({message:"Vendedor no encontrado"},{type: "warning", allow_dismiss: true});
+			
+			$("#IdVendedorPreVenta").val(0);
+			$("#NombreVendedorPreVenta").val("¡Vendedor No Identificado!");
+        }
+		
+		AsignarVendedorPreVenta();
+		
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
+    }
+}
+
+var ManejoRespuestaProcesarFormaPago = function(respuesta){
+    if(respuesta.code==200){
+        var res = JSON.parse(respuesta.respuesta.f_registro);
+        switch(res.code) {
+            case '200':
+                $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
+                $("#ModalIngresoPago").modal("hide");
+				
+				//$(".divBotonesC").toggle();
+                //$('#IdVenta2').val("");
+                $('#FormIngresoFP')[0].reset();
+                CargarTablaPagos(respuesta.respuesta.v_pagos);
+				console.log("Pago Procesado!!!");
+				
+                break;
+            case '-2':
+                $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
+                break;
+            default:
+                $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+                break;
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
+var ProcesarProductoPreVenta = function(){
+    if(errorRut == 0){
+        parametroAjax.ruta=rutaPV;
+        parametroAjax.data = $("#FormPreVenta").serialize();
+        respuesta=procesarajax(parametroAjax);
+        ManejoRespuestaProcesarProductoPreVenta(respuesta);
+    }
+};
+
+var ManejoRespuestaProcesarProductoPreVenta = function(respuesta){
+    if(respuesta.code==200){
+        var res = JSON.parse(respuesta.respuesta.f_registro);
+        switch(res.code) {
+            case '200':
+                $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
+				
+				$("#IdProductoPreVenta").val("");
+                $("#NombreProductoPreVenta").val("");
+                $("#PrecioProductoPreVenta").val("");
+                $("#CantidadProductoPreVenta").val(1);
+				$("#CodigoProductoPreVenta").val("");
+				
+				//$('#IdPreVenta').val(respuesta.respuesta.v_cabecera[0].idPreVenta);
+				AsignarIdPreVenta(respuesta.respuesta.v_cabecera[0].idPreVenta);
+				
+				CargarTablaProductosPreVenta(respuesta.respuesta.v_detalles);
+				
+				$("#CodigoProductoPreVenta").focus();
+				
+                break;
+            case '-2':
+                $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
+                break;
+            default:
+                $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+                break;
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+
+};
+
+var ManejoRespuestaBuscarCliente = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta!=null){
+            if(respuesta.respuesta.IdCliente==0){
+                // var rut = $("#RUTProveedor").val();
+                // $("#RUTProveedor2").val(rut);
+                // $("#ModalProveedor").modal();
+            }else{
+                $("#IdClientePreVenta").val(respuesta.respuesta.IdCliente);
+                $("#NombreClientePreVenta").val(respuesta.respuesta.NombreCliente);
+				$("#CA_ClientePreVenta").val(respuesta.respuesta.CupoAutorizado);
+				$("#CU_ClientePreVenta").val(respuesta.respuesta.CupoUtilizado);
+				$("#CD_ClientePreVenta").val($("#CA_ClientePreVenta").val() - $("#CU_ClientePreVenta").val() );
+				$("#EstadoClientePreVenta").val(respuesta.respuesta.EstadoCliente);
+				$("#PC_ClientePreVenta").val("01-01-2099");
+				
+				AsignarClientePreVenta();
+            }    
+        }else{
+            $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
+        }
+		
+		
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
+var ManejoRespuestaEliminarPago = function(respuesta){
+    
+	if(respuesta.code==200){
+        if(respuesta.respuesta!=null){
+			
+			switch(respuesta.code) {
+				case '200':	
+					$.growl({message:"Pago eliminado correctamente..."},{type: "success", allow_dismiss: true,});
+					CargarTablaPagos(respuesta.respuesta.v_pagos);
+					break;
+				case '-2':
+					$.growl({message:"Error---"},{type: "warning", allow_dismiss: true,});
+					break;
+				default:
+					$.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+					break;
+			}
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+
+}
+
+var ManejoRespuestaProcesarCargaPreferencias = function(respuesta){	
+    if(respuesta.code==200){
+		
+        if(respuesta.respuesta!=null){
+			
+            if(respuesta.respuesta.IdCliente==0){
+                $("#NumeroCuotasCredito").val(6);
+				$("#InteresMensualCredito").val(2.5);
+            }else{
+                $("#NumeroCuotasCredito").val(respuesta.respuesta.v_pvc.NumeroMaxCuotas);
+                $("#InteresMensualCredito").val(respuesta.respuesta.v_pvc.InteresMensual);
+            }    
+        }else{
+            $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
+var ManejoRespuestaBuscarClienteVC = function(respuesta){
+	
+	console.log("ManejoRespuestaBuscarClienteVC...");
+	
+    if(respuesta.code==200){
+        if(respuesta.respuesta.v_cliente!=null){
+            $("#IdClienteVC").val(respuesta.respuesta.v_cliente[0].IdCliente);
+            $("#NombreClienteCredito").val(respuesta.respuesta.v_cliente[0].NombreCliente);
+            $("#FechaPrimeraCuota").val(respuesta.respuesta.v_fechas.fechaPago);
+        }else{
+            $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
+var CargarTablaPagos = function(data){
+    if(limpiarPagos==1) { destruirTabla('#tablaPagos'); $('#tablaPagos thead').empty();}
+	
+	$("#tablaPagos").dataTable({
+		
+		"footerCallback": function (data){
+		var api = this.api(), data;
+		// Remove the formatting to get integer data for summation
+		var intVal = function (i){
+			return typeof i === 'string' ?
+				i.replace(/[\$,]/g, '')*1 :
+				typeof i === 'number' ?
+					i : 0;
+		};
+		// Total over all pages
+		totalPago = api
+			.column(4)
+			.data()
+			.reduce( function (a, b) {
+				return intVal(a) + intVal(b);
+			}, 0 );
+		},
+		
+		responsive:false,
+		"bSort": false,
+		"scrollCollapse": false,
+		"paging": false,
+		"searching": false,
+		"info":false,			
+		"pageLength": 50, 
+		
+		"data": data,
+		"columns":[
+			{"title": "",
+			 "data": "IdDetallePago",
+				"render": function(data, type, row, meta){
+					var result = `
+					<center>
+					<a href="#" onclick="EliminarPago(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Eliminar Pago" data-original-title="Delete">
+						<i class="icofont icofont-ui-delete"></i>
+					</a>
+					</center>`;
+					return result;
+				}
+			},
+			{"title": "Id Pago","data": "IdDetallePago",visible:0},
+			{"title": "Id Pre-Venta","data": "IdPreVenta",visible:0},
+			{"title": "Forma de Pago","data": "FormaPago", width: 200,  className: "text-left"},
+			{"title": "Monto Pagado","data": "MontoPagado", width: 300, className: "text-right", render: $.fn.dataTable.render.number('.',',',2) }
+		],   
+		
+	});
+
+	limpiarPagos=1;
+	console.log("Total Pagos: " + totalPago);
+	$("#TotalPagadoPreVenta").val(totalPago);
+	CalcularSaldoPago();
+};
+
+var CargarTablaProductosPreVenta = function(data){
+    if(limpiarImpuestos==1){
+		destruirTabla('#tablaDetalles');
+		$('#tablaDetalles thead').empty();
+		console.log("limpiarImpuestos: " + limpiarImpuestos);
+	}
+             
+	$("#tablaDetalles").dataTable({
+		
+		"footerCallback": function (data){
+		var api = this.api(), data;
+		// Remove the formatting to get integer data for summation
+		var intVal = function (i){
+			return typeof i === 'string' ?
+				i.replace(/[\$,]/g, '')*1 :
+				typeof i === 'number' ?
+					i : 0;
+		};
+		// Total over all pages
+		totalPV = api
+			.column(7)
+			.data()
+			.reduce( function (a, b) {
+				return intVal(a) + intVal(b);
+			}, 0 );
+		},
+		responsive:false,
+		"bSort": false,
+		"scrollCollapse": false,
+		"paging": false,
+		"searching": false,
+		"info":false,			
+		"pageLength": 50, 
+		"columnDefs": [
+			{"targets": [ 1 ],"searchable": true},
+			{"sWidth": "1px", "aTargets": [8]}
+		],
+		"data": data,
+		"columns":[
+		   
+			{"title": "Id","data": "IdDetallePreVenta",visible:0},
+			{"title": "IdPreVenta","data": "IdPreVenta",visible:0},
+			{"title": "IdProducto","data": "IdProducto",visible:0},
+			{"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
+			{"title": "Producto","data": "NombreProducto", 
+						width: 800},
+			{"title": "Precio Venta","data": "ValorUnitarioVenta", 
+						width: 100,
+						render: $.fn.dataTable.render.number( '.', ',', 2 ),
+						className: "text-right"},
+			{"title": "Cantidad","data": "CantidadPreVenta", 
+						width: 50,
+						render: $.fn.dataTable.render.number( '.', ',', 2 ),
+						className: "text-center"},
+			{"title": "Total","data": "TotalLinea", 
+						width: 100,
+						render: $.fn.dataTable.render.number( '.', ',', 2 ),
+						className: "text-right"},
+			{"title": "",
+				"data": "IdDetallePreVenta",
+				width: 100,
+				"render": function(data, type, row, meta){
+					var result = `
+					<center>
+					
+					 <a href="#" onclick="cambiarEstatusPreventa(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+						<i class="icofont icofont-ui-delete"></i>
+					</a>
+					</center>`;
+					return result;
+				}
+			},
+			{"title": "Factor Impuesto","data": "FactorImpuesto",visible:0},
+			{"title": "Valor Impuestos","data": "ValorImpuestos",visible:0},
+			{"title": "Monto Descuento","data": "MontoDescuento",visible:0},
+			
+			{"title": "Estado","data": "EstadoPreVentaDetalle",visible:0},
+			{"title": "Estado","data": "desEstadoPreventaDetalle",visible:0}
+		]
+	});
+
+	limpiarImpuestos=1;
+	console.log("totalPV: " + totalPV);
+	$("#TotalPreVenta_").val("$" + totalPV);
+	$("#TotalPreVenta").val("$" + totalPV);
+	$("#TotalPreVentaFP").val(totalPV);
+	
+	//calcularTotalPreVenta(totalPV);
+};
+
+
 // var calcularMontos = function(CantidadVenta,ValorUnitarioVenta,FactorImpuesto,MontoDescuento){
-    // var ValorImpuesto = (CantidadVenta * ValorUnitarioVenta * FactorImpuesto / 100)
+    // var ValorImpuesto = (CantidadVent * ValorUnitarioVenta * FactorImpuesto / 100)
     // $("#ValorImpuestos").val(ValorImpuesto);
     // var TotalLinea = ((CantidadVenta * ValorUnitarioVenta) - MontoDescuento);
     // $("#TotalLinea").val(TotalLinea);
@@ -167,13 +1080,13 @@ var ContinuarVenta = function(){
     // }
 // }
 
-var ManejoRespuestaProcesarD = function(respuesta){
-    if(respuesta.code==200){
-        cargarDetalleCajaDiaria(respuesta.respuesta);
-    }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-    }
-}
+// var ManejoRespuestaProcesarD = function(respuesta){
+    // if(respuesta.code==200){
+        // cargarDetalleCajaDiaria(respuesta.respuesta);
+    // }else{
+        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    // }
+// }
 
 // // Manejo Activar / Desactivar compra
 // var ManejoRespuestaProcesarI = function(respuesta){
@@ -978,12 +1891,12 @@ var ManejoRespuestaProcesarD = function(respuesta){
     // ManejoRespuestaProcesarI(respuesta);
 // }
 
-var verDetallesCajaDiaria = function(IdCaja){
-    parametroAjax.ruta=rutaB;
-    parametroAjax.data = {IdCaja:IdCaja};
-    respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaProcesarD(respuesta);
-}
+// var verDetallesCajaDiaria = function(IdCaja){
+    // parametroAjax.ruta=rutaB;
+    // parametroAjax.data = {IdCaja:IdCaja};
+    // respuesta=procesarajax(parametroAjax);
+    // ManejoRespuestaProcesarD(respuesta);
+// }
 
 // var verDetallesDetalleVenta = function(IdDetalleVenta){
     // parametroAjax.ruta=rutaBDC;

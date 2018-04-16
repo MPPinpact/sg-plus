@@ -131,6 +131,8 @@ Route::post('/preventadc', 'PreventaController@postRegistrarDetallec')->name('pr
 Route::post('/preventabdc', 'PreventaController@postBuscarDetallec')->name('preventabdc');
 Route::post('/preventacp', 'PreventaController@postCerrarPreventa')->name('preventacp');
 Route::post('/preventada', 'PreventaController@postPreventadetalleactiva')->name('preventada');
+Route::post('/preventaRP', 'PreventaController@postRegistrarPagoPreVenta')->name('preventaRP');
+Route::post('/preventaEP', 'PreventaController@postDetallePagoActiva')->name('preventaEP');
 
 //CRUd venta
 Route::get('/ventas', 'VentaController@getVentas')->name('ventas');
@@ -157,7 +159,7 @@ Route::get('/cajaDiariaDetalle', 'PuntoVentaController@getCajaDiariaDetalle')->n
 Route::get('/cajaDiariaResumenVenta', 'PuntoVentaController@getCajaDiariaResumenVenta')->name('cajaDiariaResumenVenta');
 Route::get('/cajaDiariaDetalleVenta', 'PuntoVentaController@getCajaDiariaDetalleVenta')->name('cajaDiariaDetalleVenta');
 
-
+Route::post('/addProductPV', 'PreventaController@postAddProductPreVenta')->name('addProductPV');
 
 
 //CRUD Vendedores
