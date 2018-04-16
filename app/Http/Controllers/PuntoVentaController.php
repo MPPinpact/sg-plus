@@ -21,6 +21,8 @@ use Storage;
 use DB;
 
 use App\Models\CajaDiaria;
+use App\Models\Cliente;
+use App\Models\Usuario;
 
 class PuntoVentaController extends Controller
 {
@@ -43,11 +45,13 @@ class PuntoVentaController extends Controller
     public function getPuntoVenta()
     {
         $model= new CajaDiaria();
-		$data['v_puntoVenta'] = array();
+        $data['v_puntoVenta'] = array();
+        $modelCD = new CajaDiaria();
+        $data['v_formas_pago'] = $modelCD->listFormasPago();
         return View::make('puntoVenta.puntoVenta',$data);;
     }
-	
-	public function getCajaDiaria()
+    
+    public function getCajaDiaria()
     {
         $modelCD = new CajaDiaria();
         $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
@@ -61,18 +65,14 @@ class PuntoVentaController extends Controller
     {
         $datos = $request->all();
 		$modelCD = new CajaDiaria();
-		
 		//$IdCaja = $datos['IdCaja'];
 		$IdCaja = 6;
-
         $data['v_resumen_ventas'] = $modelCD->resumenVentas($IdCaja);
 		$data['v_resumen_pagos'] = $modelCD->resumenPagos($IdCaja);
 		$data['v_resumen_otros_movimientos'] = $modelCD->resumenOM($IdCaja);
-		
 		log::info($data['v_resumen_ventas']);
 		log::info($data['v_resumen_ventas']);
 		log::info($data['v_resumen_otros_movimientos']);
-		
         return View::make('puntoVenta.cajaDiariaResumen',$data);
     }
 
@@ -87,9 +87,7 @@ class PuntoVentaController extends Controller
 	{
 		$modelCD = new CajaDiaria();
         $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
-		
 		log::info($data['v_cajas_diarias']);
-		
         return View::make('puntoVenta.cajaDiariaResumenVenta',$data);
 	}
 	
@@ -97,9 +95,7 @@ class PuntoVentaController extends Controller
 	{
 		$modelCD = new CajaDiaria();
         $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
-		
 		log::info($data['v_cajas_diarias']);
-		
         return View::make('puntoVenta.cajaDiariaDetalle',$data);
 	}
 	
@@ -107,9 +103,7 @@ class PuntoVentaController extends Controller
 	{
 		$modelCD = new CajaDiaria();
         $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
-		
 		log::info($data['v_cajas_diarias']);
-		
         return View::make('puntoVenta.cajaDiariaDetalleVenta',$data);
 	}
 
@@ -146,10 +140,8 @@ class PuntoVentaController extends Controller
     protected function postCompradetalleactiva(Request $request){
         $datos = $request->all();
         $model= new Venta();
-        
 		$detalle = $model->getOneCompraDetalle($datos['IdDetalleCompra']);
         $result['activar'] = $model->activarCompraDetalle($detalle);
-		
         $result['v_detalles'] = $model->getDetallesCompra($detalle[0]->IdCompra);
         return $result;
     }
@@ -166,40 +158,30 @@ class PuntoVentaController extends Controller
 	protected function postDetallePagoActiva(Request $request){
         $datos = $request->all();
 		$model = new Venta();
-		
 		log::info("IdDetallePago: ". $datos['IdDetallePago']);
-		
 		$pago = $model->getOnePagoVenta($datos['IdDetallePago']);		
         $detalle = $model->activarDetallePago($datos['IdDetallePago']);
         $result['v_pagos'] = $model->getDetallePago($pago->IdVenta);
-		
         return $result;
     }
 	
 	protected function postCargaPreferenciasCredito(Request $request){
         $datos = $request->all();
 		$modelVC = new VentaCredito();
-		
 		$pvr = $modelVC->listPrefenciActiva();	
 		$result['v_pvc'] = $pvr;
-		
         return $result;
     }
 	
 	protected function postFinalizarVenta(Request $request){
         $datos = $request->all();
 		$model = new Venta();
-		
 		$IdVenta = $datos['IdVenta'];
-		
 		log::info($datos);
 		log::info("En el controller...");
 		log::info("Inicio Función Finaliza Venta: " . $IdVenta );
-		
 		$finalizaVenta = $model->regFinalizarVenta($IdVenta);
-		
 		//log::info($finalizaVenta);
-		
 		log::info("FIn Función Finaliza Venta: " . $IdVenta);
         return;
     }
@@ -279,4 +261,21 @@ class PuntoVentaController extends Controller
         log::info($result);
         return $result;   
     }
+
+    protected function postBuscarClienteDetalleCredito(Request $request){
+        $datos = $request->all();
+        $model= new Usuario();
+        $datos['RUTCliente']=$model->LimpiarRut($datos['RUTCliente']);
+        $model= new Cliente();
+        $result['caso'] = $datos['Caso']; 
+        $result['v_cliente'] = $model->buscarClienteDetalleCredito($datos);
+        return $result;
+    }
+
+    protected function postPagarCuenta(Request $request){
+        $datos = $request->all();
+        log::info($datos);
+        return $datos;
+    }
+
 }

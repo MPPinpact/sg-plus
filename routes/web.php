@@ -159,7 +159,15 @@ Route::get('/cajaDiariaDetalle', 'PuntoVentaController@getCajaDiariaDetalle')->n
 Route::get('/cajaDiariaResumenVenta', 'PuntoVentaController@getCajaDiariaResumenVenta')->name('cajaDiariaResumenVenta');
 Route::get('/cajaDiariaDetalleVenta', 'PuntoVentaController@getCajaDiariaDetalleVenta')->name('cajaDiariaDetalleVenta');
 
+<<<<<<< HEAD
 Route::post('/addProductPV', 'PreventaController@postAddProductPreVenta')->name('addProductPV');
+=======
+
+Route::post('/buscarCDC', 'PuntoVentaController@postBuscarClienteDetalleCredito')->name('buscarCDC');
+Route::post('/pagarCuenta', 'PuntoVentaController@postPagarCuenta')->name('pagarCuenta');
+
+
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 
 
 //CRUD Vendedores
@@ -168,6 +176,10 @@ Route::post('/vendedores', 'VendedorController@postvendedor')->name('vendedores'
 Route::post('/activarVen', 'VendedorController@postVendedoractivo')->name('activarVen');
 Route::post('/detallesVen', 'VendedorController@postVendedordetalle')->name('detallesVen');
 Route::post('/buscarVen', 'VendedorController@postBuscarVen')->name('buscarVen');
+/// Registro de Metas
+Route::post('/metas', 'VendedorController@postMetas')->name('metas');
+Route::post('/metasE', 'VendedorController@postMetaselimiar')->name('metasE');
+Route::post('/metasD', 'VendedorController@postMetasdetalles')->name('metasD');
 
 //CRUD Formas de Pago
 Route::get('/FormaPago', 'FormaPagoController@getFormaPago')->name('FormaPago');

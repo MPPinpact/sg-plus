@@ -44,7 +44,11 @@ class Vendedor extends Authenticatable
         return DB::table('v_estados')->get();
     }
 
-    // registrar una nueva vendedor
+    public function listVendedorMetas($IdVendedor){
+        return DB::table('v_vendedores_metas')->where('IdVendedor',$IdVendedor)->get();
+    }
+
+    // registrar una nuevo vendedor
     public function regVendedor($datos){
         $idAdmin = Auth::id();
         $datos['IdVendedor']==null ? $Id=0 : $Id= $datos['IdVendedor'];
@@ -55,6 +59,20 @@ class Vendedor extends Authenticatable
         }
         return $result;
     }
+
+
+    // registrar una nueva meta
+    public function regMetas($datos){
+        $idAdmin = Auth::id();
+        $datos['IdMeta']==null ? $Id=0 : $Id= $datos['IdMeta'];
+        $sql="select f_registro_meta(".$Id.",".$datos['IdVendedor2'].",'".$datos['PeriodoVentaInicio']."','".$datos['PeriodoVentaFin']."','".$datos['MetaPeriodo']."',".$idAdmin.")";
+        $execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
+
 
 
     // Activar / Desactivar vendedor
@@ -70,8 +88,18 @@ class Vendedor extends Authenticatable
                 ->update($values);
     }
 
+    public function delMetas($IdMeta){
+        return DB::table('vendedores_metas')->where('IdMeta', '=', $IdMeta)->delete();
+
+    }
+
     public function getOneDetalle($IdVendedor){
         return DB::table('v_vendedores')->where('IdVendedor',$IdVendedor)->get();
     }
+
+    public function getOneDetalleM($IdMeta){
+        return DB::table('v_vendedores_metas')->where('IdMeta',$IdMeta)->get();
+    }
+    
 
 }

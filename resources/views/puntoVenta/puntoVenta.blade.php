@@ -243,15 +243,26 @@
 					<div class="row" >
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
+<<<<<<< HEAD
 								<input id="RUTClienteCredito_" name="RUTClienteCredito_" type="text" class="md-form-control" maxlength="250" />
 								<label for="RUTClienteCredito_">RUT Cliente</label>
 								<small id="ErrorRutCredito" class="rut-error"></small>
+=======
+								<input id="RUTClienteConsultaCredito" name="RUTClienteConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" />
+								<label for="RUTClienteConsultaCredito">RUT Cliente</label>
+								<small id="ErrorRutConsultaCredito" class="rut-error"></small>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 							</div>
 						</div>
 						<div class="col-md-9">
 							<div class="md-input-wrapper">
+<<<<<<< HEAD
 								<input id="NombreClienteCredito_" name="NombreClienteCredito_" type="text" class="md-form-control" maxlength="250" readonly />
 								<label for="NombreClienteCredito_">Nombre Cliente</label>
+=======
+								<input id="NombreClienteConsultaCredito" name="NombreClienteConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
+								<label for="NombreClienteConsultaCredito">Nombre Cliente</label>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 							</div>
 						</div>
 					</div>
@@ -259,20 +270,35 @@
 					<div class="row">
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
+<<<<<<< HEAD
 								<input id="MontoAFinanciar_" name="MontoAFinanciar_" type="text" class="md-form-control" maxlength="250" />
 								<label for="MontoAFinanciar_">Crédito Autoriizado</label>
+=======
+								<input id="CreditoAutorizadoConsultaCredito" name="CreditoAutorizadoConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" />
+								<label for="CreditoAutorizadoConsultaCredito">Crédito Autorizado</label>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
+<<<<<<< HEAD
 								<input id="NumeroCuotasCredito_" name="NumeroCuotasCredito_" type="text" class="md-form-control" maxlength="250" />
 								<label for="NumeroCuotasCredito_">Crédito Utilizado</label>
+=======
+								<input id="CreditoUtilizadoConsultaCredito" name="CreditoUtilizadoConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" />
+								<label for="CreditoUtilizadoConsultaCredito">Crédito Utilizado</label>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
+<<<<<<< HEAD
 								<input id="InteresMensualCredito_" name="InteresMensualCredito_" type="text" class="md-form-control" maxlength="250" readonly />
 								<label for="InteresMensualCredito_">Crédito Disponible</label>
+=======
+								<input id="CreditoDisponibleConsultaCredito" name="CreditoDisponibleConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
+								<label for="CreditoDisponibleConsultaCredito">Crédito Disponible</label>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 							</div>
 						</div>
 					</div>
@@ -280,20 +306,35 @@
 					<div class="row">
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
+<<<<<<< HEAD
 								<input id="MontoAFinanciar_" name="MontoAFinanciar_" type="text" class="md-form-control" maxlength="250" />
 								<label for="MontoAFinanciar_">Última Compra Realizada</label>
+=======
+								<input id="UltimaCompraConsultaCredito" name="UltimaCompraConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" />
+								<label for="UltimaCompraConsultaCredito">Última Compra Realizada</label>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
+<<<<<<< HEAD
 								<input id="NumeroCuotasCredito_" name="NumeroCuotasCredito_" type="text" class="md-form-control" maxlength="250" />
 								<label for="NumeroCuotasCredito_">Último Pago Realizado</label>
+=======
+								<input id="UltimoPagoConsultaCredito" name="UltimoPagoConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" />
+								<label for="UltimoPagoConsultaCredito">Último Pago Realizado</label>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
+<<<<<<< HEAD
 								<input id="InteresMensualCredito_" name="InteresMensualCredito_" type="text" class="md-form-control" maxlength="250" readonly />
 								<label for="InteresMensualCredito_">Último Monto Facturado</label>
+=======
+								<input id="UltimoMontoFacturadoConsultaCredito" name="UltimoMontoFacturadoConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
+								<label for="UltimoMontoFacturadoConsultaCredito">Último Monto Facturado</label>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 							</div>
 						</div>
 					</div>
@@ -301,15 +342,20 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="md-input-wrapper">
+<<<<<<< HEAD
 								<input id="MontoPagoEfectivo_" name="MontoPagoEfectivo_" type="text" class="md-form-control" maxlength="250" readonly />
 								<label for="MontoPagoEfectivo_">Estado Cliente</label>
+=======
+								<input id="EstadoClienteConsultaCredito" name="EstadoClienteConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
+								<label for="EstadoClienteConsultaCredito">Estado Cliente</label>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 							</div>
 						</div>
 					</div>
 					
 					<div class="row" id="">
 						<div class="col-md-12">
-							<button id="cancelarFPE" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
+							<button id="cancelarFPE" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block" data-dismiss="modal">
 								Cerrar
 							</button>
 						</div>
@@ -337,13 +383,20 @@
 					<div class="row" >
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
+<<<<<<< HEAD
 								<input id="RUTClienteCredito_" name="RUTClienteCredito_" type="text" class="md-form-control" maxlength="250" />
 								<label for="RUTClienteCredito_">RUT Cliente</label>
 								<small id="ErrorRutCredito" class="rut-error"></small>
+=======
+								<input id="RUTClientePagoCredito" name="RUTClientePagoCredito" type="text" class="md-form-control md-valid" maxlength="250" />
+								<label for="RUTClientePagoCredito">RUT Cliente</label>
+								<small id="ErrorRutPagoCredito" class="rut-error"></small>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 							</div>
 						</div>
 						<div class="col-md-9">
 							<div class="md-input-wrapper">
+<<<<<<< HEAD
 								<input id="NombreClienteCredito_" name="NombreClienteCredito_" type="text" class="md-form-control" maxlength="250" readonly />
 								<label for="NombreClienteCredito_">Nombre Cliente</label>
 							</div>
@@ -844,10 +897,15 @@
 									<i class="icofont icofont-circled-right"> </i> Continuar Pre-Venta
 								</button>
 								
+=======
+								<input id="NombreClientePagoCredito" name="NombreClientePagoCredito" type="text" class="md-form-control md-valid" maxlength="250" readonly />
+								<label for="NombreClientePagoCredito">Nombre Cliente</label>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 							</div>
 						</div>
 					</div>
 					
+<<<<<<< HEAD
 					<div id="PreVentaStep_2" style="display: none;" >
 						<div class="row">
 							<div class="col-md-12">
@@ -899,10 +957,61 @@
 								<button id="botonFinalizarPreVenta" name="botonFinalizarPreVenta"  type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
 									<i class="icofont icofont-ui-check"></i> Finalizar 
 								</button>
+=======
+					<div class="row">
+						<div class="col-md-4">
+							<div class="md-input-wrapper">
+								<input id="MontoFacturadoClientePagoCredito" name="MontoFacturadoClientePagoCredito" type="text" class="md-form-control md-valid" maxlength="250" readonly/>
+								<label for="MontoFacturadoClientePagoCredito">Monto Facturado</label>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="md-input-wrapper">
+								<input id="FechaVencimientoClientePagoCredito" name="FechaVencimientoClientePagoCredito" type="text" class="md-form-control md-valid" maxlength="250" readonly/>
+								<label for="FechaVencimientoClientePagoCredito">Fecha de Vencimiento</label>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="md-input-wrapper">
+								<input id="DeudaTotalClientePagoCredito" name="DeudaTotalClientePagoCredito" type="text" class="md-form-control md-valid" maxlength="250" readonly />
+								<label for="DeudaTotalClientePagoCredito">Deuda Total</label>
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="row">
+						<div class="col-md-4">
+							<div class="md-input-wrapper">
+								<input id="MontoClientePagoCredito" name="MontoClientePagoCredito" type="text" class="md-form-control md-valid" maxlength="250" />
+								<label for="MontoClientePagoCredito">Monto a Pagar</label>
+							</div>
+						</div>
+						
+						<div class="col-md-8">
+							<div class="md-input-wrapper">
+								<select name="IdFormaPagoCredito" id="IdFormaPagoCredito" class="md-disable md-valid"></select>
+								<label for="InteresMensualCredito">Forma de Pago</label>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 							</div>
 						</div>
 					</div>
 					
+<<<<<<< HEAD
+=======
+					<div class="row" id="">
+						<div class="col-md-6">
+							<button id="botonCanelarPago" name="botonCanelarPago" type="button" data-dismiss="modal" class="btn-xlg btn-danger waves-effect waves-light  btn-block">
+								Cancelar
+							</button>
+						</div>
+						<div class="col-md-6">
+							<button id="botonPagarCuenta" name="botonPagarCuenta" type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
+								Pagar
+							</button>
+						</div>
+					</div>	
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 				{!! Form::close() !!}
             </div>
         </div>
@@ -1340,6 +1449,7 @@
 		</div>
     </div>
 </div>
+<<<<<<< HEAD
 
 <script Language="Javascript">
 var rutaBPD = "{{ URL::route('preventabpd') }}"
@@ -1352,6 +1462,15 @@ var rutaPVC = "{{ URL::route('ventasPVC')  }}"
 var rutaBCC = "{{ URL::route('ventasBCC')  }}"
 </script>
 
+=======
+<script Language="Javascript">
+	var rutaBC = "{{ URL::route('buscarCDC') }}"
+	var rutaPC = "{{ URL::route('pagarCuenta') }}"
+	var d = [];
+	d['v_formas_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_pago) }}'));
+	console.log(d);
+</script>
+>>>>>>> a3dc6e8faab70b548b92309d5599afc072b194ac
 <script src="{{ asset('js/ptovta/ptovta.js') }}"></script>
 <script src="{{ asset('js/ptovta/ventaRapida.js') }}"></script>
 @endsection

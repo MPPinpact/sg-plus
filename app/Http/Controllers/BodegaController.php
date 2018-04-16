@@ -75,7 +75,7 @@ class BodegaController extends Controller
         $datos = $request->all();
         $model= new Bodega();
         $result['v_detalles'] = $model->getOneDetalle($datos['IdBodega']);
-        // $result['v_productos'] = $model->localesProducto($datos['IdBodega']);
+        $result['v_productos'] = $model->listProductos($datos['IdBodega']);
         return $result;
     }
 
