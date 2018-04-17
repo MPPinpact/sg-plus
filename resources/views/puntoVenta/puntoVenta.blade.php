@@ -152,14 +152,14 @@
             </div>
             <div class="modal-body">
 				{!! Form::open(['id'=>'FormConsultaStockProducto','autocomplete' => 'off']) !!}
-					<input type="hidden" name="IdProductoConsultaCredito_" id="IdProductoConsultaCredito_">
+					<input type="hidden" name="IdProductoConsultaCredito" id="IdProductoConsultaCredito">
 					
 					
 					<div class="row" >
 						<div class="col-md-9">
 							<div class="md-input-wrapper">
-								<input id="IdProductoConsultaCredito_" name="IdProductoConsultaCredito_" type="text" class="md-form-control" maxlength="250" />
-								<label for="IdProductoConsultaCredito_">Códido Producto</label>
+								<input id="CodigoProductoConsultaCredito" name="CodigoProductoConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" />
+								<label for="CodigoProductoConsultaCredito">Códido Producto</label>
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -172,45 +172,15 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="content clearfix">
-								<!-- Shopping cart field et start -->
 								<h3 id="basic-forms-h-0" tabindex="-1" class="title current"> Disponiblidad del Producto</h3>
+								<span id="NombreProductoConsulta"></span>
 								<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0" class="body current" aria-hidden="false">
-									<table id="listado_productos_preventa" class="table table-striped table-responsive nowrap dataTable no-footer dtr-inline cart-page" role="grid" style="width: 100%;">
-										<thead>
-											<tr>
-												<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 800px; text-align:left; ">Producto</th>
-												<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 100px; text-align:center;">Stock</th>
-												<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 200px; text-align:center;">Precio</th>
-											 </tr>
-										  </thead>
-										<tbody>
-											<tr class="odd">
-												<td class="pro-name">
-													<h6> Local 1 - Bodega Venta</h6>
-												</td>
-												<td class="text-center"><h6> 1</h6></td>
-												<td class="text-right"><h6> $456</h6></td>
-											</tr>
-											<tr class="even">
-												<td class="pro-name">
-													<h6> Local 1 - Bodega General</h6>
-												</td>
-												<td class="text-center"><h6>1</h6></td>
-												<td class="text-right"><h6>$689</h6></td>
-											</tr>
-											<tr class="odd">
-												<td class="pro-name">
-													<h6>  Local 2 - Bodega General</h6>
-												</td>
-												<td class="text-center"><h6>1</h6></td>
-												<td class="text-right"><h6>$755</h6></td>
-											</tr>
-										</tbody>
-									</table>
-								</fieldset>                               <!-- Shopping cart fieldset end -->
+									<table id="listado_productos_preventa" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+								</fieldset>
 							</div> 
 						</div>
 					</div>
+					<br>
 						
 					<div class="row" id="">
 						<div class="col-md-12">
@@ -237,20 +207,20 @@
             </div>
             <div class="modal-body">
 				{!! Form::open(['id'=>'FormConsultaCredito','autocomplete' => 'off']) !!}
-					<input type="hidden" name="IdClienteConsultaCredito" id="IdClienteConsultaCredito" value="">
+					<input type="hidden" name="IdClienteConsultaCredito" id="IdClienteConsultaCredito" class="ConsultaCreditoCliente">
 					
 					
 					<div class="row" >
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
-								<input id="RUTClienteConsultaCredito" name="RUTClienteConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" />
+								<input id="RUTClienteConsultaCredito" name="RUTClienteConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" />
 								<label for="RUTClienteConsultaCredito">RUT Cliente</label>
 								<small id="ErrorRutConsultaCredito" class="rut-error"></small>
 							</div>
 						</div>
 						<div class="col-md-9">
 							<div class="md-input-wrapper">
-								<input id="NombreClienteConsultaCredito" name="NombreClienteConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
+								<input id="NombreClienteConsultaCredito" name="NombreClienteConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" readonly />
 								<label for="NombreClienteConsultaCredito">Nombre Cliente</label>
 							</div>
 						</div>
@@ -259,19 +229,19 @@
 					<div class="row">
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="CreditoAutorizadoConsultaCredito" name="CreditoAutorizadoConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" />
+								<input id="CreditoAutorizadoConsultaCredito" name="CreditoAutorizadoConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" />
 								<label for="CreditoAutorizadoConsultaCredito">Crédito Autorizado</label>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="CreditoUtilizadoConsultaCredito" name="CreditoUtilizadoConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" />
+								<input id="CreditoUtilizadoConsultaCredito" name="CreditoUtilizadoConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" />
 								<label for="CreditoUtilizadoConsultaCredito">Crédito Utilizado</label>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="CreditoDisponibleConsultaCredito" name="CreditoDisponibleConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
+								<input id="CreditoDisponibleConsultaCredito" name="CreditoDisponibleConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" readonly />
 								<label for="CreditoDisponibleConsultaCredito">Crédito Disponible</label>
 							</div>
 						</div>
@@ -280,19 +250,19 @@
 					<div class="row">
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="UltimaCompraConsultaCredito" name="UltimaCompraConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" />
+								<input id="UltimaCompraConsultaCredito" name="UltimaCompraConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" />
 								<label for="UltimaCompraConsultaCredito">Última Compra Realizada</label>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="UltimoPagoConsultaCredito" name="UltimoPagoConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" />
+								<input id="UltimoPagoConsultaCredito" name="UltimoPagoConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" />
 								<label for="UltimoPagoConsultaCredito">Último Pago Realizado</label>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="UltimoMontoFacturadoConsultaCredito" name="UltimoMontoFacturadoConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
+								<input id="UltimoMontoFacturadoConsultaCredito" name="UltimoMontoFacturadoConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" readonly />
 								<label for="UltimoMontoFacturadoConsultaCredito">Último Monto Facturado</label>
 							</div>
 						</div>
@@ -301,7 +271,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="md-input-wrapper">
-								<input id="EstadoClienteConsultaCredito" name="EstadoClienteConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
+								<input id="EstadoClienteConsultaCredito" name="EstadoClienteConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" readonly />
 								<label for="EstadoClienteConsultaCredito">Estado Cliente</label>
 							</div>
 						</div>
@@ -332,20 +302,20 @@
             </div>
             <div class="modal-body">
 				{!! Form::open(['id'=>'FormPagoCredito','autocomplete' => 'off']) !!}
-					<input type="hidden" name="IdClientePagoCredito" id="IdClientePagoCredito" value="">
+					<input type="hidden" name="IdClientePagoCredito" id="IdClientePagoCredito" class="PagoCreditoM">
 					
 					<div class="row" >
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
-								<input id="RUTClientePagoCredito" name="RUTClientePagoCredito" type="text" class="md-form-control md-valid" maxlength="250" />
+								<input id="RUTClientePagoCredito" name="RUTClientePagoCredito" type="text" class="md-form-control md-valid md-static PagoCreditoM" maxlength="250" />
 								<label for="RUTClientePagoCredito">RUT Cliente</label>
 								<small id="ErrorRutPagoCredito" class="rut-error"></small>
 							</div>
 						</div>
 						<div class="col-md-9">
 							<div class="md-input-wrapper">
-								<input id="NombreClienteCredito_" name="NombreClienteCredito_" type="text" class="md-form-control" maxlength="250" readonly />
-								<label for="NombreClienteCredito_">Nombre Cliente</label>
+								<input id="NombreClientePagoCredito" name="NombreClientePagoCredito" type="text" class="md-form-control md-static PagoCreditoM" maxlength="250" readonly />
+								<label for="NombreClientePagoCredito">Nombre Cliente</label>
 							</div>
 						</div>
 					</div>
@@ -353,37 +323,37 @@
 					<div class="row">
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="MontoAFinanciar_" name="MontoAFinanciar_" type="text" class="md-form-control" maxlength="250" />
-								<label for="MontoAFinanciar_">Monto Facturado</label>
+								<input id="MontoFacturadoPagoCredito" name="MontoFacturadoPagoCredito" type="text" class="md-form-control md-static PagoCreditoM" maxlength="250" />
+								<label for="MontoFacturadoPagoCredito">Monto Facturado</label>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="NumeroCuotasCredito_" name="NumeroCuotasCredito_" type="text" class="md-form-control" maxlength="250" />
-								<label for="NumeroCuotasCredito_">Fecha de Vencimiento</label>
+								<input id="FechaVencimientoPagoCredito" name="FechaVencimientoPagoCredito" type="text" class="md-form-control md-static PagoCreditoM" maxlength="250" />
+								<label for="FechaVencimientoPagoCredito">Fecha de Vencimiento</label>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="NumeroCuotasCredito_" name="NumeroCuotasCredito_" type="text" class="md-form-control" maxlength="250" />
-								<label for="NumeroCuotasCredito_">Deuda Total</label>
+								<input id="DeudaTotalPagoCredito" name="DeudaTotalPagoCredito" type="text" class="md-form-control md-static PagoCreditoM" maxlength="250" />
+								<label for="DeudaTotalPagoCredito">Deuda Total</label>
 							</div>
 						</div>
 						
 					</div>
 					
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="InteresMensualCredito_" name="InteresMensualCredito_" type="text" class="md-form-control" maxlength="250" />
-								<label for="InteresMensualCredito_">Monto a Pagar</label>
+								<input id="MontoAPagarPagoCredito" name="MontoAPagarPagoCredito" type="text" class="md-form-control md-static PagoCreditoM" maxlength="250" />
+								<label for="MontoAPagarPagoCredito">Monto a Pagar</label>
 							</div>
 						</div>
 						
-						<div class="col-md-3">
+						<div class="col-md-8">
 							<div class="md-input-wrapper">
-								<input id="InteresMensualCredito_" name="InteresMensualCredito_" type="check" class="md-form-control"  />
-								<label for="InteresMensualCredito_">Forma de Pago</label>
+								<select name="IdFormaPagoCredito" id="IdFormaPagoCredito" class="md-disable md-valid"></select>
+								<label for="FormaPagoCredito">Forma de Pago</label>
 							</div>
 						</div>
 						
@@ -391,7 +361,7 @@
 					
 					<div class="row" id="">
 						<div class="col-md-6">
-							<button id="botonCanelarPago" name="botonCanelarPago" type="button" class="btn-xlg btn-danger waves-effect waves-light  btn-block">
+							<button id="botonCanelarPago" name="botonCanelarPago" type="button" class="btn-xlg btn-danger waves-effect waves-light  btn-block" data-dismiss="modal">
 								Cancelar
 							</button>
 						</div>
@@ -1340,19 +1310,19 @@
 </div>
 
 <script Language="Javascript">
-var rutaPVBP = "{{ URL::route('preventabpd') }}"
-var rutaPVAP = "{{ URL::route('addProductPV') }}"
-var rutaPVBV = "{{ URL::route('buscarVen') }}"
-var rutaPVBC = "{{ URL::route('preventabc') }}"
-var rutaFP = "{{ URL::route('preventaRP')  }}"
-var rutaEP = "{{ URL::route('preventaEP') }}"
-var rutaPVC = "{{ URL::route('ventasPVC')  }}"
-var rutaBCC = "{{ URL::route('ventasBCC')  }}"
+	var rutaPVBP = "{{ URL::route('preventabpd') }}"
+	var rutaPVAP = "{{ URL::route('addProductPV') }}"
+	var rutaPVBV = "{{ URL::route('buscarVen') }}"
+	var rutaPVBC = "{{ URL::route('preventabc') }}"
+	var rutaFP = "{{ URL::route('preventaRP')  }}"
+	var rutaEP = "{{ URL::route('preventaEP') }}"
+	var rutaPVC = "{{ URL::route('ventasPVC')  }}"
+	var rutaBCC = "{{ URL::route('ventasBCC')  }}"
 	var rutaBC = "{{ URL::route('buscarCDC') }}"
 	var rutaPC = "{{ URL::route('pagarCuenta') }}"
+	var rutaBP = "{{ URL::route('PtoBuscarP') }}"
 	var d = [];
 	d['v_formas_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_pago) }}'));
-	console.log(d);
 </script>
 <script src="{{ asset('js/ptovta/ptovta.js') }}"></script>
 <script src="{{ asset('js/ptovta/ventaRapida.js') }}"></script>

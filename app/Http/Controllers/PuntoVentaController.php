@@ -23,6 +23,7 @@ use DB;
 use App\Models\CajaDiaria;
 use App\Models\Cliente;
 use App\Models\Usuario;
+use App\Models\Producto;
 
 class PuntoVentaController extends Controller
 {
@@ -269,10 +270,9 @@ class PuntoVentaController extends Controller
         $datos= $request->all();
         $model= new Usuario();
         $datos['RUTCliente']=$model->LimpiarRut($datos['RUTCliente']);
-		
         $model= new Cliente();
         $result['v_cliente'] = $model->buscarClienteDetalleCredito($datos);
-			
+            
         return $result;
     }
 
@@ -281,5 +281,18 @@ class PuntoVentaController extends Controller
         log::info($datos);
         return $datos;
     }
+
+    protected function postBuscarProductosC(Request $request){
+        $datos = $request->all();
+        $producto = Producto::where('CodigoBarra', '=', $datos['CodigoProducto'])->first();
+        $result['Existe'] = 0;
+        if ($producto != null){
+            $result['Existe'] = 1;
+            $model= new Producto();
+            $result['v_stock'] = $model->listStock($producto->IdProducto);
+        }
+        return $result;
+    }
+    
 
 }

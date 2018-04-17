@@ -1,4 +1,4 @@
-var manejoRefresh=limpiarLocales=limpiarCajas=limpiarDetalleCaja=errorRut=errorRut2=errorRut3=limpiarBodegas=NVenta=0;
+var manejoRefresh=limpiarProductos=limpiarCajas=limpiarDetalleCaja=errorRut=errorRut2=errorRut3=limpiarBodegas=NVenta=0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -8,156 +8,15 @@ var parametroAjax = {
     'async': false
 };
 
-$(document).ready(function(){	
-	// Botones de cabecera de compra
-    $(document).on('click','#botonConsultaCredito', ConsultaCreditoCliente);
-    $(document).on('click','#botonPagoCredito', PagoCreditoCliente);
-    // $(document).on('click','#cancelar',BotonCancelar);
-    // $(document).on('click','#agregar',BotonAgregar);
-    // $(document).on('click','#modificar',modificarCabeceras);
-    // $(document).on('click','#volverAct',volverTabs);
-});
-
-
 var ConsultaCreditoCliente = function(){
-    
 	$("#spanTituloModalCreditoCliente").text("Consulta Crédito Interno de Clientes");
     $("#ModalConsultaCreditoCliente").modal();
 }
 
 var PagoCreditoCliente = function(){
-    
 	$("#spanTituloModalPagoCredito").text("Pago/Abono Crédito Interno de Cliente");
     $("#ModalPagoCreditoCliente").modal();
 }
-
-// var calcularMontos = function(CantidadVenta,ValorUnitarioVenta,FactorImpuesto,MontoDescuento){
-    // var ValorImpuesto = (CantidadVenta * ValorUnitarioVenta * FactorImpuesto / 100)
-    // $("#ValorImpuestos").val(ValorImpuesto);
-    // var TotalLinea = ((CantidadVenta * ValorUnitarioVenta) - MontoDescuento);
-    // $("#TotalLinea").val(TotalLinea);
-    // var ValorUnitarioFinal = (TotalLinea / CantidadVenta);
-    // $("#ValorUnitarioFinal").val(ValorUnitarioFinal);
-// }
-
-// var calcularTotalVenta = function(totalVenta){
-	// $("#TotalVentaDetalle").val(totalVenta);
-	// $("#TotalVentaPago").val(totalVenta);
-	// $("#TotalVenta").val(totalVenta);
-// }
-
-// var ManejoRespuestaBuscarProducto = function(respuesta){
-    // if(respuesta.code==200){
-        // if(respuesta.respuesta!=null){
-            // if(respuesta.respuesta.producto.IdProducto){
-                // if(respuesta.respuesta.producto.IdProducto==0){
-                    // $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
-                // }else{
-                    // $("#IdProducto").val(respuesta.respuesta.producto.IdProducto);
-                    // $("#NombreProducto").val(respuesta.respuesta.producto.NombreProducto);
-                    // $("#ValorUnitarioVenta").val(respuesta.respuesta.producto.PrecioVentaSugerido);
-                    // $("#CantidadVenta").val(1);
-                    // $("#FactorImpuesto").val(respuesta.respuesta.impuesto);
-                    // $("#MontoDescuento").val(0);
-                    // $("#IdUnidadMedida").val(respuesta.respuesta.producto.IdUnidadMedida).trigger("change");
-                    // calcularMontos($("#CantidadVenta").val(),$("#ValorUnitarioVenta").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
-                // } 
-            // } 
-        // }else{
-            // $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
-        // }
-    // }else{
-        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
-    // }
-// }
-
-// var ManejoRespuestaBuscarCliente = function(respuesta){
-    // if(respuesta.code==200){
-        // if(respuesta.respuesta!=null){
-            // if(respuesta.respuesta.IdCliente==0){
-                // // var rut = $("#RUTProveedor").val();
-                // // $("#RUTProveedor2").val(rut);
-                // // $("#ModalProveedor").modal();
-            // }else{
-                // $("#IdCliente").val(respuesta.respuesta.IdCliente);
-                // $("#NombreCliente").val(respuesta.respuesta.NombreCliente);
-            // }    
-        // }else{
-            // $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
-        // }
-    // }else{
-        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-    // }
-// }
-
-// var ManejoRespuestaBuscarClienteVC = function(respuesta){
-	
-	// console.log("ManejoRespuestaBuscarClienteVC...");
-	
-    // if(respuesta.code==200){
-        // if(respuesta.respuesta.v_cliente!=null){
-            // $("#IdClienteVC").val(respuesta.respuesta.v_cliente[0].IdCliente);
-            // $("#NombreClienteCredito").val(respuesta.respuesta.v_cliente[0].NombreCliente);
-            // $("#FechaPrimeraCuota").val(respuesta.respuesta.v_fechas.fechaPago);
-        // }else{
-            // $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
-        // }
-    // }else{
-        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-    // }
-// }
-
-// var ManejoRespuestaBuscarEmpresa = function(respuesta){
-    // if(respuesta.code==200){
-        // if(respuesta.respuesta!=null){
-            // crearselect(respuesta.respuesta.v_locales,"IdLocal");
-            // if(respuesta.respuesta.busqueda.IdEmpresa==0){
-                // $("#idEmpresa").val("");
-                // $("#NombreFantasiaE").val("");
-                // $.growl({message:"Empresa no encontrada"},{type: "warning", allow_dismiss: true,});
-            // }else{
-                // $("#idEmpresa").val(respuesta.respuesta.busqueda.IdEmpresa);
-                // $("#NombreFantasiaE").val(respuesta.respuesta.busqueda.NombreFantasia);
-            // }    
-        // }else{
-            // $.growl({message:"Contacte al personal informatico"},{type: "warning", allow_dismiss: true,});
-        // }
-    // }else{
-        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-    // }
-// }
-
-// var ManejoRespuestaProcesarDetalleVenta = function(respuesta){
-    // if(respuesta.code==200){
-        // if(respuesta.respuesta!=null){
-            // $("#ModalDetalleVenta").modal();
-            // $("#spanTituloModal").text("Detalle Venta");
-            // $("#divBotonM").show();
-            // $("#divBotonesAC").hide();
-            // bloquearInputsDetalles();
-            // pintarDatosActualizarDetalles(respuesta.respuesta[0]);
-        // }else{
-            // $.growl({message:"Contacte al personal informatico"},{type: "warning", allow_dismiss: true,});
-        // }
-    // }else{
-        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-    // }
-// }
-
-// var ManejoRespuestaProcesarCD = function(respuesta){
-    // if(respuesta.code==200){
-        // if(respuesta.respuesta.activar>0){
-            // if(respuesta.respuesta.v_detalles.length>0){
-                // $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
-                // cargarTablaDetalles(respuesta.respuesta.v_detalles);
-            // }
-        // }else{
-            // $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
-        // }
-    // }else{
-        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-    // }
-// }
 
 var ManejoRespuestaProcesarD = function(respuesta){
     if(respuesta.code==200){
@@ -168,14 +27,84 @@ var ManejoRespuestaProcesarD = function(respuesta){
 }
 
 var ManejoRespuestaProcesarPagarCuenta = function(respuesta){
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         $("#ModalPagoCreditoCliente").modal("hide");
-        
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
+}
+
+var ManejoRespuestaBuscarProducto = function(respuesta){
+    if(respuesta.code==200){
+        if (respuesta.respuesta.Existe == 0){ $.growl({message:"Código de producto no encontrado"},{type: "warning", allow_dismiss: true,}); }
+        respuesta.respuesta.v_stock ? $("#NombreProductoConsulta").text(respuesta.respuesta.v_stock[0].NombreProducto) : $("#NombreProductoConsulta").text("") 
+        cargarTablaProductos(respuesta.respuesta.v_stock);
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
+
+var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
+    if(respuesta.code==200){
+        var cliente = respuesta.respuesta.v_cliente;
+        if (cliente.length > 0){
+            if (caso == 1){
+                $("#IdClienteConsultaCredito").val(cliente[0].IdCliente);
+                $("#NombreClienteConsultaCredito").val(cliente[0].NombreCliente);
+                $("#CreditoAutorizadoConsultaCredito").val(cliente[0].CupoAutorizado);
+                $("#CreditoUtilizadoConsultaCredito").val(cliente[0].CupoUtilizado);
+                var disp = (parseInt(cliente[0].CupoAutorizado)-parseInt(cliente[0].CupoUtilizado));
+                $("#CreditoDisponibleConsultaCredito").val(disp);
+                // $("#UltimaCompraConsultaCredito").val(c.);
+                // $("#UltimoPagoConsultaCredito").val(c.);
+                // $("#UltimoMontoFacturadoConsultaCredito").val(c.);
+                $("#EstadoClienteConsultaCredito").val(cliente[0].DetalleEstadoCliente);
+            }
+            if (caso == 2){
+                $("#IdClientePagoCredito").val(cliente[0].IdCliente);
+                $("#NombreClientePagoCredito").val(cliente[0].NombreCliente);
+                $("#MontoFacturadoPagoCredito").val("");
+                $("#FechaVencimientoPagoCredito").val("");
+                $("#DeudaTotalPagoCredito").val("");
+            }
+
+        }else{
+            $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
+            if (caso == 1){
+                $(".ConsultaCreditoCliente").val("");
+            }
+            if (caso == 2){
+                $(".PagoCreditoM").val("");
+                $("#IdFormaPagoCredito").val("").trigger("change");
+            }
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+var cargarTablaProductos = function(data){
+    if(limpiarProductos==1){destruirTabla('#listado_productos_preventa');$('#listado_productos_preventa thead').empty();}
+    $("#listado_productos_preventa").dataTable({
+        responsive:false,
+        'bSort': false,
+        "scrollCollapse": false,
+        "paging": false,
+        "searching": false,
+        "aLengthMenu": DataTableLengthMenu,
+        "pagingType": "full_numbers",
+        "language": LenguajeTabla,
+        "columnDefs": [
+            {"sWidth": "1px", "aTargets": [1]},
+        ],
+        "data": data,
+        "columns":[
+            {"title": "Ubicación","data": "LocalBodega"},
+            {"title": "Stock","data": "Stock"},
+            {"title": "Precio","data": "PrecioVentaSugerido"},
+        ],
+    });
+    limpiarProductos=1;
 }
 
 var pintarDatosCreditoClientes = function(data){
@@ -250,7 +179,7 @@ var crearAllSelect = function(data){
 }
 
 
-var verificarRut = function(control,caso){
+var verificarRutC = function(control,caso){
     var res = Valida_Rut(control);
     var format = formateaRut(control.val(), res);
     if (format != false){
@@ -274,7 +203,31 @@ var buscarClienteDC = function(RUTCliente,Caso){
     parametroAjax.ruta=rutaBC;
     parametroAjax.data = {RUTCliente:RUTCliente,Caso:Caso};
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaBuscarClienteDC(respuesta);
+    ManejoRespuestaBuscarClienteDC(respuesta,Caso);
+}
+
+var BotonCancelarPago = function(){
+    $('#FormPagoCredito')[0].reset();
+}
+
+var CerrarConsultaPago = function(){
+    $('#FormConsultaCredito')[0].reset();
+}
+
+var CerrarPagoCredito = function(){
+    $('#FormPagoCredito')[0].reset();
+}
+
+var botonConsultarStockProducto = function(){
+    var VarCodigoProducto = $("#CodigoProductoConsultaCredito").val();
+    if (VarCodigoProducto.length > 1){
+        parametroAjax.ruta=rutaBP;
+        parametroAjax.data = {CodigoProducto:VarCodigoProducto};
+        respuesta=procesarajax(parametroAjax);
+        ManejoRespuestaBuscarProducto(respuesta); 
+    }else{
+        $.growl({message:"Ingrese Codigo  de producto "},{type: "warning", allow_dismiss: true,});
+    }
 }
 
 $(document).ready(function(){   
@@ -282,14 +235,14 @@ $(document).ready(function(){
     $("#RUTClienteConsultaCredito").focusout(function() {
         var valid = $("#RUTClienteConsultaCredito").val();
         if (valid.length > 0){
-            var res = verificarRut($("#RUTClienteConsultaCredito"),1);
+            var res = verificarRutC($("#RUTClienteConsultaCredito"),1);
             $("#RUTClienteConsultaCredito").val(res);
         }else{$("#ErrorRutConsultaCredito").text("");}
     });
     $("#RUTClientePagoCredito").focusout(function() {
         var valid = $("#RUTClientePagoCredito").val();
         if (valid.length > 0){
-            var res = verificarRut($("#RUTClientePagoCredito"),2);
+            var res = verificarRutC($("#RUTClientePagoCredito"),2);
             $("#RUTClientePagoCredito").val(res);
         }else{$("#ErrorRutPagoCredito").text("");}
     });
@@ -299,6 +252,12 @@ $(document).ready(function(){
     $(document).on('click','#botonPagoCredito', PagoCreditoCliente);
     $(document).on('click','#botonCanelarPago',BotonCancelarPago);
     $(document).on('click','#botonPagarCuenta',validatePC);
+    $(document).on('click','#cancelarFPE',CerrarConsultaPago);
+    $(document).on('click','#botonCanelarPago',CerrarPagoCredito);
+    $(document).on('click','#botonConsultarStockProducto',botonConsultarStockProducto);
+
+
+
     // $(document).on('click','#modificar',modificarCabeceras);
     // $(document).on('click','#volverAct',volverTabs);
     $('#FormPagoCredito').formValidation({
