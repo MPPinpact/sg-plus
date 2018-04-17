@@ -230,6 +230,13 @@ var botonConsultarStockProducto = function(){
     }
 }
 
+var botonCerrarStockProducto = function(){
+    $("#CodigoProductoConsultaCredito").val("");
+    destruirTabla('#listado_productos_preventa');$('#listado_productos_preventa thead').empty();
+    $("#NombreProductoConsulta").text("");
+    limpiarProductos=0;
+}
+
 $(document).ready(function(){   
     $("#FechaVencimientoClientePagoCredito").inputmask({ mask: "99-99-9999"});
     $("#RUTClienteConsultaCredito").focusout(function() {
@@ -255,8 +262,7 @@ $(document).ready(function(){
     $(document).on('click','#cancelarFPE',CerrarConsultaPago);
     $(document).on('click','#botonCanelarPago',CerrarPagoCredito);
     $(document).on('click','#botonConsultarStockProducto',botonConsultarStockProducto);
-
-
+    $(document).on('click','#cancelarBPS',botonCerrarStockProducto);
 
     // $(document).on('click','#modificar',modificarCabeceras);
     // $(document).on('click','#volverAct',volverTabs);

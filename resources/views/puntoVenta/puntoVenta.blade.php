@@ -145,16 +145,11 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                	<span aria-hidden="true">×</span>
-            	</button>
             	<h6 id="spanTituloModalConsultaStockProducto" class="modal-title"></h6>
             </div>
             <div class="modal-body">
 				{!! Form::open(['id'=>'FormConsultaStockProducto','autocomplete' => 'off']) !!}
 					<input type="hidden" name="IdProductoConsultaCredito" id="IdProductoConsultaCredito">
-					
-					
 					<div class="row" >
 						<div class="col-md-9">
 							<div class="md-input-wrapper">
@@ -184,7 +179,7 @@
 						
 					<div class="row" id="">
 						<div class="col-md-12">
-							<button id="cancelarFPE" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
+							<button id="cancelarBPS" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block" data-dismiss="modal">
 								Cerrar
 							</button>
 						</div>
@@ -200,16 +195,11 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                	<span aria-hidden="true">×</span>
-            	</button>
             	<h6 id="spanTituloModalCreditoCliente" class="modal-title"></h6>
             </div>
             <div class="modal-body">
 				{!! Form::open(['id'=>'FormConsultaCredito','autocomplete' => 'off']) !!}
 					<input type="hidden" name="IdClienteConsultaCredito" id="IdClienteConsultaCredito" class="ConsultaCreditoCliente">
-					
-					
 					<div class="row" >
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
@@ -295,9 +285,6 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                	<span aria-hidden="true">×</span>
-            	</button>
             	<h6 id="spanTituloModalPagoCredito" class="modal-title"></h6>
             </div>
             <div class="modal-body">
