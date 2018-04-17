@@ -69,9 +69,12 @@ class VentaCreditoController extends Controller
     }
 
     protected function postBuscarCliente (Request $request){
-        $datos = $request->all();
+        log::info("Cargar cliente Venta Credito");
+		
+		$datos = $request->all();
         $usuario= new Usuario();
         $datos['RUTCliente'] = $usuario->LimpiarRut($datos['RUTCliente']);
+		
         $venta= new VentaCredito();
         $result ['v_cliente'] = $venta->getOneCliente($datos['RUTCliente']);
         $result ['v_fechas'] = $venta->calcularFechaPago($result ['v_cliente']);

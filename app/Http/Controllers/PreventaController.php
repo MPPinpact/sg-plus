@@ -23,6 +23,7 @@ use DB;
 use App\Models\Preventa;
 use App\Models\Cliente;
 use App\Models\Usuario;
+use App\Models\VentaCredito;
 use App\Models\Producto;
 use App\Models\Impuesto;
 use App\Models\Empresa;
@@ -163,12 +164,14 @@ class PreventaController extends Controller
         return $result;
     }
 
-    protected function postBuscarCliente(Request $request){
-        $datos = $request->all();
-        $model= new Usuario();
-        $datos['RUT']=$model->LimpiarRut($datos['RUTCliente']);
-        $result = Cliente::where('RUTCliente',$datos['RUT'])->first();
-        if($result == null) { $result = '{"IdCliente":0}'; } 
+    protected function postBuscarCliente(Request $request){		
+		$datos = $request->all();	
+		//log::info("Asignar Cliente " . $datos['RUTCliente'] ." a Pre-Venta");
+		
+		$venta= new VentaCredito();
+        $result['v_cliente'] = $venta->getOneCliente(str_replace(".","",$datos['RUTCliente']));
+		$result['v_fechas'] = $venta->calcularFechaPago($result['v_cliente']);
+		
         return $result;
     }
 

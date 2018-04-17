@@ -205,10 +205,13 @@ class PuntoVentaController extends Controller
     }
 
     protected function postBuscarCliente(Request $request){
-        $datos = $request->all();
+        log::inf0("Buscar cliente PuntoVentaController --> buscarCDC");
+		
+		$datos = $request->all();
         $model= new Usuario();
         $datos['RUT']=$model->LimpiarRut($datos['RUTCliente']);
         $result = Cliente::where('RUTCliente',$datos['RUT'])->first();
+		
         if($result == null) { $result = '{"IdCliente":0}'; } 
         return $result;
     }
@@ -263,12 +266,13 @@ class PuntoVentaController extends Controller
     }
 
     protected function postBuscarClienteDetalleCredito(Request $request){
-        $datos = $request->all();
+        $datos= $request->all();
         $model= new Usuario();
         $datos['RUTCliente']=$model->LimpiarRut($datos['RUTCliente']);
+		
         $model= new Cliente();
-        $result['caso'] = $datos['Caso']; 
         $result['v_cliente'] = $model->buscarClienteDetalleCredito($datos);
+			
         return $result;
     }
 

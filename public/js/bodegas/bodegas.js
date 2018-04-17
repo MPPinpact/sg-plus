@@ -97,24 +97,15 @@ var cargarTablaBodegas = function(data){
                 },
                 {"title": "IdBodega","data": "IdBodega",visible:0},
                 {"title": "Nombre Bodega","data": "NombreBodega"},
-                {"title": "Descripcion Bodega Local","data": "DescripcionBodega"},
+                {"title": "Descripción Bodega Local","data": "DescripcionBodega"},
                 {"title": "Local Asociado","data": "NombreLocal"},
-                 {   
-                    "title": "Fecha de Creación", 
-                    "data": "auFechaCreacion",
-                    "render": function(data, type, row, meta){
-                        if(type === 'display'){
-                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
-                        }
-                        return data;
-                    }
-                },  
+                {"title": "Fecha de Creación", "data": "auFechaCreacion", visible:0},
                 {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
-                {"title": "Creado por","data": "creador"},
+                {"title": "Creado por","data": "creador",visible:0},
                 {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
                 {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0},
                 {"title": "Modificado por","data": "modificador",visible:0},
-                {"title": "Estado","data": "desEstadoBodega"}
+                {"title": "Estado Bodega","data": "desEstadoBodega", className: "text-center"}
             ],
         });
         limpiarLocales=1;
@@ -146,16 +137,25 @@ var cargarTablaProductos = function(data){
                 {"title": "Id","data": "IdProducto",visible:0},
                 {"title": "IdFamilia","data": "IdFamilia", visible:0},
                 {"title": "IdSubFamilia","data": "IdSubFamilia",visible:0},
-                {"title": "Codigo Barra","data": "CodigoBarra"},
-                {"title": "Nombre Producto","data": "NombreProducto"},
+                {"title": "Código","data": "CodigoBarra"},
+                {"title": "Producto","data": "NombreProducto"},
                 {"title": "Familia","data": "NombreFamilia"},
                 {"title": "Subfamilia","data": "NombreSubFamilia"},
-                {"title": "Stock Actual","data": "Stock"},
-                {"title": "Stock Minimo","data": "StockMinimo"},
-                {"title": "Stock Maximo","data": "StockMaximo"},
-                {"title": "Precio Ultima Compra","data": "PrecioUltimaCompra"},
-                {"title": "Precio Venta","data": "PrecioVentaSugerido"},
-                {"title": "Monto Valorizado","data": "MontoValorizado"},
+                {"title": "Precio UC","data": "PrecioUltimaCompra", 
+					render: $.fn.dataTable.render.number( '.', ',', 2 ),
+					className: "text-right"},
+				{"title": "Stock Mínimo","data": "StockMinimo", 
+					className: "text-right"},
+                {"title": "Stock Máximo","data": "StockMaximo", 
+					className: "text-right"},
+                {"title": "Stock Actual","data": "Stock", 
+					className: "text-right"},
+                {"title": "Precio Venta","data": "PrecioVentaSugerido",
+					render: $.fn.dataTable.render.number( '.', ',', 2 ),
+					className: "text-right"},
+                {"title": "Monto Valorizado","data": "MontoValorizado", 
+					render: $.fn.dataTable.render.number( '.', ',', 2 ),
+					className: "text-right"},
             ],
         });
         limpiarBodegas=1;

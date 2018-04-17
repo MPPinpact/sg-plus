@@ -1340,10 +1340,10 @@
 </div>
 
 <script Language="Javascript">
-var rutaBPD = "{{ URL::route('preventabpd') }}"
-var rutaPV = "{{ URL::route('addProductPV') }}"
-var rutaBV = "{{ URL::route('buscarVen') }}"
-var rutaBC = "{{ URL::route('preventabc') }}"
+var rutaPVBP = "{{ URL::route('preventabpd') }}"
+var rutaPVAP = "{{ URL::route('addProductPV') }}"
+var rutaPVBV = "{{ URL::route('buscarVen') }}"
+var rutaPVBC = "{{ URL::route('preventabc') }}"
 var rutaFP = "{{ URL::route('preventaRP')  }}"
 var rutaEP = "{{ URL::route('preventaEP') }}"
 var rutaPVC = "{{ URL::route('ventasPVC')  }}"

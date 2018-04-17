@@ -101,7 +101,7 @@ var cargarTablaLocales = function(data){
                 {"title": "Encargado Local","data": "IdEncargadoLocal"},
                 {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
                 {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
-                {"title": "Creado por","data": "creador"},
+                {"title": "Creado por","data": "creador",visible:0},
                 {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
                 {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0},
                 {"title": "Modificado por","data": "modificador",visible:0},
@@ -142,13 +142,15 @@ var cargarTablaBodegas = function(data){
                 "searchable": false
             }],
             "data": data,
-            "columns":[
-            {"title": "Id","data": "IdBodega",visible:0},
-            {"title": "Nombre","data": "NombreBodega"},
-            {"title": "Descripción","data": "DescripcionBodega"},
-            {"title": "Estado","data": "desEstadoBodega"},
-            {"title": "Monto Valorizado","data": "MontoValorizado"},
-
+            "columns":
+			[
+				{"title": "Id","data": "IdBodega",visible:0},
+				{"title": "Nombre Bodega","data": "NombreBodega"},
+				{"title": "Descripción","data": "DescripcionBodega"},
+				{"title": "Mercadería Valorizada","data": "MontoValorizado",
+					render: $.fn.dataTable.render.number( '.', ',', 2 ),
+					className: "text-right"},
+				{"title": "Estado Local","data": "desEstadoBodega", className: "text-center"},
             ],
         });
         limpiarBodegas=1;

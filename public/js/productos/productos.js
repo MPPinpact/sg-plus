@@ -254,8 +254,12 @@ var cargarTablaStock = function(data){
             {"title": "Empresa","data": "NombreFantasia"},
             {"title": "Local","data": "NombreLocal"},
             {"title": "Bodega","data": "NombreBodega"},
-            {"title": "Stock","data": "Stock"},
-            {"title": "Monto Valorizado","data": "MontoValorizado"}
+            {"title": "Stock","data": "Stock",
+				render: $.fn.dataTable.render.number( '.', ',', 2 ),
+				className: "text-right"},
+            {"title": "Monto Valorizado","data": "MontoValorizado", 
+				render: $.fn.dataTable.render.number( '.', ',', 2 ),
+				className: "text-right"},
         ],
     });
     limpiarStock=1;

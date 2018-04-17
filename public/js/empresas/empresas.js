@@ -147,12 +147,15 @@ var cargarTablaLocales = function(data){
                 "searchable": false
             }],
             "data": data,
-            "columns":[
-            {"title": "Id","data": "IdLocal",visible:0},
-            {"title": "Nombre","data": "NombreLocal"},
-            {"title": "Id Encargado","data": "IdEncargadoLocal"},
-            {"title": "Estado","data": "desEstadoLocal"},
-            {"title": "MontoValorizado","data": "MontoValorizado"}
+            "columns":
+			[
+				{"title": "Id","data": "IdLocal",visible:0},
+				{"title": "Nombre del Local","data": "NombreLocal"},
+				{"title": "Encargado Local","data": "IdEncargadoLocal"},
+				{"title": "Mercadería Valorizada","data": "MontoValorizado", 
+					render: $.fn.dataTable.render.number( '.', ',', 2 ),
+					className: "text-right"},
+				{"title": "Estado","data": "desEstadoLocal", visible:0},
             ],
         });
         limpiarLocales=1;

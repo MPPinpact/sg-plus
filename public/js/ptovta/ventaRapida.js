@@ -271,7 +271,9 @@ var BotonPagoCredito = function (){
 	
 	$("#InfoAddTC").hide();
 	$("#InfoAddCredito").show();
-
+	$('#RUTClienteCredito').val($('#RUTCliente').val());
+	
+	
 	$("#divBotonM_FPE").hide();
 	$("#divBotonAC_FPE").show();
 	$("#botonGuardarFormaPago").text("Continuar");
@@ -557,7 +559,7 @@ var buscarClienteVC = function(RUTCliente){
 }
 
 var buscarCliente = function(RUTCliente){
-    parametroAjax.ruta=rutaBC;
+    parametroAjax.ruta=rutaPVBC;
     parametroAjax.data = {RUTCliente:RUTCliente};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaBuscarCliente(respuesta);
@@ -565,7 +567,7 @@ var buscarCliente = function(RUTCliente){
 
 var buscarProducto = function(CodigoBarra){
 	if(CodigoBarra.length > 0){
-		parametroAjax.ruta=rutaBPD;
+		parametroAjax.ruta=rutaPVBP;
 		parametroAjax.data = {CodigoBarra:CodigoBarra};
 		respuesta=procesarajax(parametroAjax);
 		
@@ -578,7 +580,7 @@ var buscarProducto = function(CodigoBarra){
 
 var buscarVendedor = function(CodigoVendedor){
 	if(CodigoVendedor.length > 0){
-		parametroAjax.ruta=rutaBV;
+		parametroAjax.ruta=rutaPVBV;
 		parametroAjax.data = {RUTVendedor:CodigoVendedor};
 		respuesta=procesarajax(parametroAjax);
 		
@@ -672,7 +674,7 @@ var ManejoRespuestaProcesarFormaPago = function(respuesta){
 
 var ProcesarProductoPreVenta = function(){
     if(errorRut == 0){
-        parametroAjax.ruta=rutaPV;
+        parametroAjax.ruta=rutaPVAP;
         parametroAjax.data = $("#FormPreVenta").serialize();
         respuesta=procesarajax(parametroAjax);
         ManejoRespuestaProcesarProductoPreVenta(respuesta);
@@ -716,20 +718,33 @@ var ManejoRespuestaProcesarProductoPreVenta = function(respuesta){
 var ManejoRespuestaBuscarCliente = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
-            if(respuesta.respuesta.IdCliente==0){
-                // var rut = $("#RUTProveedor").val();
-                // $("#RUTProveedor2").val(rut);
-                // $("#ModalProveedor").modal();
-            }else{
-                $("#IdClientePreVenta").val(respuesta.respuesta.IdCliente);
-                $("#NombreClientePreVenta").val(respuesta.respuesta.NombreCliente);
-				$("#CA_ClientePreVenta").val(respuesta.respuesta.CupoAutorizado);
-				$("#CU_ClientePreVenta").val(respuesta.respuesta.CupoUtilizado);
+            if(respuesta.respuesta.v_cliente!=null){
+				
+				$("#IdClientePreVenta").val(respuesta.respuesta.v_cliente[0].IdCliente);
+				$("#NombreClientePreVenta").val(respuesta.respuesta.v_cliente[0].NombreCliente);
+				$("#CA_ClientePreVenta").val(respuesta.respuesta.v_cliente[0].CupoAutorizado);
+				$("#CU_ClientePreVenta").val(respuesta.respuesta.v_cliente[0].CupoUtilizado);
 				$("#CD_ClientePreVenta").val($("#CA_ClientePreVenta").val() - $("#CU_ClientePreVenta").val() );
-				$("#EstadoClientePreVenta").val(respuesta.respuesta.EstadoCliente);
-				$("#PC_ClientePreVenta").val("01-01-2099");
+				$("#CD_ClientePreVenta").val(parseFloat($("#CD_ClientePreVenta").val()).toLocaleString('cl'));
+				
+				$("#EstadoClientePreVenta").val(respuesta.respuesta.v_cliente[0].DetalleEstadoCliente);
+				$("#PC_ClientePreVenta").val(moment(respuesta.respuesta.v_cliente[0].fechaProximaCuota, 'YYYY-MM-DD',true).format("DD-MM-YYYY"));   
+				 
+                // $("#IdClientePreVenta").val(respuesta.respuesta.IdCliente);
+                // $("#NombreClientePreVenta").val(respuesta.respuesta.NombreCliente);
+				// $("#CA_ClientePreVenta").val(respuesta.respuesta.CupoAutorizado);
+				// $("#CU_ClientePreVenta").val(respuesta.respuesta.CupoUtilizado);
+				// $("#CD_ClientePreVenta").val($("#CA_ClientePreVenta").val() - $("#CU_ClientePreVenta").val() );
+				// $("#EstadoClientePreVenta").val(respuesta.respuesta.DetalleEstadoCliente);
+				// $("#PC_ClientePreVenta").val(respuesta.respuesta.fechaProximaCuota);
 				
 				AsignarClientePreVenta();
+				
+            }else{
+				// var rut = $("#RUTProveedor").val();
+                // $("#RUTProveedor2").val(rut);
+                // $("#ModalProveedor").modal();
+
             }    
         }else{
             $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
