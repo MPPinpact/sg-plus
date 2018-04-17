@@ -1371,6 +1371,7 @@
 <script Language="Javascript">
 var rutaPVBP = "{{ URL::route('preventabpd') }}"
 var rutaPVAP = "{{ URL::route('addProductPV') }}"
+var rutaRPV = "{{ URL::route('addPreVentaPV') }}"
 var rutaPVBV = "{{ URL::route('buscarVen') }}"
 var rutaPVBC = "{{ URL::route('preventabc') }}"
 var rutaFP = "{{ URL::route('preventaRP')  }}"

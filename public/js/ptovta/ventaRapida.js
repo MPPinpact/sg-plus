@@ -36,6 +36,8 @@ $(document).ready(function(){
 
 	$(document).on('click','#botonRecuperarPreVenta', RecuperarPreVenta);
 	$(document).on('click','#botonAgregarProductos', AgregarProductos);
+	$(document).on('click','#botonAgregarPreVentaPV', CargarPreVenta);
+	
 	
 	$(document).on('click','#botonAgregarProductoPreVenta', AgregarProductoPreVenta);
 	$(document).on('click','#botonPreVenta',PreVenta);
@@ -415,6 +417,14 @@ var AgregarProductos = function(){
 	$("#botonAgregarProductos").hide();
 }
 
+var CargarPreVenta = function(){
+	parametroAjax.ruta=rutaRPV;
+    parametroAjax.data = $("#FormPreVenta").serialize();
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaProcesarProductoPreVenta(respuesta);
+	
+	AgregarProductos();
+}
 
 var PreVenta= function(){
 	$("#frameProductos").show();
