@@ -34,7 +34,10 @@ $(document).ready(function(){
 	$(document).on('click','#botonConfirmarFormaPagoPreVenta', CerrarModalFormaPago);
 	
 
-
+	$(document).on('click','#botonRecuperarPreVenta', RecuperarPreVenta);
+	$(document).on('click','#botonAgregarProductos', AgregarProductos);
+	$(document).on('click','#botonAgregarPreVentaPV', CargarPreVenta);
+	
 	
 	$(document).on('click','#botonAgregarProductoPreVenta', AgregarProductoPreVenta);
 	$(document).on('click','#botonPreVenta',PreVenta);
@@ -400,7 +403,35 @@ var AsignarIdPreVenta = function(IdVenta){
 	$("#spanTituloModalPreVenta").text("Pre-Venta: " + $("#IdPreVenta").val() + " | Local: xxxx | Caja: xxxx | Vendedor: " +  $("#NombreVendedorPreVenta").val());
 }
 
+var RecuperarPreVenta = function(){
+	$("#frameNroPreVenta").show();
+	$("#frameProductos").hide();
+	$("#botonRecuperarPreVenta").hide();
+	$("#botonAgregarProductos").show();
+}
+
+var AgregarProductos = function(){
+	$("#frameNroPreVenta").hide();
+	$("#frameProductos").show();
+	$("#botonRecuperarPreVenta").show();
+	$("#botonAgregarProductos").hide();
+}
+
+var CargarPreVenta = function(){
+	parametroAjax.ruta=rutaRPV;
+    parametroAjax.data = $("#FormPreVenta").serialize();
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaProcesarProductoPreVenta(respuesta);
+	
+	AgregarProductos();
+}
+
 var PreVenta= function(){
+	$("#frameProductos").show();
+	$("#frameNroPreVenta").hide();
+	$("#botonRecuperarPreVenta").show();
+	$("#botonAgregarProductos").hide();
+	
     $("#PreVentaStep_1").show();
 	$("#PreVentaStep_2").hide();
 	

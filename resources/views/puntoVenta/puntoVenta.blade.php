@@ -746,7 +746,7 @@
 					<input type="hidden" name="IdDetallePreVenta" id="IdDetallePreVenta">
 					
 					<div id="PreVentaStep_1" style="display: none;">
-						<div class="row">
+						<div class="row" id="frameProductos">
 							<div class="col-md-2">
 								<div class="md-input-wrapper">
 									<input id="CodigoProductoPreVenta" name="CodigoProductoPreVenta" type="text" class="md-form-control" maxlength="250" />
@@ -776,7 +776,21 @@
 									<i class="icon-check"></i>  Agregar
 								</button>
 							</div>
-						</div>	
+						</div>
+
+						<div class="row" id="frameNroPreVenta" style="display: none;">
+							<div class="col-md-8">
+								<div class="md-input-wrapper">
+									<input id="NroPreVenta" name="NroPreVenta" type="text" class="md-form-control form-control-lg " maxlength="250" />
+									<label for="NroPreVenta">Nro. Pre-Venta</label>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<button id="botonAgregarPreVentaPV" name="botonAgregarPreVentaPV" type="button" class="btn btn-success waves-effect waves-light btn-block">
+									<i class="icon-check"></i>  Recuperar Pre-Venta
+								</button>
+							</div>
+						</div>						
 						
 						<div class="row"> <br /> </div>
 						
@@ -784,7 +798,22 @@
 							<div class="col-md-12">
 								<div class="content clearfix">
 									<!-- Shopping cart field et start -->
-									<h3 id="basic-forms-h-0" tabindex="-1" class="title current"> Productos Pre-Venta </h3>
+									<div class="row">
+										<div class="col-md-6">
+											<h3 id="basic-forms-h-0" tabindex="-1" class="title current"> 
+												Productos Pre-Venta 
+											</h3>
+										</div>
+										<div class="col-md-6">	
+											<button style="float:right;"  id="botonRecuperarPreVenta" name="botonRecuperarPreVenta" type="button" class="btn btn-inverse-danger waves-effect waves-light">
+												<i class="icofont icofont-listine-dots"> </i>  Recuperar Pre-Venta
+											</button>
+											<button style="float:right; display:none;"  id="botonAgregarProductos" name="botonAgregarProductos" type="button" class="btn btn-inverse-danger waves-effect waves-light">
+												<i class="icofont icofont-listine-dots"> </i>  Agregar Productos
+											</button>
+										</div>
+									</div>
+									
 									<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0" class="body current" aria-hidden="false">
 										<div class="col-md-12 table-responsive">
 											<table id="tablaDetalles" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
@@ -1310,6 +1339,7 @@
 </div>
 
 <script Language="Javascript">
+
 	var rutaPVBP = "{{ URL::route('preventabpd') }}"
 	var rutaPVAP = "{{ URL::route('addProductPV') }}"
 	var rutaPVBV = "{{ URL::route('buscarVen') }}"

@@ -97,6 +97,7 @@ class PreventaController extends Controller
         return $result;
     }
 	
+	
     //Registrar Pre-Venta desde el Módulo Punto de Venta
     protected function postAddProductPreVenta(Request $request){
         $datos = $request->all();
@@ -119,6 +120,23 @@ class PreventaController extends Controller
 		
 		$result['v_cabecera'] = $model->getCabeceraPreventa($IdPreVenta);
         $result['f_registro'] = $model->regDetallePreVentaPuntoVenta($datos);
+        $result['v_detalles'] = $model->getDetallesPreventa($datos['IdPreVenta']);
+        return $result;
+    }
+	
+	//Recuperar Pre-Venta desde el Módulo Punto de Venta
+    protected function postAddPreVentaPreVenta(Request $request){
+        $datos = $request->all();
+        $model= new Preventa();
+		
+		/* Tengo IdPreVenta? */
+		$IdPreVenta=0;
+		$datos['NroPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['NroPreVenta'];
+		log::info("IdPreVenta: " . $IdPreVenta);
+		exit;
+		
+		$result['f_registro'] = $result = '{"code":200}'; 
+		$result['v_cabecera'] = $model->getCabeceraPreventa($IdPreVenta);
         $result['v_detalles'] = $model->getDetallesPreventa($datos['IdPreVenta']);
         return $result;
     }

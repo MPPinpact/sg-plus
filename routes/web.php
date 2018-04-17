@@ -159,10 +159,14 @@ Route::get('/cajaDiariaDetalle', 'PuntoVentaController@getCajaDiariaDetalle')->n
 Route::get('/cajaDiariaResumenVenta', 'PuntoVentaController@getCajaDiariaResumenVenta')->name('cajaDiariaResumenVenta');
 Route::get('/cajaDiariaDetalleVenta', 'PuntoVentaController@getCajaDiariaDetalleVenta')->name('cajaDiariaDetalleVenta');
 
+Route::post('/addPreVentaPV', 'PreventaController@postAddPreVentaPreVenta')->name('addPreVentaPV');
 Route::post('/addProductPV', 'PreventaController@postAddProductPreVenta')->name('addProductPV');
 Route::post('/buscarCDC', 'PuntoVentaController@postBuscarClienteDetalleCredito')->name('buscarCDC');
 Route::post('/pagarCuenta', 'PuntoVentaController@postPagarCuenta')->name('pagarCuenta');
 Route::post('/PtoBuscarP', 'PuntoVentaController@postBuscarProductosC')->name('PtoBuscarP');
+
+
+
 
 //CRUD Vendedores
 Route::get('/vendedores', 'VendedorController@getvendedor')->name('vendedores');
@@ -170,6 +174,7 @@ Route::post('/vendedores', 'VendedorController@postvendedor')->name('vendedores'
 Route::post('/activarVen', 'VendedorController@postVendedoractivo')->name('activarVen');
 Route::post('/detallesVen', 'VendedorController@postVendedordetalle')->name('detallesVen');
 Route::post('/buscarVen', 'VendedorController@postBuscarVen')->name('buscarVen');
+
 /// Registro de Metas
 Route::post('/metas', 'VendedorController@postMetas')->name('metas');
 Route::post('/metasE', 'VendedorController@postMetaselimiar')->name('metasE');
