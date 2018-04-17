@@ -1,4 +1,4 @@
-var manejoRefresh=limpiarLocales=limpiarCajas=limpiarDetalleCaja=errorRut=errorRutPagoCuenta=errorRut2=errorRut3=limpiarBodegas=NVenta=0;
+var manejoRefresh=limpiarLocales=limpiarCajas=limpiarDetalleCaja=errorRut=errorRut2=errorRut3=limpiarBodegas=NVenta=0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -8,52 +8,156 @@ var parametroAjax = {
     'async': false
 };
 
-var BotonCancelarPago = function(){
-    $('#FormPagoCredito')[0].reset();
-}
+$(document).ready(function(){	
+	// Botones de cabecera de compra
+    $(document).on('click','#botonConsultaCredito', ConsultaCreditoCliente);
+    $(document).on('click','#botonPagoCredito', PagoCreditoCliente);
+    // $(document).on('click','#cancelar',BotonCancelar);
+    // $(document).on('click','#agregar',BotonAgregar);
+    // $(document).on('click','#modificar',modificarCabeceras);
+    // $(document).on('click','#volverAct',volverTabs);
+});
+
 
 var ConsultaCreditoCliente = function(){
+    
 	$("#spanTituloModalCreditoCliente").text("Consulta Crédito Interno de Clientes");
     $("#ModalConsultaCreditoCliente").modal();
 }
 
-var PagoCreditoCliente = function(){   
+var PagoCreditoCliente = function(){
+    
 	$("#spanTituloModalPagoCredito").text("Pago/Abono Crédito Interno de Cliente");
     $("#ModalPagoCreditoCliente").modal();
 }
 
-var ManejoRespuestaBuscarClienteDC = function(respuesta){
-    if(respuesta.code==200){
-        if(respuesta.respuesta.v_cliente!=null){
-            var resp = parseInt(respuesta.respuesta.caso);
-            if(respuesta.respuesta.v_cliente[0]){
-                switch(resp) {
-                    case 1:
-                        pintarDatosCreditoClientes(respuesta.respuesta.v_cliente[0]);
-                    break;
-                    case 2:
-                        pintarDatosPagoCreditoClientes(respuesta.respuesta.v_cliente[0]);
-                    break;
-                }
-            
-            }else{
-                $.growl({message:"Cliente no encontrado, Verifique RUT"},{type: "warning", allow_dismiss: true,});
-                switch(resp) {
-                    case 1:
-                        limpiarDatosCreditoClientes();
-                    break;
-                    case 2:
-                        limpiarDatospagoCreditoClientes();
-                    break;
-                }
-            }    
-        }else{
-            $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
-        }
-    }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-    }
-}
+// var calcularMontos = function(CantidadVenta,ValorUnitarioVenta,FactorImpuesto,MontoDescuento){
+    // var ValorImpuesto = (CantidadVenta * ValorUnitarioVenta * FactorImpuesto / 100)
+    // $("#ValorImpuestos").val(ValorImpuesto);
+    // var TotalLinea = ((CantidadVenta * ValorUnitarioVenta) - MontoDescuento);
+    // $("#TotalLinea").val(TotalLinea);
+    // var ValorUnitarioFinal = (TotalLinea / CantidadVenta);
+    // $("#ValorUnitarioFinal").val(ValorUnitarioFinal);
+// }
+
+// var calcularTotalVenta = function(totalVenta){
+	// $("#TotalVentaDetalle").val(totalVenta);
+	// $("#TotalVentaPago").val(totalVenta);
+	// $("#TotalVenta").val(totalVenta);
+// }
+
+// var ManejoRespuestaBuscarProducto = function(respuesta){
+    // if(respuesta.code==200){
+        // if(respuesta.respuesta!=null){
+            // if(respuesta.respuesta.producto.IdProducto){
+                // if(respuesta.respuesta.producto.IdProducto==0){
+                    // $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
+                // }else{
+                    // $("#IdProducto").val(respuesta.respuesta.producto.IdProducto);
+                    // $("#NombreProducto").val(respuesta.respuesta.producto.NombreProducto);
+                    // $("#ValorUnitarioVenta").val(respuesta.respuesta.producto.PrecioVentaSugerido);
+                    // $("#CantidadVenta").val(1);
+                    // $("#FactorImpuesto").val(respuesta.respuesta.impuesto);
+                    // $("#MontoDescuento").val(0);
+                    // $("#IdUnidadMedida").val(respuesta.respuesta.producto.IdUnidadMedida).trigger("change");
+                    // calcularMontos($("#CantidadVenta").val(),$("#ValorUnitarioVenta").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
+                // } 
+            // } 
+        // }else{
+            // $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
+        // }
+    // }else{
+        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
+    // }
+// }
+
+// var ManejoRespuestaBuscarCliente = function(respuesta){
+    // if(respuesta.code==200){
+        // if(respuesta.respuesta!=null){
+            // if(respuesta.respuesta.IdCliente==0){
+                // // var rut = $("#RUTProveedor").val();
+                // // $("#RUTProveedor2").val(rut);
+                // // $("#ModalProveedor").modal();
+            // }else{
+                // $("#IdCliente").val(respuesta.respuesta.IdCliente);
+                // $("#NombreCliente").val(respuesta.respuesta.NombreCliente);
+            // }    
+        // }else{
+            // $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
+        // }
+    // }else{
+        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    // }
+// }
+
+// var ManejoRespuestaBuscarClienteVC = function(respuesta){
+	
+	// console.log("ManejoRespuestaBuscarClienteVC...");
+	
+    // if(respuesta.code==200){
+        // if(respuesta.respuesta.v_cliente!=null){
+            // $("#IdClienteVC").val(respuesta.respuesta.v_cliente[0].IdCliente);
+            // $("#NombreClienteCredito").val(respuesta.respuesta.v_cliente[0].NombreCliente);
+            // $("#FechaPrimeraCuota").val(respuesta.respuesta.v_fechas.fechaPago);
+        // }else{
+            // $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
+        // }
+    // }else{
+        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    // }
+// }
+
+// var ManejoRespuestaBuscarEmpresa = function(respuesta){
+    // if(respuesta.code==200){
+        // if(respuesta.respuesta!=null){
+            // crearselect(respuesta.respuesta.v_locales,"IdLocal");
+            // if(respuesta.respuesta.busqueda.IdEmpresa==0){
+                // $("#idEmpresa").val("");
+                // $("#NombreFantasiaE").val("");
+                // $.growl({message:"Empresa no encontrada"},{type: "warning", allow_dismiss: true,});
+            // }else{
+                // $("#idEmpresa").val(respuesta.respuesta.busqueda.IdEmpresa);
+                // $("#NombreFantasiaE").val(respuesta.respuesta.busqueda.NombreFantasia);
+            // }    
+        // }else{
+            // $.growl({message:"Contacte al personal informatico"},{type: "warning", allow_dismiss: true,});
+        // }
+    // }else{
+        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    // }
+// }
+
+// var ManejoRespuestaProcesarDetalleVenta = function(respuesta){
+    // if(respuesta.code==200){
+        // if(respuesta.respuesta!=null){
+            // $("#ModalDetalleVenta").modal();
+            // $("#spanTituloModal").text("Detalle Venta");
+            // $("#divBotonM").show();
+            // $("#divBotonesAC").hide();
+            // bloquearInputsDetalles();
+            // pintarDatosActualizarDetalles(respuesta.respuesta[0]);
+        // }else{
+            // $.growl({message:"Contacte al personal informatico"},{type: "warning", allow_dismiss: true,});
+        // }
+    // }else{
+        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    // }
+// }
+
+// var ManejoRespuestaProcesarCD = function(respuesta){
+    // if(respuesta.code==200){
+        // if(respuesta.respuesta.activar>0){
+            // if(respuesta.respuesta.v_detalles.length>0){
+                // $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
+                // cargarTablaDetalles(respuesta.respuesta.v_detalles);
+            // }
+        // }else{
+            // $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
+        // }
+    // }else{
+        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    // }
+// }
 
 var ManejoRespuestaProcesarD = function(respuesta){
     if(respuesta.code==200){

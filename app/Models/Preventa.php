@@ -72,7 +72,73 @@ class Preventa extends Authenticatable
         }
         return $result;
     }
+	
+	// Registrar Pre-Venta desde el Módulo Punto de Venta
+    public function regPreVentaPuntoVenta($datos){
+        $IdUsuario = Auth::id();
+		
+        $datos['IdPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['IdPreVenta'];		
+		$datos['IdClientePreVenta']==null ? $datos['IdClientePreVenta']="null" :$datos['IdClientePreVenta']=$datos['IdClientePreVenta'];
+		$datos['IdVendedorPreVenta']==null ? $datos['IdVendedorPreVenta']="null" :$datos['IdVendedorPreVenta']=$datos['IdVendedorPreVenta'];
+		$datos['IdLocalPreVenta']==null ? $datos['IdLocalPreVenta']="null" :$datos['IdLocalPreVenta']=$datos['IdLocalPreVenta'];
+		$datos['IdCajaPreVenta']==null ? $datos['IdCajaPreVenta']="null" :$datos['IdCajaPreVenta']=$datos['IdCajaPreVenta'];
+		
+		$sql="select f_registro_preventa(".$IdPreVenta.",".$datos['IdClientePreVenta'].",".$datos['IdVendedorPreVenta'].",".$datos['IdLocalPreVenta'].",".$datos['IdCajaPreVenta'].",'".$datos['FechaPreVenta']."',".$IdUsuario.")";
+        $execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
+	
+	// Registrar Detalle Pre-Venta desde el Módulo Punto de Venta
+    public function regDetallePreVentaPuntoVenta($datos){
+        $IdUsuario = Auth::id();
+		
+        $datos['IdDetallePreVenta']==null ? $Id=0 : $Id= $datos['IdDetallePreVenta'];
+		
+        $sql="select f_registro_detalle_preventa(".$Id.",".$datos['IdPreVenta'].",".$datos['IdProductoPreVenta'].",null,'".$datos['CantidadProductoPreVenta']."','".$datos['PrecioProductoPreVenta']."','0','0','0','0','".$datos['TotalLineaPreVenta']."',".$IdUsuario.")";
+        $execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
 
+	// Registrar Pago Pre-Venta
+    public function regPagoPreVenta($datos){
+        $idAdmin = Auth::id();
+		
+		log::info("IdPreVenta: " . $datos['IdPreVentaPago']);
+		
+        $datos['IdDetallePago']==null ? $Id=0 : $Id= $datos['IdDetallePago'];
+		
+		$fpc = $datos['FechaPrimeraCuota']; 
+		if($fpc == "") $fpc = date("d-m-Y");
+		else $fpc = $this->formatearFecha($fpc);
+		
+        $sql="select f_registro_pago_preventas(".$Id.",".$datos['IdPreVentaPago'].",".$datos['IdFormaPagoPreVenta'].",'".$datos['CodigoAprobacionTarjeta']."','".$datos['NumeroTransaccionTarjeta']."','".$datos['IdClienteVC']."', '".$fpc."','".$datos['NumeroCuotasCredito']."','".$datos['InteresMensualCredito']."','".$datos['MontoFinalCredito']."','".$datos['MontoCuotaCredito']."','".$datos['MontoPagoEfectivo']."',1,".$idAdmin.")";
+		log::info($sql);
+        $execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
+	
+	public function getDetallePago($IdPreVenta){
+        return DB::table('v_preventas_pagos')->where('IdPreVenta', $IdPreVenta)->get(); 
+    }
+	
+	public function getOnePagoPreVenta($IdDetallePago){
+        return DB::table('v_preventas_pagos')->where('IdDetallePago',$IdDetallePago)->first();
+    }
+	
+	public function activarDetallePago($IdDetallePago){
+		$IdAdmin = Auth::id();
+		$values=array('EstadoPago'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$IdAdmin);
+		return DB::table('preventas_pagos')->where('IdDetallePago', $IdDetallePago)->update($values);
+    }
 
     // registrar Detalle compra
     public function regDetallePreventa($datos){
