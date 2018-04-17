@@ -74,7 +74,10 @@ class Local extends Authenticatable
     }
 
     public function bodegasLocal($IdLocal){    
-        return DB::table('v_bodegas')->where('IdLocal',$IdLocal)->get(); 
+        $result['bodegas'] =  DB::table('v_bodegas')->where('IdLocal',$IdLocal)->get(); 
+        $sql="select SUM(MontoValorizado) as TotalValorizado from v_bodegas where IdLocal=".$IdLocal;
+        $result['sum']=DB::select($sql);
+        return $result;
     }
 
     public function getOneDetalle($IdLocal){

@@ -44,14 +44,7 @@ class FormaPagoController extends Controller
     public function getFormaPago()
     {
         $model= new FormaPago();
-        // $data['v_proveedores'] = $model->listProveedor();
-        // $data['v_locales'] = $model->listLocales();
-        // $data['v_estados'] = $model->listEstados();
-        $data['v_formas_de_pago'] = $model->listFormaspago();
-        $data['v_formas_pago'] = $model->listRegFormaspago();
-        $data['v_estados'] = $model->listEstados();
-        //dd($data);
-        
+        $data['v_formas_de_pago'] = $model->listFormasPago();
         return View::make('formaspago.formaspago',$data);
     }
 
@@ -59,9 +52,8 @@ class FormaPagoController extends Controller
     protected function postFormaPago(Request $request){
         $datos = $request->all();
         $model= new FormaPago ();
-        $result['f_registro'] = $model->regProveedor($datos);
-        // $result['v_bodegas'] = $model->listProveedor();
-        var_dump($result);
+        $result['f_registro'] = $model->regFormaPago($datos);
+        $result['v_formas_de_pago'] = $model->listFormasPago();
         return $result;
     }
 
@@ -70,8 +62,8 @@ class FormaPagoController extends Controller
         $datos = $request->all();
         $model= new FormaPago();
         $proveedor = FormaPago::find($datos['IdFormaPago']);
-        $result['activar'] = $model->activarProveedor($proveedor);
-        $result['v_proveedores'] = $model->listRegFormaspago();
+        $result['activar'] = $model->activarFormaPago($proveedor);
+        $result['v_formas_de_pago'] = $model->listFormasPago();
         // var_dump($result);
         return $result;
     }

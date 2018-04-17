@@ -21,7 +21,8 @@ var ManejoRespuestaProcesarD = function(respuesta){
         $(".md-form-control").addClass("md-valid");
         bloquearInuts();
         pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
-        cargarTablaLocales(respuesta.respuesta.v_locales);
+        cargarTablaLocales(respuesta.respuesta.v_locales.locales);
+        $("#TotalMontoValorizado").val(respuesta.respuesta.v_locales.sum[0].TotalValorizado);
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -151,6 +152,7 @@ var cargarTablaLocales = function(data){
             {"title": "Nombre","data": "NombreLocal"},
             {"title": "Id Encargado","data": "IdEncargadoLocal"},
             {"title": "Estado","data": "desEstadoLocal"},
+            {"title": "MontoValorizado","data": "MontoValorizado"}
             ],
         });
         limpiarLocales=1;

@@ -2,7 +2,7 @@
 @section('content')
 <style type="text/css" media="screen">
 	.nav-tabs .slide{
-		 width: calc(100% / 2)!important;
+		 width: calc(100% / 1)!important;
 	}
 </style>
 <div class="row">
@@ -26,9 +26,11 @@
 					</div>
 					<br />
 					<div class="row">
-						<div class="col-md-12 table-responsive">
-							<table id="tablaProveedor" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+						<div class="col-md-2"></div>
+						<div class="col-md-8 table-responsive">
+							<table id="tablaFormaPago" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 						</div>
+						<div class="col-md-2"></div>
 					</div>
 		        </div>
 	        </div>
@@ -50,7 +52,7 @@
 									<a style="float:right;" id="volverAct" href="#"><u>volver</u></a>
 								</div>
 							</div>
-							<div id="divTabs">
+							<!-- <div id="divTabs">
 			                    <ul class="nav nav-tabs nav-justified md-tabs " role="tablist">
 			                        <li class="nav-item">
 			                            <a id="adetalles" class="nav-link active" data-toggle="tab" href="#detalles" role="tab">
@@ -61,20 +63,11 @@
 			                            </a>
 			                            <div class="slide"></div>
 			                        </li>
-			                        <li class="nav-item">
-			                            <a id="acompras" class="nav-link" data-toggle="tab" href="#compras" role="tab">
-			                                <div class="f-26">
-			                                    <i class="icofont icofont-document-search"></i>
-			                                </div>
-			                                Compras Realizadas
-			                           	</a>
-			                            <div class="slide"></div>
-			                        </li>
 			                    </ul>
-							</div>
+							</div> -->
 		                    <!-- Tab panes -->
 		                    <div class="tab-content">
-		                        <div class="tab-pane active" id="detalles" role="tabpanel">
+		                        <!-- <div class="tab-pane active" id="detalles" role="tabpanel"> -->
 									<br><br>
 									{!! Form::open(['id'=>'FormRegFormaPago','autocomplete' => 'off']) !!}
 									{!! Form::hidden('IdFormaPago', '', [
@@ -82,12 +75,14 @@
 									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
-										<div class="col-sm-6">
+										<div class="col-md-4"></div>
+										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="pNombreFormaPago" name="pNombreFormaPago" type="text" class="md-form-control md-static" maxlength="250" readonly />
-					                            <label for="pNombreFormaPago">Forma de Pago</label>
+				                                <input id="NombreFormaPago" name="NombreFormaPago" type="text" class="md-form-control md-static" maxlength="250" readonly />
+					                            <label for="NombreFormaPago">Forma de Pago</label>
 					                        </div>
 										</div>
+										<div class="col-md-4"></div>
 									</div>									
 									<br>
 									<div align="center">
@@ -108,14 +103,7 @@
 										</div>
 									</div>
 									{!! Form::close() !!}
-		                        </div>
-		                        <div class="tab-pane" id="compras" role="tabpanel">
-									<div class="row">
-										<div class="col-md-12 table-responsive">
-											<table id="tablaProductos" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
-										</div>
-									</div>
-		                        </div>
+		                        <!-- </div> -->
 		                    </div>
 		                </div>
 		            </div>
@@ -129,11 +117,7 @@
 	var rutaA = "{{ URL::route('FormaPagoAtc') }}"
 	var rutaD = "{{ URL::route('FormaPagoDet') }}"
 	var d = [];
-	console.log(d);
-	
 	d['v_formas_de_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_de_pago) }}'));
-	d['v_formas_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_pago) }}'));
-	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
 </script>
 <script src="{{ asset('js/formaspago/formaspago.js') }}"></script>
 @endsection

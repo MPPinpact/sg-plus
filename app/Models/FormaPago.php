@@ -33,72 +33,36 @@ class FormaPago extends Authenticatable
         'auFechaModificacion','auFechaCreacion'
     ];
 
-    // Cargar tabla de bodega
-    public function listProveedor(){
-        return DB::table('v_proveedores')->get();
-    }
-
-    // Cargar combo de estados de Estado (Activo / Inactivo)
-    public function listEstados(){
-        return DB::table('v_estados')->get();
-    }
-    // Cargar combo formas de pago 
-    public function listFormaspago(){
-        return DB::table('v_formas_de_pago')->get();
-    }
-
-    public function listRegFormaspago(){
+    public function listFormasPago(){
         return DB::table('v_formas_pago')->get();
     }
 
-    // Cargar combo de Locales
-    public function listLocales(){
-        return DB::table('v_locales_combo')->get();
-    }
-
     // registrar una nueva proveedor
-    public function regProveedor($datos){        
-        log::info($datos);
+    public function regFormaPago($datos){        
         $idAdmin = Auth::id();
         $datos['IdFormaPago']==null ? $Id=0 : $Id= $datos['IdFormaPago'];
-        $sql="select f_registro_formapago(".$Id.",'".$datos['pNombreFormaPago']."',".$idAdmin.")";
-        log::info($sql);
+        $sql="select f_registro_formapago(".$Id.",'".$datos['NombreFormaPago']."',".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
         }
-
-        // log::info($execute);
-        // Para probar
-        //return $result;
-        
+        return $result;
     }
 
     // Activar / Desactivar proveedor
-    public function activarProveedor($datos){
-        
+    public function activarFormaPago($datos){
         $idAdmin = Auth::id();
-        if ($datos['EstadoFormaPago']>0){
+        if ($datos->EstadoFormaPago > 0){
             $values=array('EstadoFormaPago'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
-        log::info('Mayor a 0'.$datos);
         }else{
             $values=array('EstadoFormaPago'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
-        log::info('Igual a 0'.$datos);
         }
         return DB::table('formas_pago')
-                ->where('EstadoFormaPago', $datos['EstadoFormaPago'])
+                ->where('IdFormaPago', $datos->IdFormaPago)
                 ->update($values);
-    }
-
-    public function localesProducto($IdBodega){
-        return DB::table('v_productos')->where('IdBodega',$IdBodega)->get();
     }
 
     public function getOneDetalle($IdFormaPago){
         return DB::table('v_formas_pago')->where('IdFormaPago',$IdFormaPago)->get();
     }
-
 }
-
-
-

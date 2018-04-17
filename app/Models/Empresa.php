@@ -69,7 +69,11 @@ class Empresa extends Authenticatable
     }
 
     public function localesEmpresa($IdEmpresa){    
-        return DB::table('v_locales')->where('IdEmpresa',$IdEmpresa)->get(); 
+        // return DB::table('v_locales')->where('IdEmpresa',$IdEmpresa)->get(); 
+        $result['locales'] =  DB::table('v_locales')->where('IdEmpresa',$IdEmpresa)->get(); 
+        $sql="select SUM(MontoValorizado) as TotalValorizado from v_locales where IdEmpresa=".$IdEmpresa;
+        $result['sum']=DB::select($sql);
+        return $result;
     }
 
     public function getOneDetalle($IdEmpresa){

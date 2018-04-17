@@ -141,9 +141,9 @@
 												<div class="col-sm-9"></div>
 												<div class="col-sm-3">
 													<div class="md-input-wrapper" >
-														<inputstyle="text-align:right;" id="TotalMontoValorizado" name="TotalMontoValorizado" type="text" class="md-form-control md-static" maxlength="250" readonly />
+														<input style="text-align:right;" id="TotalMontoValorizadoL" name="TotalMontoValorizadoL" type="text" class="md-form-control md-static" maxlength="250" readonly />
 														<div style="float: right;">
-															<label style="text-align: right;color:#40C4FF" for="TotalMontoValorizado">Total Valorizado</label>
+															<label style="text-align: right;color:#40C4FF" for="TotalMontoValorizadoL">Total Valorizado</label>
 														</div>
 													</div>
 												</div>

@@ -10,13 +10,17 @@ var parametroAjax = {
 };
 
 var ManejoRespuestaProcesarD = function(respuesta){
+    console.log(respuesta);
+    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         $(".divDetalles").toggle();
         $("#divVolver").show();
         $("#spanTitulo").text("Detalles");
         bloquearInuts();
         pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
-        cargarTablaBodegas(respuesta.respuesta.v_bodegas);
+        cargarTablaBodegas(respuesta.respuesta.v_bodegas.bodegas);
+        console.log(respuesta.respuesta.v_bodegas.sum[0].TotalValorizado);
+        $("#TotalMontoValorizadoL").val(respuesta.respuesta.v_bodegas.sum[0].TotalValorizado);
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
