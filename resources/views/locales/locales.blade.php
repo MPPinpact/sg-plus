@@ -136,6 +136,18 @@
 									<div class="row">
 										<div class="col-md-12 table-responsive">
 											<table id="tablaBodegas" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+											<br />
+											<div class="row">
+												<div class="col-sm-9"></div>
+												<div class="col-sm-3">
+													<div class="md-input-wrapper" >
+														<inputstyle="text-align:right;" id="TotalMontoValorizado" name="TotalMontoValorizado" type="text" class="md-form-control md-static" maxlength="250" readonly />
+														<div style="float: right;">
+															<label style="text-align: right;color:#40C4FF" for="TotalMontoValorizado">Total Valorizado</label>
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 		                        </div>

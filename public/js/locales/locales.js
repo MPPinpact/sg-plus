@@ -143,6 +143,8 @@ var cargarTablaBodegas = function(data){
             {"title": "Nombre","data": "NombreBodega"},
             {"title": "Descripción","data": "DescripcionBodega"},
             {"title": "Estado","data": "desEstadoBodega"},
+            {"title": "Monto Valorizado","data": "MontoValorizado"},
+
             ],
         });
         limpiarBodegas=1;
