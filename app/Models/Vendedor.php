@@ -53,7 +53,8 @@ class Vendedor extends Authenticatable
         $idAdmin = Auth::id();
         $datos['IdVendedor']==null ? $Id=0 : $Id= $datos['IdVendedor'];
         $sql="select f_registro_vendedor(".$Id.",'".$datos['RUTVendedor']."','".$datos['NombreVendedor']."','".$datos['ComisionVendedor']."',".$idAdmin.")";
-        $execute=DB::select($sql);
+		$execute=DB::select($sql);
+		
         foreach ($execute[0] as $key => $value) {
             $result=$value;
         }

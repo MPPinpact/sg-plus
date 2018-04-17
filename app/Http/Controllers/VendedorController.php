@@ -55,8 +55,8 @@ class VendedorController extends Controller
     //Registrar o actualizar Vendedor
     protected function postvendedor(Request $request){
         $datos = $request->all();
-        $usuario= new Usuario();
-        $datos['RUTVendedor'] = $usuario->LimpiarRut($datos['RUTVendedor']);
+        $datos['RUTVendedor'] = str_replace(".","", $datos['RUTVendedor']); 
+		
         $model= new Vendedor();
         $result['f_registro'] = $model->regVendedor($datos);
         $result['v_vendedores'] = $model->listVendedor();
@@ -85,7 +85,8 @@ class VendedorController extends Controller
     protected function postBuscarVen(Request $request){
         $datos = $request->all();
         $usuario= new Usuario();
-        $datos['RUTVendedor'] = $usuario->LimpiarRut($datos['RUTVendedor']);
+		
+        $datos['RUTVendedor'] = str_replace(".","", $datos['RUTVendedor']); 
         $result['v_usuario'] = Usuario::where('usrUserName', $datos['RUTVendedor'])->first();
         return $result;
     }

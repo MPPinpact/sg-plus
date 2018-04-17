@@ -155,15 +155,17 @@ var cargarTablaVendedores = function(data){
             },
             {"title": "IdVendedor","data": "IdVendedor",visible:0},
             {"title": "RUT","data": "RUTVendedor"},
-            {"title": "Nombre","data": "NombreVendedor"},
-            {"title": "Comisión","data": "ComisionVendedor"},
+            {"title": "Nombre Vendedor","data": "NombreVendedor"},
+            {"title": "Comisión x Venta","data": "ComisionVendedor",
+					render: $.fn.dataTable.render.number( '.', ',', 2 ),
+					className: "text-right"},
             {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
             {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
-            {"title": "Creado por","data": "creador"},
+            {"title": "Creado por","data": "creador",visible:0},
             {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
             {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0},
             {"title": "Modificado por","data": "modificador",visible:0},
-            {"title": "Estado","data": "desEstadoVendedor"}
+            {"title": "Estado Vendedor","data": "desEstadoVendedor"}
         ],
     });
     limpiarVendedores=1;
