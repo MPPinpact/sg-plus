@@ -214,7 +214,7 @@ class PuntoVentaController extends Controller
 		
         if($result == null) { $result = '{"IdCliente":0}'; } 
         return $result;
-    }
+    }	
 
     protected function postBuscarempresa(Request $request){
         $datos = $request->all();
