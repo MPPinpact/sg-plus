@@ -166,6 +166,10 @@ Route::post('/asginarCli', 'PreventaController@postAsignarCliente')->name('asgin
 
 Route::post('/buscarCDC', 'PuntoVentaController@postBuscarClienteDetalleCredito')->name('buscarCDC');
 Route::post('/pagarCuenta', 'PuntoVentaController@postPagarCuenta')->name('pagarCuenta');
+Route::post('/PtoBuscarP', 'PuntoVentaController@postBuscarProductosC')->name('PtoBuscarP');
+
+
+
 
 
 //CRUD Vendedores
