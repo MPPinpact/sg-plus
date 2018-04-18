@@ -286,11 +286,13 @@ class PuntoVentaController extends Controller
         $datos = $request->all();
         $producto = Producto::where('CodigoBarra', '=', $datos['CodigoProducto'])->first();
         $result['Existe'] = 0;
+		
         if ($producto != null){
             $result['Existe'] = 1;
             $model= new Producto();
             $result['v_stock'] = $model->listStock($producto->IdProducto);
         }
+		
         return $result;
     }
     

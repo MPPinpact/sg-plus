@@ -432,6 +432,8 @@ var CargarPreVenta = function(){
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarProductoPreVenta(respuesta, 2);
 	console.log("Fin CargarPreVenta()");
+	
+	//printDIV();
 }
 
 var PreVenta= function(){
@@ -749,6 +751,9 @@ var ManejoRespuestaProcesarProductoPreVenta = function(respuesta, origen){
 			$("#RUTCliente").val(respuesta.respuesta.v_cabecera[0].RUTCliente);
 			AsignarClientePreVenta();
 			
+			CargarTablaPagos(respuesta.respuesta.v_pagos);
+			$("#botonFormaPagoPreVenta").text("Total Pagado: " + $("#TotalPagadoPreVenta").val());
+	
 			AgregarProductos();
 			console.log("Fin Origen: " + origen);
 		}
@@ -924,7 +929,9 @@ var CargarTablaProductosPreVenta = function(data){
 		$('#tablaDetalles thead').empty();
 		console.log("limpiarImpuestos: " + limpiarImpuestos);
 	}
-             
+    
+	var columnReport = [[5],[6],[9],[11],[12]];       
+	
 	$("#tablaDetalles").dataTable({
 		
 		"footerCallback": function (data){
@@ -938,7 +945,7 @@ var CargarTablaProductosPreVenta = function(data){
 		};
 		// Total over all pages
 		totalPV = api
-			.column(7)
+			.column(8)
 			.data()
 			.reduce( function (a, b) {
 				return intVal(a) + intVal(b);
@@ -961,7 +968,8 @@ var CargarTablaProductosPreVenta = function(data){
 			{"title": "Id","data": "IdDetallePreVenta",visible:0},
 			{"title": "IdPreVenta","data": "IdPreVenta",visible:0},
 			{"title": "IdProducto","data": "IdProducto",visible:0},
-			{"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
+			{"title": "Código","data": "CodigoBarra",
+						className: "text-right"},
 			{"title": "Producto","data": "NombreProducto", 
 						width: 800},
 			{"title": "Precio Venta","data": "ValorUnitarioVenta", 
@@ -972,6 +980,7 @@ var CargarTablaProductosPreVenta = function(data){
 						width: 50,
 						render: $.fn.dataTable.render.number( '.', ',', 2 ),
 						className: "text-center"},
+			{"title": "Monto Descuento","data": "MontoDescuento",visible:0},
 			{"title": "Total","data": "TotalLinea", 
 						width: 100,
 						render: $.fn.dataTable.render.number( '.', ',', 2 ),
@@ -989,14 +998,24 @@ var CargarTablaProductosPreVenta = function(data){
 					</center>`;
 					return result;
 				}
+			},	
+		],
+		dom: 'Bfrtip',
+        buttons: [
+            {	extend: 'print',
+				text: 'Imprimir PreVenta',
+				className: 'btn btn-inverse-warning',
+				pageSize:'A4',
+				autoPrint: true,
+				exportOptions: {
+					modifier: {
+						columns: columnReport,
+						page: 'current'
+					}
+				}
 			},
-			{"title": "Factor Impuesto","data": "FactorImpuesto",visible:0},
-			{"title": "Valor Impuestos","data": "ValorImpuestos",visible:0},
-			{"title": "Monto Descuento","data": "MontoDescuento",visible:0},
-			
-			{"title": "Estado","data": "EstadoPreVentaDetalle",visible:0},
-			{"title": "Estado","data": "desEstadoPreventaDetalle",visible:0}
-		]
+        ]
+		
 	});
 
 	limpiarImpuestos=1;
@@ -1008,6 +1027,14 @@ var CargarTablaProductosPreVenta = function(data){
 	//calcularTotalPreVenta(totalPV);
 };
 
+function printDIV(){
+	var divToPrint = document.getElementById("tablaDetalles");
+	var newWin = window.open('', 'Printing...');
+	newWin.document.open();
+	newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+	newWin.document.close();
+	setTimeout(function(){newWin.close();}, 10);
+}
 
 // var calcularMontos = function(CantidadVenta,ValorUnitarioVenta,FactorImpuesto,MontoDescuento){
     // var ValorImpuesto = (CantidadVent * ValorUnitarioVenta * FactorImpuesto / 100)

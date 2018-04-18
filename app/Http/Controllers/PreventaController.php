@@ -137,6 +137,7 @@ class PreventaController extends Controller
 		$result['f_registro'] = '{"code":200}'; 
 		$result['v_cabecera'] = $model->getCabeceraPreventa($IdPreVenta);
         $result['v_detalles'] = $model->getDetallesPreventa($IdPreVenta);
+		$result['v_pagos'] = $model->getDetallePago($IdPreVenta);
         return $result;
     }
 

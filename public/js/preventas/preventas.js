@@ -261,9 +261,8 @@ var cargarTablaPreventas = function(data){
                         return result;
                     }
                 },
-                {"title": "Id","data": "idPreVenta", className: "text-center",visible:0},
-                {
-                    "title": "Fecha Preventa", 
+				{"title": "Nor. Pre-Venta","data": "idPreVenta", className: "text-center"},
+                {"title": "Fecha Preventa", 
                     "data": "FechaPreVenta", className: "text-center", 
                     "render": function(data, type, row, meta){
                         if(type === 'display'){
@@ -288,7 +287,7 @@ var cargarTablaPreventas = function(data){
 
 var cargarTablaDetalles = function(data){
     if(limpiarImpuestos==1){destruirTabla('#tablaDetalles');$('#tablaDetalles thead').empty();}
-        var columnReport = [[5],[6],[9],[11],[12]];       
+        var columnReport = [[5],[6],[7],[12]];       
         $("#tablaDetalles").dataTable({
 			
 			"footerCallback": function (data){
@@ -366,6 +365,17 @@ var cargarTablaDetalles = function(data){
             ],   
             dom: 'Bfrtip',
             buttons: [
+				{
+					extend: 'print',
+					text: 'Imprimir PreVenta',
+					title:'Detalles Preventa N° '+NPreventa,
+					className: 'btn btn-inverse-warning',
+					pageSize:'A4',
+					autoPrint: true,	
+					exportOptions: {
+                        columns: columnReport,
+                    }					
+				},
                 {
                     extend: 'pdf',
                     text: 'Finalizar Pre-venta',
