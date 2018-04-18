@@ -82,6 +82,7 @@ class Compra extends Authenticatable
         $datos['IdDetalleCompra']==null ? $Id=0 : $Id= $datos['IdDetalleCompra'];
         $sql="select f_registro_detalle_compra(".$Id.",".$datos['IdCompra2'].",".$datos['IdProducto'].",".$datos['IdUnidadMedida'].",'".$datos['CantidadComprada']."','".$datos['ValorUnitario']."','".$datos['FactorImpuesto']."','".$datos['ValorImpuestos']."','".$datos['MontoDescuento']."','".$datos['ValorUnitarioFinal']."','".$datos['TotalLinea']."',".$datos['EstadoDetalleCompra'].",".$idAdmin.")";
         $execute=DB::select($sql);
+		log::info($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
         }
