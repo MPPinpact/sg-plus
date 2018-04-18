@@ -62,6 +62,7 @@ $(document).ready(function(){
     });
 	
 	$("#NombreVendedorPreVenta").change(function() {
+		console.log("NombreVendedorPreVenta.change!!!");
         AsignarVendedorPreVenta();
     });
 	
@@ -197,9 +198,12 @@ var CerrarModalAsignarVendedor = function(){
 }
 
 var AsignarVendedorPreVenta = function(){
+	console.log("AsignarVendedorPreVenta()");
 	$("#spanTituloModalPreVenta").text("Pre-Venta: " + $("#IdPreVenta").val() + " | Local: xxxx | Caja: xxxx | Vendedor: " +  $("#NombreVendedorPreVenta").val());
 	$("#NombreVendedor_DIV").text($("#NombreVendedorPreVenta").val());
 	$("#botonVendedorPreVenta").text($("#NombreVendedorPreVenta").val());
+	console.log("Fin AsignarVendedorPreVenta()");
+	
 }
 
 var ModalCliente = function(){
@@ -408,6 +412,8 @@ var RecuperarPreVenta = function(){
 	$("#frameProductos").hide();
 	$("#botonRecuperarPreVenta").hide();
 	$("#botonAgregarProductos").show();
+	
+	$("#NroPreVenta").focus();
 }
 
 var AgregarProductos = function(){
@@ -415,15 +421,17 @@ var AgregarProductos = function(){
 	$("#frameProductos").show();
 	$("#botonRecuperarPreVenta").show();
 	$("#botonAgregarProductos").hide();
+	
+	$("#CodigoProductoPreVenta").focus();
 }
 
 var CargarPreVenta = function(){
+	console.log("CargarPreVenta()");
 	parametroAjax.ruta=rutaRPV;
     parametroAjax.data = $("#FormPreVenta").serialize();
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaProcesarProductoPreVenta(respuesta);
-	
-	AgregarProductos();
+    ManejoRespuestaProcesarProductoPreVenta(respuesta, 2);
+	console.log("Fin CargarPreVenta()");
 }
 
 var PreVenta= function(){
@@ -658,9 +666,11 @@ var ManejoRespuestaBuscarVendedorPreVenta = function(respuesta){
                 }else{
                     $("#IdVendedorPreVenta").val(respuesta.respuesta.v_usuario.idUser);
                     $("#NombreVendedorPreVenta").val(respuesta.respuesta.v_usuario.usrNombreFull);
-                } 
-				
-				
+					
+					parametroAjax.ruta=rutaPVAV;
+					parametroAjax.data = $("#FormPreVenta").serialize();
+					respuesta=procesarajax(parametroAjax);
+                }
             } 
         }else{
             $.growl({message:"Vendedor no encontrado"},{type: "warning", allow_dismiss: true});
@@ -708,40 +718,44 @@ var ProcesarProductoPreVenta = function(){
         parametroAjax.ruta=rutaPVAP;
         parametroAjax.data = $("#FormPreVenta").serialize();
         respuesta=procesarajax(parametroAjax);
-        ManejoRespuestaProcesarProductoPreVenta(respuesta);
+        ManejoRespuestaProcesarProductoPreVenta(respuesta, 1);
     }
 };
 
-var ManejoRespuestaProcesarProductoPreVenta = function(respuesta){
+var ManejoRespuestaProcesarProductoPreVenta = function(respuesta, origen){	
     if(respuesta.code==200){
-        var res = JSON.parse(respuesta.respuesta.f_registro);
-        switch(res.code) {
-            case '200':
-                $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
+        $.growl({message:"Pre-Venta Recuperada con éxito!!!"},{type: "success", allow_dismiss: true,});
 				
-				$("#IdProductoPreVenta").val("");
-                $("#NombreProductoPreVenta").val("");
-                $("#PrecioProductoPreVenta").val("");
-                $("#CantidadProductoPreVenta").val(1);
-				$("#CodigoProductoPreVenta").val("");
-				
-				//$('#IdPreVenta').val(respuesta.respuesta.v_cabecera[0].idPreVenta);
-				AsignarIdPreVenta(respuesta.respuesta.v_cabecera[0].idPreVenta);
-				
-				CargarTablaProductosPreVenta(respuesta.respuesta.v_detalles);
-				
-				$("#CodigoProductoPreVenta").focus();
-				
-                break;
-            case '-2':
-                $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
-                break;
-            default:
-                $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-                break;
-        }
+		$("#IdProductoPreVenta").val("");
+		$("#NombreProductoPreVenta").val("");
+		$("#PrecioProductoPreVenta").val("");
+		$("#CantidadProductoPreVenta").val(1);
+		$("#CodigoProductoPreVenta").val("");
+		
+		AsignarIdPreVenta(respuesta.respuesta.v_cabecera[0].idPreVenta);
+		CargarTablaProductosPreVenta(respuesta.respuesta.v_detalles);
+		
+		if(origen == "2"){
+			console.log("Origen: " + origen);
+			$("#IdVendedorPreVenta").val(respuesta.respuesta.v_cabecera[0].IdVendedor);
+			$("#NombreVendedorPreVenta").val(respuesta.respuesta.v_cabecera[0].NombreVendedor);
+			$("#NombreVendedor_DIV").text($("#NombreVendedorPreVenta").val());
+			$("#botonVendedorPreVenta").text($("#NombreVendedorPreVenta").val());
+			AsignarVendedorPreVenta();		
+			
+			$("#IdClientePreVenta").val(respuesta.respuesta.v_cabecera[0].IdCliente);
+			$("#NombreClientePreVenta").val(respuesta.respuesta.v_cabecera[0].NombreCliente);
+			$("#RUTCliente").val(respuesta.respuesta.v_cabecera[0].RUTCliente);
+			$("#RUTCliente").val(respuesta.respuesta.v_cabecera[0].RUTCliente);
+			AsignarClientePreVenta();
+			
+			AgregarProductos();
+			console.log("Fin Origen: " + origen);
+		}
+		
+		
     }else{
-        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+        $.growl({message:"Contacte al personal informático..."},{type: "danger", allow_dismiss: true,});
     }
 
 };
@@ -760,14 +774,11 @@ var ManejoRespuestaBuscarCliente = function(respuesta){
 				
 				$("#EstadoClientePreVenta").val(respuesta.respuesta.v_cliente[0].DetalleEstadoCliente);
 				$("#PC_ClientePreVenta").val(moment(respuesta.respuesta.v_cliente[0].fechaProximaCuota, 'YYYY-MM-DD',true).format("DD-MM-YYYY"));   
-				 
-                // $("#IdClientePreVenta").val(respuesta.respuesta.IdCliente);
-                // $("#NombreClientePreVenta").val(respuesta.respuesta.NombreCliente);
-				// $("#CA_ClientePreVenta").val(respuesta.respuesta.CupoAutorizado);
-				// $("#CU_ClientePreVenta").val(respuesta.respuesta.CupoUtilizado);
-				// $("#CD_ClientePreVenta").val($("#CA_ClientePreVenta").val() - $("#CU_ClientePreVenta").val() );
-				// $("#EstadoClientePreVenta").val(respuesta.respuesta.DetalleEstadoCliente);
-				// $("#PC_ClientePreVenta").val(respuesta.respuesta.fechaProximaCuota);
+				
+				console.log("Actualiza Cliente en DB...");
+				parametroAjax.ruta=rutaPVAC;
+				parametroAjax.data = $("#FormPreVenta").serialize();
+				respuesta=procesarajax(parametroAjax);
 				
 				AsignarClientePreVenta();
 				

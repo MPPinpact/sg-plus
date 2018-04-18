@@ -91,6 +91,38 @@ class Preventa extends Authenticatable
         return $result;
     }
 	
+	public function regVendedorPreVenta($datos){
+		$IdUsuario = Auth::id();
+		 
+		$datos['IdPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['IdPreVenta'];		
+		$datos['IdVendedorPreVenta']==null ? $datos['IdVendedorPreVenta']="null" :$datos['IdVendedorPreVenta']=$datos['IdVendedorPreVenta'];
+		
+		$sql="select f_actualizar_preventa_vendedor(".$IdPreVenta.",".$datos['IdVendedorPreVenta'].",".$IdUsuario.")";
+        $execute=DB::select($sql);
+		log::info($sql);
+		
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+	}
+	
+	public function regClientePreVenta($datos){
+		$IdUsuario = Auth::id();
+		 
+		$datos['IdPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['IdPreVenta'];		
+		$datos['IdClientePreVenta']==null ? $datos['IdClientePreVenta']="null" :$datos['IdClientePreVenta']=$datos['IdClientePreVenta'];
+		
+		$sql="select f_actualizar_preventa_cliente(".$IdPreVenta.",".$datos['IdClientePreVenta'].",".$IdUsuario.")";
+        $execute=DB::select($sql);
+		log::info($sql);
+		
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+	}
+	
 	// Registrar Detalle Pre-Venta desde el Módulo Punto de Venta
     public function regDetallePreVentaPuntoVenta($datos){
         $IdUsuario = Auth::id();

@@ -126,21 +126,46 @@ class PreventaController extends Controller
 	
 	//Recuperar Pre-Venta desde el Módulo Punto de Venta
     protected function postAddPreVentaPreVenta(Request $request){
-        $datos = $request->all();
+		$datos = $request->all();
         $model= new Preventa();
 		
 		/* Tengo IdPreVenta? */
 		$IdPreVenta=0;
 		$datos['NroPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['NroPreVenta'];
 		log::info("IdPreVenta: " . $IdPreVenta);
-		exit;
-		
-		$result['f_registro'] = $result = '{"code":200}'; 
+				
+		$result['f_registro'] = '{"code":200}'; 
 		$result['v_cabecera'] = $model->getCabeceraPreventa($IdPreVenta);
-        $result['v_detalles'] = $model->getDetallesPreventa($datos['IdPreVenta']);
+        $result['v_detalles'] = $model->getDetallesPreventa($IdPreVenta);
         return $result;
     }
 
+	protected function postAsignarVendedor(Request $request){
+        log::info("Asignar Vendedor a Pre-Venta ");
+		
+		$datos = $request->all();
+		log::info("IdPreVenta: " . $datos['IdPreVenta']);
+		log::info("IdVendedor: " . $datos['IdVendedorPreVenta']);
+		
+		$model= new Preventa();
+		$result['f_registro'] = $model->regVendedorPreVenta($datos);
+		
+        return $result;
+    }
+	
+	protected function postAsignarCliente(Request $request){
+        log::info("Asignar Cliente a Pre-Venta ");
+		
+		$datos = $request->all();
+		log::info("IdPreVenta: " . $datos['IdPreVenta']);
+		log::info("IdCliente: " . $datos['IdClientePreVenta']);
+		
+		$model= new Preventa();
+		$result['f_registro'] = $model->regClientePreVenta($datos);
+		
+        return $result;
+    }
+	
 	//Activar / desactivar Preventa
     protected function postPreventactiva(Request $request){
         $datos = $request->all();
