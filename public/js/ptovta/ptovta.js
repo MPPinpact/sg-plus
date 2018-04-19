@@ -56,9 +56,13 @@ var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
                 $("#CreditoUtilizadoConsultaCredito").val(cliente[0].CupoUtilizado);
                 var disp = (parseInt(cliente[0].CupoAutorizado)-parseInt(cliente[0].CupoUtilizado));
                 $("#CreditoDisponibleConsultaCredito").val(disp);
-                $("#UltimaCompraConsultaCredito").val(respuesta.respuesta.v_cliente.UltimaCompra[0].TotalVenta);
+                if (respuesta.respuesta.v_cliente.UltimaCompra){
+                    $("#UltimaCompraConsultaCredito").val(respuesta.respuesta.v_cliente.UltimaCompra[0].TotalVenta);
+                }
                 // $("#UltimoPagoConsultaCredito").val(c.);
-                $("#UltimoMontoFacturadoConsultaCredito").val(respuesta.respuesta.v_cliente.MontoAnterior[0].MontoFacturadoAnterior);
+                if (respuesta.respuesta.v_cliente.MontoAnterior){
+                    $("#UltimoMontoFacturadoConsultaCredito").val(respuesta.respuesta.v_cliente.MontoAnterior[0].MontoFacturadoAnterior);
+                }
                 $("#EstadoClienteConsultaCredito").val(cliente[0].DetalleEstadoCliente);
             }
             if (caso == 2){
