@@ -47,7 +47,7 @@ var ManejoRespuestaBuscarProducto = function(respuesta){
 
 var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
     if(respuesta.code==200){
-        var cliente = respuesta.respuesta.v_cliente;
+        var cliente = respuesta.respuesta.v_cliente.cliente;
         if (cliente.length > 0){
             if (caso == 1){
                 $("#IdClienteConsultaCredito").val(cliente[0].IdCliente);
@@ -56,9 +56,9 @@ var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
                 $("#CreditoUtilizadoConsultaCredito").val(cliente[0].CupoUtilizado);
                 var disp = (parseInt(cliente[0].CupoAutorizado)-parseInt(cliente[0].CupoUtilizado));
                 $("#CreditoDisponibleConsultaCredito").val(disp);
-                // $("#UltimaCompraConsultaCredito").val(c.);
+                $("#UltimaCompraConsultaCredito").val(respuesta.respuesta.v_cliente.UltimaCompra[0].TotalVenta);
                 // $("#UltimoPagoConsultaCredito").val(c.);
-                // $("#UltimoMontoFacturadoConsultaCredito").val(c.);
+                $("#UltimoMontoFacturadoConsultaCredito").val(respuesta.respuesta.v_cliente.MontoAnterior[0].MontoFacturadoAnterior);
                 $("#EstadoClienteConsultaCredito").val(cliente[0].DetalleEstadoCliente);
             }
             if (caso == 2){

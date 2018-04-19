@@ -272,7 +272,6 @@ class PuntoVentaController extends Controller
         $datos['RUTCliente']=$model->LimpiarRut($datos['RUTCliente']);
         $model= new Cliente();
         $result['v_cliente'] = $model->buscarClienteDetalleCredito($datos);
-            
         return $result;
     }
 

@@ -100,7 +100,9 @@ class Cliente extends Authenticatable
         $cliente = DB::table('v_clientes')->where('RUTCliente',$datos['RUTCliente'])->get();
         $result = [];
         if ($cliente){
-            $result=$cliente;
+            $result['cliente'] =$cliente;
+            $result['UltimaCompra'] = DB::select("select TotalVenta from v_ventas where RUTCliente = '".$datos['RUTCliente']."' order by IdVenta desc limit 1");
+            $result['MontoAnterior'] = DB::select("select MontoFacturadoAnterior from v_clientes_eecc where RUTCliente = '".$datos['RUTCliente']."' order by IdEECC desc limit 1");
         }
         return $result;
     }
