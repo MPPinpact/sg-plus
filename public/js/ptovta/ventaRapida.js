@@ -733,16 +733,16 @@ var ManejoRespuestaBuscarProductoPreVenta = function(respuesta){
 var ManejoRespuestaBuscarVendedorPreVenta = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta.v_usuario!=null){
-            if(respuesta.respuesta.v_usuario.idUser){
-                if(respuesta.respuesta.v_usuario.idUser==0){
+            if(respuesta.respuesta.v_usuario.IdVendedor){
+                if(respuesta.respuesta.v_usuario.IdVendedor==0){
                     $.growl({message:"Vendedor no encontrado"},{type: "warning", allow_dismiss: true});
 					
 					$("#IdVendedorPreVenta").val(0);
                     $("#NombreVendedorPreVenta").val("¡Vendedor No Identificado!");
 					
                 }else{
-                    $("#IdVendedorPreVenta").val(respuesta.respuesta.v_usuario.idUser);
-                    $("#NombreVendedorPreVenta").val(respuesta.respuesta.v_usuario.usrNombreFull);
+                    $("#IdVendedorPreVenta").val(respuesta.respuesta.v_usuario.IdVendedor);
+                    $("#NombreVendedorPreVenta").val(respuesta.respuesta.v_usuario.NombreVendedor);
 					
 					if(_tipoVenta_=="PreVenta") parametroAjax.ruta=rutaPVAV;
 					if(_tipoVenta_=="Venta") parametroAjax.ruta=rutaVAV;
