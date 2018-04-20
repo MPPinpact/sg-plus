@@ -76,7 +76,7 @@
 		</div>	
 	</div>	
 	
-	<div class="col-lg-4 grid-item">
+	<div class="col-lg-4 grid-item" style="display:none">
 		<div class="card">
 			<div class="bg-primary">
 				<div class="card-block">
@@ -96,8 +96,8 @@
 		<div class="card">
 			<div class="bg-primary">
 				<div class="card-block">
-					<h5 class="counter txt-white d-inline-block">Venta Directa</h5>
-					<h6 class="f-w-100 txt-white">Permite realizar una venta directa de productos</h6>
+					<h5 class="counter txt-white d-inline-block">Venta de Productos</h5>
+					<h6 class="f-w-100 txt-white">Permite realizar una venta de productos</h6>
 					<h6 class="f-w-100 txt-white">----</h6>                                                   
 					<a id="botonVentaDirecta" name="botonVentaDirecta" style="float:right;" href="#!" class="btn btn-inverse-primary waves-effect waves-light">Ventas Directa <i class="icon-action-redo"></i></a>
 					<!-- <a id="botonVentaRapida" name="botonVentaRapida" style="float:right;" href="{{ route('ventas') }}" class="btn btn-inverse-primary waves-effect waves-light">Ir a Ventas <i class="icon-action-redo"></i></a> -->
@@ -167,9 +167,9 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="content clearfix">
-								<h3 id="basic-forms-h-0" tabindex="-1" class="title current"> Disponiblidad del Producto</h3>
+								<h3 id="basic-forms-h-0___" tabindex="-1" class="title current"> Disponiblidad del Producto</h3>
 								<span id="NombreProductoConsulta"></span>
-								<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0" class="body current" aria-hidden="false">
+								<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0___" class="body current" aria-hidden="false">
 									<table id="listado_productos_preventa" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 								</fieldset>
 							</div> 
@@ -542,7 +542,7 @@
 									<div class="md-input-wrapper" >
 										<input style="text-align:right;" id="TotalPreVentaFP" name="TotalPreVentaFP" type="text" class="md-form-control md-static" maxlength="250" readonly />
 										<div style="float: right;">
-											<label style="color:#40C4FF" for="TotalPreVentaFP">Total Venta</label>
+											<label id="lblTotalVenta" style="color:#40C4FF" for="TotalPreVentaFP">Total Venta</label>
 										</div>
 									</div>
 								</div>
@@ -716,6 +716,7 @@
             <div class="modal-body">
 				{!! Form::open(['id'=>'FormPreVenta','autocomplete' => 'off']) !!}
 					<input type="hidden" name="IdPreVenta" id="IdPreVenta">
+					<input type="hidden" name="EstadoPreVenta" id="EstadoPreVenta">
 					<input type="hidden" name="IdProductoPreVenta" id="IdProductoPreVenta">	
 					<input type="hidden" name="TotalLineaPreVenta" id="TotalLineaPreVenta">	
 					<input type="hidden" name="FechaPreVenta" id="FechaPreVenta" value="<?php echo date("Y-m-d"); ?>">	
@@ -769,7 +770,7 @@
 							<div class="col-md-8">
 								<div class="md-input-wrapper">
 									<input id="NroPreVenta" name="NroPreVenta" type="text" class="md-form-control form-control-lg " maxlength="250" />
-									<label for="NroPreVenta">Nro. Pre-Venta</label>
+									<label id="lblNroPreVenta" for="NroPreVenta">Nro. Pre-Venta</label>
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -807,7 +808,7 @@
 											<br />
 											<div class="md-input-wrapper">
 												<input style="text-align:right;" id="TotalPreVenta_" name="TotalPreVenta_" type="text" class="md-form-control text-right form-control-lg" maxlength="250" readonly />
-												<label for="TotalPreVenta_">Total Pre-Venta</label>
+												<label id="lblTotalVenta_" for="TotalPreVenta_">Total Venta</label>
 											</div>
 										</div>
 										
@@ -821,7 +822,7 @@
 						
 						<div class="row" >
 							<div class="col-md-6">
-								<button id="botonCancelarPreVenta" name="botonCancelarPreVenta" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
+								<button id="botonCancelarPreVenta_1" name="botonCancelarPreVenta_1" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
 									<i class="icofont icofont-ui-close"> </i> Cancelar
 								</button>
 							</div>
@@ -839,7 +840,7 @@
 								<div class="md-input-wrapper">
 									<input id="TotalPreVenta" name="TotalPreVenta" type="text" class="md-form-control text-right form-control-lg" maxlength="250" readonly />
 									
-									<label for="TotalVentaVR">Total Pre-Venta</label>
+									<label  id="lblTotalVentaVR" for="TotalVentaVR">Total Venta</label>
 								</div>
 							</div>
 						</div>
@@ -876,7 +877,7 @@
 								</button>
 							</div>
 							<div class="col-md-4">
-								<button id="botonCancelarPreVenta" name="botonCancelarPreVenta" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
+								<button id="botonCancelarPreVenta_2" name="botonCancelarPreVenta_2" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
 									<i class="icofont icofont-ui-close"> </i> Cancelar
 								</button>
 							</div>
@@ -887,191 +888,6 @@
 							</div>
 						</div>
 					</div>
-				{!! Form::close() !!}
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Venta Directa -->
-<div class="modal fade" id="ModalVentaDirecta" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                	<span aria-hidden="true">×</span>
-            	</button>
-            	<h6 id="spanTituloModalVentaDirecta" class="modal-title">Venta Directa</h6>
-            </div>
-            <div class="modal-body">
-				{!! Form::open(['id'=>'FormVentaDirecta','autocomplete' => 'off']) !!}
-					<input type="hidden" name="IdVentaDirecta" id="IdVentaPreVenta" value="0">
-					
-					<div id="VentaRapidaStep_1" style="display: none;">
-						<div class="row">
-							<div class="col-md-2">
-								<div class="md-input-wrapper">
-									<input id="CodigoProducto" name="CodigoProducto" type="text" class="md-form-control" maxlength="250" />
-									<label for="NumeroPreVenta">Código</label>
-								</div>
-							</div>
-							<div class="col-md-5">
-								<div class="md-input-wrapper">
-									<input id="CodigoProducto" name="CodigoProducto" type="text" class="md-form-control" maxlength="250" />
-									<label for="NumeroPreVenta">Producto</label>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="md-input-wrapper">
-									<input id="CodigoProducto" name="CodigoProducto" type="text" class="md-form-control" maxlength="250" />
-									<label for="NumeroPreVenta">Precio</label>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<button id="botonAgregarProducto" name="botonAgregarProducto" type="button" class="btn btn-success waves-effect waves-light btn-block">
-									Agregar<i class="icon-check"></i> 
-								</button>
-							</div>
-						</div>	
-						
-						<div class="row">
-							<div class="col-md-12">
-								<div id="wizard">
-									<section>	
-										<form class="wizard-form wizard clearfix" id="basic-forms" action="#" role="application">
-											<div class="content clearfix">
-												<!-- Shopping cart field et start -->
-												<h3 id="basic-forms-h-0" tabindex="-1" class="title current"> Listado de Compras </h3>
-												<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0" class="body current" aria-hidden="false">
-													<table id="listado_productos_venta_directa" class="table table-striped table-responsive nowrap dataTable no-footer dtr-inline cart-page" role="grid" style="width: 100%;">
-														<thead>
-															<tr>
-																<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 1023px;">Producto</th>
-																<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 153px;">Precio</th>
-																<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 100px;">Cantidad</th>
-																<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 134px;text-align:center">Action</th>
-															 </tr>
-														  </thead>
-														<tbody>
-															<tr class="odd">
-																<td class="pro-name">
-																	<h6>Man's cloth</h6>
-																	<span>Lorem ipsum dolor sit consec te imperdiet iaculis ipsum..</span>
-																</td>
-																<td>$456</td>
-																<td class="text-center">1</td>
-																<td class="action-icon text-center">
-																	<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
-																</td>
-															</tr>
-															<tr class="even">
-																<td class="pro-name">
-																	<h6> Cosmetic </h6>
-																	<span>Interchargebla lens Digital Camera with APS-C-X Trans CMOS Sens</span>
-																</td>
-																<td>$689</td>
-																<td class="text-center">1</td>
-																<td class="action-icon text-center">
-																	<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
-																</td>
-															</tr>
-															<tr class="odd">
-																<td class="pro-name">
-																	<h6> Jacket man </h6>
-																	<span>Lorem ipsum dolor sit consec te imperdiet iaculis ipsum..</span>
-																</td>
-																<td>$755</td>
-																<td class="text-center">1</td>
-																<td class="action-icon text-center">
-																	<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
-																</td>
-															</tr>
-															<tr class="even">
-																<td class="pro-name">
-																	<h6> Footwear Man </h6>
-																	<span>Lorem ipsum dolor sit consec te imperdiet iaculis ipsum..</span>
-																</td>
-																<td>$989</td>
-																<td class="text-center">2</td>
-																<td class="action-icon text-center">
-																	<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</fieldset>                               <!-- Shopping cart fieldset end -->
-											</div> 
-										</form>
-									</section>
-								</div>
-							</div>
-						</div>
-						
-						<div class="row" >
-							<div class="col-md-6">
-								<button id="botonCancelarVentaDirecta" name="botonCancelarVentaDirecta" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
-									<i class="icofont icofont-ui-close"> </i> Cancelar
-								</button>
-							</div>
-							<div class="col-md-6">
-								<button id="botonContinuarVentaDirecta" name="botonContinuarVentaDirecta"  type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
-									<i class="icofont icofont-ui-play"> </i> Continuar Venta
-								</button>
-								
-							</div>
-						</div>
-					</div>
-					
-					<div id="VentaRapidaStep_2" style="display: none;" >
-						<div class="row">
-							<div class="col-md-12">
-								<div class="md-input-wrapper">
-									<input id="TotalVentaVR" name="TotalVentaVR" type="text" class="md-form-control text-right form-control-lg" maxlength="250" />
-									
-									<label for="TotalVentaVR">Total Venta</label>
-								</div>
-							</div>
-						</div>
-						
-						<div class="row"> <br /> </div>	
-						
-						<div class="row">
-							<div class="col-md-4">
-								<label for="botonVendedor"> Ingrese Vendedor <i class="icofont icofont-business-man"> </i></label>
-								<button id="botonVendedor" name="botonVendedor" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
-									<i class="icofont icofont-business-man"> </i>  Vendedor
-								</button>
-							</div>
-							<div class="col-md-4">
-								<label for="botonCliente"> Seleccione Cliente <i class="icofont icofont-ui-user"> </i></label>
-								<button id="botonCliente" name="botonCliente" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
-									<i class="icofont icofont-ui-user"> </i> Cliente
-								</button>
-							</div>
-							<div class="col-md-4">
-								<label for="botonCliente"> Forma de Pago <i class="icofont icofont-coins"> </i></label>
-								<button id="botonCliente" name="botonCliente" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
-									<i class="icofont icofont-coins"> </i> Forma de Pago
-								</button>
-							</div>
-						</div>
-						
-						<div class="row"> <br /> <br /> <br /> </div>						
-						
-						<div class="row" >
-							<div class="col-md-6">
-								<button id="botonCancelarVenta_2" name="botonCancelarVenta_2" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
-									<i class="icofont icofont-ui-close"> </i> Cancelar
-								</button>
-							</div>
-							<div class="col-md-6">
-								<button id="botonFinalizarVenta" name="botonFinalizarVenta"  type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
-									<i class="icofont icofont-ui-check"></i> Finalizar Venta
-								</button>
-							</div>
-						</div>
-					</div>
-					
 				{!! Form::close() !!}
             </div>
         </div>
@@ -1114,8 +930,8 @@
 										<form class="wizard-form wizard clearfix" id="basic-forms" action="#" role="application">
 											<div class="content clearfix">
 												<!-- Shopping cart field et start -->
-												<h3 id="basic-forms-h-0" tabindex="-1" class="title current"> Listado de Compras </h3>
-												<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0" class="body current" aria-hidden="false">
+												<h3 id="basic-forms-h-0__" tabindex="-1" class="title current"> Listado de Compras </h3>
+												<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0__" class="body current" aria-hidden="false">
 													<table id="e-product-list" class="table table-striped table-responsive nowrap dataTable no-footer dtr-inline cart-page" role="grid" style="width: 100%;">
 														<thead>
 															<tr>
@@ -1335,11 +1151,20 @@
 	var rutaPVBC = "{{ URL::route('preventabc') }}"
 	var rutaFP = "{{ URL::route('preventaRP')  }}"
 	var rutaEP = "{{ URL::route('preventaEP') }}"
+	var rutaPVCP = "{{ URL::route('preventacp') }}"
 	var rutaPVC = "{{ URL::route('ventasPVC')  }}"
 	var rutaBCC = "{{ URL::route('ventasBCC')  }}"
 	var rutaBC = "{{ URL::route('buscarCDC') }}"
 	var rutaPC = "{{ URL::route('pagarCuenta') }}"
 	var rutaBP = "{{ URL::route('PtoBuscarP') }}"
+	/* Formulario Venta */
+	var rutaVAP = "{{ URL::route('addProductV') }}"
+	var rutaVAV = "{{ URL::route('asignarVenVen') }}"
+	var rutaVAC = "{{ URL::route('asignarCliVen') }}"
+	var rutaVFP = "{{ URL::route('ventaRP')  }}"
+	var rutaVEP = "{{ URL::route('ventaEP') }}"
+	var rutaVCP = "{{ URL::route('ventaVCV') }}"
+	var rutaRV = "{{ URL::route('addPreVentaV') }}"
 	var d = [];
 	d['v_formas_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_pago) }}'));
 </script>

@@ -274,7 +274,18 @@ class PreventaController extends Controller
     protected function postCerrarPreventa(Request $request){
         $datos = $request->all();
         $model= new Preventa();
-        $result = $model->cerrarPreventa($datos['IdPreVenta']);
+		
+		$datos['IdPreVenta']==null ? $IdPreVenta=$datos['IdPreVenta'] : $IdPreVenta= $datos['IdPreVenta'];
+		
+        $resultCierrePreVenta = $model->cerrarPreventa($IdPreVenta);
+		log::info($resultCierrePreVenta);
+		
+		if($resultCierrePreVenta==1){						
+			$result['f_registro'] = '{"code":200}'; 
+		}else{
+			$result['f_registro'] = '{"code":"500","des_code":"'.$resultCierrePreVenta.'"}'; 
+		}
+        
         return $result;   
     }
 }
