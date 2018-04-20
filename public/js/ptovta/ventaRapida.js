@@ -54,9 +54,6 @@ $(document).ready(function(){
 	
 	$(document).on('click','#botonPreVenta',PreVenta);
 	$(document).on('click','#botonVentaDirecta',VentaDirecta);
-
-	$(document).on('click','#botonVentaPreVenta',VentaPreVenta);
-	$(document).on('click','#botonContinuarVentaPreVenta', ContinuarVentaPreVenta);
 	
 	
 	/* focusout --> lost focus */
