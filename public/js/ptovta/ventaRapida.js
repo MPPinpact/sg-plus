@@ -45,20 +45,16 @@ $(document).ready(function(){
 	$(document).on('click','#botonRecuperarPreVenta', RecuperarPreVenta);
 	$(document).on('click','#botonAgregarProductos', AgregarProductos);
 	$(document).on('click','#botonAgregarPreVentaPV', CargarPreVenta);
-	
-	
 	$(document).on('click','#botonAgregarProductoPreVenta', AgregarProductoPreVenta);
-	$(document).on('click','#botonPreVenta',PreVenta);
 	$(document).on('click','#botonVolverPreVenta', VolverPreVenta);
 	$(document).on('click','#botonContinuarPreVenta', ContinuarPreVenta);
 	$(document).on('click','#botonFinalizarPreVenta', FinalizarPreVenta);
 	$(document).on('click','#botonCancelarPreVenta_1', CancelarPreVenta);
 	$(document).on('click','#botonCancelarPreVenta_2', CancelarPreVenta);
 	
-	
+	$(document).on('click','#botonPreVenta',PreVenta);
 	$(document).on('click','#botonVentaDirecta',VentaDirecta);
-	$(document).on('click','#botonContinuarVentaDirecta', ContinuarVentaDirecta);
-	
+
 	$(document).on('click','#botonVentaPreVenta',VentaPreVenta);
 	$(document).on('click','#botonContinuarVentaPreVenta', ContinuarVentaPreVenta);
 	
@@ -578,28 +574,6 @@ var VentaDirecta = function(){
 	$('#ModalPreVenta').on('shown.bs.modal', function() {
 		$('#CodigoProductoPreVenta').focus().select();
 	});
-}
-
-var ContinuarVentaDirecta = function(){
-	$("#VentaRapidaStep_1").hide();
-	$("#VentaRapidaStep_2").show();	
-}
-
-var VentaPreVenta = function(){
-    $("#VentaPreVentaStep_1").show();
-	$("#VentaPreVentaStep_2").hide();
-	
-	$("#spanTituloModalVentaPreVenta").text("Venta x Pre-Venta");
-    $("#ModalVentaPreVenta").modal();
-	
-	$('#ModalVentaPreVenta').on('shown.bs.modal', function() {
-		$('#CodigoProducto').focus().select();
-	});
-}
-
-var ContinuarVentaPreVenta = function(){
-	$("#VentaPreVentaStep_1").hide();
-	$("#VentaPreVentaStep_2").show();	
 }
 
 /* Funciones Comunes de los formularios de PreVenta, Venta Directa y Venta Pre-Venta*/

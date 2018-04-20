@@ -75,23 +75,7 @@
 			</div>	
 		</div>	
 	</div>	
-	
-	<div class="col-lg-4 grid-item" style="display:none">
-		<div class="card">
-			<div class="bg-primary">
-				<div class="card-block">
-					<h5 class="counter txt-white d-inline-block">Venta x Pre-Venta</h5>
-					<h6 class="f-w-100 txt-white">Permite realizar una venta utilizando Pre-Ventas realizadas</h6>
-					<h6 class="f-w-100 txt-white">por vendedores.</h6>                                                   
-					<a id="botonVentaPreVenta" name="botonVentaPreVenta" style="float:right;" href="#!" class="btn btn-inverse-primary waves-effect waves-light">Ventas x Pre-Venta <i class="icon-action-redo"></i></a>
-					<!-- <a id="botonVentaRapida" name="botonVentaRapida" style="float:right;" href="{{ route('ventas') }}" class="btn btn-inverse-primary waves-effect waves-light">Ir a Ventas <i class="icon-action-redo"></i></a> -->
-					<br />
-				</div>
-				<!-- <div class="card-block"></div>	 -->
-			</div>	
-		</div>	
-	</div>
-	
+		
 	<div class="col-lg-4 grid-item">
 		<div class="card">
 			<div class="bg-primary">
