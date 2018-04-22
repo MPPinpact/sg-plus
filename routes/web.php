@@ -190,6 +190,12 @@ Route::post('/FormaPago', 'FormaPagoController@postFormaPago')->name('FormaPago'
 Route::post('/FormaPagoAtc', 'FormaPagoController@postFormaPagoactivo')->name('FormaPagoAtc');
 Route::post('/FormaPagoDet', 'FormaPagoController@postFormaPagodetalle')->name('FormaPagoDet');
 
+//CRUD Abono Cliente
+Route::get('/AbonoCliente', 'AbonoClienteController@getAbonoCliente')->name('AbonoCliente');
+Route::post('/AbonoCliente', 'AbonoClienteController@postAbonoCliente')->name('AbonoCliente');
+Route::post('/AbonoClienteAtc', 'AbonoClienteController@postAbonoClienteactivo')->name('AbonoClienteAtc');
+Route::post('/AbonoClienteDet', 'AbonoClienteController@postAbonoClientedetalle')->name('AbonoClienteDet');
+
 
 Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){
 	//accesos (Seleccionar acceso para ingresar a la aplicacion)

@@ -14,19 +14,19 @@ use Session;
 use Exception;
 use Auth;
 
-class FormaPago extends Authenticatable
+class AbonoCliente extends Authenticatable
 {
     /**
      * The attributes that are mass assignable.
      * @var array
      */
 
-    protected $table = 'formas_pago';
+    protected $table = 'abono_cliente';
 
-    protected $primaryKey = 'IdFormaPago';
+    protected $primaryKey = 'IdAbono';
 
     protected $fillable = [
-        'NombreFormaPago','EstadoFormaPago','auUsuarioModificacion','auUsuarioCreacion'
+        'MontoAbono','FechaAbono','EstadoAbono','IdFormaPago'
     ];
 
     protected $dates = [
@@ -34,13 +34,13 @@ class FormaPago extends Authenticatable
     ];
 
     public function listFormasPago(){
-        return DB::table('v_formas_pago')->get();
+        return DB::table('v_abonocliente')->get();
     }
 
     // registrar una nueva proveedor
     public function regFormaPago($datos){        
         $idAdmin = Auth::id();
-        $datos['IdFormaPago']==null ? $Id=0 : $Id= $datos['IdFormaPago'];
+        $datos['IdCliente']==null ? $Id=0 : $Id= $datos['IdCliente'];
         $sql="select f_registro_formapago(".$Id.",'".$datos['NombreFormaPago']."',".$idAdmin.")";
         Log::info($sql);
         $execute=DB::select($sql);
@@ -59,11 +59,11 @@ class FormaPago extends Authenticatable
             $values=array('EstadoFormaPago'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }
         return DB::table('formas_pago')
-                ->where('IdFormaPago', $datos->IdFormaPago)
+                ->where('IdCliente', $datos->IdCliente)
                 ->update($values);
     }
 
-    public function getOneDetalle($IdFormaPago){
-        return DB::table('v_formas_pago')->where('IdFormaPago',$IdFormaPago)->get();
+    public function getOneDetalle($IdCliente){
+        return DB::table('v_abonocliente')->where('IdCliente',$IdCliente)->get();
     }
 }
