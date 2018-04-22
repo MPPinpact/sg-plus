@@ -271,8 +271,10 @@ class Preventa extends Authenticatable
 
     public function cerrarPreventa($IdPreventa){
         $idAdmin = Auth::id();
+		
         $values=array('EstadoPreVenta'=>2,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
-        return DB::table('preventas')
+        
+		return DB::table('preventas')
                 ->where('idPreVenta', $IdPreventa)
                 ->update($values);
     }

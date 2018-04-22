@@ -74,7 +74,58 @@ class VentaController extends Controller
         $result['v_detalles'] = $model->getDetallesVenta($datos['IdVenta2']);
         return $result;
     }
-        
+	
+	//Registrar Venta desde el Módulo Punto de Venta
+    protected function postAddProductVenta(Request $request){
+        $datos = $request->all();
+        $model= new Venta();
+		
+		/* Tengo IdVenta? */
+		$IdVenta=0;
+		$datos['IdPreVenta']==null ? $IdVenta=0 : $IdVenta= $datos['IdPreVenta'];
+		
+		log::info("IdVenta: " . $IdVenta);
+		
+		if($IdVenta==0) {
+			$ResultVenta = $model->regVentaPuntoVenta($datos);
+			$obj = json_decode($ResultVenta);
+			$datos['IdPreVenta']=  $obj->{'IdVenta'};
+			$IdVenta=$obj->{'IdVenta'};
+		}
+		
+		log::info("IdVenta: " . $IdVenta);
+		
+		$result['v_cabecera'] = $model->getCabeceraVenta($IdVenta);
+        $result['f_registro'] = $model->regDetalleVentaPuntoVenta($datos);
+        $result['v_detalles'] = $model->getDetallesVenta($IdVenta);
+        return $result;
+    }
+	
+	protected function postAsignarVendedor(Request $request){
+        log::info("Asignar Vendedor a Venta ");
+		
+		$datos = $request->all();
+		log::info("IdVenta: " . $datos['IdPreVenta']);
+		log::info("IdVendedor: " . $datos['IdVendedorPreVenta']);
+		
+		$model= new Venta();
+		$result['f_registro'] = $model->regVendedorVenta($datos);
+		
+        return $result;
+    }
+	
+	protected function postAsignarCliente(Request $request){
+        log::info("Asignar Cliente a Venta ");
+		
+		$datos = $request->all();
+		log::info("IdVenta: " . $datos['IdPreVenta']);
+		log::info("IdCliente: " . $datos['IdClientePreVenta']);
+		
+		$model= new Venta();
+		$result['f_registro'] = $model->regClienteVenta($datos);
+		
+        return $result;
+    }
 
     //Activar / desactivar Venta
     protected function postVentaActiva(Request $request){
@@ -106,8 +157,47 @@ class VentaController extends Controller
     protected function postRegistrarPagoVenta(Request $request){
         $datos = $request->all();
         $model= new Venta();
+		
         $result['f_registro'] = $model->regPagoVenta($datos);
         $result['v_pagos'] = $model->getDetallePago($datos['IdVentaPago']);
+        return $result;
+    }
+	
+	//Registrar o Actualizar Pago
+    protected function postRegistrarPagoPuntoVenta(Request $request){
+        $datos = $request->all();
+        $model= new Venta();
+		
+        $result['f_registro'] = $model->regPagoPuntoVenta($datos);
+        $result['v_pagos'] = $model->getDetallePago($datos['IdPreVentaPago']);
+        return $result;
+    }
+	
+	//Recuperar Pre-Venta desde el Módulo Punto de Venta
+    protected function postAddPreVentaVenta(Request $request){
+		$datos = $request->all();
+        $model= new Preventa();
+		
+		/* Tengo IdPreVenta? */
+		$IdPreVenta=0;
+		$datos['NroPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['NroPreVenta'];
+		//log::info("IdPreVenta: " . $IdPreVenta);
+		
+		$model= new Venta();
+		$ResultVenta = $model->cargaPreVenta($IdPreVenta);
+		$newVenta = json_decode($ResultVenta);
+		$IdVenta = $newVenta->IdVenta;
+		
+		//log::info($ResultVenta);
+		//log::info("IdVenta: " .$IdVenta);
+		if($IdVenta!=0){
+			$result['f_registro'] = '{"code":200}'; 
+			$result['v_cabecera'] = $model->getCabeceraVenta($IdVenta);
+			$result['v_detalles'] = $model->getDetallesVenta($IdVenta);
+			$result['v_pagos'] = $model->getDetallePago($IdVenta);
+		}else{
+			$result['f_registro'] = '{"code":"'.$newVenta->code.'","des_code":"'.$newVenta->des_code.'"}'; 
+		}
         return $result;
     }
 	
@@ -217,8 +307,26 @@ class VentaController extends Controller
     protected function postCerrarVenta(Request $request){
         $datos = $request->all();
         $model= new Venta();
-        $result = $model->cerrarVenta($datos['IdVenta']);
-        log::info($result);
+		
+		$datos['IdVenta']==null ? $IdVenta=$datos['IdPreVenta'] : $IdVenta= $datos['IdVenta'];
+		
+        $resultCierreVenta = $model->cerrarVenta($IdVenta);
+		log::info($resultCierreVenta);
+		
+		if($resultCierreVenta==1){
+			$resultFinalizaVenta = $model->regFinalizarVenta($IdVenta);
+			log::info($resultFinalizaVenta);
+			$finalizaVenta = json_decode($resultFinalizaVenta);
+						
+			if($finalizaVenta->code==200){
+				$result['f_registro'] = '{"code":200}'; 
+			}else{
+				$result['f_registro'] = '{"code":"'.$finalizaVenta->code.'","des_code":"'.$finalizaVenta->des_code.'"}'; 
+			}
+		}else{
+			$result['f_registro'] = '{"code":"'.$cierreVenta->code.'","des_code":"'.$cierreVenta->des_code.'"}'; 
+		}
+		
         return $result;   
     }
 

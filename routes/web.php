@@ -168,9 +168,14 @@ Route::post('/buscarCDC', 'PuntoVentaController@postBuscarClienteDetalleCredito'
 Route::post('/pagarCuenta', 'PuntoVentaController@postPagarCuenta')->name('pagarCuenta');
 Route::post('/PtoBuscarP', 'PuntoVentaController@postBuscarProductosC')->name('PtoBuscarP');
 
-
-
-
+/* Formulario Venta -> Punto de Venta */
+Route::post('/addProductV', 'VentaController@postAddProductVenta')->name('addProductV');
+Route::post('/asignarVenVen', 'VentaController@postAsignarVendedor')->name('asignarVenVen');
+Route::post('/asignarCliVen', 'VentaController@postAsignarCliente')->name('asignarCliVen');
+Route::post('/ventaRP', 'VentaController@postRegistrarPagoPuntoVenta')->name('ventaRP');
+Route::post('/ventaEP', 'VentaController@postDetallePagoActiva')->name('ventaEP');
+Route::post('/ventaVCV', 'VentaController@postCerrarVenta')->name('ventaVCV');
+Route::post('/addPreVentaV', 'VentaController@postAddPreVentaVenta')->name('addPreVentaV');
 
 //CRUD Vendedores
 Route::get('/vendedores', 'VendedorController@getvendedor')->name('vendedores');

@@ -83,6 +83,70 @@ class Venta extends Authenticatable
         return $result;
     }
 
+	// Registrar Pre-Venta desde el Módulo Punto de Venta
+    public function regVentaPuntoVenta($datos){
+        $IdUsuario = Auth::id();
+		
+        $datos['IdPreVenta']==null ? $IdVenta=0 : $IdVenta= $datos['IdPreVenta'];		
+		$datos['IdClientePreVenta']==null ? $datos['IdClientePreVenta']="null" :$datos['IdClientePreVenta']=$datos['IdClientePreVenta'];
+		$datos['IdVendedorPreVenta']==null ? $datos['IdVendedorPreVenta']="null" :$datos['IdVendedorPreVenta']=$datos['IdVendedorPreVenta'];
+		$datos['IdLocalPreVenta']==null ? $datos['IdLocalPreVenta']="null" :$datos['IdLocalPreVenta']=$datos['IdLocalPreVenta'];
+		$datos['IdCajaPreVenta']==null ? $datos['IdCajaPreVenta']="null" :$datos['IdCajaPreVenta']=$datos['IdCajaPreVenta'];
+		
+		$sql="select f_registro_venta(".$IdVenta.",".$datos['IdClientePreVenta'].",".$datos['IdVendedorPreVenta'].",".$datos['IdLocalPreVenta'].",".$datos['IdCajaPreVenta'].",'".$datos['FechaPreVenta']."',".$IdUsuario.")";
+        $execute=DB::select($sql);
+		
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
+	
+	// Registrar Detalle Venta desde el Módulo Punto de Venta
+    public function regDetalleVentaPuntoVenta($datos){
+        $IdUsuario = Auth::id();
+		
+        $datos['IdDetallePreVenta']==null ? $Id=0 : $Id= $datos['IdDetallePreVenta'];
+        $sql="select f_registro_detalle_venta(".$Id.",".$datos['IdPreVenta'].",".$datos['IdProductoPreVenta'].",null,'".$datos['CantidadProductoPreVenta']."','".$datos['PrecioProductoPreVenta']."','0','0','0','0','".$datos['TotalLineaPreVenta']."',".$IdUsuario.")";
+        $execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
+	
+	public function regVendedorVenta($datos){
+		$IdUsuario = Auth::id();
+		 
+		$datos['IdPreVenta']==null ? $IdVenta=0 : $IdVenta= $datos['IdPreVenta'];		
+		$datos['IdVendedorPreVenta']==null ? $datos['IdVendedorPreVenta']="null" :$datos['IdVendedorPreVenta']=$datos['IdVendedorPreVenta'];
+		
+		$sql="select f_actualizar_venta_vendedor(".$IdVenta.",".$datos['IdVendedorPreVenta'].",".$IdUsuario.")";
+        $execute=DB::select($sql);
+		log::info($sql);
+		
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+	}
+	
+	public function regClienteVenta($datos){
+		$IdUsuario = Auth::id();
+		 
+		$datos['IdPreVenta']==null ? $IdVenta=0 : $IdVenta= $datos['IdPreVenta'];		
+		$datos['IdClientePreVenta']==null ? $datos['IdClientePreVenta']="null" :$datos['IdClientePreVenta']=$datos['IdClientePreVenta'];
+		
+		$sql="select f_actualizar_venta_cliente(".$IdVenta.",".$datos['IdClientePreVenta'].",".$IdUsuario.")";
+        $execute=DB::select($sql);
+		log::info($sql);
+		
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+	}
+	
     // Activar / Desactivar Venta
     public function activarVenta($datos){
         $idAdmin = Auth::id();
@@ -139,12 +203,40 @@ class Venta extends Authenticatable
         return $result;
     }
 	
+	// Registrar Pago Punto Venta
+    public function regPagoPuntoVenta($datos){
+        $idAdmin = Auth::id();
+		
+		//log::info("IdPreVenta: " . $datos['IdPreVentaPago']);
+		
+        $datos['IdDetallePago']==null ? $Id=0 : $Id= $datos['IdDetallePago'];
+		
+		$fpc = $datos['FechaPrimeraCuota']; 
+		if($fpc == "") $fpc = date("d-m-Y");
+		else $fpc = $this->formatearFecha($fpc);
+		
+        $sql="select f_registro_pago_ventas(".$Id.",".$datos['IdPreVentaPago'].",".$datos['IdFormaPagoPreVenta'].",'".$datos['CodigoAprobacionTarjeta']."','".$datos['NumeroTransaccionTarjeta']."','".$datos['IdClienteVC']."', '".$fpc."','".$datos['NumeroCuotasCredito']."','".$datos['InteresMensualCredito']."','".$datos['MontoFinalCredito']."','".$datos['MontoCuotaCredito']."','".$datos['MontoPagoEfectivo']."',1,".$idAdmin.")";
+		//log::info($sql);
+		
+        $execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
+	
 	public function regFinalizarVenta($IdVenta){
 		$sql="select f_finaliza_venta(".$IdVenta.")";
-		log::info($sql);
+		//log::info($sql);
+		
 		$execute=DB::select($sql);
-		log::info($execute);
-        $result['IdVenta'] = 1;
+		
+		foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+		//log::info($execute);
+		
+        //$result['IdVenta'] = 1;
 		return $result;
 	}
 	
@@ -202,9 +294,8 @@ class Venta extends Authenticatable
     }
 
     public function cerrarVenta($IdVenta){
-        log::info("llegue al modelo");
-        log::info($IdVenta);
         $IdAdmin = Auth::id();
+		
         $values=array('EstadoVenta'=>2,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$IdAdmin);
 		log::info($values);
         return DB::table('ventas')
@@ -223,4 +314,19 @@ class Venta extends Authenticatable
         }
         return $result;
     }
+	
+	public  function cargaPreVenta($IdPreVenta){
+		$IdAdmin = Auth::id();
+		
+		$sql="select f_registro_venta_preventa(".$IdPreVenta.",".$IdAdmin.")";
+		//log::info($sql);
+		
+        $execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+		
+		return $result;
+	}
+	
 }

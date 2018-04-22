@@ -85,11 +85,13 @@ class VendedorController extends Controller
     protected function postBuscarVen(Request $request){
         $datos = $request->all();
         $usuario= new Usuario();
+		$model= new Vendedor();
 		
 		$rutVendedor =  str_replace(".", "", $datos['RUTVendedor']);		
         log::info("RUTVendedor: ". $rutVendedor);
 		
-        $result['v_usuario'] = Usuario::where('usrUserName', $rutVendedor)->first();
+        //$result['v_usuario'] = Usuario::where('usrUserName', $rutVendedor)->first();
+		$result['v_usuario'] = Vendedor::where('RUTVendedor', $rutVendedor)->first();
         return $result;
     }
 
