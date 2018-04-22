@@ -101,6 +101,12 @@ $avatarUser = Auth::user()->usrUrlimage;
             Clientes
           </a>
         </li>
+        <li>
+          <a class="waves-effect" href="{{ route('AbonoCliente') }}">
+            <i class="icon-arrow-right"></i>
+            Abono Clientes
+          </a>
+        </li>
       </ul>
     </li>
     <li class="treeview">
