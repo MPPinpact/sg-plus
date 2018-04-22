@@ -150,7 +150,7 @@ Route::post('/ventasFin', 'VentaController@postFinalizarVenta')->name('ventasFin
 Route::post('/ventaDetallesActiva', 'VentaController@postventaDetallesActiva')->name('ventaDetallesActiva');
 Route::post('/ventasPre', 'VentaController@postCargarPreventa')->name('ventasPre');
 
-//CRUd venta
+//Pantalla punto de venta
 Route::get('/ptovta', 'PuntoVentaController@getPuntoVenta')->name('ptovta');
 Route::get('/cajaDiaria', 'PuntoVentaController@getCajaDiaria')->name('cajaDiaria');
 Route::get('/cajaDiariaResumen', 'PuntoVentaController@getCajaDiariaResumen')->name('cajaDiariaResumen');
@@ -195,6 +195,9 @@ Route::post('/FormaPago', 'FormaPagoController@postFormaPago')->name('FormaPago'
 Route::post('/FormaPagoAtc', 'FormaPagoController@postFormaPagoactivo')->name('FormaPagoAtc');
 Route::post('/FormaPagoDet', 'FormaPagoController@postFormaPagodetalle')->name('FormaPagoDet');
 
+// CRUD inventario
+Route::get('/inventario', 'InventarioController@getInventario')->name('inventario');
+Route::post('/inventario', 'InventarioController@postInventario')->name('inventario');
 
 Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){
 	//accesos (Seleccionar acceso para ingresar a la aplicacion)

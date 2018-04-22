@@ -213,6 +213,12 @@ $avatarUser = Auth::user()->usrUrlimage;
             Bodegas
           </a>
         </li>
+        <li>
+          <a class="waves-effect" href="{{ route('inventario') }}">
+            <i class="icon-grid"></i>
+            Inventario
+          </a>
+        </li>
       </ul>
     </li>
   </ul>
