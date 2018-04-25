@@ -45,8 +45,8 @@ class InventarioController extends Controller
     {
         $model= new Inventario();
         $data['v_inventario'] = $model->listInventario();
-        $data['v_estados'] = $model->listEstados();
         $data['v_tipo_inventario'] = $model->listTipoInventario();
+        $data['v_bodegas'] = $model->listBodega();
         return View::make('inventario.inventario',$data);
     }
 
@@ -61,22 +61,45 @@ class InventarioController extends Controller
     }
 
     //Activar / desactivar bodega
-    // protected function postBodegactivo (Request $request){
-    //     $datos = $request->all();
-    //     $model= new Inventario();
-    //     $bodega = Bodega::find($datos['IdBodega']);
-    //     $result['activar'] = $model->activarBodega($bodega);
-    //     $result['v_bodegas'] = $model->listBodega();
-    //     return $result;
-    // }
+    protected function postInventarioactivo (Request $request){
+        $datos = $request->all();
+        $model= new Inventario();
+        $inventario = Inventario::find($datos['IdInventario']);
+        $result['activar'] = $model->activarInventario($inventario);
+        $result['v_inventario'] = $model->listInventario();
+        return $result;
+    }
+
+    protected function postBuscarInventario(Request $request){
+        $datos = $request->all();
+        $model= new Inventario();
+        $result['v_cabecera'] = $model->getCabeceraInventario($datos['IdInventario']);
+        $result['v_detalles'] = $model->getDetallesInventario($datos['IdInventario']);
+        return $result;
+    }
 
     // Ver detalles de los bodegas
-    // protected function postBodegadetalle (Request $request){
-    //     $datos = $request->all();
-    //     $model= new Inventario();
-    //     $result['v_detalles'] = $model->getOneDetalle($datos['IdBodega']);
-    //     $result['v_productos'] = $model->listProductos($datos['IdBodega']);
-    //     return $result;
-    // }
+    protected function postBuscarDetalleInventario (Request $request){
+        $datos = $request->all();
+        $model= new Inventario();
+        $result = $model->getOneDetalle($datos['IdInventarioDetalle']);
+        return $result;
+    }
+
+    protected function postRegistrarDetalleInventario(Request $request){
+        $datos = $request->all();
+        $model= new Inventario();
+        $result['f_registro'] = $model->regDetalleInventario($datos);
+        $result['v_detalles'] = $model->getDetallesInventario($datos['IdInventario2']);        
+        return $result;
+    }
+
+    protected function postbuscarProducto(Request $request){
+        $datos = $request->all();
+        $model= new Inventario();
+        $result = $model->getBusquedaProducto($datos);
+        log::info($result);
+        return $result;      
+    }
 
 }

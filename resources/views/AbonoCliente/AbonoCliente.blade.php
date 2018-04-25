@@ -70,25 +70,43 @@
 		                        <!-- <div class="tab-pane active" id="detalles" role="tabpanel"> -->
 									<br><br>
 									{!! Form::open(['id'=>'FormAbonoCliente','autocomplete' => 'off']) !!}
-									{!! Form::hidden('IdFormaPago', '', [
-									'id'            => 'IdFormaPago',
-									'class'         => 'form-control'])!!}
+									{!! Form::hidden('IdAbono', '', ['id'=> 'IdAbono'])!!}
+									{!! Form::hidden('IdClienteAbono', '', ['id'=> 'IdClienteAbono'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
-										<div class="col-md-4"></div>
+										<div class="col-md-2"></div>
+										<div class="col-sm-3">
+					                        <div class="md-input-wrapper">
+												<input id="RUTClienteAbono" name="RUTClienteAbono" type="text" class="md-form-control md-static" maxlength="250" readonly />
+												<label for="RUTCliente">RUT Cliente</label>
+							                    <small id="ErrorRut" class="rut-error"></small>
+											</div>
+										</div>
+					                    <div class="col-sm-5">
+					                        <div class="md-input-wrapper">
+												<input id="NombreClienteAbono" name="NombreClienteAbono" type="text" class="md-form-control md-static" maxlength="250" readonly />
+				                                <label for="EstadoAbono">Nombre Cliente</label>
+											</div>
+					                    </div>
+										<div class="col-md-2"></div>
+									</div>									
+									<br>
+
+									<div class="row">
+										<div class="col-md-2"></div>
+					                    <div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+												<select name="IdFormaPago" id="IdFormaPago" class="md-disable md-valid" disabled></select>
+				                                <label for="IdFormaPago">Forma de Pago</label>
+											</div>
+					                    </div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
 				                                <input id="MontoAbono" name="MontoAbono" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="MontoAbono">Monto a abonar</label>
 					                        </div>
 										</div>
-					                    <div class="col-sm-4">
-					                        <div class="md-input-wrapper">
-												<select name="EstadoAbono" id="EstadoAbono" class="md-disable md-valid" disabled></select>
-				                                <label for="EstadoAbono">Estado</label>
-											</div>
-					                    </div>
-										<div class="col-md-4"></div>
+										<div class="col-md-2"></div>
 									</div>									
 									<br>
 									<div align="center">
@@ -122,8 +140,10 @@
 	var ruta = "{{ URL::route('AbonoCliente') }}"
 	var rutaA = "{{ URL::route('AbonoClienteAtc') }}"
 	var rutaD = "{{ URL::route('AbonoClienteDet') }}"
+	var rutaBC = "{{ URL::route('AbonoClienteBC') }}"
 	 var d = [];
-	 d['v_formas_de_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_de_pago) }}'));
+	 d['v_abono_cliente'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_abono_cliente) }}'));
+	 d['v_formas_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_pago) }}'));
 </script>
 <script src="{{ asset('js/abonocliente/abonocliente.js') }}"></script>
 @endsection

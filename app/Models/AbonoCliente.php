@@ -33,16 +33,19 @@ class AbonoCliente extends Authenticatable
         'auFechaModificacion','auFechaCreacion'
     ];
 
-    public function listFormasPago(){
-        return DB::table('v_abonocliente')->get();
+    public function listAbonoCliente(){
+        return DB::table('v_abono_cliente')->where('EstadoAbono',1)->get();
     }
 
-    // registrar una nueva proveedor
-    public function regFormaPago($datos){        
+    public function listFormaPago(){
+        return DB::table('v_forma_pago_combo')->get();
+    }
+
+    // registrar abono
+    public function regAbonoCliente($datos){        
         $idAdmin = Auth::id();
-        $datos['IdCliente']==null ? $Id=0 : $Id= $datos['IdCliente'];
-        $sql="select f_registro_formapago(".$Id.",'".$datos['NombreFormaPago']."',".$idAdmin.")";
-        Log::info($sql);
+        $datos['IdAbono']==null ? $Id=0 : $Id= $datos['IdAbono'];
+        $sql="select f_registro_abono(".$Id.",".$datos['IdClienteAbono'].",'".$datos['MontoAbono']."',".$datos['IdFormaPago'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -50,20 +53,31 @@ class AbonoCliente extends Authenticatable
         return $result;
     }
 
-    // Activar / Desactivar proveedor
-    public function activarFormaPago($datos){
+
+
+
+
+
+    // Activar / Desactivar abono
+    public function activarAbonoCliente($datos){
         $idAdmin = Auth::id();
-        if ($datos->EstadoFormaPago > 0){
-            $values=array('EstadoFormaPago'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
-        }else{
-            $values=array('EstadoFormaPago'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        if ($datos->EstadoAbono > 0){
+            $values=array('EstadoAbono'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+            $values2=array('EstadoMovimiento'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }
-        return DB::table('formas_pago')
-                ->where('IdCliente', $datos->IdCliente)
+        // else{
+        //     $values=array('EstadoAbono'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        // }
+        $sql = DB::table('clientes_movimientos')
+                ->where('NumeroDocumento', $datos->IdAbono)
+                ->update($values2);
+
+        return DB::table('abono_cliente')
+                ->where('IdAbono', $datos->IdAbono)
                 ->update($values);
     }
 
-    public function getOneDetalle($IdCliente){
-        return DB::table('v_abonocliente')->where('IdCliente',$IdCliente)->get();
+    public function getOneDetalle($IdAbono){
+        return DB::table('v_abono_cliente')->where('IdAbono',$IdAbono)->get();
     }
 }

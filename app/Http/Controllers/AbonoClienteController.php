@@ -21,8 +21,8 @@ use Storage;
 use DB;
 
 use App\Models\AbonoCliente;
-// use App\Models\AbonoCliente;
-// use App\Models\Proveedor;
+use App\Models\Cliente;
+use App\Models\Usuario;
 
 class AbonoClienteController extends Controller
 {
@@ -45,7 +45,8 @@ class AbonoClienteController extends Controller
     public function getAbonoCliente()
     {
         $model= new AbonoCliente();
-        $data['v_formas_de_pago'] = $model->listFormasPago();
+        $data['v_abono_cliente'] = $model->listAbonoCliente();
+        $data['v_formas_pago'] = $model->listFormaPago();
         return View::make('AbonoCliente.AbonoCliente',$data);
     }
 
@@ -54,7 +55,7 @@ class AbonoClienteController extends Controller
         $datos = $request->all();
         $model= new AbonoCliente ();
         $result['f_registro'] = $model->regAbonoCliente($datos);
-        $result['v_formas_de_pago'] = $model->listFormasPago();
+        $result['v_abono_cliente'] = $model->listAbonoCliente();
         return $result;
     }
 
@@ -62,10 +63,9 @@ class AbonoClienteController extends Controller
     protected function postAbonoClienteactivo (Request $request){        
         $datos = $request->all();
         $model= new AbonoCliente();
-        $proveedor = AbonoCliente::find($datos['IdAbonoCliente']);
+        $proveedor = AbonoCliente::find($datos['IdAbono']);
         $result['activar'] = $model->activarAbonoCliente($proveedor);
-        $result['v_formas_de_pago'] = $model->listFormasPago();
-        // var_dump($result);
+        $result['v_abono_cliente'] = $model->listAbonoCliente();
         return $result;
     }
 
@@ -73,12 +73,23 @@ class AbonoClienteController extends Controller
     protected function postAbonoClientedetalle (Request $request){
         $datos = $request->all();
         $model= new AbonoCliente();
-        $result['v_detalles'] = $model->getOneDetalle($datos['IdAbonoCliente']);
+        $result['v_detalles'] = $model->getOneDetalle($datos['IdAbono']);
         // $result['v_productos'] = $model->localesProducto($datos['IdProveedor']);
         return $result;
     }
 
+    protected function postBuscarCliente(Request $request){
+        $datos = $request->all();
+        $model= new Usuario();
+        $datos['RUT']=$model->LimpiarRut($datos['RUTCliente']);
+        $result = Cliente::where('RUTCliente',$datos['RUT'])->first();
+        if($result == null) { $result = '{"IdCliente":0}'; } 
+        return $result;
+    }
+
 }
+
+
 
 
 

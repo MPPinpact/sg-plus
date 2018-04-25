@@ -200,6 +200,15 @@ Route::post('/FormaPagoDet', 'FormaPagoController@postFormaPagodetalle')->name('
 // CRUD inventario
 Route::get('/inventario', 'InventarioController@getInventario')->name('inventario');
 Route::post('/inventario', 'InventarioController@postInventario')->name('inventario');
+Route::post('/inventarioa', 'InventarioController@postInventarioactivo')->name('inventarioa');
+Route::post('/inventariob', 'InventarioController@postBuscarInventario')->name('inventariob');
+Route::post('/inventariobdc', 'InventarioController@postBuscarDetalleInventario')->name('inventariobdc');
+Route::post('/inventariodc', 'InventarioController@postRegistrarDetalleInventario')->name('inventariodc');
+Route::post('/inventariobpd', 'InventarioController@postbuscarProducto')->name('inventariobpd');
+
+
+
+
 
 
 //CRUD Abono Cliente
@@ -207,8 +216,7 @@ Route::get('/AbonoCliente', 'AbonoClienteController@getAbonoCliente')->name('Abo
 Route::post('/AbonoCliente', 'AbonoClienteController@postAbonoCliente')->name('AbonoCliente');
 Route::post('/AbonoClienteAtc', 'AbonoClienteController@postAbonoClienteactivo')->name('AbonoClienteAtc');
 Route::post('/AbonoClienteDet', 'AbonoClienteController@postAbonoClientedetalle')->name('AbonoClienteDet');
-
-
+Route::post('/AbonoClienteBC', 'AbonoClienteController@postBuscarCliente')->name('AbonoClienteBC');
 
 Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){
 	//accesos (Seleccionar acceso para ingresar a la aplicacion)

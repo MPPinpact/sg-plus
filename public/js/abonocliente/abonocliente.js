@@ -10,7 +10,6 @@ var parametroAjax = {
 };
 
 var ManejoRespuestaProcesarD = function(respuesta){
-    console.log(respuesta);
     if(respuesta.code==200){
         $("#spanTitulo").text("Detalles");
         $(".divDetalles").toggle();
@@ -27,9 +26,29 @@ var ManejoRespuestaProcesarI = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta.activar>0){
             $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
-            cargarTablaAbonoCliente(respuesta.respuesta.v_formas_de_pago);
+            cargarTablaAbonoCliente(respuesta.respuesta.v_abono_cliente);
         }else{
             $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
+        }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
+// Manejo respuesta buscar cliente
+var ManejoRespuestaBuscarCliente = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta!=null){
+            if(respuesta.respuesta.IdCliente==0){
+                $("#IdClienteAbono").val("");
+                $("#NombreClienteAbono").val("");
+                $("#MontoAbono").val("");
+            }else{
+                $("#IdClienteAbono").val(respuesta.respuesta.IdCliente);
+                $("#NombreClienteAbono").val(respuesta.respuesta.NombreCliente);
+            }    
+        }else{
+            $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
         }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
@@ -47,7 +66,7 @@ var ManejoRespuestaProcesar = function(respuesta){
                 $(".divBotones").toggle();
                 $('#FormAbonoCliente')[0].reset();
                 $('#IdFormaPago').val("");
-                cargarTablaAbonoCliente(respuesta.respuesta.v_formas_de_pago);
+                cargarTablaAbonoCliente(respuesta.respuesta.v_abono_cliente);
                 break;
             case '-2':
                 $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
@@ -80,7 +99,7 @@ var cargarTablaAbonoCliente = function(data){
             "columns":[
                 {
                     "title": "",
-                    "data": "IdFormaPago",
+                    "data": "IdAbono",
                     "render": function(data, type, row, meta){
                         var result = `
                         <center>
@@ -114,9 +133,11 @@ var cargarTablaAbonoCliente = function(data){
 
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
-    $("#IdFormaPago").val(data.IdFormaPago);
+    $("#IdAbono").val(data.IdAbono);
+    $("#RUTClienteAbono").val(data.RUTCliente);
+    $("#NombreClienteAbono").val(data.NombreCliente);
     $("#MontoAbono").val(data.MontoAbono);
-    $("#EstadoFormadePago").val(data.EstadoFormadePago).trigger("change");
+    $("#IdFormaPago").val(data.IdFormaPago).trigger("change");
 }
 
 var BotonCancelar = function(){
@@ -142,7 +163,7 @@ var BotonAgregar = function(){
     desbloquearInuts();
 }
 
-var ProcesarFormadePago = function(){
+var ProcesarAbonoCliente = function(){
     parametroAjax.ruta=ruta;
     parametroAjax.data = $("#FormAbonoCliente").serialize();
     respuesta=procesarajax(parametroAjax);
@@ -153,28 +174,37 @@ var validador = function(){
     $('#FormAbonoCliente').formValidation('validate');
 };
 
-var cambiarEstatus = function(IdFormaPago){
+var cambiarEstatus = function(IdAbono){
     parametroAjax.ruta=rutaA;
-    parametroAjax.data = {IdFormaPago:IdFormaPago};
+    parametroAjax.data = {IdAbono:IdAbono};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarI(respuesta);
 }
 
-var verDetalles = function(IdFormaPago){
+var verDetalles = function(IdAbono){
     parametroAjax.ruta=rutaD;
-    parametroAjax.data = {IdFormaPago:IdFormaPago};
+    parametroAjax.data = {IdAbono:IdAbono};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarD(respuesta);
 }
 
+var buscarCliente = function(RUTCliente){
+    parametroAjax.ruta=rutaBC;
+    parametroAjax.data = {RUTCliente:RUTCliente};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaBuscarCliente(respuesta);
+}
+
 var bloquearInuts = function(){
+    $("#RUTClienteAbono").prop('readonly', true);
     $("#MontoAbono").prop('readonly', true);
-    $("#EstadoFormaPago").prop('disabled', true);
+    $("#IdFormaPago").prop('disabled', true);
 }
 
 var desbloquearInuts = function(){
+    $("#RUTClienteAbono").prop('readonly', false);
     $("#MontoAbono").prop('readonly', false);
-    $("#EstadoFormaPago").prop('disabled', false);
+    $("#IdFormaPago").prop('disabled', false);  
 }
 
 var modificarBodega = function(){
@@ -193,8 +223,38 @@ var volverTabs = function(){
     // $("#acompras").removeClass("active");
 }
 
+var crearAllSelect = function(data){
+    // crearselect(data.v_tipo_dte,"TipoDTE");
+    // crearselect(data.v_estados,"EstadoCompra");
+    // crearselect(data.v_estados,"EstadoDetalleCompra");
+    crearselect(data.v_formas_pago,"IdFormaPago");
+}
+
+var verificarRut = function(control,caso){
+    var res = Valida_Rut(control);
+    var format = formateaRut(control.val(), res);
+    if (format != false){
+        errorRut = 0;
+        buscarCliente(format);
+        $("#ErrorRut").text("");
+        return format;
+    }else{
+        errorRut = 1;$("#ErrorRut").text("Rut invalido");
+        return control.val();
+    }
+}
+
 $(document).ready(function(){
-    cargarTablaAbonoCliente(d.v_formas_de_pago);
+    console.log(d);
+    cargarTablaAbonoCliente(d.v_abono_cliente);
+    crearAllSelect(d);
+    $("#RUTClienteAbono").focusout(function() {
+        var valid = $("#RUTClienteAbono").val();
+        if (valid.length > 0){
+            var res = verificarRut($("#RUTClienteAbono"));
+            $("#RUTClienteAbono").val(res);
+        }else{$("#ErrorRut").text("");}
+    });
     $(document).on('click','#guardar',validador);
     $(document).on('click','#cancelar',BotonCancelar);
     $(document).on('click','#agregar',BotonAgregar);
@@ -203,7 +263,23 @@ $(document).ready(function(){
     $('#FormAbonoCliente').formValidation({
         excluded:[':disabled'],
         fields: {
+            'RUTClienteAbono': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },   
             'MontoAbono': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },            
+            'IdFormaPago': {
                 verbose: false,
                 validators: {
                     notEmpty: {
@@ -214,7 +290,7 @@ $(document).ready(function(){
         }
     })
     .on('success.form.fv', function(e){
-        ProcesarFormadePago();
+        ProcesarAbonoCliente();
     })
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');

@@ -169,6 +169,12 @@ $avatarUser = Auth::user()->usrUrlimage;
             Productos
           </a>
         </li>
+        <li>
+          <a class="waves-effect" href="{{ route('inventario') }}">
+            <i class="icon-arrow-right"></i>
+            Inventario
+          </a>
+        </li>
       </ul>
     </li>
     <li class="treeview">
@@ -217,12 +223,6 @@ $avatarUser = Auth::user()->usrUrlimage;
           <a class="waves-effect" href="{{ route('bodegas') }}">
             <i class="icon-grid"></i>
             Bodegas
-          </a>
-        </li>
-        <li>
-          <a class="waves-effect" href="{{ route('inventario') }}">
-            <i class="icon-grid"></i>
-            Inventario
           </a>
         </li>
       </ul>

@@ -37,12 +37,7 @@ class Inventario extends Authenticatable
 
     // Cargar tabla de bodega
     public function listInventario(){
-        return DB::table('v_bodegas')->get();
-    }
-
-    // Cargar combo de estados de Estado (Activo / Inactivo)
-    public function listEstados(){
-        return DB::table('v_estados_inventario')->get();
+        return DB::table('v_inventario')->get();
     }
 
     // Cargar combo de Locales
@@ -50,30 +45,55 @@ class Inventario extends Authenticatable
         return DB::table('v_tipo_inventario')->get();
     }
 
+    // Cargar combo de estados Bodegas
+    public function listBodega(){
+        return DB::table('v_bodegas_combo')->get();
+    }
+
     // registrar una nueva bodega
     public function regInventario($datos){
         $idAdmin = Auth::id();
-        $datos['IdBodega']==null ? $Id=0 : $Id= $datos['IdBodega'];
-        $sql="select f_registro_bodega(".$Id.",'".$datos['NombreBodega']."','".$datos['DescripcionBodega']."',".$datos['IdLocal'].",".$datos['EstadoBodega'].",".$idAdmin.")";
+        $datos['IdInventario']==null ? $Id=0 : $Id= $datos['IdInventario'];
+        $datos['FechaInventario'] = $this->formatearFecha($datos['FechaInventario']);
+        $datos['FechaTomaInventario'] = $this->formatearFecha($datos['FechaTomaInventario']);
+        $sql="select f_registro_inventario(".$Id.",'".$datos['FechaInventario']."','".$datos['FechaTomaInventario']."','".$datos['Comentario']."',".$datos['TipoInventario'].",".$datos['IdBodega'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
-            $result['f_registro_bodega']=$value;
+            $result=$value;
         }
         return $result;
     }
 
+    public function regDetalleInventario($datos){
+        $idAdmin = Auth::id();
+        $datos['IdInventarioDetalle']==null ? $Id=0 : $Id= $datos['IdInventarioDetalle'];
+        $sql="select f_registro_inventario_detalle(".$Id.",".$datos['IdInventario2'].",".$datos['IdProducto'].",'".$datos['StockFisico']."','".$datos['StockSistema']."','0',0,".$idAdmin.")";
+        log::info($sql);
+        $execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
+
+    public function formatearFecha($d){
+        $formato = explode("-", $d);
+        $fecha = $formato[2]."-".$formato[1]."-".$formato[0];
+        return $fecha;
+    }
+
     // Activar / Desactivar bodega
-    // public function activarBodega($datos){
-    //     $idAdmin = Auth::id();
-    //     if ($datos['EstadoBodega']>0){
-    //         $values=array('EstadoBodega'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
-    //     }else{
-    //         $values=array('EstadoBodega'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
-    //     }
-    //     return DB::table('bodegas')
-    //             ->where('IdBodega', $datos['IdBodega'])
-    //             ->update($values);
-    // }
+    public function activarInventario($datos){
+        $idAdmin = Auth::id();
+        if ($datos->EstadoInventario >0){
+            $values=array('EstadoInventario'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        }else{
+            $values=array('EstadoInventario'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        }
+        return DB::table('inventario')
+                ->where('IdInventario', $datos->IdInventario)
+                ->update($values);
+    }
 
     // public function listProductos($IdBodega){   
     //     $result['productos'] =  DB::table('v_bodegas_productos')->where('IdBodega',$IdBodega)->get(); 
@@ -82,8 +102,22 @@ class Inventario extends Authenticatable
     //     return $result;
     // }
 
-    public function getOneDetalle($IdBodega){
-        return DB::table('v_bodegas')->where('IdBodega',$IdBodega)->get(); 
-    }  
+    public function getCabeceraInventario($IdInventario){
+        return DB::table('v_inventario')->where('IdInventario',$IdInventario)->get(); 
+    }
 
+    public function getDetallesInventario($IdInventario){
+        return DB::table('v_inventario_detalle')->where('IdInventario',$IdInventario)->get(); 
+    }
+
+    public function getOneDetalle($IdInventarioDetalle){
+        return DB::table('v_inventario_detalle')->where('IdInventarioDetalle',$IdInventarioDetalle)->get(); 
+    }
+
+    public function getBusquedaProducto($datos){
+        return DB::table('v_bodegas_productos')
+            ->where('IdBodega',$datos['IdBodega'])
+            ->where('CodigoBarra',$datos['CodigoBarra'])
+            ->get(); 
+    }
 }
