@@ -1,5 +1,5 @@
 var manejoRefresh=limpiarLocales=limpiarImpuestos=limpiarPagos=errorRut=errorRut2=errorRut3=limpiarBodegas=NVenta=0;
-var _tipoVenta_=0
+var _tipoVenta_=0;
 var _idVenta_=0;
 var _idCaja_=0;
 var _idLocal_=0;
@@ -15,6 +15,7 @@ var parametroAjax = {
     'ruta': '',
     'async': false
 };
+
 
 $(document).ready(function(){	
 	// Botones de cabecera de VentaRapida
@@ -54,6 +55,7 @@ $(document).ready(function(){
 	
 	$(document).on('click','#botonPreVenta',PreVenta);
 	$(document).on('click','#botonVentaDirecta',VentaDirecta);
+	
 	
 	
 	/* focusout --> lost focus */
@@ -164,6 +166,38 @@ $(document).ready(function(){
       }
     });
 	
+	$('#FormPreVenta').on('keyup keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) { 
+		 e.preventDefault();
+		 return false;
+      }
+    });
+	
+	$('#CantidadProductoPreVenta').on('keyup keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) { 
+		 e.preventDefault();
+		 
+		 return false;
+      }
+    });
+	
+	
+	
+	$('#CodigoProductoPreVenta').on('keyup keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) { 
+		 e.preventDefault();
+		 
+		  buscarProducto($("#CodigoProductoPreVenta").val());
+		  
+		 return false;
+      }
+    });
+	
+	
+	
 	$('#FormIngresoFP').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
@@ -187,6 +221,7 @@ $(document).ready(function(){
 });
 
 var ActualizarTituloVentanaVenta = function(){
+	console.log("ActualizarTitulo() _idLocal_: " + _idLocal_ + " | _idCaja_: " + _idCaja_)
 	$("#spanTituloModalPreVenta").text(_tipoVenta_ + ": "+_idVenta_+" | Local: "+_idLocal_+" | Caja: "+_idCaja_+" | Vendedor: "+_nombreVendedor_);
 }
 
@@ -462,6 +497,8 @@ var CargarPreVenta = function(){
 }
 
 var PersonalizaFormularioVenta = function(){
+	ProcesarInfoCaja();
+	
 	$("#basic-forms-h-0").text('Productos de la '+_tipoVenta_);
 	//$("#botonRecuperarPreVenta").text('Recuperar '+_tipoVenta_);
 	//$("#botonAgregarPreVentaPV").text('Recuperar '+_tipoVenta_);
@@ -476,7 +513,6 @@ var PersonalizaFormularioVenta = function(){
 
 var PreVenta= function(){
 	_tipoVenta_ = "PreVenta";
-	
 	PersonalizaFormularioVenta();
 	
 	$("#frameProductos").show();
@@ -490,7 +526,8 @@ var PreVenta= function(){
 	//destruirTabla('#tablaDetalles');
 	$('#tablaDetalles thead').empty();
 	
-	$("#spanTituloModalPreVenta").text(_tipoVenta_+": ---- | Local: ---- | Caja: ---- | Vendedor: ------");
+	ActualizarTituloVentanaVenta()
+	//$("#spanTituloModalPreVenta").text(_tipoVenta_+": ---- | Local: ---- | Caja: ---- | Vendedor: ------");
 	$('#IdPreVenta').val(0);
     $("#ModalPreVenta").modal();
 	
@@ -564,7 +601,8 @@ var VentaDirecta = function(){
 	//destruirTabla('#tablaDetalles');
 	$('#tablaDetalles thead').empty();
 	
-	$("#spanTituloModalPreVenta").text(_tipoVenta_+": ---- | Local: ---- | Caja: ---- | Vendedor: ------");
+	ActualizarTituloVentanaVenta();
+	//$("#spanTituloModalPreVenta").text(_tipoVenta_+": ---- | Local: ---- | Caja: ---- | Vendedor: ------");
 	$('#IdPreVenta').val(0);
     $("#ModalPreVenta").modal();
 	
@@ -653,6 +691,15 @@ var ProcesarCargaPreferencias = function(){
     ManejoRespuestaProcesarCargaPreferencias(respuesta);
 };
 
+var ProcesarInfoCaja = function(){
+    parametroAjax.ruta=rutaCD;
+    parametroAjax.data = $("#FormIngresoFP").serialize();
+    respuesta=procesarajax(parametroAjax);
+	console.log("ProcesarInfoCaja --> Respuesta: " + respuesta);
+	
+    ManejoRespuestaProcesarInfoCaja(respuesta);
+};
+
 var ProcesarFormaPago = function(){
     if(_tipoVenta_=="PreVenta"){ 
 		parametroAjax.ruta=rutaFP;
@@ -720,6 +767,8 @@ var ManejoRespuestaBuscarProductoPreVenta = function(respuesta){
                     $("#CantidadProductoPreVenta").val(1);
 					
 					CalcularMontosPreVenta();
+					
+					$("#CantidadProductoPreVenta").focus().select();
                 } 
             } 
         }else{
@@ -971,6 +1020,34 @@ var ManejoRespuestaProcesarCargaPreferencias = function(respuesta){
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
+}
+
+var ManejoRespuestaProcesarInfoCaja = function(respuesta){	
+    if(respuesta.code==200){
+		
+        if(respuesta.respuesta!=null){
+			console.log("respuesta.respuesta.v_cajaActual.IdCaja: " + respuesta.respuesta.v_cajaActual[0].IdCaja);
+			console.log("respuesta.respuesta.v_cajaActual.IdLocal: " + respuesta.respuesta.v_cajaActual[0].IdLocal);
+			
+            if(respuesta.respuesta.v_cajaActual==null){
+                _idCaja_= 0;
+				_idLocal_= 0;
+            }else{
+				$("#IdLocalPreVenta").val(respuesta.respuesta.v_cajaActual[0].IdLocal);
+				$("#IdCajaPreVenta").val(respuesta.respuesta.v_cajaActual[0].IdCaja);
+								
+                _idCaja_= respuesta.respuesta.v_cajaActual[0].IdCaja;
+				_idLocal_= respuesta.respuesta.v_cajaActual[0].IdLocal;
+            }    
+        }else{
+            $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
+        }
+		
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+	
+	console.log("Fin de ManejoRespuestaProcesarInfoCaja()");
 }
 
 var ManejoRespuestaBuscarClienteVC = function(respuesta){

@@ -55,6 +55,19 @@ class CompraController extends Controller
         $data['v_unidad_medida'] = $model->listUnidadMedida();
         return View::make('compras.compras',$data);
     }
+	
+	public function getCompraMasiva()
+    {
+        $model= new Compra();
+        $data['v_locales'] = $model->cargarLocales();
+		
+		$data['v_compras'] = $model->listCompra();
+        $data['v_bodegas'] = $model->listBodega();
+        $data['v_estados'] = $model->listEstados();
+        $data['v_tipo_dte'] = $model->listTipoDte();
+        $data['v_unidad_medida'] = $model->listUnidadMedida();
+        return View::make('compras.compraMasiva',$data);
+    }
 
     //Registrar o actualizar compra
     protected function postCompras(Request $request){
@@ -73,8 +86,107 @@ class CompraController extends Controller
         $result['v_detalles'] = $model->getDetallesCompra($datos['IdCompra2']);
         return $result;
     }
-        
-
+	
+	//Registrar Detalle Compra Masiva
+    protected function postRegistrarDetalleCompraMasiva(Request $request){
+        $model= new Compra();
+		
+		$datos = $request->all();
+		$IdCompra = $datos['IdCompra'];
+		$datos['IdLocal'] = 7;
+		
+		if($IdCompra==null){
+			$result['f_registro_compra'] = $model->regCompraMasiva($datos);
+			log::info("Registro Compra: " . $result['f_registro_compra']);
+			
+			$obj = json_decode($result['f_registro_compra']);
+			log::info($obj->IdCompra);
+			
+			$datos['IdCompra'] = $obj->IdCompra;
+			$IdCompra =$obj->IdCompra;
+			
+		}else{
+			$result['f_registro_compra'] = $model->getCabeceraCompraFirst($IdCompra);
+			
+		}
+		
+        $result['detalle_compra'] = $model->regDetalleCompraMasiva($datos);
+        $result['v_detalle_compra_masiva'] = $model->getDetallesCompraMasiva($IdCompra);
+        return $result;
+    }
+	
+	//Registrar Bodega de Destino Detalle Compra Masiva
+    protected function postRegistrarBodegaDestino(Request $request){
+        $model= new Compra();
+		
+		$datos = $request->all();
+		$IdCompraDetalle = $datos['IdDetalleCompraBD'];
+		$IdCompra = $datos['IdCompraBD'];
+		$IdProducto = $datos['IdProductoBD'];
+		$datos['IdLocal'] = 7;
+		
+		if($IdCompraDetalle!=null){
+			$result['f_registro_bodega_destino'] = $model->regCompraMasivaBodegaDestino($datos);
+			log::info("Registro Bodega Destino: " . $result['f_registro_bodega_destino']);			
+		}
+		
+        $result['v_bodega_destino'] = $model->getBodegasDestinoCompraMasiva($IdCompraDetalle);
+		$result['v_detalle_compra_masiva'] = $model->getDetallesCompraMasiva($IdCompra);
+        return $result;
+    }
+	
+    //Registrar Bodega de Destino Detalle Compra Masiva
+    protected function getBodegaDestino(Request $request){
+        $model= new Compra();
+		
+		$datos = $request->all();
+		$IdCompraDetalle = $datos['IdDetalleCompraBD'];
+		log::info("IdCompraDetalle: ". $IdCompraDetalle);
+		
+        $result['v_bodega_destino'] = $model->getBodegasDestinoCompraMasiva($IdCompraDetalle);
+        return $result;
+    }
+	
+	//Registrar Bodega de Destino Detalle Compra Masiva
+    protected function getStockProducto(Request $request){
+        $modelPRO = new Producto();
+		
+		$datos = $request->all();
+		$IdProducto = $datos['IdProducto'];
+		log::info("IdProducto: ". $IdProducto);
+		
+        $result['v_stock'] = $modelPRO->listStock($IdProducto);
+        return $result;
+    }
+	
+	protected function postEliminarAsignacionBodegaDestino(Request $request){
+        $model= new Compra();
+		
+		$datos = $request->all();
+		$IdBodegaDestino = $datos['IdBodegaDestino'];		
+		$bodegaDestino = $model->getBodegasDestinoById($IdBodegaDestino);
+		
+		$IdCompraDetalle = $bodegaDestino[0]->IdDetalleCompra;
+		$IdCompra = $bodegaDestino[0]->IdCompra;
+		$IdProducto = $bodegaDestino[0]->IdProducto;
+		$IdBodega =  $bodegaDestino[0]->IdBodega;
+		$Cantidad =  $bodegaDestino[0]->Cantidad;
+		
+		log::info("IdBodegaDestino: ". $IdBodegaDestino);
+		log::info("IdProducto: " . $bodegaDestino[0]->IdProducto );
+		log::info("IdBodega: " . $bodegaDestino[0]->IdBodega );
+		log::info("IdDetalleCompra: " . $bodegaDestino[0]->IdDetalleCompra );
+		log::info("IdCompra: " . $bodegaDestino[0]->IdCompra );
+		
+		
+        $result['e'] = $model->eliminarAsginacionBodegaDestino($bodegaDestino);
+		
+		$result['v_bodega_destino'] = $model->getBodegasDestinoCompraMasiva($IdCompraDetalle);
+		$result['v_detalle_compra_masiva'] = $model->getDetallesCompraMasiva($IdCompra);
+        return $result;
+    }
+	
+	
     //Activar / desactivar compra
     protected function postCompractiva(Request $request){
         $datos = $request->all();
@@ -150,10 +262,25 @@ class CompraController extends Controller
 
     protected function postBuscarproductos(Request $request){
         $datos = $request->all();
+		
         $result['producto'] = Producto::where('CodigoBarra',$datos['CodigoBarra'])->first();
-        if($result['producto'] == null) { $result['producto'] = '{"IdProducto":0}'; }
-        $model= new Compra(); 
-        $result['impuesto'] = $model->buscarImpuestos($result['producto']->IdProducto);
+        if($result['producto'] != null){
+			$model= new Compra(); 
+			$result['impuesto'] = $model->buscarImpuestos($result['producto']->IdProducto);	
+			
+		}else{
+			$result['producto'] = '{IdProducto:0}'; 
+			
+		}
+		
+        return $result;
+    }
+	
+	protected function postBuscarProductoMasivo(Request $request){
+        $datos = $request->all();
+        $result['productos'] = Producto::where('NombreProducto', 'like', '%'. $datos['InfoProducto'] .'%')->orWhere('CodigoBarra', $datos['InfoProducto'])->get();
+        if($result['productos'] == null) { $result['productos'] = '{"IdProducto":0}'; }
+		
         return $result;
     }
 

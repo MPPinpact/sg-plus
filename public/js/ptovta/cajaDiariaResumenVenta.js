@@ -1,4 +1,4 @@
-var manejoRefresh=limpiarLocales=limpiarCajas=limpiarDetalleCaja=errorRut=errorRut2=errorRut3=limpiarBodegas=NVenta=0;
+var manejoRefresh=limpiarLocales=limpiarCajaDiariaResumen=limpiarCajaDiariaDetalle=limpiarDetalle=errorRut2=errorRut3=limpiarBodegas=NVenta=0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -8,141 +8,164 @@ var parametroAjax = {
     'async': false
 };
 
-
-var verDetallesCajaDiaria = function(IdCaja){
-    parametroAjax.ruta=rutaB;
-    parametroAjax.data = {IdCaja:IdCaja};
+var verDetalleVenta = function(IdVenta){
+	console.log("verDetalleVenta(IdVenta)");
+	$("#IdVenta").val(IdVenta);
+	
+	parametroAjax.ruta=rutaCDDV;
+    parametroAjax.data = $("#FormCajaDiaria").serialize();
     respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaVerDetalleCajaDiaria(respuesta);
+    ManejoRespuestaVerDetalleVenta(respuesta);
 }
 
-
-var ManejoRespuestaVerDetalleCajaDiaria = function(respuesta){
+var ManejoRespuestaVerDetalleVenta = function(respuesta){
+	console.log("Detalle: " + respuesta.respuesta.v_detalle_venta[0]);
+		
     if(respuesta.code==200){
-        cargarDetalleCajaDiaria(respuesta.respuesta);
+		
+        cargarDetalleVenta(respuesta.respuesta.v_detalle_venta);
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
 }
 
-var cargarCajasDiarias = function(data){
-    if(limpiarCajas==1){destruirTabla('#tablaCajaDiaria');$('#tablaCajaDiaria thead').empty();}
-        $("#tablaCajaDiaria").dataTable({
-            responsive:false,
-            "aLengthMenu": DataTableLengthMenu,
-            "pagingType": "full_numbers",
-			"pageLength": 10, 
-            "language": LenguajeTabla,
-            "columnDefs": [
-                {"targets": [ 1 ],"searchable": true},
-                {"sWidth": "1px", "aTargets": [6]}
-            ],
-            "data": data,
-            "columns":[
-                {"title": "ACC", "data": "IdCaja",
-                    "render": function(data, type, row, meta){
-                        var result = `
-                        <center>
-                        <a href="#" onclick="verDetallesCajaDiaria(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
-                            <i class="icofont icofont-search"></i>
-                        </a>
-                        <a href="#" onclick="cambiarEstatusVenta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
-                            <i class="icofont icofont-ui-delete"></i>
-                        </a>	
-                        </center>`;
-                        return result;
-                    }
-                },
-                {"title": "Id Caja","data": "IdCaja",  className: "text-center",
-							render: $.fn.dataTable.render.number( '.', ',', 0 ),
-							className: "text-center"},
-                {"title": "Fecha Caja", "data": "FechaCaja", className: "text-center", 
-                    "render": function(data, type, row, meta){
-                        if(type === 'display'){
-                            data = moment(data, 'YYYY-MM-DD',true).format("DD-MM-YYYY");
-                        }
-                        return data;
-                    }
-                },
-                {"title": "Usuario Responsable","data": "IdUsuario", className: "text-center"},
-                {"title": "Fecha Apertura", className: "text-center", 
-						"data": "FechaApertura",
-						"render": function(data, type, row, meta){
-							if(type === 'display'){
-								data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
-							}
-							return data;
-						}
-				},
-                {"title": "Fecha Cierre", className: "text-center", 
-						"data": "FechaCierre",
-						"render": function(data, type, row, meta){
-							if(type === 'display'){
-								data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
-							}
-							return data;
-						}
-                },
-				{"title": "Estado Caja","data": "EstadoCaja", className: "text-center"},
-            ],			
-        });
-        limpiarCajas=1;
-};
+var ManejoRespuestaProcesarInfoCaja = function(respuesta){	
+	console.log(respuesta[0].IdCaja);
+	console.log(respuesta[0].IdLocal);
+   
+	if(respuesta!=null){
+		console.log("respuesta.respuesta.v_cajaActual.IdCaja: " + respuesta[0].IdCaja);
+		console.log("respuesta.respuesta.v_cajaActual.IdLocal: " + respuesta[0].IdLocal);
+		
+		$("#IdLocal").val(respuesta[0].IdLocal);
+		$("#IdCaja").val(respuesta[0].IdCaja);
+		   
+	}else{
+		$("#IdLocal").val(0);
+		$("#IdCaja").val(0);
+			
+		$.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
+	}
+		
 
-var cargarDetalleCajaDiaria = function(data){
-    
-	if(limpiarDetalleCaja==1){
-		destruirTabla('#tablaDetalleCajaDiaria');
-		$('#tablaDetalleCajaDiaria thead').empty();
+	
+	console.log("Fin de ManejoRespuestaProcesarInfoCaja()");
+}
+
+var cargarCajaDiariaResumenVenta = function(data){
+    if(limpiarCajaDiariaResumen==1){
+		destruirTabla('#tablaCajaDiariaResumenVenta');
+		$('#tablaCajaDiariaResumenVenta thead').empty();
 	}
 	
-	$("#tablaDetalleCajaDiaria").dataTable({
-		responsive:false,
-		"aLengthMenu": DataTableLengthMenu,
-		"pageLength": 5, 
-		"language": LenguajeTabla,
+	$("#tablaCajaDiariaResumenVenta").dataTable({
+		 "footerCallback": function ( row, data, start, end, display ) {
+		var api = this.api(), data;
+		// Remove the formatting to get integer data for summation
+		var intVal = function (i){
+			return typeof i === 'string' ?
+				i.replace(/[\$,]/g, '')*1 :
+				typeof i === 'number' ?
+					i : 0;
+		};
+		// Total over all pages
+		totalRecaudado = api
+			.column(2)
+			.data()
+			.reduce( function (a, b) {
+				return intVal(a) + intVal(b);
+			}, 0 );
+			
+			$( api.column( 2 ).footer() ).html('$'+totalRecaudado +' ( Total Recaudado )');
+		},
+		
 		bFilter: false, 
-		bInfo: false,
-		"bPaginate": false,			
+		searching: false,
+		paging: false, 
+		"aLengthMenu": DataTableLengthMenu,
+		"language": LenguajeTabla,
 		"data": data,
+		
 		"columns":[
-			{"title": "", "data": "IdCaja",
+			{"title": "Nro. Venta","data": "IdVenta",  className: "text-center", render: $.fn.dataTable.render.number( '.', ',', 0 ), className: "text-center"},
+			{"title": "FormaPago", "data": "FormaPago", className: "text-left"},
+			{"title": "RUT Client", "data": "RUTCliente", className: "text-left"},
+			{"title": "Cliente", "data": "NombreCliente", className: "text-left"},
+			{"title": "Monto","data": "TotalFormaPago", render: $.fn.dataTable.render.number( '.', ',', 0 ), className: "text-right"},
+			{"title": "", "data": "IdVenta",
 				"render": function(data, type, row, meta){
 					var result = `
 					<center>
-					<a href="#" onclick="verDetallesVenta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
+					<a href="#" onclick="verDetalleVenta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Movimientos" data-original-title="Delete">
 						<i class="icofont icofont-search"></i>
-					</a>`;
+					</a>
+					</center>`;
 					return result;
 				}
 			},
-			{"title": "Id Caja","data": "IdCaja",visible:0},
-			{"title": "Id Forma Pago","data": "IdFormaPago",visible:0},
-			{"title": "Venta","data": "IdVenta"},
-			{"title": "Forma Pago","data": "FormaPago"},
-			{"title": "Total","data": "TotalFormaPago"}
-		],
+		],			
 	});
-	limpiarDetalleCaja=1;
+	limpiarCajas=1;
+	console.log("Total Recaudado: " + totalRecaudado);
+		
+};
+
+var cargarDetalleVenta = function(data){
+    if(limpiarDetalle==1){
+		destruirTabla('#tablaDetalleVenta');
+		$('#tablaDetalleVenta thead').empty();
+	}
+	
+	$("#tablaDetalleVenta").dataTable({
+		 "footerCallback": function ( row, data, start, end, display ) {
+		var api = this.api(), data;
+		// Remove the formatting to get integer data for summation
+		var intVal = function (i){
+			return typeof i === 'string' ?
+				i.replace(/[\$,]/g, '')*1 :
+				typeof i === 'number' ?
+					i : 0;
+		};
+		// Total over all pages
+		totalFormaPago = api
+			.column(2)
+			.data()
+			.reduce( function (a, b) {
+				return intVal(a) + intVal(b);
+			}, 0 );
+			
+			$( api.column( 2 ).footer() ).html('$'+totalFormaPago+' ( Total Forma Pago )');
+		},
+		
+		bFilter: false, 
+		searching: false,
+		paging: false, 
+		"aLengthMenu": DataTableLengthMenu,
+		"language": LenguajeTabla,
+		"data": data,
+		
+		"columns":[
+			{"title": "Id Venta","data": "IdVenta", visible:0},
+			{"title": "Producto", "data": "NombreProducto", className: "text-left"},
+			{"title": "Cant", "data": "CantidadVenta", className: "text-center", render: $.fn.dataTable.render.number( '.', ',', 0 )},
+			{"title": "Valor","data": "ValorUnitarioVenta", className: "text-right", render: $.fn.dataTable.render.number( '.', ',', 0 )},
+			{"title": "Total","data": "TotalLinea", className: "text-right", render: $.fn.dataTable.render.number( '.', ',', 0 )},
+		],			
+	});
+	limpiarDetalle=1;
+	console.log("Total Forma Pago: " + totalFormaPago);
 };
 
 
+
 $(document).ready(function(){
-    
-    cargarCajasDiarias(d.v_cajas_diarias);
-	cargarDetalleCajaDiaria(null);
 	
-	// Botones de cabecera de compra
-    // $(document).on('click','#botonCDR', BotonAgregar);
-    // $(document).on('click','#guardarI',validadorI);
-    // $(document).on('click','#aceptarM',validadorP);
-    // $(document).on('click','#cancelar',BotonCancelar);
-    // $(document).on('click','#agregar',BotonAgregar);
-    // $(document).on('click','#modificar',modificarCabeceras);
-    // $(document).on('click','#volverAct',volverTabs);
+	ManejoRespuestaProcesarInfoCaja(d.v_cajaActual);
+    cargarCajaDiariaResumenVenta(d.v_detalle_venta);
+	cargarDetalleVenta(null)
+	
+	
 });
-
-
 
 // var calcularMontos = function(CantidadVenta,ValorUnitarioVenta,FactorImpuesto,MontoDescuento){
     // var ValorImpuesto = (CantidadVenta * ValorUnitarioVenta * FactorImpuesto / 100)
@@ -272,7 +295,32 @@ $(document).ready(function(){
     // }
 // }
 
-
+// var ManejoRespuestaProcesarD = function(respuesta){
+    // if(respuesta.code==200){
+        // NVenta=respuesta.respuesta.v_cabecera[0].IdVenta;
+        // bloquearInputs();
+        // $("#div-mod").show();
+        // $("#div-acep").hide();
+        // $(".divDetalles").toggle();
+        // $("#divVolver").show();
+        // $("#divTabs").show();
+        // $("#spanTitulo").text("Detalle Venta");
+		
+        // pintarDatosActualizar(respuesta.respuesta.v_cabecera[0]);
+        // cargarTablaDetalles(respuesta.respuesta.v_detalles);
+		// cargarTablaPagos(respuesta.respuesta.v_pagos);
+		
+        // if(parseInt(respuesta.respuesta.v_cabecera[0].EstadoVenta)>1){
+            // $(".CerrarVenta").hide();
+            // $("#agregarC").hide();
+        // }else{
+            // $(".CerrarVenta").show();
+            // $("#agregarC").show();
+        // }
+    // }else{
+        // $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    // }
+// }
 
 // // Manejo Activar / Desactivar compra
 // var ManejoRespuestaProcesarI = function(respuesta){
@@ -1077,7 +1125,12 @@ $(document).ready(function(){
     // ManejoRespuestaProcesarI(respuesta);
 // }
 
-
+// var verDetallesVenta = function(IdVenta){
+    // parametroAjax.ruta=rutaB;
+    // parametroAjax.data = {IdVenta:IdVenta};
+    // respuesta=procesarajax(parametroAjax);
+    // ManejoRespuestaProcesarD(respuesta);
+// }
 
 // var verDetallesDetalleVenta = function(IdDetalleVenta){
     // parametroAjax.ruta=rutaBDC;

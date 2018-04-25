@@ -52,16 +52,30 @@ class UsuarioController extends Controller
         return $result;
     }
 
+	protected function postBuscarUsuario(Request $request){
+        $datos = $request->all();
+        $model= new Usuario();
+		
+		log::info($datos);
+		
+		
+        $result['v_usuario'] = $model->getBuscarUsuario($datos['IdUsuario']);
+        $result['v_locales'] = $model->getBuscarLocales($datos['IdUsuario']);
+        return $result;
+    }
+	
     //Pantalla de registro de usuario
     protected function getUsuarios(){
         $p = Session::get('perfiles');
         $model= new Usuario();
+		
         $data['v_usuarios'] = $model->listUsuario();
         $data['v_perfiles'] = $model->listPerfiles();
         $data['v_estados'] = $model->listEstados();
         $result["perfil"] = $p["idPerfil"];
         $data['v_perfil']=json_encode($result);
-        return View::make('usuarios.usuarios',$data);
+        //return View::make('usuarios.usuarios',$data);
+		return View::make('usuarios.newUsuarios',$data);
     }
 
     // Registrar un nuevo usuario o actualizar datos (Administrador)

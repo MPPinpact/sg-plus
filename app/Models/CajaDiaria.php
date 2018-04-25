@@ -65,6 +65,14 @@ class CajaDiaria extends Authenticatable
         return DB::table('v_resumen_ventas')->where('IdCaja', '=', $IdVenta)->get();
     }
 	
+	// 
+    public function getCajaActivaLocal($IdLocal){
+		//log::info("Modelo Cajas Diarias --> getCajaActivaLocal");
+        return DB::table('v_cajas_abiertas')->where('IdLocal', '=', $IdLocal)->get();
+    }
+	
+	
+	
     // Cargar combo de estados de Estado (Activo / Inactivo)
     public function listEstados(){
         return DB::table('v_estados_ventas')->get();
@@ -86,7 +94,29 @@ class CajaDiaria extends Authenticatable
     }
 
     public function listCajasDiariasResumen($IdCaja){
-        return DB::table('v_resumen_ventas')->where('IdCaja', $IdCaja)->get(); 
+        return DB::table('v_resumen_caja')->where('IdCaja', $IdCaja)->orderBy('IdFormaPago', 'ASC')->get();
+    }
+	
+	public function listResumenCajasDiaria($IdCaja){
+        return DB::table('v_resumen_caja')->where('IdCaja', $IdCaja)->orderBy('IdFormaPago', 'ASC')->get(); 
+    }
+	
+	public function listResumenRecaudacionCajasDiaria($IdCaja){
+        return DB::table('v_cajas_diarias_recaudacion')->where('IdCaja', $IdCaja)->orderBy('Item', 'ASC')->get(); 
+    }
+	
+	public function listDetallePagoCajasDiaria($IdCaja){
+        return DB::table('v_pagos')->where('IdCaja', $IdCaja)->orderBy('IdPago', 'ASC')->get(); 
+    }
+	
+	public function listDetalleVentaFormaPago($IdCaja, $IdFormaPago){
+        return DB::table('v_resumen_ventas')->where([ ['IdCaja', '=', $IdCaja], ['IdFormaPago','=',$IdFormaPago]])->orderBy('IdVenta', 'ASC')->get(); 
+	
+    }
+	
+	public function listDetalleVentaCajaDiaria($IdCaja){
+        return DB::table('v_resumen_ventas')->where([ ['IdCaja', '=', $IdCaja]])->orderBy('IdVenta', 'ASC')->get(); 
+		
     }
 	
     // registrar Venta
@@ -237,7 +267,7 @@ class CajaDiaria extends Authenticatable
     }
 
     public function cerrarVenta($IdVenta){
-        log::info("llegue al modelo");
+        log::info("cerrarVenta()");
         log::info($IdVenta);
 		
         $IdAdmin = Auth::id();
@@ -248,5 +278,35 @@ class CajaDiaria extends Authenticatable
         return DB::table('ventas')
                 ->where('IdVenta', $IdVenta)
                 ->update($values);
+    }
+	
+	public function cerrarCajaDiaria($IdCaja){
+        log::info("cerrarCajaDiaria()");
+        log::info("IdCaja: " .$IdCaja);
+		
+        $IdAdmin = Auth::id();
+        $values=array('EstadoCaja'=>2,'FechaCierre'=>date("Y-m-d H:i:s"),'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$IdAdmin);
+		
+		log::info($values);
+		
+        return DB::table('caja_diaria')
+                ->where('IdCaja', $IdCaja)
+                ->update($values);
+    }
+	
+	public function abrirCajaDiaria($IdLocal){
+        log::info("abrirCajaDiaria()");
+        log::info("IdLocal: " .$IdLocal);
+		
+        $IdUsuario = Auth::id();
+		 		
+		$sql="select f_abrir_caja_diaria(".$IdLocal.",".$IdUsuario.")";
+        $execute=DB::select($sql);
+		log::info($sql);
+		
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
     }
 }

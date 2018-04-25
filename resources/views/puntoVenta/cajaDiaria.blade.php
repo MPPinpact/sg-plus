@@ -29,35 +29,36 @@
 				<div class="col-md-12">
 					<div class="row">
 						<div class="col-md-2">
+                			<a  href="{{ route('cajaDiaria') }}" style="float:left;" name="agregar" id="agregar" class="btn btn-inverse-primary waves-effect waves-light btn-block" href="#primary" role="button">
+								<span>Listado de Cajas Diarias </span>
+							</a>
+						</div>
+						
+						
+						<div class="col-md-2">
+							<a  href="{{ URL::route('cajaDiariaResumen') }}" style="float:left;" name="botonCDR" id="botonCDR" class="btn btn-warning waves-effect waves-light btn-block" href="#primary" role="button">
+								<span>Resumen Caja Actual </span>
+							</a>
+						</div>
+						
+						<div class="col-md-2">
+							<a  href="{{ URL::route('cajaDiariaResumenVenta') }}" style="float:left;" name="botonCDRV" id="botonCDRV" class="btn btn-warning waves-effect waves-light btn-block" href="#primary" role="button">
+								<span>Resumen Venta Caja Actual</span>
+							</a>
+						</div>
+						
+						<div class="col-md-2">
                 			<a  href="#" style="float:left;" name="agregar" id="agregar" class="btn btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
 								<span>Nueva Caja</span>
 							</a>
 						</div>
+						
 						<div class="col-md-2">
-							<a  href="#" style="float:left;" name="agregar" id="agregar" class="btn btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
+							<a  href="{{ URL::route('cajaDiariaCierre') }}" style="float:left;" name="agregar" id="agregar" class="btn btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
 								<span>Cerrar Caja Actual</span>
 							</a>
 						</div>
-						<div class="col-md-2">
-							<a  href="{{ URL::route('cajaDiariaResumen') }}" style="float:left;" name="botonCDR" id="botonCDR" class="btn btn-warning waves-effect waves-light btn-block" href="#primary" role="button">
-								<span>Resumen Caja </span>
-							</a>
-						</div>
-						<div class="col-md-2">
-							<a  href="{{ URL::route('cajaDiariaDetalle') }}" style="float:left;" name="botonCDD" id="botonCDD" class="btn btn-warning waves-effect waves-light btn-block" href="#primary" role="button">
-								<span>Detalle Caja </span>
-							</a>
-						</div>
-						<div class="col-md-2">
-							<a  href="{{ URL::route('cajaDiariaResumenVenta') }}" style="float:left;" name="botonCDRV" id="botonCDRV" class="btn btn-warning waves-effect waves-light btn-block" href="#primary" role="button">
-								<span>Resumen Venta</span>
-							</a>
-						</div>
-						<div class="col-md-2">
-							<a  href="{{ URL::route('cajaDiariaDetalleVenta') }}" style="float:left;" name="botonCDDV" id="botonCDDV" class="btn btn-warning waves-effect waves-light btn-block" href="#primary" role="button">
-								<span>Detalle Venta</span>
-							</a>
-						</div>
+						
 					</div>
 					<br />
 				</div>

@@ -116,7 +116,9 @@ class PreventaController extends Controller
 			$IdPreVenta=$obj->{'IdPreVenta'};
 		}
 		
-		log::info("IdPreVenta: " . $IdPreVenta);
+		// log::info("IdPreVenta: " . $IdPreVenta);
+		// log::info("IdLocalPreVenta: " . $datos['IdLocalPreVenta']);
+		// log::info("IdCajaPreVenta: " . $datos['IdCajaPreVenta']);
 		
 		$result['v_cabecera'] = $model->getCabeceraPreventa($IdPreVenta);
         $result['f_registro'] = $model->regDetallePreVentaPuntoVenta($datos);

@@ -182,6 +182,11 @@ var crearAllSelect = function(data){
     crearselect(data.v_formas_pago,"IdFormaPagoCredito");
 }
 
+var cargarInfoCajaDiaria = function(info){
+	console.log("IdCaja: " + info.IdCaja);
+	_idCaja_  = info.IdCaja;
+}
+
 
 var verificarRutC = function(control,caso){
     var res = Valida_Rut(control);
@@ -268,6 +273,9 @@ $(document).ready(function(){
     $(document).on('click','#botonConsultarStockProducto',botonConsultarStockProducto);
     $(document).on('click','#cancelarBPS',botonCerrarStockProducto);
 
+	//cargarInfoCajaDiaria(ptovta.cajaActual[0]);
+	
+	
     // $(document).on('click','#modificar',modificarCabeceras);
     // $(document).on('click','#volverAct',volverTabs);
     $('#FormPagoCredito').formValidation({

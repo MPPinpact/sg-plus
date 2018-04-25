@@ -56,11 +56,6 @@
 		        <div class="row">
 		            <div class="col-sm-12">
 		                <div class="product-edit">
-							<!-- <div class="row">
-								<div id="divVolver" class="col-md-12">
-									<a style="float:right;" id="volverAct" href="#"><u>volver</u></a>
-								</div>
-							</div> -->
 							<div id="divTabs">
 			                    <ul class="nav nav-tabs nav-justified md-tabs " role="tablist">
 			                        <li class="nav-item">
