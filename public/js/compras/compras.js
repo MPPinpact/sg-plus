@@ -351,9 +351,11 @@ var pintarDatosActualizar= function(data){
     $("#TotalDescuentos").val(data.TotalDescuentos);
     $("#TotalImpuestos").val(data.TotalImpuestos);
     $("#TotalCompra").val(data.TotalCompra);
+	
     var combos = buscarCombos(data.IdLocal,data.IdBodega);
     crearselect(combos.v_local,"IdLocal");    
     crearselect(combos.v_bodega,"IdBodega");
+	
     $("#IdLocal").val(data.IdLocal).trigger("change");
     $("#TipoDTE").val(data.TipoDTE).trigger("change");
     $("#EstadoCompra").val(data.EstadoCompra).trigger("change");
@@ -692,9 +694,11 @@ $(document).ready(function(){
     crearFormatoFecha();
     cargarTablaCompras(d.v_compras);
     crearAllSelect(d);
+	
     $("#IdLocal").change(function() {
         buscarBodegas($("#IdLocal").val());
     });
+	
     $("#RUTProveedor").focusout(function() {
         var valid = $("#RUTProveedor").val();
         if (valid.length > 0){
@@ -709,6 +713,7 @@ $(document).ready(function(){
             $("#RUTProveedor2").val(res);
         }else{$("#ErrorRut2").text("");}
     });
+	
     $("#RUT").focusout(function() {
         var valid = $("#RUT").val();
         if (valid.length > 0){

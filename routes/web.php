@@ -107,6 +107,8 @@ Route::post('/generarEECC', 'CicloFacturacionController@postGenerarEECC')->name(
 
 //CRUD Compra
 Route::get('/compras', 'CompraController@getCompras')->name('compras');
+Route::get('/compraMasiva', 'CompraController@getCompraMasiva')->name('compraMasiva');
+
 Route::post('/compras', 'CompraController@postCompras')->name('compras');
 Route::post('/activarCom', 'CompraController@postCompractiva')->name('activarCom');
 Route::post('/comprab', 'CompraController@postBuscarcompra')->name('comprab');
@@ -116,7 +118,14 @@ Route::post('/comprapr', 'CompraController@postRegistroproveedor')->name('compra
 Route::post('/comprabb', 'CompraController@postBuscarBodega')->name('comprabb');
 Route::post('/comprabc', 'CompraController@postBuscarcombos')->name('comprabc');
 Route::post('/comprabpd', 'CompraController@postBuscarproductos')->name('comprabpd');
+Route::post('/compraBPM', 'CompraController@postBuscarProductoMasivo')->name('compraBPM');
 Route::post('/comprardc', 'CompraController@postRegistrarDetallec')->name('comprardc');
+Route::post('/compraRDCM', 'CompraController@postRegistrarDetalleCompraMasiva')->name('compraRDCM');
+Route::post('/compraRBD', 'CompraController@postRegistrarBodegaDestino')->name('compraRBD');
+Route::post('/compraBD', 'CompraController@getBodegaDestino')->name('compraBD');
+Route::post('/compraEBD', 'CompraController@postEliminarAsignacionBodegaDestino')->name('compraEBD');
+Route::post('/compraCSP', 'CompraController@getStockProducto')->name('compraCSP');
+
 Route::post('/comprarbdc', 'CompraController@postBuscarDetallec')->name('comprarbdc');
 Route::post('/comprada', 'CompraController@postCompradetalleactiva')->name('comprada');
 
@@ -154,15 +163,22 @@ Route::post('/ventasPre', 'VentaController@postCargarPreventa')->name('ventasPre
 Route::get('/ptovta', 'PuntoVentaController@getPuntoVenta')->name('ptovta');
 Route::get('/cajaDiaria', 'PuntoVentaController@getCajaDiaria')->name('cajaDiaria');
 Route::get('/cajaDiariaResumen', 'PuntoVentaController@getCajaDiariaResumen')->name('cajaDiariaResumen');
+Route::get('/cajaDiariaCierre', 'PuntoVentaController@getCajaDiariaCierre')->name('cajaDiariaCierre');
+Route::post('/cajaDiariaCierre', 'PuntoVentaController@postCajaDiariaCierre')->name('cajaDiariaCierre');
 Route::post('/cajaDiariaResumen', 'PuntoVentaController@postCajaDiariaResumen')->name('cajaDiariaResumen');
+Route::post('/cajaDiariaDetalleFP', 'PuntoVentaController@postDetalleVentaFormaPago')->name('cajaDiariaDetalleFP');
+
 Route::get('/cajaDiariaDetalle', 'PuntoVentaController@getCajaDiariaDetalle')->name('cajaDiariaDetalle');
 Route::get('/cajaDiariaResumenVenta', 'PuntoVentaController@getCajaDiariaResumenVenta')->name('cajaDiariaResumenVenta');
 Route::get('/cajaDiariaDetalleVenta', 'PuntoVentaController@getCajaDiariaDetalleVenta')->name('cajaDiariaDetalleVenta');
+Route::post('/detalleVenta', 'PuntoVentaController@postDetalleVenta')->name('detalleVenta');
 
 Route::post('/addPreVentaPV', 'PreventaController@postAddPreVentaPreVenta')->name('addPreVentaPV');
 Route::post('/addProductPV', 'PreventaController@postAddProductPreVenta')->name('addProductPV');
 Route::post('/asginarVen', 'PreventaController@postAsignarVendedor')->name('asginarVen');
 Route::post('/asginarCli', 'PreventaController@postAsignarCliente')->name('asginarCli');
+
+Route::post('/infoCD', 'PuntoVentaController@postInfoCajaDiaria')->name('infoCD');
 
 Route::post('/buscarCDC', 'PuntoVentaController@postBuscarClienteDetalleCredito')->name('buscarCDC');
 Route::post('/pagarCuenta', 'PuntoVentaController@postPagarCuenta')->name('pagarCuenta');
@@ -246,6 +262,9 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){
 	Route::post('/activarP', 'UsuarioController@postPerfilactivo')->name('activarP');
 	// Desbloquear cuenta de usuario por maximo de intentos fallídos
 	Route::post('/desbloquearC', 'UsuarioController@postDesbloquearcuenta')->name('desbloquearC');
+	
+Route::post('/buscarUsuario', 'UsuarioController@postBuscarUsuario')->name('buscarUsuario');
+
 });
 
 

@@ -140,7 +140,7 @@ class Producto extends Authenticatable
     }
 
     public function listStock($IdProducto){
-        return DB::table('v_productos_stock')->where('IdProducto',$IdProducto)->get();
+        return DB::table('v_productos_stock')->where('IdProducto',$IdProducto)->orderBy('IdLocal', 'asc')->get();
 
     }
 

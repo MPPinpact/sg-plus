@@ -88,6 +88,50 @@ class Compra extends Authenticatable
         }
         return $result;
     }
+	
+	// registrar compra
+    public function regCompraMasiva($datos){
+        $idAdmin = Auth::id();
+        $datos['IdCompra']==null ? $IdCompra=0 : $IdCompra= $datos['IdCompra'];
+        $sql="select f_registro_compra(".$IdCompra.",Null,Null,Null,Null,5,Null,Now(),Now(),Now(),0,0,0,0,1,".$datos['IdLocal'].",".$idAdmin.")";
+		log::info($sql);
+		
+		$execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
+	
+	// registrar compra
+    public function regCompraMasivaBodegaDestino($datos){
+        $idAdmin = Auth::id();
+        $datos['IdDetalleCompraBD']==null ? $IdDetalleCompraBD=0 : $IdDetalleCompraBD= $datos['IdDetalleCompraBD'];
+        $sql="select f_registro_detalle_compra_bodega_destino(Null, ".$IdDetalleCompraBD.",".$datos['IdProductoBD'].",".$datos['IdBodega'].",'".$datos['CantidadAsignada']."',".$idAdmin.")";
+		log::info($sql);
+		
+		$execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
+	
+	// registrar Detalle compra masiva
+    public function regDetalleCompraMasiva($datos){
+        $idAdmin = Auth::id();
+        $datos['IdDetalleCompra']==null ? $IdDetalleCompra=0 : $IdDetalleCompra= $datos['IdDetalleCompra'];
+		$datos['TotalLinea'] = $datos['CantidadProducto'] * $datos['PrecioCosto'];
+		
+        $sql="select f_registro_detalle_compra_masiva(".$IdDetalleCompra.",".$datos['IdCompra'].",".$datos['IdProducto'].",'".$datos['CantidadProducto']."','".$datos['PrecioCosto']."','".$datos['PrecioVenta']."','".$datos['TotalLinea']."',1,".$idAdmin.")";
+        $execute=DB::select($sql);
+		log::info($sql);
+		
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
 
     // Activar / Desactivar Compra
     public function activarCompra($datos){
@@ -118,9 +162,56 @@ class Compra extends Authenticatable
     public function getCabeceraCompra($IdCompra){
         return DB::table('v_compras')->where('IdCompra',$IdCompra)->get(); 
     }
+	
+	public function getCabeceraCompraFirst($IdCompra){
+        return DB::table('v_compras')->where('IdCompra',$IdCompra)->first(); 
+    }
 
     public function getDetallesCompra($IdCompra){
         return DB::table('v_compras_detalle')->where('IdCompra',$IdCompra)->get(); 
+    }
+	
+	public function getDetallesCompraMasiva($IdCompra){
+        return DB::table('v_compras_detalle_masiva')->where('IdCompra',$IdCompra)->get(); 
+    }
+	
+	public function getBodegasDestinoCompraMasiva($IdCompraDetalleBD){
+        return DB::table('v_compras_detalle_bodegas')->where('IdDetalleCompra',$IdCompraDetalleBD)->get(); 
+    }
+	
+	public function getBodegasDestinoById($Id){
+        return DB::table('v_compras_detalle_bodegas')->where('Id',$Id)->get(); 
+    }
+
+	public function eliminarAsginacionBodegaDestino($bodegaDestino){
+        $idAdmin = Auth::id();
+		
+		$Id  = $bodegaDestino[0]->Id;
+		$IdCompraDetalle = $bodegaDestino[0]->IdDetalleCompra;
+		$IdCompra = $bodegaDestino[0]->IdCompra;
+		$IdProducto = $bodegaDestino[0]->IdProducto;
+		$IdBodega =  $bodegaDestino[0]->IdBodega;
+		$Cantidad =  $bodegaDestino[0]->Cantidad;
+		
+		$sql="select f_registro_detalle_compra_bodega_destino(".$Id.", ".$IdCompraDetalle.",".$IdProducto.",".$IdBodega.",'-".$Cantidad."',".$idAdmin.")";
+		log::info($sql);
+		
+		$execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+
+    }
+	
+	public function asignarStock($IdProducto,$IdBodega,$Cantidad){
+        $idAdmin = Auth::id();
+		
+        $values=array('Stock'=>Stock - $Cantidad);
+        
+        return DB::table('Stock')
+                ->where([['IdProducto', $IdProducto],['IdBodega', $IdBodega]])
+                ->update($values);
+
     }
 
 
@@ -133,6 +224,12 @@ class Compra extends Authenticatable
     
     public function buscarLocales($IdEmpresa){
         return DB::table('v_locales_combo')->where('IdEmpresa',$IdEmpresa)->get();
+    }
+	
+	public function cargarLocales(){
+		log::info("cargarLocales()");
+
+        return DB::table('v_locales_combo')->get();
     }
 
     

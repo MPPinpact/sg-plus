@@ -1141,6 +1141,7 @@
 	var rutaBC = "{{ URL::route('buscarCDC') }}"
 	var rutaPC = "{{ URL::route('pagarCuenta') }}"
 	var rutaBP = "{{ URL::route('PtoBuscarP') }}"
+	
 	/* Formulario Venta */
 	var rutaVAP = "{{ URL::route('addProductV') }}"
 	var rutaVAV = "{{ URL::route('asignarVenVen') }}"
@@ -1149,8 +1150,13 @@
 	var rutaVEP = "{{ URL::route('ventaEP') }}"
 	var rutaVCP = "{{ URL::route('ventaVCV') }}"
 	var rutaRV = "{{ URL::route('addPreVentaV') }}"
+	
+	/* Caja Diaria */
+	var rutaCD = "{{ URL::route('infoCD') }}"
+	
 	var d = [];
 	d['v_formas_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_pago) }}'));
+	
 </script>
 <script src="{{ asset('js/ptovta/ptovta.js') }}"></script>
 <script src="{{ asset('js/ptovta/ventaRapida.js') }}"></script>

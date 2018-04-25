@@ -72,8 +72,9 @@ class Usuario extends Authenticatable
                                         Auth::logout();
                                         return '{"code":"-2","des_code":"Perfil inactivo"}';
                                     }
-                            }else
+                            }else{
                                 return '{"code":"-2","des_code":"Ocurrio un error al iniciar la session"}';
+							}
                     }
                     $this->sumarIntentosFallidos($user[0]->idUser);
                     return '{"code":"-2","des_code":"Usuario o contraseña incorrectos, recuerde que despues de 3 intentos fallídos se bloqueará su cuenta"}';
@@ -413,6 +414,14 @@ class Usuario extends Authenticatable
 
     public function getUsuario($datos){
         return DB::table('v_usuarios')->where('idUser',$datos['idUser'])->get(); 
+    }
+	
+	public function getBuscarUsuario($IdUsuario){
+        return DB::table('v_usuarios')->where('idUser',$IdUsuario)->get(); 
+    }
+	
+	public function getBuscarLocales($IdUsuario){
+        return DB::table('v_usuarios_locales')->where('IdUsuario',$IdUsuario)->get(); 
     }
 
 
