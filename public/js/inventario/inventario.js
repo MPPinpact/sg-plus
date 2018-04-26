@@ -332,48 +332,6 @@ var cargarTablaDetalles = function(data){
                 {"title": "Stock Sistema","data": "StockSistema"},
             ],   
             dom: 'Bfrtip',
-            buttons: [
-                {
-                    text: 'Cerrar Inventario',
-                    className: 'btn btn-primary BtnCerrarInv',                
-                },
-                {
-                    text: 'Comparar Inventario',
-                    className: 'btn btn-primary BtnCompararInv',                  
-                },
-                {
-                    text: 'Ajustar Inventario',
-                    className: 'btn btn-primary BtnAjustarInv',                 
-                },
-                {
-                    extend: 'pdf',
-                    text: 'Finalizar Pre-venta',
-                    className: 'btn btn-inverse-primary waves-effect waves-light CerrarPreventa',
-                    // orientation:'landscape',  //Hoja Horizontal
-                    pageSize:'A4',
-                    title:'Detalles Preventa N° '+NPreventa,
-                    exportOptions: {
-                        columns: columnReport,
-                        modifier: {
-                            page: 'all',
-                        }
-                    }
-                    ,
-                    customize : function(doc){
-                        doc.defaultStyle.fontSize = 8; 
-                        doc.pageMargins = [100, 40, 40,0];
-                        var colCount = new Array();   
-                        $($("#tablaDetalles").dataTable()).find('tbody tr:first-child td').each(function(){
-                            if($(this).attr('colspan')){
-                                for(var i=1;i<=$(this).attr('colspan');$i++){
-                                    colCount.push('*');
-                                }
-                            }else{ colCount.push('*'); }
-                        });
-                        doc.content[1].table.widths = colCount;
-                    }
-                }
-            ]
         });
     limpiarDetalles=1;
 };

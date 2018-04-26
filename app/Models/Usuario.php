@@ -56,13 +56,28 @@ class Usuario extends Authenticatable
                             (isset($data['remember'])) ? $bool="true" : $bool="false";  
                             Auth::loginUsingId($result,$bool);
                             if (Auth::check()){
+                                    
                                     $r=$this->resetIntentosFallidos($user[0]->idUser);
+                                    
                                     $usuario = Auth::user();
+                                    
                                     $perfiles = DB::table('v_perfiles_usuarios')
                                     ->where('idUser',$usuario->idUser)
                                     ->where('activoPerfil',1)->get();
+                                    
                                     $nroPerfiles = count($perfiles);
+                                    
+                                    $Idlocal = DB::table('usuarios_locales')
+                                    ->where('IdUsuario',$usuario->idUser)
+                                    ->where('Estado',1)->get();
+                                    
+                                    $local = DB::table('v_locales')
+                                    ->where('IdLocal',$Idlocal[0]->IdLocal)
+                                    ->get();
+
                                     Session::put('nroPerfiles', $nroPerfiles);
+                                    Session::put('local', $local);
+                                    
                                     if ($nroPerfiles>1) {
                                         return '{"code":"200","des_code":"admin/accesos"}';
                                     } elseif ($nroPerfiles>0 && $nroPerfiles<2) {
