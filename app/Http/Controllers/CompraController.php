@@ -55,19 +55,85 @@ class CompraController extends Controller
         $data['v_unidad_medida'] = $model->listUnidadMedida();
         return View::make('compras.compras',$data);
     }
-	
-	public function getCompraMasiva()
+   
+    public function getCompraMasivaNew()
     {
         $model= new Compra();
         $data['v_locales'] = $model->cargarLocales();
-		
-		$data['v_compras'] = $model->listCompra();
+        
+        $data['v_compras'] = $model->listCompra();
         $data['v_bodegas'] = $model->listBodega();
         $data['v_estados'] = $model->listEstados();
         $data['v_tipo_dte'] = $model->listTipoDte();
         $data['v_unidad_medida'] = $model->listUnidadMedida();
-        return View::make('compras.compraMasiva',$data);
+
+        $Compra = $model->getCompraMasivaAbierta(7);
+        $obj = json_decode($Compra);
+
+        if(Count($obj) > 0) $data['IdCompra'] = $obj[0]->IdCompra;
+        else $data['IdCompra'] = 0;
+
+        return View::make('compras.compraMasivaNew',$data);
     }
+    
+    public function getCompraMasivaList()
+    {
+        $model= new Compra();       
+        $data['v_compras_masiva'] = $model->listCompraMasiva();
+        return View::make('compras.compraMasivaList',$data);
+    }
+
+    public function getCompraMasivaReport()
+    {
+        $model= new Compra();
+        
+        $Compra = $model->getCompraMasivaAbierta(7);
+        $obj = json_decode($Compra);
+
+        if(Count($obj) > 0) $data['IdCompra'] = $obj[0]->IdCompra;
+        else $data['IdCompra'] = 0;
+
+        return View::make('compras.compraMasivaReport',$data);
+    }
+
+    public function getResumenCompra(Request $request){
+        $model= new Compra();
+        $datos = $request->all();
+
+        $IdCompra = $datos['IdCompra'];
+        $result['v_resumen_compra'] = $model->rerporteCompra($IdCompra);
+
+        return $result;
+    }
+
+    public function postCompraMasivaView()
+    {
+        $model= new Compra();
+        $data['v_locales'] = $model->cargarLocales();
+
+        return View::make('compras.compraMasivaView',$data);
+    }
+
+     public function getCompraMasivaView()
+    {
+        log::info("getCompraMasivaView()");
+
+        $model= new Compra();
+
+        $data['v_locales'] = $model->cargarLocales();
+        $data['v_estados'] = $model->listEstados();
+        $data['v_tipo_dte'] = $model->listTipoDte();
+        $data['v_unidad_medida'] = $model->listUnidadMedida();
+
+        $Compra = $model->getCompraMasivaAbierta(7);
+        $obj = json_decode($Compra);
+
+        if(Count($obj) > 0) $data['IdCompra'] = $obj[0]->IdCompra;
+        else $data['IdCompra'] = 0;
+
+        return View::make('compras.compraMasivaNew',$data);
+    }
+
 
     //Registrar o actualizar compra
     protected function postCompras(Request $request){
@@ -87,34 +153,53 @@ class CompraController extends Controller
         return $result;
     }
 	
-	//Registrar Detalle Compra Masiva
+    //Registrar Detalle Compra Masiva
     protected function postRegistrarDetalleCompraMasiva(Request $request){
         $model= new Compra();
-		
-		$datos = $request->all();
-		$IdCompra = $datos['IdCompra'];
-		$datos['IdLocal'] = 7;
-		
-		if($IdCompra==null){
-			$result['f_registro_compra'] = $model->regCompraMasiva($datos);
-			log::info("Registro Compra: " . $result['f_registro_compra']);
-			
-			$obj = json_decode($result['f_registro_compra']);
-			log::info($obj->IdCompra);
-			
-			$datos['IdCompra'] = $obj->IdCompra;
-			$IdCompra =$obj->IdCompra;
-			
-		}else{
-			$result['f_registro_compra'] = $model->getCabeceraCompraFirst($IdCompra);
-			
-		}
-		
+        
+        $datos = $request->all();
+        $IdCompra = $datos['IdCompra'];
+        $datos['IdLocal'] = 7;
+        
+        if($IdCompra==null){
+            $result['f_registro_compra'] = $model->regCompraMasiva($datos);
+            log::info("Registro Compra: " . $result['f_registro_compra']);
+            
+            $obj = json_decode($result['f_registro_compra']);
+            log::info($obj->IdCompra);
+            
+            $datos['IdCompra'] = $obj->IdCompra;
+            $IdCompra =$obj->IdCompra;
+            
+        }else{
+            $result['f_registro_compra'] = $model->getCabeceraCompraFirst($IdCompra);
+            
+        }
+        
         $result['detalle_compra'] = $model->regDetalleCompraMasiva($datos);
         $result['v_detalle_compra_masiva'] = $model->getDetallesCompraMasiva($IdCompra);
         return $result;
     }
+
+    //Registrar Detalle Compra Masiva
+    protected function postCargarDetalleCompraMasiva(Request $request){
+        log::info("postCargarDetalleCompraMasiva()");
+        $model= new Compra();
+        
+        $datos = $request->all();
+        $IdCompra = $datos['IdCompra'];
+        
+        log::info("IdCompra: ". $IdCompra);
+
+        $result['v_detalle_compra_masiva'] = $model->getDetallesCompraMasiva($IdCompra);
+        $result['v_resumen_compra_bodega'] = $model->rerporteCompraBodega($IdCompra);
+        $result['v_resumen_compra_local'] = $model->rerporteCompraLocal($IdCompra);
+
+
+        return $result;
+    }
 	
+
 	//Registrar Bodega de Destino Detalle Compra Masiva
     protected function postRegistrarBodegaDestino(Request $request){
         $model= new Compra();
@@ -143,6 +228,11 @@ class CompraController extends Controller
 		$IdCompraDetalle = $datos['IdDetalleCompraBD'];
 		log::info("IdCompraDetalle: ". $IdCompraDetalle);
 		
+        $detalle = $model->getOneCompraDetalle($IdCompraDetalle);
+        $obj = json_decode($detalle);
+        log::info("IdProducto: " . $obj[0]->IdProducto);
+
+        $result['v_detalle_compra'] = $detalle = $model->getOneCompraDetalle($IdCompraDetalle);
         $result['v_bodega_destino'] = $model->getBodegasDestinoCompraMasiva($IdCompraDetalle);
         return $result;
     }

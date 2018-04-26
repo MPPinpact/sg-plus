@@ -16,7 +16,7 @@
 				<div class="col-md-12">
 					<div class="row">
 						<div class="col-md-2">
-                			<a  href="{{ route('compras') }}" style="float:left;" name="botonListadoCompras" id="botonListadoCompras" class="btn btn-inverse-primary waves-effect waves-light btn-block" href="#primary" role="button">
+                			<a  href="{{ route('compras') }}" style="float:left;" name="botonListadoCompras" id="botonListadoCompras" class="btn btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
 								<span>Compras Realizadas </span>
 							</a>
 						</div>
@@ -28,7 +28,7 @@
 						</div>
 						
 						<div class="col-md-2">
-							<a  href="{{ URL::route('compraMasivaList') }}" style="float:left;" name="botonAgregarCompraMasiva" id="botonAgregarCompraMasiva" class="btn btn-warning waves-effect waves-light btn-block" href="#primary" role="button">
+							<a  href="#!" style="float:left;" name="botonAgregarCompraMasiva" id="botonAgregarCompraMasiva" class="btn btn-inverse-warning waves-effect waves-light btn-block" href="#primary" role="button">
 								<span>Compras Masivas</span>
 							</a>
 						</div>
@@ -44,7 +44,36 @@
 								<span>--</span>
 							</a>
 						</div>
+					</div>
+				</div>
+				<br />
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-2">
+							<a  href="{{ route('compraMasivaList') }}" style="float:left;" name="" id="" class="btn btn-success waves-effect waves-light btn-block" role="button">
+								<span>Listado Compras Masivas</span>
+							</a>
+						</div>
 						
+						<div class="col-md-2">
+                			<a  href="{{ route('compraMasivaNew') }}" style="float:left;" name="botonListadoCompras" id="botonListadoCompras" class="btn btn-inverse-success waves-effect waves-light btn-block" role="button">
+								<span>Nueva Compra Masiva </span>
+							</a>
+						</div>
+						
+
+						<div class="col-md-2">
+                			<a  href="{{ route('compraMasivaReport') }}" style="float:left;" name="botonGenerarListadoCompra" id="botonGenerarListadoCompra" class="btn btn-success waves-effect waves-light btn-block" role="button">
+								<span>Reporte Compra Masiva</span>
+							</a>
+						</div>
+						
+						<div class="col-md-2">
+							<a  href="#!" style="float:left;" name="botonAgregarCompraMasiva" id="botonAgregarCompraMasiva" class="btn btn-success waves-effect waves-light btn-block"  role="button">
+								<span>Finalizar Compra Masiva</span>
+							</a>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -57,15 +86,59 @@
 			 <div class="card-header">
 	        	<center>
 	        		<h5 class="card-header-text">
-	        			Listado de Compras Registradas
+	        			Visualización de Compra Masiva
 	        		</h5>
                 </center>
 	        </div>
 			 <div class="card-block">
 				<div class="col-md-12">
+					{!! Form::open(['id'=>'FormDetalleCompra','autocomplete' => 'off']) !!}
+					<input type="hidden" name="IdCompra" id="IdCompra">
+					<input type="hidden" name="IdLocalDC" id="IdLocalDC">
+					<input type="hidden" name="IdDetalleCompra" id="IdDetalleCompra">
+					
+					<div class="row">		
+						<div class="col-md-3">					
+							<div class="input-group">
+								<input id="NombreProducto" name="NombreProducto" type="text" aria-describedby="btn-addon1" class="md-form-control md-static" placeholder="Buscar Producto...">
+								<span class="input-group-addon" id="botonBuscarProducto"><i class="icofont icofont-search"></i></span>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input type="hidden" name="IdProducto" id="IdProducto">
+								<input id="CodigoBarra" name="CodigoBarra" type="text" class="md-form-control md-static" maxlength="20" placeholder="Código..." />
+								<span class="input-group-addon" id="botonBuscarCodigo"><i class="icofont icofont-search"></i></span>
+							</div>
+						</div>
+						<div class="col-md-1">
+							<div class="md-input-wrapper">
+								<input id="CantidadProducto" name="CantidadProducto" type="text" class="md-form-control md-static" maxlength="250"  />
+								<label for="CantidadProducto">Cantidad</label>
+							</div>
+						</div>
+						<div class="col-md-1">
+							<div class="md-input-wrapper">
+								<input id="PrecioCosto" name="PrecioCosto" type="text" class="md-form-control md-static" maxlength="250"  />
+								<label for="PrecioCosto">Costo</label>
+							</div>
+						</div>
+						<div class="col-md-1">
+							<div class="md-input-wrapper">
+								<input id="PrecioVenta" name="PrecioVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
+								<label for="PrecioVenta">Venta</label>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="md-input-wrapper">
+								<button id="botonBodegaDestino" name="botonBodegaDestino" type="button" class="btn-lg btn-success waves-effect waves-light btn-block">Bodega Destino  <i class="icofont icofont-home-search"></i></button>
+							</div>
+						</div>
+					</div>
+					{!! Form::close() !!}
 					<div class="row">
 						<div class="col-md-12 table-responsive">
-							<table id="tablaCompras" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+							<table id="tablaDetalleCompra" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 						</div>
 					</div>
 				</div>
@@ -120,8 +193,8 @@
 		                    <div class="tab-content">
 		                        <div class="tab-pane active" id="Tabdetalles" role="tabpanel">
 									{!! Form::open(['id'=>'FormCompras','autocomplete' => 'off']) !!}
-									{!! Form::hidden('IdCompra', '', [
-									'id'            => 'IdCompra',
+									{!! Form::hidden('IdCompra_', '', [
+									'id'            => 'IdCompra_',
 									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
@@ -164,8 +237,8 @@
 
 										<div class="col-sm-2">
 											<div class="md-input-wrapper">
-												<select name="IdLocal" id="IdLocal" class="md-disable md-valid" disabled></select>
-												<label for="IdLocal">Locales</label>
+												<select name="IdLocal_" id="IdLocal_" class="md-disable md-valid" disabled></select>
+												<label for="IdLocal_">Locales</label>
 											</div>
 										</div>
 
@@ -285,169 +358,180 @@
 		</div>
 	</div>
 </div>
-<!-- Modal Proveedor -->
-<div class="modal fade modal-flex" id="ModalProveedor" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            	<h6 class="modal-title">REGISTRO PROVEEDOR</h6>
-            </div>
-            <div class="modal-body">
-            	{!! Form::open(['id'=>'FormProveedorNew','autocomplete' => 'off']) !!}
-            	<div class="row">
-					<div class="col-sm-6">
-						<div class="md-input-wrapper">
-							<input id="RUTProveedor2" name="RUTProveedor2" type="text" class="md-form-control md-static" maxlength="250" readonly/>
-							<label for="RUTProveedor2">RUT Proveedor</label>
-		                    <small id="ErrorRut2" class="rut-error"></small>
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div class="md-input-wrapper">
-							<input id="NombreFantasia2" name="NombreFantasia2" type="text" class="md-form-control" maxlength="250"/>
-							<label for="NombreFantasia2">Nombre Fantasía</label>
-						</div>
-					</div>
-				</div>
-				{!! Form::close() !!}
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="cancelarM" class="btn btn-inverse-primary waves-effect waves-light" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="aceptarM" class="btn btn-primary waves-effect waves-light">Guardar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Detalle Compra -->
-<div class="modal fade" id="ModalDetalleCompra" tabindex="-1" role="dialog">
+
+<!--Modal Buscar Producto -->
+<div class="modal fade" id="ModalBuscarProducto" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                	<span aria-hidden="true">×</span>
-            	</button>
-            	<h6 id="spanTituloModal" class="modal-title"></h6>
+            	<h6 id="spanTituloModalBusquedaProducto" class="modal-title"></h6>
             </div>
             <div class="modal-body">
-				{!! Form::open(['id'=>'FormDetalle','autocomplete' => 'off']) !!}
-					<input type="hidden" name="IdDetalleCompra" id="IdDetalleCompra" value="1">
-					<input type="hidden" name="IdCompra2" id="IdCompra2" value="1">
-					<input type="hidden" name="IdProducto" id="IdProducto" value="1">
+				{!! Form::open(['id'=>'FormBusquedaProducto','autocomplete' => 'off']) !!}
+					
+					<div class="row" >
+						<div class="col-md-9">
+							<div class="md-input-wrapper">
+								<input id="InfoProducto" name="InfoProducto" type="text" class="md-form-control md-static" maxlength="250" />
+								<label for="InfoProducto">Código/Nombre/Descripción del Producto</label>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<button id="botonBuscar" name="botonBuscar" type="button" class="btn btn-success waves-effect waves-light btn-block">
+								Buscar Producto  <i class="icofont icofont-search"></i>
+							</button>
+						</div>
+					</div>
 					
 					<div class="row">
-						<div class="col-md-3">
-							<div class="md-input-wrapper">
-								<input id="CodigoBarra" name="CodigoBarra" type="text" class="md-form-control" maxlength="250" readonly />
-								<label for="CodigoBarra">Producto</label>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="md-input-wrapper">
-								<input id="NombreProducto" name="NombreProducto" type="text" class="md-form-control" maxlength="250" readonly />
-								<label for="NombreProducto">Nombre Producto</label>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="md-input-wrapper">
-								<select name="IdUnidadMedida" id="IdUnidadMedida" class="md-disable md-valid" disabled></select>
-								<label for="IdUnidadMedida">Unidad de medida</label>
-							</div>
+						<div class="col-md-12">
+							<div class="content clearfix">
+								<h3 id="basic-forms-h-0___" tabindex="-1" class="title current"> Productos Similares</h3>
+								<span id="NombreProductoConsulta"></span>
+								<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0___" class="body current" aria-hidden="false">
+									<table id="tablaResultadoBusquedaProducto" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+								</fieldset>
+							</div> 
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<div class="md-input-wrapper">
-								<input id="CantidadComprada" name="CantidadComprada" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="CantidadComprada">Cantidad</label>
-							</div>
+					<br>
+						
+					<div class="row" id="">
+						<div class="col-md-12">
+							<button id="cancelarBPS" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block" data-dismiss="modal">
+								Cerrar
+							</button>
 						</div>
-						<div class="col-md-3">
-							<div class="md-input-wrapper">
-								<input id="ValorUnitario" name="ValorUnitario" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="ValorUnitario">Valor Unitario</label>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="md-input-wrapper">
-								<input id="FactorImpuesto" name="FactorImpuesto" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="FactorImpuesto">Factor Impuesto</label>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="md-input-wrapper">
-								<input id="ValorImpuestos" name="ValorImpuestos" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="ValorImpuestos">Valor Impuestos</label>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<div class="md-input-wrapper">
-								<input id="MontoDescuento" name="MontoDescuento" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="MontoDescuento">Monto Descuento</label>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="md-input-wrapper">
-								<input id="ValorUnitarioFinal" name="ValorUnitarioFinal" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="ValorUnitarioFinal">Valor Unitario Final</label>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="md-input-wrapper">
-								<input id="TotalLinea" name="TotalLinea" type="text" class="md-form-control" maxlength="10" readonly />
-								<label for="TotalLinea">Total Linea</label>
-							</div>
-						</div>
-						<input type="hidden" id="EstadoDetalleCompra" name="EstadoDetalleCompra" value="1">						
-					</div>
+					</div>	
 				{!! Form::close() !!}
-            </div>
-            <div class="modal-footer">
-				<div align="center">
-					<div class="pull-rigth">
-						<div id="divBotonM" style="display:none;">
-							<button id="modificarC" type="button" class="btn btn-primary waves-effect waves-light">
-								Modificar
-							</button>
-						</div>
-						<div id="divBotonesAC" style="display:none;">
-							<button id="cancelarC" type="button" class="btn btn-inverse-primary waves-effect waves-light">
-								Cancelar
-							</button>
-							<button id="guardarC"  type="button" class="btn btn-primary waves-effect waves-light">
-								Guardar
-							</button>
-						</div>
-					</div>
-				</div>
             </div>
         </div>
     </div>
 </div>
 
+<!--Modal Asignar Bodega Destino al Producto -->
+<div class="modal fade" id="ModalBodegaDestino" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<h6 id="spanTituloModalBodegaDestino" class="modal-title"></h6>
+            </div>
+            <div class="modal-body">
+				{!! Form::open(['id'=>'FormAsignarBodega','autocomplete' => 'off']) !!}
+					<input type="hidden" name="IdDetalleCompraBD" id="IdDetalleCompraBD">
+					<input type="hidden" name="IdCompraBD" id="IdCompraBD">
+					<input type="hidden" name="IdProductoBD" id="IdProductoBD">
+					
+					<div class="row" >
+						<div class="col-md-4">
+							<div class="md-input-wrapper">
+								<select name="IdLocal" id="IdLocal" class="md-static"></select>
+								<label for="IdLocal">Locales</label>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="md-input-wrapper">
+								<select name="IdBodega" id="IdBodega" class="md-static"></select>
+								<label for="IdBodega">Bodegas</label>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="md-input-wrapper">
+								<input id="CantidadBD" name="CantidadBD" type="hidden" />
+								<input id="CantidadAsignada" name="CantidadAsignada" type="text" class="md-form-control md-static" maxlength="5" />
+								<label for="CantidadAsignada">Cantidad</label>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<button id="botonAsignarProducto" name="botonAsignarProducto" type="button" class="btn btn-success waves-effect waves-light btn-block">
+								Asignar  <i class="icofont icofont-bubble-right"></i>
+							</button>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<div class="content clearfix">
+								<h3 id="basic-forms-h-0___" tabindex="-1" class="title current"> Bodegas de Destino</h3>
+								<span id="NombreProductoConsulta"></span>
+								<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0___" class="body current" aria-hidden="false">
+									<table id="tablaBodegaDestino" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+								</fieldset>
+							</div> 
+						</div>
+					</div>
+					<br>
+						
+					<div class="row" id="">
+						<div class="col-md-4">
+							<button id="cerrarBodegaDestino" name="cerrarBodegaDestino" type="button" class="btn-lg btn-danger waves-effect waves-light btn-block" data-dismiss="modal">
+								Cerrar
+							</button>
+						</div>
+						
+						<div class="col-md-4">
+							<div class="md-input-wrapper">
+								<button id="botonRegistrarCompra" name="botonRegistrarCompra" type="button" class="btn-lg btn-primary waves-effect waves-light btn-block">Registrar  <i class="icofont icofont-bubble-right"></i></button>
+							</div>
+						</div>
+												
+						<div class="col-md-4">
+							<div class="md-input-wrapper">
+								<button id="botonImprimirEtiqueta" name="botonImprimirEtiqueta" type="button" class="btn-lg btn btn-block" disabled >Imprimir Etiquetas <i class="icofont icofont-barcode"></i></button>
+							</div>
+						</div>
+						
+						
+					</div>	
+				{!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal STOCK Producto -->
+<div class="modal fade" id="ModalStockProducto" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            
+            <div class="modal-body">
+				{!! Form::open(['id'=>'FormStockProducto','autocomplete' => 'off']) !!}
+				<input type="hidden" name="IdProductoStock" id="IdProductoStock">
+									
+				<div class="row">
+					<div class="col-md-12">
+						
+							<h3 id="NombreProductoStock" tabindex="-1" class="title current"> Stock del Producto</h3>
+							<span id="NombreProductoStock">Pan con Queso</span>
+							
+							<table id="tablaStockProducto" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+							
+					</div> 
+				</div>
+				
+				<br>
+					
+				<div class="row" id="">
+					<div class="col-md-4">
+						<button id="cerrarBodegaDestino" name="cerrarBodegaDestino" type="button" class="btn-lg btn-danger waves-effect waves-light btn-block" data-dismiss="modal">
+							Cerrar
+						</button>
+					</div>						
+				</div>	
+				{!! Form::close() !!}
+			</div>
+        </div>
+    </div>
+</div>
+
+
 <script Language="Javascript">
-	var ruta = "{{ URL::route('compras') }}"
-	var rutaA = "{{ URL::route('activarCom') }}"
-	var rutaB = "{{ URL::route('comprab') }}"
-	var rutaBP = "{{ URL::route('comprabp') }}"
-	var rutaPR = "{{ URL::route('comprapr') }}"
-	var rutaBE = "{{ URL::route('comprabe') }}"
-	var rutaBB = "{{ URL::route('comprabb') }}"
-	var rutaBC = "{{ URL::route('comprabc') }}"
-	var rutaBPD = "{{ URL::route('comprabpd') }}"
-	var rutaDC = "{{ URL::route('comprardc') }}"
-	var rutaBDC = "{{ URL::route('comprarbdc') }}"
-	var rutaCDA = "{{ URL::route('comprada') }}"
 	var d = [];
-	d['v_compras'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_compras) }}'));
-	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
-	d['v_bodegas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_bodegas) }}'));
-	d['v_tipo_dte'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_tipo_dte) }}'));
-	d['v_unidad_medida'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_unidad_medida) }}'));
+	d['v_compra_masiva'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_compra_masiva) }}'));
+	d['v_detalle_compra_masiva'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_detalle_compra_masiva) }}'));
+	
+	d['v_locales'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_locales) }}'));
+	
 </script>
-<script src="{{ asset('js/compras/compras.js') }}"></script>
+<script src="{{ asset('js/compras/compraMasivaView.js') }}"></script>
 @endsection
