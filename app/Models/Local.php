@@ -54,6 +54,8 @@ class Local extends Authenticatable
         $datos['IdLocal']==null ? $Id=0 : $Id= $datos['IdLocal'];
         $sql="select f_registro_local(".$Id.",'".$datos['NombreLocal']."',".$datos['IdEmpresa'].",".$datos['IdEncargadoLocal'].",".$datos['EstadoLocal'].",".$idAdmin.")";
         $execute=DB::select($sql);
+
+        log::info("SQL: " . $sql);
         foreach ($execute[0] as $key => $value) {
             $result['f_registro_local']=$value;
         }
