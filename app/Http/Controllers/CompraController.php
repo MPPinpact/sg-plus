@@ -223,6 +223,10 @@ class CompraController extends Controller
 		$IdProducto = $datos['IdProductoBD'];
 		$datos['IdLocal'] = 7;
 		
+        log::info("IdCompraDetalle: " . $IdCompraDetalle);
+        log::info("IdProducto: " . $IdProducto);
+
+
 		if($IdCompraDetalle!=null){
 			$result['f_registro_bodega_destino'] = $model->regCompraMasivaBodegaDestino($datos);
 			log::info("Registro Bodega Destino: " . $result['f_registro_bodega_destino']);			

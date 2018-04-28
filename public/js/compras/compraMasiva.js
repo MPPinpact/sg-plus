@@ -95,7 +95,8 @@ var BodegaDestino = function(){
 	
 	$("#CantidadAsignada").val($("#CantidadProducto").val());
 	$("#CantidadBD").val($("#CantidadProducto").val());
-	
+	$("#IdProductoBD").val($("#IdProducto").val());
+
 	$("#spanTituloModalBodegaDestino").text("Asignar Productos a Bodegas...");
 	$("#ModalBodegaDestino").modal();
 	
