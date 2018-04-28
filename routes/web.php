@@ -221,11 +221,8 @@ Route::post('/inventariob', 'InventarioController@postBuscarInventario')->name('
 Route::post('/inventariobdc', 'InventarioController@postBuscarDetalleInventario')->name('inventariobdc');
 Route::post('/inventariodc', 'InventarioController@postRegistrarDetalleInventario')->name('inventariodc');
 Route::post('/inventariobpd', 'InventarioController@postbuscarProducto')->name('inventariobpd');
-
-
-
-
-
+Route::post('/inventariobb', 'InventarioController@postbuscarBodega')->name('inventariobb');
+Route::post('/inventarioci', 'InventarioController@postCerrarInventario')->name('inventarioci');
 
 //CRUD Abono Cliente
 Route::get('/AbonoCliente', 'AbonoClienteController@getAbonoCliente')->name('AbonoCliente');

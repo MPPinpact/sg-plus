@@ -18,8 +18,6 @@ var calcularMontos = function(CantidadComprada,ValorUnitario,FactorImpuesto,Mont
 }
 
 var ManejoRespuestaBuscarProducto = function(respuesta){
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
             if(respuesta.respuesta.producto.IdProducto){
