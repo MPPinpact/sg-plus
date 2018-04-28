@@ -29,13 +29,13 @@
 						
 						<div class="col-md-2">
 							<a  href="#!" style="float:left;" name="botonAgregarCompraMasiva" id="botonAgregarCompraMasiva" class="btn btn-inverse-warning waves-effect waves-light btn-block" href="#primary" role="button">
-								<span>Ingresasr Compra Masiva</span>
+								<span>Compras Masivas</span>
 							</a>
 						</div>
 						
 						<div class="col-md-2">
-                			<a  href="#!" style="float:left;" name="botonGenerarListadoCompra" id="botonGenerarListadoCompra" class="btn btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
-								<span>Generar Listado Compras</span>
+                			<a  href="{{ URL::route('compraPurchaseList') }}" style="float:left;" name="botonListadoCompra" id="botonListadoCompra" class="btn btn-primary waves-effect waves-light btn-block" role="button">
+								<span>Listados de Compra</span>
 							</a>
 						</div>
 						
@@ -44,7 +44,36 @@
 								<span>--</span>
 							</a>
 						</div>
+					</div>
+				</div>
+				<br />
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-2">
+							<a  href="{{ route('compraMasivaList') }}" style="float:left;" name="" id="" class="btn btn-success waves-effect waves-light btn-block" role="button">
+								<span>Listado Compras Masivas</span>
+							</a>
+						</div>
 						
+						<div class="col-md-2">
+                			<a  href="{{ route('compraMasivaNew') }}" style="float:left;" name="botonListadoCompras" id="botonListadoCompras" class="btn btn-inverse-success waves-effect waves-light btn-block" role="button">
+								<span>Nueva Compra Masiva </span>
+							</a>
+						</div>
+						
+
+						<div class="col-md-2">
+                			<a  href="{{ route('compraMasivaReport') }}" style="float:left;" name="botonGenerarListadoCompra" id="botonGenerarListadoCompra" class="btn btn-success waves-effect waves-light btn-block" role="button">
+								<span>Reporte Compra Masiva</span>
+							</a>
+						</div>
+						
+						<div class="col-md-2">
+							<a  href="#!" style="float:left;" name="botonAgregarCompraMasiva" id="botonAgregarCompraMasiva" class="btn btn-success waves-effect waves-light btn-block"  role="button">
+								<span>Finalizar Compra Masiva</span>
+							</a>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -110,6 +139,55 @@
 					<div class="row">
 						<div class="col-md-12 table-responsive">
 							<table id="tablaDetalleCompra" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-7">
+		<div class="card">
+			<div class="card-header">
+	        	<center>
+	        		<h5 class="card-header-text">
+	        			Resumen de Compra Masiva Bodega
+	        		</h5>
+	            </center>
+	        </div>
+			 <div class="card-block">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-12 table-responsive">
+							<table id="tablaResumenCompraMasivaBodega" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%">
+								<tfoot>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-5">
+		<div class="card">
+			<div class="card-header">
+	        	<center>
+	        		<h5 class="card-header-text">
+	        			Resumen de Compra Masiva Local
+	        		</h5>
+	            </center>
+	        </div>
+			 <div class="card-block">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-12 table-responsive">
+							<table id="tablaResumenCompraMasivaLocal" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%">
+								<tfoot>
+								</tfoot>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -513,18 +591,20 @@
 	var rutaBD = "{{ URL::route('compraBD') }}"
 	var rutaEBD = "{{ URL::route('compraEBD') }}"
 	var rutaCSP = "{{ URL::route('compraCSP') }}"
+	var rutaCDC = "{{ URL::route('compraCDC') }}"
+	
 		
 	var rutaDC = "{{ URL::route('comprardc') }}"
 	var rutaBDC = "{{ URL::route('comprarbdc') }}"
 	var rutaCDA = "{{ URL::route('comprada') }}"
 	var d = [];
 	d['v_locales'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_locales) }}'));
-	
-	d['v_compras'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_compras) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
-	d['v_bodegas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_bodegas) }}'));
 	d['v_tipo_dte'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_tipo_dte) }}'));
 	d['v_unidad_medida'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_unidad_medida) }}'));
+
+	d['IdCompra'] = JSON.parse(rhtmlspecialchars('{{ json_encode($IdCompra) }}'));
+
 </script>
 <script src="{{ asset('js/compras/compraMasiva.js') }}"></script>
 @endsection

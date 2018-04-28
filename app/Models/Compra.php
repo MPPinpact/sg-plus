@@ -33,11 +33,22 @@ class Compra extends Authenticatable
         'auFechaModificacion','auFechaCreacion'
     ];
 
-
-
     // Cargar tabla de impuesto
     public function listCompra(){
         return DB::table('v_compras')->get();
+    }
+
+    // Cargar tabla de impuesto
+    public function listCompraMasiva(){
+        return DB::table('v_compras_masivas')->get();
+    }
+
+    public function listComprasListadoCompra(){
+        return DB::table('v_compras_listado_compras')->get();
+    }
+
+    public function getCompraMasivaAbierta($IdLocal){
+        return DB::table('v_compras_masivas')->where([['IdLocal','=', $IdLocal],['EstadoCompra','=','1']])->orderBy('IdCompra','desc')->get();
     }
 
     // Cargar combo de estados de Estado (Activo / Inactivo)
@@ -60,6 +71,13 @@ class Compra extends Authenticatable
         return DB::table('v_unidadmedida_combo')->get();
     }
         
+    public function rerporteCompraBodega($IdCompra){
+        return DB::table('v_compra_resumen_bodega')->where('IdCompra','=', $IdCompra)->orderBy('IdLocal')->get();
+    }
+
+    public function rerporteCompraLocal($IdCompra){
+        return DB::table('v_compra_resumen_local')->where('IdCompra','=', $IdCompra)->orderBy('IdLocal')->get();
+    }
 
     // registrar compra
     public function regCompra($datos){
@@ -68,7 +86,7 @@ class Compra extends Authenticatable
         $datos['FechaDTE'] = $this->formatearFecha($datos['FechaDTE']);
         $datos['FechaVencimiento'] = $this->formatearFecha($datos['FechaVencimiento']);
         $datos['FechaPago'] = $this->formatearFecha($datos['FechaPago']);
-        $sql="select f_registro_compra(".$Id.",".$datos['IdOrdenCompra'].",".$datos['IdProveedor'].",".$datos['idEmpresa'].",".$datos['IdBodega'].",".$datos['TipoDTE'].",'".$datos['FolioDTE']."','".$datos['FechaDTE']."','".$datos['FechaVencimiento']."','".$datos['FechaPago']."','".$datos['TotalNeto']."','".$datos['TotalDescuentos']."','".$datos['TotalImpuestos']."','".$datos['TotalCompra']."',".$datos['EstadoCompra'].",".$datos['IdLocal'].",".$idAdmin.")";
+        $sql="select f_registro_compra(".$Id.",1,".$datos['IdOrdenCompra'].",".$datos['IdProveedor'].",".$datos['idEmpresa'].",".$datos['IdBodega'].",".$datos['TipoDTE'].",'".$datos['FolioDTE']."','".$datos['FechaDTE']."','".$datos['FechaVencimiento']."','".$datos['FechaPago']."','".$datos['TotalNeto']."','".$datos['TotalDescuentos']."','".$datos['TotalImpuestos']."','".$datos['TotalCompra']."',".$datos['EstadoCompra'].",".$datos['IdLocal'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -93,7 +111,7 @@ class Compra extends Authenticatable
     public function regCompraMasiva($datos){
         $idAdmin = Auth::id();
         $datos['IdCompra']==null ? $IdCompra=0 : $IdCompra= $datos['IdCompra'];
-        $sql="select f_registro_compra(".$IdCompra.",Null,Null,Null,Null,5,Null,Now(),Now(),Now(),0,0,0,0,1,".$datos['IdLocal'].",".$idAdmin.")";
+        $sql="select f_registro_compra(".$IdCompra.",2,Null,Null,Null,Null,5,Null,Now(),Now(),Now(),0,0,0,0,1,".$datos['IdLocal'].",".$idAdmin.")";
 		log::info($sql);
 		
 		$execute=DB::select($sql);

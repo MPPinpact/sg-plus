@@ -477,6 +477,11 @@ var cargarTablaPagos = function(data){
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
+
+            $( api.column( 4 ).footer() ).html(
+                '$'+pageTotal +' ( $'+ total +' total)'
+            );
+            
 			},
             responsive:false,
             "bSort": false,

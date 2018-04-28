@@ -67,17 +67,18 @@ class Usuario extends Authenticatable
                                     
                                     $nroPerfiles = count($perfiles);
                                     
-                                    $Idlocal = DB::table('usuarios_locales')
+                                    $locales = DB::table('usuarios_locales')
                                     ->where('IdUsuario',$usuario->idUser)
                                     ->where('Estado',1)->get();
-                                    
-                                    $local = DB::table('v_locales')
-                                    ->where('IdLocal',$Idlocal[0]->IdLocal)
-                                    ->get();
 
+                                    log::info("Locales del Usuario: " . $usuario->idUser);
+                                    log::info($locales);
+                                    log::info("========================================");
+
+                                    Session::put('$localesUsuario', $locales);
                                     Session::put('nroPerfiles', $nroPerfiles);
-                                    Session::put('local', $local);
                                     
+
                                     if ($nroPerfiles>1) {
                                         return '{"code":"200","des_code":"admin/accesos"}';
                                     } elseif ($nroPerfiles>0 && $nroPerfiles<2) {
@@ -156,6 +157,19 @@ class Usuario extends Authenticatable
                 ->where('idUser',$idUser)
                 ->where('activoPerfil',1)
                 ->orderBy('idPerfil')
+                ->get();  
+        return $result;            
+    }
+
+    // Listar los perfiles activos para que el usuario acceso despues de iniciar session
+    public function localesDisponibles(){
+        $idUser = Auth::id();
+
+        log::info("IdUsuario: ". $idUser);
+        $result = DB::table('v_usuarios_locales')
+                ->where('IdUsuario',$idUser)
+                ->where('EstadoLocal',1)
+                ->orderBy('IdLocal')
                 ->get();  
         return $result;            
     }

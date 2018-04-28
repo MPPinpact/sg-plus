@@ -107,7 +107,12 @@ Route::post('/generarEECC', 'CicloFacturacionController@postGenerarEECC')->name(
 
 //CRUD Compra
 Route::get('/compras', 'CompraController@getCompras')->name('compras');
-Route::get('/compraMasiva', 'CompraController@getCompraMasiva')->name('compraMasiva');
+Route::get('/compraMasivaList', 'CompraController@getCompraMasivaList')->name('compraMasivaList');
+Route::get('/compraMasivaNew', 'CompraController@getCompraMasivaNew')->name('compraMasivaNew');
+Route::get('/compraMasivaReport', 'CompraController@getCompraMasivaReport')->name('compraMasivaReport');
+
+Route::any('/compraMasivaView', 'CompraController@getCompraMasivaView')->name('compraMasivaView');
+//Route::post('/compraMasivaView', 'CompraController@postCompraMasivaView')->name('compraMasivaView');
 
 Route::post('/compras', 'CompraController@postCompras')->name('compras');
 Route::post('/activarCom', 'CompraController@postCompractiva')->name('activarCom');
@@ -122,12 +127,18 @@ Route::post('/compraBPM', 'CompraController@postBuscarProductoMasivo')->name('co
 Route::post('/comprardc', 'CompraController@postRegistrarDetallec')->name('comprardc');
 Route::post('/compraRDCM', 'CompraController@postRegistrarDetalleCompraMasiva')->name('compraRDCM');
 Route::post('/compraRBD', 'CompraController@postRegistrarBodegaDestino')->name('compraRBD');
+Route::post('/compraCDC', 'CompraController@postCargarDetalleCompraMasiva')->name('compraCDC');
+
 Route::post('/compraBD', 'CompraController@getBodegaDestino')->name('compraBD');
 Route::post('/compraEBD', 'CompraController@postEliminarAsignacionBodegaDestino')->name('compraEBD');
 Route::post('/compraCSP', 'CompraController@getStockProducto')->name('compraCSP');
+Route::post('/compraRC', 'CompraController@getResumenCompra')->name('compraRC');
 
 Route::post('/comprarbdc', 'CompraController@postBuscarDetallec')->name('comprarbdc');
 Route::post('/comprada', 'CompraController@postCompradetalleactiva')->name('comprada');
+
+Route::get('/compraPurchaseList', 'CompraController@getCompraPurchaseList')->name('compraPurchaseList');
+Route::get('/compraPurchasListNew', 'CompraController@getCompraPurchaseList')->name('compraPurchasListNew');
 
 //CRUd preventa
 Route::get('/preventas', 'PreventaController@getPreventas')->name('preventas');

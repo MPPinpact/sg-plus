@@ -140,30 +140,6 @@ $avatarUser = Auth::user()->usrUrlimage;
       </a>
       <ul class="treeview-menu">
         <li>
-          <a class="waves-effect" href="{{ route('umedidas') }}">
-            <i class="icon-arrow-right"></i>
-            Unidad de medida
-          </a>
-        </li>
-        <li>
-          <a class="waves-effect" href="{{ route('familias') }}">
-            <i class="icon-arrow-right"></i>
-            Familias
-          </a>
-        </li>
-        <li>
-          <a class="waves-effect" href="{{ route('subfamilias') }}">
-            <i class="icon-arrow-right"></i>
-            Subfamilias
-          </a>
-        </li>
-        <li>
-          <a class="waves-effect" href="{{ route('impuestos') }}">
-            <i class="icon-arrow-right"></i>
-            Impuestos
-          </a>
-        </li>
-        <li>
           <a class="waves-effect" href="{{ route('productos') }}">
             <i class="icon-arrow-right"></i>
             Productos
@@ -173,6 +149,33 @@ $avatarUser = Auth::user()->usrUrlimage;
           <a class="waves-effect" href="{{ route('inventario') }}">
             <i class="icon-arrow-right"></i>
             Inventario
+          </a>
+        </li>
+         <li class="p-0">
+            <div class="dropdown-divider m-0"></div>
+          </li>
+        <li>
+          <a class="waves-effect" href="{{ route('umedidas') }}">
+            <i class="icon-grid"></i>
+            Unidad de medida
+          </a>
+        </li>
+        <li>
+          <a class="waves-effect" href="{{ route('familias') }}">
+           <i class="icon-grid"></i>
+            Familias
+          </a>
+        </li>
+        <li>
+          <a class="waves-effect" href="{{ route('subfamilias') }}">
+            <i class="icon-grid"></i>
+            Subfamilias
+          </a>
+        </li>
+        <li>
+          <a class="waves-effect" href="{{ route('impuestos') }}">
+            <i class="icon-grid"></i>
+            Impuestos
           </a>
         </li>
       </ul>
