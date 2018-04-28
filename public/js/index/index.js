@@ -42,7 +42,7 @@ $(document).ready(function() {
 	v['v_perfil'] = $("#idPerfiltext").val();
 	v['idUser'] = $("#idUsertext").val();
 	//Cierre de sesion despues de 20 min de inactividad
-	setTimeout(function(){();},1200000);
+	setTimeout(function(){Salir();},1200000);
 	// Cierre de session por manupulacion de url o cierre del navegador
 	window.onbeforeunload = function (e) {if (v_salir == 0){Salir();}v_salir = 0;}
     // $(document).on('click','.btn',cambiarSalir);
