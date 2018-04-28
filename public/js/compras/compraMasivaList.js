@@ -11,7 +11,8 @@ var parametroAjax = {
 var verCompraMasiva = function(IdCompra){
     
     $("#IdCompra").val(IdCompra);
-    window.location.href = "/compraMasivaView";
+    //window.location.href = "/compraMasivaView?id="+IdCompra;
+    $("#FormCompraMasivaView").submit();
 
 }
 

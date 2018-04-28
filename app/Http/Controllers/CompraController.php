@@ -45,8 +45,7 @@ class CompraController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getCompras()
-    {
+    public function getCompras(){
         $model= new Compra();
         $data['v_compras'] = $model->listCompra();
         $data['v_bodegas'] = $model->listBodega();
@@ -56,8 +55,7 @@ class CompraController extends Controller
         return View::make('compras.compras',$data);
     }
    
-    public function getCompraMasivaNew()
-    {
+    public function getCompraMasivaNew(){
         $model= new Compra();
         $data['v_locales'] = $model->cargarLocales();
         
@@ -76,15 +74,13 @@ class CompraController extends Controller
         return View::make('compras.compraMasivaNew',$data);
     }
     
-    public function getCompraMasivaList()
-    {
+    public function getCompraMasivaList(){
         $model= new Compra();       
         $data['v_compras_masiva'] = $model->listCompraMasiva();
         return View::make('compras.compraMasivaList',$data);
     }
 
-    public function getCompraMasivaReport()
-    {
+    public function getCompraMasivaReport(){
         $model= new Compra();
         
         $Compra = $model->getCompraMasivaAbierta(7);
@@ -101,22 +97,24 @@ class CompraController extends Controller
         $datos = $request->all();
 
         $IdCompra = $datos['IdCompra'];
-        $result['v_resumen_compra'] = $model->rerporteCompra($IdCompra);
+        $result['v_resumen_compra_bodega'] = $model->rerporteCompraBodega($IdCompra);
+        $result['v_resumen_compra_local'] = $model->rerporteCompraLocal($IdCompra);
 
         return $result;
     }
 
-    public function postCompraMasivaView()
-    {
+    public function postCompraMasivaView(){
         $model= new Compra();
         $data['v_locales'] = $model->cargarLocales();
 
         return View::make('compras.compraMasivaView',$data);
     }
 
-     public function getCompraMasivaView()
-    {
+    public function getCompraMasivaView(Request $request){
         log::info("getCompraMasivaView()");
+
+        $datos = $request->all();
+        log::info($datos);
 
         $model= new Compra();
 
@@ -125,15 +123,30 @@ class CompraController extends Controller
         $data['v_tipo_dte'] = $model->listTipoDte();
         $data['v_unidad_medida'] = $model->listUnidadMedida();
 
-        $Compra = $model->getCompraMasivaAbierta(7);
-        $obj = json_decode($Compra);
+        //$Compra = $model->getCompraMasivaAbierta(7);
+        //$obj = json_decode($Compra);
+        //if(Count($obj) > 0) $data['IdCompra'] = $obj[0]->IdCompra;
 
-        if(Count($obj) > 0) $data['IdCompra'] = $obj[0]->IdCompra;
-        else $data['IdCompra'] = 0;
+        if( isset($datos['IdCompra']) ){
+            $data['IdCompra'] = $datos['IdCompra'];
+
+        }else{
+
+            $data['IdCompra'] = 0;
+
+        }
+
+
 
         return View::make('compras.compraMasivaNew',$data);
     }
 
+    protected function getCompraPurchaseList(){
+        $model= new Compra();       
+        $data['v_compras_listado_compra'] = $model->listComprasListadoCompra();
+        
+        return View::make('compras.compraPurchaseList',$data);
+    }
 
     //Registrar o actualizar compra
     protected function postCompras(Request $request){

@@ -33,8 +33,6 @@ class Compra extends Authenticatable
         'auFechaModificacion','auFechaCreacion'
     ];
 
-
-
     // Cargar tabla de impuesto
     public function listCompra(){
         return DB::table('v_compras')->get();
@@ -43,6 +41,10 @@ class Compra extends Authenticatable
     // Cargar tabla de impuesto
     public function listCompraMasiva(){
         return DB::table('v_compras_masivas')->get();
+    }
+
+    public function listComprasListadoCompra(){
+        return DB::table('v_compras_listado_compras')->get();
     }
 
     public function getCompraMasivaAbierta($IdLocal){

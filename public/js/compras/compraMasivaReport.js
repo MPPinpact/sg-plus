@@ -1,4 +1,4 @@
-var manejoRefresh=limpiarTablaResumenCompraMasiva=0;
+var manejoRefresh=limpiarTablaResumenCompraMasiva=limpiarTablaResumenCompraMasivaLocal=limpiarTablaResumenCompraMasivaBodega=0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -10,82 +10,141 @@ var parametroAjax = {
 
 var CargarResumenCompraMasiva = function(IdCompra){
     console.log("CargarResumenCompraMasiva("+IdCompra+")");
-    $("#tituloReporteCompraMasica").text("Reporte de la Compra Masiva Nro. " + d.IdCompra);
-
+    $("#tituloReporteCompraMasiva").text("Reporte de la Compra Masiva Nro. " + d.IdCompra);
+    $("#tituloRCMB").text("Resumen x Bodega de la Compra Masiva Nro. " + d.IdCompra);
+    $("#tituloRCML").text("Resumen x Local de la Compra Masiva Nro. " + d.IdCompra);
+    
     parametroAjax.ruta=rutaRC;
     parametroAjax.data = {IdCompra:IdCompra};
     respuesta=procesarajax(parametroAjax);
 
-    cargarTablaResumenCompraMasiva(respuesta.respuesta.v_resumen_compra);
+    cargarTablaResumenCompraMasivaBodega(respuesta.respuesta.v_resumen_compra_bodega);
+    cargarTablaResumenCompraMasivaLocal(respuesta.respuesta.v_resumen_compra_local);
     
 }
 
-var cargarTablaResumenCompraMasiva = function(data){
+var cargarTablaResumenCompraMasivaBodega = function(data){
     
     if(limpiarTablaResumenCompraMasiva==1){
-		destruirTabla('#tablaResumenCompraMasiva');
-		$('#tablaResumenCompraMasiva thead').empty();
-	}
-		
-	$("#tablaResumenCompraMasiva").dataTable({
-		responsive:true,
-		"aLengthMenu": DataTableLengthMenu,
-		"pagingType": "full_numbers",
-		"language": LenguajeTabla,
-		"paging":   true,
-		"bFilter": true,
-		"info":false,			
-		"pageLength": 25, 
-		"data": data,
-		"columns":[
-                {"title": "",
-                    "data": "IdCompra",  width:100, className: "text-center", 
-                    "render": function(data, type, row, meta){
-                        var result = `
-                        <center>
-                        <a href="#" onclick="verCompraMasiva(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
-                            <i class="icofont icofont-search"></i>
-                        </a>
-                        <a href="#" onclick="VerReporteCompra(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Reporte Compra" data-original-title="Print">
-                            <i class="icofont icofont-print	"></i>
-                        </a>
-                        </center>`;
-                        return result;
-                    }
-                },
-                {"title": "Nro. Compra","data": "IdCompra", width:100, className: "text-center"},
-                {"title": "Fecha Ingreso", width:150, className: "text-center",
-                    "data": "FechaDTE",
-                    "render": function(data, type, row, meta){
-                        if(type === 'display'){
-                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
-                        }
-                        return data;
-                    }
-                },
-                {"title": "Lcoal","data": "NombreLocal", width:200, className: "text-left"},
-                {"title": "Bodega","data": "NombreBodega", width:200, className: "text-left"},
+        destruirTabla('#tablaResumenCompraMasivaBodega');
+        $('#tablaResumenCompraMasivaBodega thead').empty();
+    }
+        
+    $("#tablaResumenCompraMasivaBodega").dataTable({
+        "footerCallback": function ( row, data, start, end, display ){
+            var api = this.api(), data;
+            // Remove the formatting to get integer data for summation
+            var intVal = function (i){
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            // Total over all pages
+            totalCosto = api
+                .column(2)
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            totalVenta = api
+                .column(3)
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+        },
+        responsive:false,
+        "aLengthMenu": DataTableLengthMenu,
+        "language": LenguajeTabla,
+        "paging":   false,
+        "bFilter": false,
+        "data": data,
+        "columns":[
+                {"title": "Lcoal","data": "NombreLocal", width:100, className: "text-left"},
+                {"title": "Bodega","data": "NombreBodega", width:100, className: "text-left"},
                 {"title": "Costo Compra","data": "CostoCompra", 
                                 render: $.fn.dataTable.render.number( '.', ',', 2 ), 
-                                width:200, className: "text-right"},
+                                width:50, className: "text-right"},
                 {"title": "Valorizado Venta","data": "ValorizadoVenta", 
                                 render: $.fn.dataTable.render.number( '.', ',', 2 ), 
-                                width:200, className: "text-right"},
+                                width:50, className: "text-right"},
+                {"title": "Margen","data": "Margen", 
+                                render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                                width:50, className: "text-right"},
+            ],
+    });
+    console.log("totalCosto: " + totalCosto);
+    console.log("totalVenta: " + totalVenta);
+    //$("#tablaResumenCompraMasivaBodega").append('<tfoot style="float:right;"><th colspan="2"></th><th>Totales</th><th >'+totalCosto+'</th><th>'+totalVenta+'</th><th></th></tfoot>')
+    limpiarTablaResumenCompraMasiva=1;
+};
+
+var cargarTablaResumenCompraMasivaLocal = function(data){
+    
+    if(limpiarTablaResumenCompraMasivaLocal==1){
+        destruirTabla('#tablaResumenCompraMasivaLocal');
+        $('#tablaResumenCompraMasivaLocal thead').empty();
+    }
+        
+    $("#tablaResumenCompraMasivaLocal").dataTable({
+        "footerCallback": function (tfoot, data, start, end, display ){
+            var api = this.api(), data;
+            // Remove the formatting to get integer data for summation
+            var intVal = function (i){
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            // Total over all pages
+            totalCosto = api
+                .column(1)
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            totalVenta = api
+                .column(2)
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+        },
+        responsive:false,
+        "aLengthMenu": DataTableLengthMenu,
+        "language": LenguajeTabla,
+        "paging":   false,
+        "bFilter": false,
+        "data": data,
+        "columns":[
+                {"title": "Lcoal","data": "NombreLocal", width:100, className: "text-left"},
+                {"title": "Costo","data": "TotalCostoCompra", 
+                                render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                                width:50, className: "text-right"},
+                {"title": "Valorizado","data": "TotalValorizadoVenta", 
+                                render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                                width:50, className: "text-right"},
+                {"title": "Margen","data": "Margen", 
+                                render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                                width:50, className: "text-right"},
                 
             ],
-	});
-	limpiarTablaResumenCompraMasiva=1;
+    });
+    
+
+    console.log("totalCosto: "+ totalCosto);
+    console.log("totalVenta: "+ totalVenta);
+    limpiarTablaResumenCompraMasivaLocal=1;
 };
 
 $(document).ready(function(){
+    console.log("IdCompra: " + d.IdCompra);
 
     if(d.IdCompra){
         CargarResumenCompraMasiva(d.IdCompra);
-
-        
-
-
-
     }
 
 

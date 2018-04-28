@@ -356,6 +356,7 @@ var Salir = function(){
     parametroAjax.data = $("#formLogout").serialize();
     window.location.href = "/";
     procesarajax(parametroAjax);
+    //alert("Hola");
 }
 
 //verificar rut

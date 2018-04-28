@@ -34,8 +34,8 @@
 						</div>
 						
 						<div class="col-md-2">
-                			<a  href="#!" style="float:left;" name="botonGenerarListadoCompra" id="botonGenerarListadoCompra" class="btn btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
-								<span>Generar Listado Compras</span>
+                			<a  href="{{ URL::route('compraPurchaseList') }}" style="float:left;" name="botonListadoCompra" id="botonListadoCompra" class="btn btn-primary waves-effect waves-light btn-block" role="button">
+								<span>Listados de Compra</span>
 							</a>
 						</div>
 						

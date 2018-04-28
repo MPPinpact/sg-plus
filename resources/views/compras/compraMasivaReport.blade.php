@@ -34,8 +34,8 @@
 						</div>
 						
 						<div class="col-md-2">
-                			<a  href="#!" style="float:left;" name="botonGenerarListadoCompra" id="botonGenerarListadoCompra" class="btn btn-primary waves-effect waves-light btn-block" href="#primary" role="button">
-								<span>Generar Listado Compras</span>
+                			<a  href="{{ URL::route('compraPurchaseList') }}" style="float:left;" name="botonListadoCompra" id="botonListadoCompra" class="btn btn-primary waves-effect waves-light btn-block" role="button">
+								<span>Listados de Compra</span>
 							</a>
 						</div>
 						
@@ -90,21 +90,63 @@
 		<div class="card">
 		   <div class="card-header">
 	        	<center>
-	        		<h5 class="card-header-text" id="tituloReporteCompraMasica" >
+	        		<h5 class="card-header-text" id="tituloReporteCompraMasiva" >
 	        			
 	        		</h5>
                 </center>
 	        </div>
-		    <div class="card-block">
-	        	<div class="row">
-					<div class="col-md-12">
-						<table id="tablaResumenCompraMasiva" ></table>
-					</div>
-				</div>
-		    </div>
 		</div>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col-md-7">
+		<div class="card">
+			<div class="card-header">
+	        	<center>
+	        		<h5 class="card-header-text" id="tituloRCMB">
+	        			Resumen de Compra Masiva Bodega
+	        		</h5>
+	            </center>
+	        </div>
+			 <div class="card-block">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-12 table-responsive">
+							<table id="tablaResumenCompraMasivaBodega" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%">
+								<tfoot>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-5">
+		<div class="card">
+			<div class="card-header">
+	        	<center>
+	        		<h5 class="card-header-text" id="tituloRCML">
+	        			Resumen de Compra Masiva Local
+	        		</h5>
+	            </center>
+	        </div>
+			 <div class="card-block">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-12 table-responsive">
+							<table id="tablaResumenCompraMasivaLocal" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%">
+								<tfoot>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
 
 <script Language="Javascript">
 	var rutaRC = "{{ URL::route('compraRC') }}"

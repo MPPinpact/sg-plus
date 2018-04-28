@@ -111,8 +111,8 @@ Route::get('/compraMasivaList', 'CompraController@getCompraMasivaList')->name('c
 Route::get('/compraMasivaNew', 'CompraController@getCompraMasivaNew')->name('compraMasivaNew');
 Route::get('/compraMasivaReport', 'CompraController@getCompraMasivaReport')->name('compraMasivaReport');
 
-Route::get('/compraMasivaView', 'CompraController@getCompraMasivaView')->name('compraMasivaView');
-Route::post('/compraMasivaView', 'CompraController@postCompraMasivaView')->name('compraMasivaView');
+Route::any('/compraMasivaView', 'CompraController@getCompraMasivaView')->name('compraMasivaView');
+//Route::post('/compraMasivaView', 'CompraController@postCompraMasivaView')->name('compraMasivaView');
 
 Route::post('/compras', 'CompraController@postCompras')->name('compras');
 Route::post('/activarCom', 'CompraController@postCompractiva')->name('activarCom');
@@ -136,6 +136,9 @@ Route::post('/compraRC', 'CompraController@getResumenCompra')->name('compraRC');
 
 Route::post('/comprarbdc', 'CompraController@postBuscarDetallec')->name('comprarbdc');
 Route::post('/comprada', 'CompraController@postCompradetalleactiva')->name('comprada');
+
+Route::get('/compraPurchaseList', 'CompraController@getCompraPurchaseList')->name('compraPurchaseList');
+Route::get('/compraPurchasListNew', 'CompraController@getCompraPurchaseList')->name('compraPurchasListNew');
 
 //CRUd preventa
 Route::get('/preventas', 'PreventaController@getPreventas')->name('preventas');
