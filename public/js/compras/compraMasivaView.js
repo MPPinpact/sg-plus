@@ -1,4 +1,4 @@
-var manejoRefresh=limpiarTablaCompraMasiva=limpiarTablaResutadoBusqueda=limpiarTablaBodegaDestino=limpiarTablaStockProducto=errorRut3=limpiarBodegas=0;
+var manejoRefresh=limpiarTablaCompraMasiva=limpiarTablaResutadoBusqueda=limpiarTablaBodegaDestino=limpiarTablaStockProducto=limpiarTablaResumenCompraMasiva=limpiarTablaResumenCompraMasivaLocal=0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -95,7 +95,8 @@ var BodegaDestino = function(){
 	
 	$("#CantidadAsignada").val($("#CantidadProducto").val());
 	$("#CantidadBD").val($("#CantidadProducto").val());
-	
+	$("#IdProductoBD").val($("#IdProducto").val());
+
 	$("#spanTituloModalBodegaDestino").text("Asignar Productos a Bodegas...");
 	$("#ModalBodegaDestino").modal();
 	
@@ -116,8 +117,10 @@ var BodegaDestinoDetalle = function(IdDetalleCompra){
     respuesta=procesarajax(parametroAjax);
     cargarTablaBodegaDestino(respuesta.respuesta.v_bodega_destino);
 	
+	
+	$("#IdProductoBD").val(respuesta.respuesta.v_detalle_compra[0].IdProducto);
 	$("#CantidadAsignada").val("");
-	$("#spanTituloModalBodegaDestino").text("Asignar Productos a Bodegas...");
+	$("#spanTituloModalBodegaDestino").text("Re-Asignar Productos a Bodegas...");
 	$("#ModalBodegaDestino").modal();
 	
 	$('#ModalBodegaDestino').on('shown.bs.modal', function() {
@@ -133,7 +136,7 @@ var AsignarBodegaProducto = function(){
 	
 	if(largoTXT.length > 0){	
 		$("#CantidadBD").val($("#CantidadBD").val() - $("#CantidadAsignada").val());
-	
+
 		parametroAjax.ruta=rutaRBD;
 		parametroAjax.data = $("#FormAsignarBodega").serialize();
 		respuesta=procesarajax(parametroAjax);
@@ -153,6 +156,37 @@ var RegistrarDetalleCompra = function(){
     respuesta=procesarajax(parametroAjax);
 
     ManejoRespuestaRegistroDetalleCompra(respuesta);
+}
+
+var CargarDetalleCompraMasiva = function(IdCompra){
+	console.log("RegistrarDetalleCompra("+IdCompra+")");
+	
+    parametroAjax.ruta=rutaCDC;
+    parametroAjax.data = {IdCompra:IdCompra};
+    respuesta=procesarajax(parametroAjax);
+
+    $("#IdCompra").val(IdCompra);
+	$("#IdCompraBD").val(IdCompra);
+
+	var EstadoCompra = respuesta.respuesta.v_compra_masiva.EstadoCompra;
+	$("#IdEstadoCompra").val(EstadoCompra);
+    cargarTablaCompraMasiva(respuesta.respuesta.v_detalle_compra_masiva);
+    cargarTablaResumenCompraMasivaBodega(respuesta.respuesta.v_resumen_compra_bodega);
+    cargarTablaResumenCompraMasivaLocal(respuesta.respuesta.v_resumen_compra_local);
+
+    if(EstadoCompra==1) {
+    	$.growl({message:"Esta compra masiva se encuentra abierta..."},{type: "success", allow_dismiss: true,});
+    	$("#botonNuevaCM").hide();
+
+    	$("#botonContinuarIngresoCM").show();
+    	$("#botonFinalizarCompraMasiva").show();
+    
+    }else{
+    	$.growl({message:"Esta compra masiva no se encuentra abierta..."},{type: "warning", allow_dismiss: true,});
+    	$("#botonNuevaCM").show();
+    	$("#botonContinuarIngresoCM").hide();
+    	$("#botonFinalizarCompraMasiva").hide();
+   	}
 }
 
 var EliminarAsignacionBodegaDestino = function(IdBodegaDestino){
@@ -181,6 +215,28 @@ var RegistrarCompra = function(){
 	
 	$("#cerrarBodegaDestino").text("Nuevo Ingreso");
 	
+}
+
+var BotonFinalizarCompraMasiva = function(){
+	console.log("BotonFinalizarCompraMasiva");
+
+	parametroAjax.ruta=rutaFCM;
+	parametroAjax.data = {IdCompra:$("#IdCompra").val()};
+	respuesta=procesarajax(parametroAjax);
+
+	var result = JSON.parse(respuesta.respuesta.f_registro);
+	if(result.code==200) {
+		$.growl({message:result.des_code},{type: "success", allow_dismiss: true,});
+		$("#botonNuevaCM").show();
+    	$("#botonContinuarIngresoCM").hide();
+		$("#botonFinalizarCompraMasiva").hide();
+
+	}else{
+		$.growl({message:result.des_code},{type: "warning", allow_dismiss: true,});
+		$("#botonNuevaCM").hide();
+    	$("#botonContinuarIngresoCM").show();
+
+	}
 }
 
 var CerrarModalBodegaDestino = function(){
@@ -225,7 +281,9 @@ var ManejoRespuestaAsignarBodega = function(respuesta){
 								
 			cargarTablaBodegaDestino(respuesta.respuesta.v_bodega_destino);
 			cargarTablaCompraMasiva(respuesta.respuesta.v_detalle_compra_masiva);
-			
+			cargarTablaResumenCompraMasivaBodega(respuesta.respuesta.v_resumen_compra_bodega);
+			cargarTablaResumenCompraMasivaLocal(respuesta.respuesta.v_resumen_compra_local);
+
 			$("#CantidadAsignada").val($("#CantidadBD").val());
 			$("#IdLocal").val("0");
 			$("#IdBodega").val("0");
@@ -261,6 +319,8 @@ var ManejoRespuestaRegistroDetalleCompra = function(respuesta){
 			$("#IdDetalleCompraBD").val(dc.IdDetalleCompra);
 			
 			cargarTablaCompraMasiva(respuesta.respuesta.v_detalle_compra_masiva);
+			cargarTablaResumenCompraMasivaBodega(respuesta.respuesta.v_resumen_compra_bodega);
+			cargarTablaResumenCompraMasivaLocal(respuesta.respuesta.v_resumen_compra_local);
 			$.growl({message:"Detalle Compra no registrado"},{type: "success", allow_dismiss: true});
 			
 		}else{
@@ -506,7 +566,122 @@ var cargarTablaStockProducto = function(data){
 	limpiarTablaStockProducto=1;
 };
 
+var cargarTablaResumenCompraMasivaBodega = function(data){
+    
+    if(limpiarTablaResumenCompraMasiva==1){
+		destruirTabla('#tablaResumenCompraMasivaBodega');
+		$('#tablaResumenCompraMasivaBodega thead').empty();
+	}
+		
+	$("#tablaResumenCompraMasivaBodega").dataTable({
+		"footerCallback": function ( row, data, start, end, display ){
+            var api = this.api(), data;
+            // Remove the formatting to get integer data for summation
+            var intVal = function (i){
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            // Total over all pages
+            totalCosto = api
+                .column(2)
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
 
+            totalVenta = api
+                .column(3)
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+        },
+        responsive:false,
+		"aLengthMenu": DataTableLengthMenu,
+		"language": LenguajeTabla,
+		"paging":   false,
+		"bFilter": false,
+		"data": data,
+		"columns":[
+                {"title": "Lcoal","data": "NombreLocal", width:100, className: "text-left"},
+                {"title": "Bodega","data": "NombreBodega", width:100, className: "text-left"},
+                {"title": "Costo Compra","data": "CostoCompra", 
+                                render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                                width:50, className: "text-right"},
+                {"title": "Valorizado Venta","data": "ValorizadoVenta", 
+                                render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                                width:50, className: "text-right"},
+                {"title": "Margen %","data": "Margen", 
+                                render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                                width:50, className: "text-right"},
+            ],
+	});
+	console.log("totalCosto: " + totalCosto);
+	console.log("totalVenta: " + totalVenta);
+	//$("#tablaResumenCompraMasivaBodega").append('<tfoot style="float:right;"><th colspan="2"></th><th>Totales</th><th >'+totalCosto+'</th><th>'+totalVenta+'</th><th></th></tfoot>')
+	limpiarTablaResumenCompraMasiva=1;
+};
+
+var cargarTablaResumenCompraMasivaLocal = function(data){
+    
+    if(limpiarTablaResumenCompraMasivaLocal==1){
+		destruirTabla('#tablaResumenCompraMasivaLocal');
+		$('#tablaResumenCompraMasivaLocal thead').empty();
+	}
+		
+	$("#tablaResumenCompraMasivaLocal").dataTable({
+		"footerCallback": function (tfoot, data, start, end, display ){
+            var api = this.api(), data;
+            // Remove the formatting to get integer data for summation
+            var intVal = function (i){
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            // Total over all pages
+            totalCosto = api
+                .column(1)
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            totalVenta = api
+                .column(2)
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+        },
+		responsive:false,
+		"aLengthMenu": DataTableLengthMenu,
+		"language": LenguajeTabla,
+		"paging":   false,
+		"bFilter": false,
+		"data": data,
+		"columns":[
+                {"title": "Lcoal","data": "NombreLocal", width:100, className: "text-left"},
+                {"title": "Costo","data": "TotalCostoCompra", 
+                                render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                                width:50, className: "text-right"},
+                {"title": "Valorizado","data": "TotalValorizadoVenta", 
+                                render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                                width:50, className: "text-right"},
+                {"title": "Margen %","data": "Margen", 
+                                render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                                width:50, className: "text-right"},
+                
+            ],
+	});
+	
+
+	console.log("totalCosto: "+ totalCosto);
+	console.log("totalVenta: "+ totalVenta);
+	limpiarTablaResumenCompraMasivaLocal=1;
+};
 
 
 /* Funciones Antiguas */
@@ -559,7 +734,11 @@ var volverTabs = function(){
 }
 
 var crearAllSelect = function(data){
-  
+    crearselect(data.v_tipo_dte,"TipoDTE");
+    crearselect(data.v_estados,"EstadoCompra");
+    crearselect(data.v_estados,"EstadoDetalleCompra");
+    crearselect(data.v_unidad_medida,"IdUnidadMedida");
+	
 	crearselect(data.v_locales,"IdLocal");
 }
 
@@ -614,16 +793,23 @@ var buscarBodegas = function(IdLocal){
 }
 
 $(document).ready(function(){
-    $("#botonBodegaDestino").prop('disabled', true);
-
-    cargarTablaCompraMasiva(d.v_detalle_compra_masiva);
+    //crearFormatoFecha();
+	$("#botonBodegaDestino").prop('disabled', true);
+    cargarTablaCompraMasiva(null);
+    cargarTablaResumenCompraMasivaBodega(null);
+    cargarTablaResumenCompraMasivaLocal(null);
     crearAllSelect(d);
 	
     $("#IdLocal").change(function() {
 		console.log("IdLocal.change()");
         buscarBodegas($("#IdLocal").val());
     });
-		
+	
+	//if(d.IdCompra) {
+	//	alert("Existe una Compra Masiva en Proceso de Ingreso, desea continuar ingresando productos en ella?");
+		CargarDetalleCompraMasiva(d.IdCompra);	
+	//}
+	
 	// Botones de detalles de compra masiva
 	$(document).on('click','#botonBuscarProducto', BotonBuscarProducto);
 	$(document).on('click','#botonBuscar', BuscarProducto);
@@ -635,7 +821,8 @@ $(document).ready(function(){
 	$(document).on('click','#cerrarBodegaDestino', CerrarModalBodegaDestino);
 	
 	$(document).on('click','#botonAsignarProducto', AsignarBodegaProducto);
-	
+	$(document).on('click','#botonFinalizarCompraMasiva', BotonFinalizarCompraMasiva);
+
 	$('#FormAsignarBodega').on('keyup keypress', function(e) {
       var keyCode = e.keyCode || e.which;
       if (keyCode === 13) { 

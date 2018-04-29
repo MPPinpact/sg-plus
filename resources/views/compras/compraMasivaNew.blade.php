@@ -69,7 +69,7 @@
 						</div>
 						
 						<div class="col-md-2">
-							<a  href="#!" style="float:left;" name="botonAgregarCompraMasiva" id="botonAgregarCompraMasiva" class="btn btn-success waves-effect waves-light btn-block"  role="button">
+							<a  href="#!" style="float:left;" name="botonFinalizarCompraMasiva" id="botonFinalizarCompraMasiva" class="btn btn-success waves-effect waves-light btn-block"  role="button">
 								<span>Finalizar Compra Masiva</span>
 							</a>
 						</div>
@@ -96,8 +96,9 @@
 					<input type="hidden" name="IdCompra" id="IdCompra">
 					<input type="hidden" name="IdLocalDC" id="IdLocalDC">
 					<input type="hidden" name="IdDetalleCompra" id="IdDetalleCompra">
+					<input type="hidden" name="IdEstadoCompra" id="IdEstadoCompra">
 					
-					<div class="row">		
+					<div class="row" id="frameIngresoCompra">		
 						<div class="col-md-3">					
 							<div class="input-group">
 								<input id="NombreProducto" name="NombreProducto" type="text" aria-describedby="btn-addon1" class="md-form-control md-static" placeholder="Buscar Producto...">
@@ -592,6 +593,7 @@
 	var rutaEBD = "{{ URL::route('compraEBD') }}"
 	var rutaCSP = "{{ URL::route('compraCSP') }}"
 	var rutaCDC = "{{ URL::route('compraCDC') }}"
+	var rutaFCM = "{{ URL::route('compraFDC') }}"
 	
 		
 	var rutaDC = "{{ URL::route('comprardc') }}"

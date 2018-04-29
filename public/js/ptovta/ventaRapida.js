@@ -46,7 +46,9 @@ $(document).ready(function(){
 	$(document).on('click','#botonRecuperarPreVenta', RecuperarPreVenta);
 	$(document).on('click','#botonAgregarProductos', AgregarProductos);
 	$(document).on('click','#botonAgregarPreVentaPV', CargarPreVenta);
+	
 	$(document).on('click','#botonAgregarProductoPreVenta', AgregarProductoPreVenta);
+	
 	$(document).on('click','#botonVolverPreVenta', VolverPreVenta);
 	$(document).on('click','#botonContinuarPreVenta', ContinuarPreVenta);
 	$(document).on('click','#botonFinalizarPreVenta', FinalizarPreVenta);
@@ -57,14 +59,9 @@ $(document).ready(function(){
 	$(document).on('click','#botonVentaDirecta',VentaDirecta);
 	
 	
-	
 	/* focusout --> lost focus */
 	$("#CodigoProductoPreVenta").focusout(function() {
         buscarProducto($("#CodigoProductoPreVenta").val());
-    });
-	
-	$("#CodigoVendedor").focusout(function() {
-        buscarVendedor($("#CodigoVendedor").val());
     });
 	
 	
@@ -158,45 +155,129 @@ $(document).ready(function(){
         data.element.parents('.form-group').removeClass('has-success');
     });
 	
-	$('#FormIngresoFP').on('keyup keypress', function(e) {
+	$('#FormPreVenta').on('keypress', function(e) {
+		var keyCode = e.keyCode || e.which;
+      	if (keyCode === 13) { 
+      		console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+
+      		alert("Enter Formulario: Campo: " + e.target.name + "...");
+			e.preventDefault();
+			return false;
+      }
+    });
+
+	$('#CodigoProductoPreVenta').on('keypress', function(e) {
+    	var keyCode = e.keyCode || e.which;
+      	if (keyCode === 13) { 
+      		console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+
+      		e.preventDefault();
+      		e.stopImmediatePropagation();
+
+      		$("#CodigoProductoPreVenta").trigger("focusout");
+			
+			return false;
+      	}
+    });
+
+	$('#CantidadProductoPreVenta').on('keypress', function(e) {
+    	var keyCode = e.keyCode || e.which;
+       	if (keyCode === 13) { 
+       		console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+
+       		e.preventDefault();
+       		e.stopImmediatePropagation();
+			
+			AgregarProductoPreVenta();
+
+	 		return false;
+       	}
+    });
+
+	$("#NroPreVenta").on('keypress', function(e) {
+		var keyCode = e.keyCode || e.which;
+
+		if (keyCode === 13) { 
+       		console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+
+       		e.preventDefault();
+       		e.stopImmediatePropagation();
+			
+			var preventa_nro = $("#NroPreVenta").val();
+			if(preventa_nro.length > 0){
+				CargarPreVenta();
+			}
+
+	 		return false;
+       	}
+	});
+
+	$('#FormVendedor').on('keypress', function(e) {
+      	var keyCode = e.keyCode || e.which;
+      	if (keyCode === 13) { 
+      		console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+
+		 	e.preventDefault();
+		 	return false;
+      	}
+    });
+
+    $('#CodigoVendedor').on('keypress', function(e) {
+      	var keyCode = e.keyCode || e.which;
+      	if (keyCode === 13) { 
+      		console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+		 	e.preventDefault();
+		 	e.stopImmediatePropagation();
+
+		 	buscarVendedor($("#CodigoVendedor").val());
+		 	return false;
+      	}
+    });
+	
+
+    $('#FormCliente').on('keypress', function(e) {
+      	var keyCode = e.keyCode || e.which;
+      	if (keyCode === 13) { 
+      		console.log("Enter #FormCliente: Campo: " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+
+		 	e.preventDefault();
+		 	return false;
+      	}
+    });
+
+    $('#RUTCliente').on('keypress', function(e) {
+      	var keyCode = e.keyCode || e.which;
+      	if (keyCode === 13) { 
+      		console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+		 	e.preventDefault();
+		 	e.stopImmediatePropagation();
+
+		 	$("#RUTCliente").trigger("focusout");
+
+		 	return false;
+      	}
+    });
+
+
+	$('#FormIngresoFP').on('keypress', function(e) {
       var keyCode = e.keyCode || e.which;
       if (keyCode === 13) { 
+      	  console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
 		 e.preventDefault();
 		 return false;
       }
     });
-	
-	$('#FormPreVenta').on('keyup keypress', function(e) {
+
+    $('#MontoPagoEfectivo').on('keypress', function(e) {
       var keyCode = e.keyCode || e.which;
       if (keyCode === 13) { 
+      	  console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
 		 e.preventDefault();
+
+		 validadorFormaPago();
 		 return false;
       }
     });
-	
-	$('#CantidadProductoPreVenta').on('keyup keypress', function(e) {
-      var keyCode = e.keyCode || e.which;
-      if (keyCode === 13) { 
-		 e.preventDefault();
-		 
-		 return false;
-      }
-    });
-	
-	
-	
-	$('#CodigoProductoPreVenta').on('keyup keypress', function(e) {
-      var keyCode = e.keyCode || e.which;
-      if (keyCode === 13) { 
-		 e.preventDefault();
-		 
-		  buscarProducto($("#CodigoProductoPreVenta").val());
-		  
-		 return false;
-      }
-    });
-	
-	
 	
 	$('#FormIngresoFP').formValidation({
         excluded:[':disabled'],
@@ -735,6 +816,8 @@ var buscarProducto = function(CodigoBarra){
 		respuesta=procesarajax(parametroAjax);
 		
 		ManejoRespuestaBuscarProductoPreVenta(respuesta);
+
+
 	}else{
 		//$.growl("Debe ingresar el Código del Producto!",{type: "warning", allow_dismiss: true,});
 		//$("#CodigoProductoPreVenta").focus();
@@ -748,6 +831,7 @@ var buscarVendedor = function(CodigoVendedor){
 		respuesta=procesarajax(parametroAjax);
 		
 		ManejoRespuestaBuscarVendedorPreVenta(respuesta);
+
 	}else{
 		//$.growl("Debe ingresar el Código del Producto!",{type: "warning", allow_dismiss: true,});
 		//$("#CodigoProductoPreVenta").focus();
@@ -758,8 +842,11 @@ var ManejoRespuestaBuscarProductoPreVenta = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
             if(respuesta.respuesta.producto.IdProducto){
+                
                 if(respuesta.respuesta.producto.IdProducto==0){
                     $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
+                    $("#CodigoProductoPreVenta").focus().select();
+
                 }else{
                     $("#IdProductoPreVenta").val(respuesta.respuesta.producto.IdProducto);
                     $("#NombreProductoPreVenta").val(respuesta.respuesta.producto.NombreProducto);
@@ -767,15 +854,25 @@ var ManejoRespuestaBuscarProductoPreVenta = function(respuesta){
                     $("#CantidadProductoPreVenta").val(1);
 					
 					CalcularMontosPreVenta();
-					
 					$("#CantidadProductoPreVenta").focus().select();
                 } 
-            } 
+            } else {
+            	 $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
+
+            	$("#IdProductoPreVenta").val("");
+                $("#NombreProductoPreVenta").val("");
+                $("#PrecioProductoPreVenta").val("");
+                $("#CantidadProductoPreVenta").val("");
+
+            	$("#CodigoProductoPreVenta").focus().select();
+            }
         }else{
             $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
+            $("#CodigoProductoPreVenta").focus().select();
         }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
+        $("#CodigoProductoPreVenta").focus().select();
     }
 }
 
@@ -788,6 +885,7 @@ var ManejoRespuestaBuscarVendedorPreVenta = function(respuesta){
 					
 					$("#IdVendedorPreVenta").val(0);
                     $("#NombreVendedorPreVenta").val("¡Vendedor No Identificado!");
+                    $("#CodigoVendedor").focus().select();
 					
                 }else{
                     $("#IdVendedorPreVenta").val(respuesta.respuesta.v_usuario.IdVendedor);
@@ -798,6 +896,8 @@ var ManejoRespuestaBuscarVendedorPreVenta = function(respuesta){
 					
 					parametroAjax.data = $("#FormPreVenta").serialize();
 					respuesta=procesarajax(parametroAjax);
+
+					CerrarModalAsignarVendedor();
                 }
             } 
         }else{
@@ -870,7 +970,7 @@ var ManejoRespuestaProcesarProductoPreVenta = function(respuesta, origen){
 			$("#IdProductoPreVenta").val("");
 			$("#NombreProductoPreVenta").val("");
 			$("#PrecioProductoPreVenta").val("");
-			$("#CantidadProductoPreVenta").val(1);
+			$("#CantidadProductoPreVenta").val("");
 			$("#CodigoProductoPreVenta").val("");
 			
 			$('#EstadoPreVenta').val(respuesta.respuesta.v_cabecera[0].EstadoPreVenta);
@@ -928,6 +1028,9 @@ var ManejoRespuestaProcesarProductoPreVenta = function(respuesta, origen){
 				}
 				console.log("Fin Origen: " + origen);
 			}
+
+			$("#CodigoProductoPreVenta").focus().select();
+
 		}else{
 			$.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
 		}
@@ -961,6 +1064,7 @@ var ManejoRespuestaBuscarCliente = function(respuesta){
 				respuesta=procesarajax(parametroAjax);
 				
 				AsignarClientePreVenta();
+				$("#RUTCliente").focus().select();
 				
             }else{
 				// var rut = $("#RUTProveedor").val();

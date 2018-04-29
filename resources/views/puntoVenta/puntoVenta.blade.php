@@ -721,25 +721,25 @@
 						<div class="row" id="frameProductos">
 							<div class="col-md-2">
 								<div class="md-input-wrapper">
-									<input id="CodigoProductoPreVenta" name="CodigoProductoPreVenta" type="text" class="md-form-control" maxlength="250" />
+									<input id="CodigoProductoPreVenta" name="CodigoProductoPreVenta" type="text" class="md-form-control md-static" maxlength="15" />
 									<label for="CodigoProductoPreVenta">Código</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="NombreProductoPreVenta" name="NombreProductoPreVenta" type="text" class="md-form-control" maxlength="250" readonly  />
+									<input id="NombreProductoPreVenta" name="NombreProductoPreVenta" type="text" class="md-form-control md-static" maxlength="50" readonly  />
 									<label for="NombreProductoPreVenta">Producto</label>
 								</div>
 							</div>
 							<div class="col-md-2">
 								<div class="md-input-wrapper">
-									<input id="PrecioProductoPreVenta" name="PrecioProductoPreVenta" type="text" class="md-form-control" maxlength="250" readonly />
+									<input id="PrecioProductoPreVenta" name="PrecioProductoPreVenta" type="text" class="md-form-control md-static" maxlength="12" readonly />
 									<label for="PrecioProductoPreVenta">Precio</label>
 								</div>
 							</div>
 							<div class="col-md-2">
 								<div class="md-input-wrapper">
-									<input id="CantidadProductoPreVenta" name="CantidadProductoPreVenta" type="text" class="md-form-control" maxlength="250" />
+									<input id="CantidadProductoPreVenta" name="CantidadProductoPreVenta" type="text" class="md-form-control md-static" maxlength="6" />
 									<label for="CantidadProductoPreVenta">Cant</label>
 								</div>
 							</div>
@@ -753,7 +753,7 @@
 						<div class="row" id="frameNroPreVenta" style="display: none;">
 							<div class="col-md-8">
 								<div class="md-input-wrapper">
-									<input id="NroPreVenta" name="NroPreVenta" type="text" class="md-form-control form-control-lg " maxlength="250" />
+									<input id="NroPreVenta" name="NroPreVenta" type="text" class="md-form-control form-control-lg  md-static" maxlength="6" />
 									<label id="lblNroPreVenta" for="NroPreVenta">Nro. Pre-Venta</label>
 								</div>
 							</div>
@@ -787,22 +787,23 @@
 									</div>
 									
 									<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0" class="body current" aria-hidden="false">
-										<div class="col-md-12 table-responsive">
-											<table id="tablaDetalles" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
-											<br />
-											<div class="md-input-wrapper">
-												<input style="text-align:right;" id="TotalPreVenta_" name="TotalPreVenta_" type="text" class="md-form-control text-right form-control-lg" maxlength="250" readonly />
-												<label id="lblTotalVenta_" for="TotalPreVenta_">Total Venta</label>
-											</div>
+										<div class="col-md-12 table-responsive" style="max-height: 300px">
+											<table id="tablaDetalles" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>											
 										</div>
-										
-										
 									</fieldset><!-- Shopping cart fieldset end -->
 								</div> 
 							</div>
 						</div>
 						
-						<div class="row"> <br /><br /><br /></div>
+						<div class="row"> 
+							<br /><br />
+							<div class="col-md-12">
+								<div class="md-input-wrapper">
+									<input style="text-align:right;" id="TotalPreVenta_" name="TotalPreVenta_" type="text" class="md-form-control text-right form-control-lg" maxlength="250" readonly />
+									<label id="lblTotalVenta_" for="TotalPreVenta_">Total Venta</label>
+								</div>
+							</div>
+						</div>
 						
 						<div class="row" >
 							<div class="col-md-6">
