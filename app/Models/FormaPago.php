@@ -38,11 +38,10 @@ class FormaPago extends Authenticatable
     }
 
     // registrar una nueva proveedor
-    public function regFormaPago($datos){        
+    public function regFormaPago($datos){      
         $idAdmin = Auth::id();
         $datos['IdFormaPago']==null ? $Id=0 : $Id= $datos['IdFormaPago'];
-        $sql="select f_registro_formapago(".$Id.",'".$datos['NombreFormaPago']."',".$idAdmin.")";
-        Log::info($sql);
+        $sql="select f_registro_formapago(".$Id.",'".$datos['NombreFormaPago']."',".$datos['PermitePagoCredito'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;

@@ -47,16 +47,19 @@
 		    </div>
 		    <div class="card-block">
 	        	<div class="row">
-					<div id="divBotonesSec" class="col-md-8" style="display:none;">
-						<button id="btn-sol-inv" type="button" class="btn btn-primary waves-effect waves-light">
-							<span>Solicitar Inventario</span>
-            			</button>
-            			<button id="btn-cer-inv" type="button" class="btn btn-primary waves-effect waves-light">
-							<span>Cerrar Inventario</span>
-            			</button>
-            			<button id="btn-aju-inv" type="button" class="btn btn-primary waves-effect waves-light">
-							<span>Ajustar Inventario</span>
-            			</button>
+					<div  class="col-md-8">
+						<div id="divBotonesSec"  style="display:none;" class="col-md-12">
+							<button id="btn-sol-inv" type="button" class="btn btn-primary waves-effect waves-light">
+								<span>Solicitar Inventario</span>
+	            			</button>
+	            			<button id="btn-cer-inv" type="button" class="btn btn-primary waves-effect waves-light">
+								<span>Cerrar Inventario</span>
+	            			</button>
+	            			<button id="btn-aju-inv" type="button" class="btn btn-primary waves-effect waves-light">
+								<span>Ajustar Inventario</span>
+            				</button>
+            				<b><span id="spanEstadoInventario" style="float:right;color:#909090;" class="card-header-text"></span></b>
+						</div>
 					</div>
 					<div class="col-md-4">
 						<button style="float:right;" name="btn-list" id="btn-list" type="button" class="btn btn-primary waves-effect waves-light">
@@ -213,6 +216,16 @@
             <div class="modal-body">
             	{!! Form::open(['id'=>'FormProveedorNew','autocomplete' => 'off']) !!}
 				<div class="row">
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<div class="md-input-wrapper">
+							<select name="IdFamiliaToma" id="IdFamiliaToma" class="md-disable md-valid md-static"></select>
+							<label for="IdFamiliaToma">Familia</label>
+						</div>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+				<div class="row">
 					<div class="col-md-12 table-responsive">
 						<table id="tablaTomaInventario" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 					</div>
@@ -220,8 +233,7 @@
 				{!! Form::close() !!}
             </div>
             <div class="modal-footer">
-                <button type="button" id="cancelarM" class="btn btn-inverse-primary waves-effect waves-light" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="aceptarM" class="btn btn-primary waves-effect waves-light">Guardar</button>
+                <button type="button" id="cancelarM" class="btn btn-inverse-primary waves-effect waves-light" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -304,6 +316,9 @@
 	
 	var rutaBB = "{{ URL::route('inventariobb') }}"
 	var rutaCI = "{{ URL::route('inventarioci') }}"
+	var rutaBF = "{{ URL::route('inventariobf') }}"
+
+
 	
 	var rutaBC = "{{ URL::route('preventabc') }}"
 	var rutaCP = "{{ URL::route('preventacp') }}"
@@ -318,4 +333,3 @@
 </script>
 <script src="{{ asset('js/inventario/inventario.js') }}"></script>
 @endsection
-

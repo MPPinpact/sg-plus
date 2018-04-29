@@ -1,4 +1,5 @@
-var manejoRefresh=limpiarInventario=limpiarDetalles=errorRut=errorRut2=errorRut3=NInventario=NBodega=limpiarTomaInventario=0;
+var limpiarInventario=limpiarDetalles=NInventario=NBodega=limpiarTomaInventario=IdEstadoInventario=0;
+var errorRut=errorRut2=errorRut3=0;
 var nombre_bodega = '';
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -7,19 +8,6 @@ var parametroAjax = {
     'ruta': '',
     'async': false
 };
-
-// var calcularMontos = function(CantidadPreVenta,ValorUnitarioVenta,FactorImpuesto,MontoDescuento){
-//     var ValorImpuesto = (CantidadPreVenta * ValorUnitarioVenta * FactorImpuesto / 100)
-//     $("#ValorImpuestos").val(ValorImpuesto);
-//     var TotalLinea = ((CantidadPreVenta * ValorUnitarioVenta) - MontoDescuento);
-//     $("#TotalLinea").val(TotalLinea);
-//     var ValorUnitarioFinal = (TotalLinea / CantidadPreVenta);
-//     $("#ValorUnitarioFinal").val(ValorUnitarioFinal);
-// }
-
-// var calcularTotalPreVenta = function(totalPV){
-//     $("#TotalPreVentaDetalle").val(totalPV);
-// }
 
 var ManejoRespuestaBuscarProducto = function(respuesta){
     if(respuesta.code==200){
@@ -37,6 +25,7 @@ var ManejoRespuestaBuscarProducto = function(respuesta){
 }
 
 var ManejoRespuestaBuscarInventario = function(respuesta){
+    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         if(respuesta.respuesta.length > 0){
             cargarTablaTomaInventario(respuesta.respuesta);
@@ -138,7 +127,8 @@ var ManejoRespuestaProcesarD = function(respuesta){
         $("#divVolver").show();
         $("#divBotonesSec").show();
         $("#divTabs").show();
-        $("#spanTitulo").text("Detalle Pre-Venta");
+        $("#spanTitulo").text("Detalle Inventario");
+        crearselect(respuesta.respuesta.v_familias,"IdFamiliaToma");
         pintarDatosActualizar(respuesta.respuesta.v_cabecera[0]);
         cargarTablaDetalles(respuesta.respuesta.v_detalles);
         if(parseInt(respuesta.respuesta.v_cabecera[0].EstadoPreVenta)>1){
@@ -155,19 +145,21 @@ var ManejoRespuestaProcesarD = function(respuesta){
 
 // Manejo Activar / Desactivar compra
 var ManejoRespuestaProcesarI = function(respuesta){
+    console.log(respuesta);
+    console.log(respuesta.respuesta);
     if(respuesta.code==200){
-        switch(respuesta.respuesta.activar){
-            case 1:
-                if(respuesta.respuesta.v_inventario.length>0){
-                    $.growl({message:"Procesado"},{type: "success", allow_dismiss: true,});
-                    cargarTablaInventario(respuesta.respuesta.v_inventario);
-                }
+        switch(respuesta.respuesta.code){
+            case 200:
+                $("#spanEstadoInventario").text(respuesta.respuesta.des_code);
+                $.growl({message:respuesta.respuesta.des_code},{type: "success", allow_dismiss: true,});
+                if (respuesta.respuesta.des_code == "Inventario Cerrado"){IdEstadoInventario = 1;}
+                if (respuesta.respuesta.des_code == "Inventario Ajustado"){IdEstadoInventario = 3;}
+                if(respuesta.respuesta.v_detalles){cargarTablaDetalles(respuesta.respuesta.v_detalles);}
+                if(respuesta.respuesta.v_inventario){cargarTablaInventario(respuesta.respuesta.v_inventario);}
             break;
             case 204:
-                $.growl({message:"Este inventario ya se encuentra cerrado"},{type: "warning", allow_dismiss: true,});
+                $.growl({message:respuesta.respuesta.des_code},{type: "warning", allow_dismiss: true,});
             break;
-            default:
-                $.growl({message:"Debe seleccionar un registro"},{type: "warning", allow_dismiss: true,});
         }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
@@ -191,11 +183,14 @@ var ManejoRespuestaProcesarI = function(respuesta){
 
 // Manejo Registro o actualizacion de cabecera de compra
 var ManejoRespuestaProcesarInventario = function(respuesta){
+    console.log(respuesta);
+    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         var res = JSON.parse(respuesta.respuesta.f_registro);
         if(res.code=="200"){ 
             $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
-            NInventario = res.IdPreVenta;
+            NInventario = res.IdInventario;
+            NBodega = respuesta.respuesta.IdBodega;
             $("#IdInventario").val(res.IdInventario);
             $("#IdInventario2").val(res.IdInventario);
             $("#div-mod").hide();
@@ -366,6 +361,16 @@ var cargarTablaInventario = function(data){
                         return data;
                     }
                 },
+                {"title": "Fecha Cierre", "data": "FechaCierreInventario", className: "text-center", 
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            if (data != null){
+                                data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                            }
+                        }
+                        return data;
+                    }
+                },
                 {"title": "Fecha Ajuste", "data": "FechaAjusteInventario", className: "text-center", 
                     "render": function(data, type, row, meta){
                         if(type === 'display'){
@@ -383,49 +388,321 @@ var cargarTablaInventario = function(data){
         limpiarInventario=1;
 };
 
+
+
 var cargarTablaDetalles = function(data){
+    console.log(data);
     if(limpiarDetalles==1){destruirTabla('#tablaDetalles');$('#tablaDetalles thead').empty();}
-        var columnReport = [[5],[6],[7],[12]];       
-        $("#tablaDetalles").dataTable({
-            responsive:false,
-            "bSort": false,
-            "scrollCollapse": false,
-            "paging": false,
-            "searching": false,
-            "info":false,           
-            "pageLength": 50, 
-            "columnDefs": [
-                {"targets": [ 1 ],"searchable": true}
-            ],
-            "data": data,
-            "columns":[
-                {
-                    "title": "",
-                    "data": "IdInventarioDetalle",
-                    "render": function(data, type, row, meta){
-                        var result = `
-                        <center>
-                        <a href="#" onclick="verDetallesPreventaD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
-                            <i class="icofont icofont-search"></i>
-                        </a>
-                        <a href="#" onclick="cambiarEstatusPreventaD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
-                            <i class="icofont icofont-ui-delete"></i>
-                        </a>
-                        </center>`;
-                        return result;
-                    }
-                },
-                {"title": "Id","data": "IdInventarioDetalle",visible:0},
-                {"title": "IdProducto","data": "IdProducto",visible:0},
-                {"title": "Nombre Producto","data": "NombreProducto"},
-                {"title": "Stock Fisico","data": "StockFisico"},
-                {"title": "Stock Sistema","data": "StockSistema"},
-            ],   
-        });
+        switch(parseInt(IdEstadoInventario)) {
+            case 0:
+                console.log("caso inventario abierto");
+                cargarTablaInventarioAbierto(data);
+                break;
+            case 1:
+                console.log("caso inventario cerrado");
+                cargarTablaInventarioCerrado(data);
+                break;
+            case 3:
+                console.log("caso inventario ajustado");
+                cargarTablaInventarioAjustado(data);
+                break;
+        }
     limpiarDetalles=1;
 };
 
+var cargarTablaInventarioAbierto = function(data){
+    var columnReport = [[0],[1],[2],[3]];       
+    $("#tablaDetalles").dataTable({
+        responsive:false,
+        "bSort": false,
+        "scrollCollapse": false,
+        "paging": false,
+        "searching": false,
+        "info":false,           
+        "pageLength": 50, 
+        "columnDefs": [
+            {"targets": [ 1 ],"searchable": true},
+        ],
+        "data": data,
+        "columns":[
+            {
+                "title": "",
+                "data": "IdInventarioDetalle",
+                "render": function(data, type, row, meta){
+                    var result = `
+                    <center>
+                    <a href="#" onclick="verDetallesPreventaD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
+                        <i class="icofont icofont-search"></i>
+                    </a>
+                    <a href="#" onclick="cambiarEstatusPreventaD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                        <i class="icofont icofont-ui-delete"></i>
+                    </a>
+                    </center>`;
+                    return result;
+                }
+            },
+            {"title": "Id","data": "IdInventarioDetalle",visible:0},
+            {"title": "IdProducto","data": "IdProducto",visible:0},
+            {"title": "Nombre Producto","data": "NombreProducto"},
+            {"title": "Precio Venta","data": "PrecioVentaSugerido", className: "text-right"},
+            {"title": "Stock Fisico","data": "StockFisico",className: "text-right"},
+        ],   
+        dom: 'Bfrtip',
+        buttons: [
+             {
+                extend: 'print',
+                text: 'Imprimir',
+                className: 'btn btn-primary waves-effect waves-light',
+                orientation:'landscape',
+                pageSize:'A4',
+                title:'Listado de Inventario N° '+NInventario+' de Bodega '+nombre_bodega,                
+                exportOptions: {
+                    columns: columnReport,
+                    modifier: {
+                        page: 'all'
+                    }
+                },
+                customize: function (win) {
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size','11px');
+                }
+            },
+            {
+                extend: 'pdf',
+                text: 'Descargar',
+                className: 'btn btn-primary waves-effect waves-light',
+                // orientation:'landscape',  //Hoja Horizontal
+                pageSize:'A4',
+                title:'Listado de Inventario N° '+NInventario+' de Bodega '+nombre_bodega,
+                filename:'Listado de Inventario N° '+NInventario+' de Bodega '+nombre_bodega+Date.now(),
+                exportOptions: {columns: columnReport, modifier: {page: 'all', } }, 
+                customize : function(doc){
+                    doc.defaultStyle.fontSize = 8; 
+                    doc.pageMargins = [40, 40, 40,0];
+                    var colCount = new Array();   
+                    $($("#tablaDetalles").dataTable()).find('tbody tr:first-child td').each(function(){
+                        if($(this).attr('colspan')){
+                            for(var i=1;i<=$(this).attr('colspan');$i++){
+                                colCount.push('*');
+                            }
+                        }else{ colCount.push('*'); }
+                    });
+                    doc.content[1].table.widths = colCount;
+                }
+            }
+        ]
+    });
+}
+var cargarTablaInventarioCerrado = function(data){
+    var columnReport = [[0],[1],[2],[3]];       
+    $("#tablaDetalles").dataTable({
+        responsive:false,
+        "bSort": false,
+        "scrollCollapse": false,
+        "paging": false,
+        "searching": false,
+        "info":false,           
+        "pageLength": 50, 
+        "columnDefs": [
+            {"targets": [ 1 ],"searchable": true},
+        ],
+        "data": data,
+        "columns":[
+            {
+                "title": "",
+                "data": "IdInventarioDetalle",
+                "render": function(data, type, row, meta){
+                    var result = `
+                    <center>
+                    <a href="#" onclick="verDetallesPreventaD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
+                        <i class="icofont icofont-search"></i>
+                    </a>
+                    <a href="#" onclick="cambiarEstatusPreventaD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                        <i class="icofont icofont-ui-delete"></i>
+                    </a>
+                    </center>`;
+                    return result;
+                }
+            },
+            {"title": "Id","data": "IdInventarioDetalle",visible:0},
+            {"title": "IdProducto","data": "IdProducto",visible:0},
+            {"title": "Nombre Producto","data": "NombreProducto"},
+            {"title": "Precio Venta","data": "PrecioVentaSugerido"},
+            {"title": "Fecha Cierre", "data": "FechaCierreInventario", className: "text-center", 
+                "render": function(data, type, row, meta){
+                    if(type === 'display'){
+                        if (data != null){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                    }
+                    return data;
+                }
+            },
+            {"title": "Stock Fisico","data": "StockFisico"},
+            {"title": "Stock Sistema","data": "StockSistema"},
+            {"title": "Diferencia","data": "Diferencia"}
+        ],   
+        dom: 'Bfrtip',
+        buttons: [
+             {
+                extend: 'print',
+                text: 'Imprimir',
+                className: 'btn btn-primary waves-effect waves-light',
+                orientation:'landscape',
+                pageSize:'A4',
+                title:'Listado de Inventario N° '+NInventario+' de Bodega '+nombre_bodega,                                                  
+                exportOptions: {
+                    columns: columnReport,
+                    modifier: {
+                        page: 'all'
+                    }
+                },
+                customize: function (win) {
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size','11px');
+                }
+            },
+            {
+                extend: 'pdf',
+                text: 'Descargar',
+                className: 'btn btn-primary waves-effect waves-light',
+                // orientation:'landscape',  //Hoja Horizontal
+                pageSize:'A4',
+                title:'Listado de Inventario N° '+NInventario+' de Bodega '+nombre_bodega,
+                filename:'Listado de Inventario N° '+NInventario+' de Bodega '+nombre_bodega+Date.now(),
+                exportOptions: {columns: columnReport, modifier: {page: 'all', } }, 
+                customize : function(doc){
+                    doc.defaultStyle.fontSize = 8; 
+                    doc.pageMargins = [40, 40, 40,0];
+                    var colCount = new Array();   
+                    $($("#tablaDetalles").dataTable()).find('tbody tr:first-child td').each(function(){
+                        if($(this).attr('colspan')){
+                            for(var i=1;i<=$(this).attr('colspan');$i++){
+                                colCount.push('*');
+                            }
+                        }else{ colCount.push('*'); }
+                    });
+                    doc.content[1].table.widths = colCount;
+                }
+            }
+        ]
+    });
+}
+var cargarTablaInventarioAjustado = function(data){
+    var columnReport = [[0],[1],[2],[3]];       
+    $("#tablaDetalles").dataTable({
+        responsive:false,
+        "bSort": false,
+        "scrollCollapse": false,
+        "paging": false,
+        "searching": false,
+        "info":false,           
+        "pageLength": 50, 
+        "columnDefs": [
+            {"targets": [ 1 ],"searchable": true},
+        ],
+        "data": data,
+        "columns":[
+            {
+                "title": "",
+                "data": "IdInventarioDetalle",
+                "render": function(data, type, row, meta){
+                    var result = `
+                    <center>
+                    <a href="#" onclick="verDetallesPreventaD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
+                        <i class="icofont icofont-search"></i>
+                    </a>
+                    <a href="#" onclick="cambiarEstatusPreventaD(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+                        <i class="icofont icofont-ui-delete"></i>
+                    </a>
+                    </center>`;
+                    return result;
+                }
+            },
+            {"title": "Id","data": "IdInventarioDetalle",visible:0},
+            {"title": "IdProducto","data": "IdProducto",visible:0},
+            {"title": "Nombre Producto","data": "NombreProducto"},
+            {"title": "Precio Venta","data": "PrecioVentaSugerido"},
+            {"title": "Fecha Cierre", "data": "FechaCierreInventario", className: "text-center", 
+                "render": function(data, type, row, meta){
+                    if(type === 'display'){
+                        if (data != null){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                    }
+                    return data;
+                }
+            },
+            {"title": "Fecha Ajuste", "data": "FechaAjusteInventario", className: "text-center", 
+                "render": function(data, type, row, meta){
+                    if(type === 'display'){
+                        if (data != null){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                    }
+                    return data;
+                }
+            },
+            {"title": "Ajuste Realizado","data": "DesAjusteRealizado"},
+            {"title": "Stock Fisico","data": "StockFisico"},
+            {"title": "Stock Sistema","data": "StockSistema"},
+            {"title": "Diferencia","data": "Diferencia"}
+        ],   
+        dom: 'Bfrtip',
+        buttons: [
+             {
+                extend: 'print',
+                text: 'Imprimir',
+                className: 'btn btn-primary waves-effect waves-light',
+                orientation:'landscape',
+                pageSize:'A4',
+                title:'Detalle Inventario Bodega '+nombre_bodega,  
+                exportOptions: {
+                    columns: columnReport,
+                    modifier: {
+                        page: 'all'
+                    }
+                },
+                customize: function (win) {
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size','11px');
+                }
+            },
+            {
+                extend: 'pdf',
+                text: 'Descargar',
+                className: 'btn btn-primary waves-effect waves-light',
+                // orientation:'landscape',  //Hoja Horizontal
+                pageSize:'A4',
+                title:'Listado de Inventario N° '+NInventario+' de Bodega '+nombre_bodega,
+                filename:'Listado de Inventario N° '+NInventario+' de Bodega '+nombre_bodega+Date.now(),
+                exportOptions: {columns: columnReport, modifier: {page: 'all', } }, 
+                customize : function(doc){
+                    doc.defaultStyle.fontSize = 8; 
+                    doc.pageMargins = [40, 40, 40,0];
+                    var colCount = new Array();   
+                    $($("#tablaDetalles").dataTable()).find('tbody tr:first-child td').each(function(){
+                        if($(this).attr('colspan')){
+                            for(var i=1;i<=$(this).attr('colspan');$i++){
+                                colCount.push('*');
+                            }
+                        }else{ colCount.push('*'); }
+                    });
+                    doc.content[1].table.widths = colCount;
+                }
+            }
+        ]
+    }); 
+}
+
+
 var pintarDatosActualizar= function(data){
+    console.log(data);
+    IdEstadoInventario = data.EstadoInventario;
+    $("#spanEstadoInventario").text("Inventario "+data.DesEstadoInventario);
     $(".md-form-control").addClass("md-valid");
     $("#IdInventario").val(data.IdInventario);
     $("#IdInventario2").val(data.IdInventario);
@@ -453,6 +730,7 @@ var pintarDatosActualizarDetalles = function(data){
 
 var BotonAgregar = function(){
     $("#spanTitulo").text("Registrar Inventario");
+    $("#spanEstadoInventario").text("");
     desbloquearInputs();
     $("#divBotonesSec").hide();
     $(".divDetalles").toggle();
@@ -620,7 +898,7 @@ var desbloquearInputsDetalles = function(){
 }
 
 var modificarCabeceras = function(){
-    $("#spanTitulo").text("Editar Pre-Venta");
+    $("#spanTitulo").text("Editar Inventario");
     $("#guardar").text("Guardar");
     $("#divVolver").hide();
     $("#div-mod").hide();
@@ -650,7 +928,6 @@ var volverTabs = function(){
 
 var crearAllSelect = function(data){
     crearselect(data.v_bodegas,"IdBodega");
-    crearselect(data.v_bodegas,"IdBodegaToma");
     crearselect(data.v_tipo_inventario,"TipoInventario");
 }
 
@@ -684,7 +961,6 @@ var buscarCombos = function(IdLocal,IdBodega){
 
 var buscarProducto = function(CodigoBarra){
     parametroAjax.ruta=rutaBPD;
-    console.log($("#IdBodega").val());
     parametroAjax.data = {CodigoBarra:CodigoBarra,IdBodega:$("#IdBodega").val()};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaBuscarProducto(respuesta);
@@ -720,55 +996,14 @@ var BuscarInventarioTotal = function(IdBodega){
     ManejoRespuestaBuscarInventario(respuesta);
 }
 
-var calcularFechaPago = function (fecha){
-    var FechaDTE = moment(fecha, 'DD-MM-YYYY',true).format("YYYY-MM-DD");
-    var FechaSuma = moment(FechaDTE).add(1, 'month').format("YYYY-MM-DD");
-    var FechaVencimiento = moment(FechaSuma, 'YYYY-MM-DD',true).format("DD-MM-YYYY");
-    $("#FechaVencimiento").val(FechaVencimiento);
-    $("#FechaPago").val(FechaVencimiento);
-    $("#FechaVencimiento").focus();
-    $("#FechaPago").focus();
-    $("#TotalNeto").focus();
+var BuscarInventarioTotalFamilia = function(IdFamilia,IdBodega){
+    console.log("busqueda por familia");
+    parametroAjax.ruta=rutaBF;
+    parametroAjax.data = {IdFamilia:IdFamilia,IdBodega:IdBodega};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaBuscarInventario(respuesta);
 }
 
-var CerrarInventario = function (){
-    console.log("Cierro inventario");
-    // parametroAjax.ruta=rutaCP;
-    // parametroAjax.data = {IdPreVenta:NInventario};
-    // respuesta=procesarajax(parametroAjax);
-    // if (respuesta.code==200){
-    //     if (respuesta.respuesta==1){
-    //         $(".CerrarPreventa").hide();
-    //         $("#agregarC").hide();
-    //     }
-    // }
-}
-
-var CompararInventario = function (){
-    console.log("Comparo inventario");
-    // parametroAjax.ruta=rutaCP;
-    // parametroAjax.data = {IdPreVenta:NInventario};
-    // respuesta=procesarajax(parametroAjax);
-    // if (respuesta.code==200){
-    //     if (respuesta.respuesta==1){
-    //         $(".CerrarPreventa").hide();
-    //         $("#agregarC").hide();
-    //     }
-    // }
-}
-
-var AjustarInventario = function (){
-    console.log("Ajusto inventario");
-    // parametroAjax.ruta=rutaCP;
-    // parametroAjax.data = {IdPreVenta:NInventario};
-    // respuesta=procesarajax(parametroAjax);
-    // if (respuesta.code==200){
-    //     if (respuesta.respuesta==1){
-    //         $(".CerrarPreventa").hide();
-    //         $("#agregarC").hide();
-    //     }
-    // }
-}
 
 var limpiarFormDetalle = function(){
     $("#NombreProducto").val("");  
@@ -789,22 +1024,17 @@ var solicitarInventario = function (){
 }
 
 var cerrarInventario = function (){
-    console.log("cerrar inventario");
     parametroAjax.ruta=rutaCI;
     parametroAjax.data = {IdInventario:NInventario,caso:1};
     respuesta=procesarajax(parametroAjax);
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
-    // ManejoRespuestaBuscarInventario(respuesta);
+    ManejoRespuestaProcesarI(respuesta);
 }
 
 var ajustarInventario = function (){
-    console.log("ajustar inventario");
     parametroAjax.ruta=rutaCI;
     parametroAjax.data = {IdInventario:NInventario,caso:2};
     respuesta=procesarajax(parametroAjax);
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
+    ManejoRespuestaProcesarI(respuesta);
 }
 
 
@@ -831,10 +1061,20 @@ $(document).ready(function(){
             buscarProducto($("#CodigoBarra").val());
         }
     });
+    $('#IdFamiliaToma').on('change', function(e) {
+        console.log("cambio");
+        console.log( $('#IdFamiliaToma').val() );
+        console.log( NBodega);
+        BuscarInventarioTotalFamilia($('#IdFamiliaToma').val(),NBodega)
+    });
 
-    // $("#CantidadPreVenta").focusout(function() {
-    //     calcularMontos($("#CantidadPreVenta").val(),$("#ValorUnitarioVenta").val(),$("#FactorImpuesto").val(),$("#MontoDescuento").val());
-    // });
+    $('#FormDetalle').on('keyup keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) { 
+        e.preventDefault();
+        return false;
+      }
+    });
 
     // Botones de cabecera de compra
     $(document).on('click','#guardar',validador);
@@ -862,14 +1102,6 @@ $(document).ready(function(){
     // $(document).on('click','.BtnAjustarInv',AjustarInventario);
 
                 
-
-    $('#FormDetalle').on('keyup keypress', function(e) {
-      var keyCode = e.keyCode || e.which;
-      if (keyCode === 13) { 
-        e.preventDefault();
-        return false;
-      }
-    });
 
     // $('#FormProveedorNew').formValidation({
     //     excluded:[':disabled'],

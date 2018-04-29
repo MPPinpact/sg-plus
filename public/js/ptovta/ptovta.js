@@ -28,7 +28,12 @@ var ManejoRespuestaProcesarD = function(respuesta){
 
 var ManejoRespuestaProcesarPagarCuenta = function(respuesta){
     if(respuesta.code==200){
-        $("#ModalPagoCreditoCliente").modal("hide");
+        if(respuesta.respuesta.code==200){
+            $("#ModalPagoCreditoCliente").modal("hide");
+            $.growl({message:respuesta.respuesta.des_code},{type: "success", allow_dismiss: true,});
+        }else{
+            $.growl({message:respuesta.respuesta.des_code},{type: "warning", allow_dismiss: true,});
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -49,7 +54,9 @@ var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
     if(respuesta.code==200){
         var cliente = respuesta.respuesta.v_cliente.cliente;
         if (cliente.length > 0){
+            //Caso consulta credito
             if (caso == 1){
+                limpiarDatosCreditoClientes();
                 $("#IdClienteConsultaCredito").val(cliente[0].IdCliente);
                 $("#NombreClienteConsultaCredito").val(cliente[0].NombreCliente);
                 $("#CreditoAutorizadoConsultaCredito").val(cliente[0].CupoAutorizado);
@@ -59,18 +66,27 @@ var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
                 if (respuesta.respuesta.v_cliente.UltimaCompra.length > 0){
                     $("#UltimaCompraConsultaCredito").val(respuesta.respuesta.v_cliente.UltimaCompra[0].TotalVenta);
                 }
-                // $("#UltimoPagoConsultaCredito").val(c.);
+                if (respuesta.respuesta.v_cliente.UltimoPago.length > 0){
+                    $("#UltimoPagoConsultaCredito").val(respuesta.respuesta.v_cliente.UltimoPago[0].MontoAbono);
+                }
                 if (respuesta.respuesta.v_cliente.MontoAnterior.length > 0){
                     $("#UltimoMontoFacturadoConsultaCredito").val(respuesta.respuesta.v_cliente.MontoAnterior[0].MontoFacturadoAnterior);
                 }
                 $("#EstadoClienteConsultaCredito").val(cliente[0].DetalleEstadoCliente);
             }
+            //Caso pago Credito
             if (caso == 2){
                 $("#IdClientePagoCredito").val(cliente[0].IdCliente);
                 $("#NombreClientePagoCredito").val(cliente[0].NombreCliente);
-                $("#MontoFacturadoPagoCredito").val("");
-                $("#FechaVencimientoPagoCredito").val("");
-                $("#DeudaTotalPagoCredito").val("");
+                if (respuesta.respuesta.v_cliente.MontoActual.length > 0){
+                    $("#MontoFacturadoPagoCredito").val(respuesta.respuesta.v_cliente.MontoActual[0].MontoFacturadoActual);
+                }
+                if (respuesta.respuesta.v_cliente.FechaVencimiento.length > 0){
+                    $("#FechaVencimientoPagoCredito").val(respuesta.respuesta.v_cliente.FechaVencimiento[0].FechaVencimiento);
+                }
+                if (respuesta.respuesta.v_cliente.DeudaTotal.length > 0){
+                    $("#DeudaTotalPagoCredito").val(respuesta.respuesta.v_cliente.DeudaTotal[0].CupoAutorizado);
+                }
             }
 
         }else{
@@ -282,7 +298,15 @@ $(document).ready(function(){
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
         fields: {
-            'MontoClientePagoCredito': {
+            'RUTClientePagoCredito': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
+            'MontoAPagarPagoCredito': {
                 verbose: false,
                 validators: {
                     notEmpty: {

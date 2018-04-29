@@ -57,6 +57,7 @@ class InventarioController extends Controller
         $model= new Inventario();
         $result['f_registro'] = $model->regInventario($datos);
         $result['v_inventario'] = $model->listInventario();
+        $result['IdBodega'] = $datos['IdBodega'];
         return $result;
     }
 
@@ -65,14 +66,28 @@ class InventarioController extends Controller
         $datos = $request->all();
         $model= new Inventario();
         $inventario = Inventario::find($datos['IdInventario']);
-        $result['activar'] = $model->activarInventario($inventario);
-        $result['v_inventario'] = $model->listInventario();
+        $result = $model->activarInventario($inventario);
         return $result;
+    }
+
+    protected function postCerrarInventario(Request $request){
+        $datos = $request->all();
+        $model= new Inventario();
+        $inventario = Inventario::find($datos['IdInventario']);
+        $result = [];
+        if ($datos['caso']==1){
+            $result = $model->getCerrarInventario($inventario);
+        }
+        if ($datos['caso']==2){
+            $result = $model->getAjustarInventario($inventario);
+        }
+        return $result;       
     }
 
     protected function postBuscarInventario(Request $request){
         $datos = $request->all();
         $model= new Inventario();
+        $result['v_familias'] = $model->getBuscarFamiliasCombo($datos['IdInventario']);
         $result['v_cabecera'] = $model->getCabeceraInventario($datos['IdInventario']);
         $result['v_detalles'] = $model->getDetallesInventario($datos['IdInventario']);
         return $result;
@@ -108,19 +123,14 @@ class InventarioController extends Controller
         return $result;        
     }
 
-    protected function postCerrarInventario(Request $request){
+    protected function postbuscarFamilia(Request $request){
         $datos = $request->all();
         $model= new Inventario();
-        $inventario = Inventario::find($datos['IdInventario']);
-        $result = [];
-        if ($datos['caso']==1){
-            $result = $model->getCerrarInventario($inventario);
-        }
-        if ($datos['caso']==2){
-            $result = $model->getAjustarInventario($inventario);
-        }
-        return $result;       
+        $result = $model->getBuscarFamilias($datos);
+        return $result;      
     }
+
+
 
 
 

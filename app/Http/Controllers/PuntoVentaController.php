@@ -25,6 +25,7 @@ use App\Models\Cliente;
 use App\Models\Venta;
 use App\Models\Usuario;
 use App\Models\Producto;
+use App\Models\AbonoCliente;
 
 class PuntoVentaController extends Controller
 {
@@ -366,15 +367,16 @@ class PuntoVentaController extends Controller
 
     protected function postPagarCuenta(Request $request){
         $datos = $request->all();
-        log::info($datos);
-        return $datos;
+        $model= new AbonoCliente();
+        $result = $model->regPagoCredito($datos);
+        return $result;
     }
 
     protected function postBuscarProductosC(Request $request){
         $datos = $request->all();
         $producto = Producto::where('CodigoBarra', '=', $datos['CodigoProducto'])->first();
         $result['Existe'] = 0;
-		
+        
         if ($producto != null){
             $result['Existe'] = 1;
             $model= new Producto();

@@ -112,6 +112,8 @@ var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
     $("#IdFormaPago").val(data.IdFormaPago);
     $("#NombreFormaPago").val(data.NombreFormaPago);
+    $( "#PermitePagoCredito" ).prop( "checked", false );
+    if ((data.PermitePagoCredito) == 1){ $( "#PermitePagoCredito" ).prop( "checked", true );}
 }
 
 var BotonCancelar = function(){
@@ -139,7 +141,10 @@ var BotonAgregar = function(){
 
 var ProcesarFormadePago = function(){
     parametroAjax.ruta=ruta;
-    parametroAjax.data = $("#FormRegFormaPago").serialize();
+    var value = 0;
+    if ($('#PermitePagoCredito').is(":checked")){ var value = 1; }
+    var camposNuevo = {'PermitePagoCredito': value}
+    parametroAjax.data = $("#FormRegFormaPago").serialize() + '&' + $.param(camposNuevo);
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesar(respuesta);
 };
