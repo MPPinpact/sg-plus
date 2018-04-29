@@ -56,8 +56,8 @@
 						</div>
 						
 						<div class="col-md-2">
-                			<a  href="{{ route('compraMasivaNew') }}" style="float:left;" name="botonListadoCompras" id="botonListadoCompras" class="btn btn-success waves-effect waves-light btn-block" role="button">
-								<span>Nueva Compra Masiva </span>
+                			<a  href="{{ route('compraMasivaNew') }}" style="float:left;" name="botonContinuarIngresoCM" id="botonContinuarIngresoCM" class="btn btn-success waves-effect waves-light btn-block" role="button">
+								<span>Continuar Ingreso CM</span>
 							</a>
 						</div>
 						
@@ -68,7 +68,7 @@
 						</div>
 						
 						<div class="col-md-2">
-							<a  href="#!" style="float:left;" name="botonAgregarCompraMasiva" id="botonAgregarCompraMasiva" class="btn btn-success waves-effect waves-light btn-block"  role="button">
+							<a  href="#!" style="float:left;" name="botonFinalizarCompraMasiva" id="botonFinalizarCompraMasiva" class="btn btn-success waves-effect waves-light btn-block"  role="button">
 								<span>Finalizar Compra Masiva</span>
 							</a>
 						</div>

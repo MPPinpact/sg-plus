@@ -51,6 +51,14 @@ class Compra extends Authenticatable
         return DB::table('v_compras_masivas')->where([['IdLocal','=', $IdLocal],['EstadoCompra','=','1']])->orderBy('IdCompra','desc')->get();
     }
 
+    public function finalizarCompraMasiva($IdCompra){
+        $IdUsuario = Auth::id();
+
+        $values=array('EstadoCompra'=>2,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$IdUsuario);
+        
+        return DB::table('compras')->where('IdCompra', $IdCompra)->update($values);
+    }
+
     // Cargar combo de estados de Estado (Activo / Inactivo)
     public function listEstados(){
         return DB::table('v_estados')->get();
@@ -183,6 +191,10 @@ class Compra extends Authenticatable
 	
 	public function getCabeceraCompraFirst($IdCompra){
         return DB::table('v_compras')->where('IdCompra',$IdCompra)->first(); 
+    }
+
+    public function getCabeceraCompraMasivaFirst($IdCompra){
+        return DB::table('v_compras_masivas')->where('IdCompra',$IdCompra)->first(); 
     }
 
     public function getDetallesCompra($IdCompra){

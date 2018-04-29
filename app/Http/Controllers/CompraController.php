@@ -136,9 +136,7 @@ class CompraController extends Controller
 
         }
 
-
-
-        return View::make('compras.compraMasivaNew',$data);
+        return View::make('compras.compraMasivaView',$data);
     }
 
     protected function getCompraPurchaseList(){
@@ -154,6 +152,19 @@ class CompraController extends Controller
         $model= new Compra();
         $result['f_registro'] = $model->regCompra($datos);
         $result['v_compras'] = $model->listCompra();
+        return $result;
+    }
+
+    protected function postFinalizarCompraMasiva(Request $request){
+        $datos = $request->all();
+        $model= new Compra();
+
+        $IdCompra = $datos['IdCompra'];
+
+        $resultado = $model->finalizarCompraMasiva($IdCompra);
+        if($resultado) $result['f_registro'] = '{"code":"200","des_code":"Compra Masiva Finalizada correctamente!!!"}'; 
+            else $result['f_registro'] = '{code:"500",des_code:"Error al Finalar la Compra Masiva!!!"}'; 
+
         return $result;
     }
 
@@ -191,6 +202,8 @@ class CompraController extends Controller
         
         $result['detalle_compra'] = $model->regDetalleCompraMasiva($datos);
         $result['v_detalle_compra_masiva'] = $model->getDetallesCompraMasiva($IdCompra);
+        $result['v_resumen_compra_bodega'] = $model->rerporteCompraBodega($IdCompra);
+        $result['v_resumen_compra_local'] = $model->rerporteCompraLocal($IdCompra);
         return $result;
     }
 
@@ -204,6 +217,7 @@ class CompraController extends Controller
         
         log::info("IdCompra: ". $IdCompra);
 
+        $result['v_compra_masiva'] = $model->getCabeceraCompraMasivaFirst($IdCompra);        
         $result['v_detalle_compra_masiva'] = $model->getDetallesCompraMasiva($IdCompra);
         $result['v_resumen_compra_bodega'] = $model->rerporteCompraBodega($IdCompra);
         $result['v_resumen_compra_local'] = $model->rerporteCompraLocal($IdCompra);
@@ -234,6 +248,8 @@ class CompraController extends Controller
 		
         $result['v_bodega_destino'] = $model->getBodegasDestinoCompraMasiva($IdCompraDetalle);
 		$result['v_detalle_compra_masiva'] = $model->getDetallesCompraMasiva($IdCompra);
+        $result['v_resumen_compra_bodega'] = $model->rerporteCompraBodega($IdCompra);
+        $result['v_resumen_compra_local'] = $model->rerporteCompraLocal($IdCompra);
         return $result;
     }
 	

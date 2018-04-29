@@ -58,7 +58,9 @@ var cargarTablaCompraMasiva = function(data){
                         return data;
                     }
                 },
-                {"title": "Total Compra","data": "TotalCompra", width:200, className: "text-right"},
+                {"title": "Total Compra","data": "TotalCompraMasiva", width:200, 
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            className: "text-right"},
                 {"title": "Estado Compra","data": "DesEstadoCompra", width:200, className: "text-center"}
             ],
 	});

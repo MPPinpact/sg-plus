@@ -22,6 +22,28 @@ var StockProducto = function(IdProducto){
 	
 }
 
+var BotonFinalizarCompraMasiva = function(){
+	console.log("BotonFinalizarCompraMasiva");
+
+	parametroAjax.ruta=rutaFCM;
+	parametroAjax.data = {IdCompra:$("#IdCompra").val()};
+	respuesta=procesarajax(parametroAjax);
+
+	var result = JSON.parse(respuesta.respuesta.f_registro);
+	if(result.code==200) {
+		$.growl({message:result.des_code},{type: "success", allow_dismiss: true,});
+		$("#botonNuevaCM").show();
+    	$("#botonContinuarIngresoCM").hide();
+		$("#botonFinalizarCompraMasiva").hide();
+
+	}else{
+		$.growl({message:result.des_code},{type: "warning", allow_dismiss: true,});
+		$("#botonNuevaCM").hide();
+    	$("#botonContinuarIngresoCM").show();
+
+	}
+}
+
 var BotonBuscarProducto = function(){
 	console.log("BotonBuscarProducto");
 	
@@ -168,9 +190,14 @@ var CargarDetalleCompraMasiva = function(IdCompra){
     $("#IdCompra").val(IdCompra);
 	$("#IdCompraBD").val(IdCompra);
 
+	var EstadoCompra = respuesta.respuesta.v_compra_masiva.EstadoCompra;
+	$("#IdEstadoCompra").val(EstadoCompra);
     cargarTablaCompraMasiva(respuesta.respuesta.v_detalle_compra_masiva);
     cargarTablaResumenCompraMasivaBodega(respuesta.respuesta.v_resumen_compra_bodega);
     cargarTablaResumenCompraMasivaLocal(respuesta.respuesta.v_resumen_compra_local);
+
+    if(EstadoCompra!=1) $("#frameIngresoCompra").hide();
+    if(EstadoCompra==1) $("#frameIngresoCompra").show();
 }
 
 var EliminarAsignacionBodegaDestino = function(IdBodegaDestino){
@@ -575,7 +602,7 @@ var cargarTablaResumenCompraMasivaBodega = function(data){
                 {"title": "Valorizado Venta","data": "ValorizadoVenta", 
                                 render: $.fn.dataTable.render.number( '.', ',', 2 ), 
                                 width:50, className: "text-right"},
-                {"title": "Margen","data": "Margen", 
+                {"title": "Margen %","data": "Margen", 
                                 render: $.fn.dataTable.render.number( '.', ',', 2 ), 
                                 width:50, className: "text-right"},
             ],
@@ -632,7 +659,7 @@ var cargarTablaResumenCompraMasivaLocal = function(data){
                 {"title": "Valorizado","data": "TotalValorizadoVenta", 
                                 render: $.fn.dataTable.render.number( '.', ',', 2 ), 
                                 width:50, className: "text-right"},
-                {"title": "Margen","data": "Margen", 
+                {"title": "Margen %","data": "Margen", 
                                 render: $.fn.dataTable.render.number( '.', ',', 2 ), 
                                 width:50, className: "text-right"},
                 
@@ -768,7 +795,7 @@ $(document).ready(function(){
     });
 	
 	if(d.IdCompra) {
-		alert("Existe una Compra Masiva Abierta, desea continuar ingresando productos en ella?");
+		alert("Existe una Compra Masiva en Proceso de Ingreso, desea continuar ingresando productos en ella?");
 		CargarDetalleCompraMasiva(d.IdCompra);	
 	}
 	

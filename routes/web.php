@@ -128,6 +128,8 @@ Route::post('/comprardc', 'CompraController@postRegistrarDetallec')->name('compr
 Route::post('/compraRDCM', 'CompraController@postRegistrarDetalleCompraMasiva')->name('compraRDCM');
 Route::post('/compraRBD', 'CompraController@postRegistrarBodegaDestino')->name('compraRBD');
 Route::post('/compraCDC', 'CompraController@postCargarDetalleCompraMasiva')->name('compraCDC');
+Route::post('/compraFDC', 'CompraController@postFinalizarCompraMasiva')->name('compraFDC');
+
 
 Route::post('/compraBD', 'CompraController@getBodegaDestino')->name('compraBD');
 Route::post('/compraEBD', 'CompraController@postEliminarAsignacionBodegaDestino')->name('compraEBD');

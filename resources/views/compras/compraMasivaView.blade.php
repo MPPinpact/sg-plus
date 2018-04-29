@@ -56,20 +56,20 @@
 						</div>
 						
 						<div class="col-md-2">
-                			<a  href="{{ route('compraMasivaNew') }}" style="float:left;" name="botonListadoCompras" id="botonListadoCompras" class="btn btn-inverse-success waves-effect waves-light btn-block" role="button">
+                			<a  href="{{ route('compraMasivaNew') }}" style="float:left;" name="botonNuevaCM" id="botonNuevaCM" class="btn btn-success waves-effect waves-light btn-block" role="button">
 								<span>Nueva Compra Masiva </span>
 							</a>
 						</div>
 						
 
 						<div class="col-md-2">
-                			<a  href="{{ route('compraMasivaReport') }}" style="float:left;" name="botonGenerarListadoCompra" id="botonGenerarListadoCompra" class="btn btn-success waves-effect waves-light btn-block" role="button">
-								<span>Reporte Compra Masiva</span>
+                			<a  href="{{ route('compraMasivaNew') }}" style="float:left;" name="botonContinuarIngresoCM" id="botonContinuarIngresoCM" class="btn btn-success waves-effect waves-light btn-block" role="button">
+								<span>Continuar Ingreso CM</span>
 							</a>
 						</div>
 						
 						<div class="col-md-2">
-							<a  href="#!" style="float:left;" name="botonAgregarCompraMasiva" id="botonAgregarCompraMasiva" class="btn btn-success waves-effect waves-light btn-block"  role="button">
+							<a  href="#!" style="float:left;" name="botonFinalizarCompraMasiva" id="botonFinalizarCompraMasiva" class="btn btn-success waves-effect waves-light btn-block"  role="button">
 								<span>Finalizar Compra Masiva</span>
 							</a>
 						</div>
@@ -86,7 +86,7 @@
 			 <div class="card-header">
 	        	<center>
 	        		<h5 class="card-header-text">
-	        			Visualización de Compra Masiva
+	        			Registro de Compra Masiva
 	        		</h5>
                 </center>
 	        </div>
@@ -96,49 +96,61 @@
 					<input type="hidden" name="IdCompra" id="IdCompra">
 					<input type="hidden" name="IdLocalDC" id="IdLocalDC">
 					<input type="hidden" name="IdDetalleCompra" id="IdDetalleCompra">
+					<input type="hidden" name="IdEstadoCompra" id="IdEstadoCompra">
 					
-					<div class="row">		
-						<div class="col-md-3">					
-							<div class="input-group">
-								<input id="NombreProducto" name="NombreProducto" type="text" aria-describedby="btn-addon1" class="md-form-control md-static" placeholder="Buscar Producto...">
-								<span class="input-group-addon" id="botonBuscarProducto"><i class="icofont icofont-search"></i></span>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class="input-group">
-								<input type="hidden" name="IdProducto" id="IdProducto">
-								<input id="CodigoBarra" name="CodigoBarra" type="text" class="md-form-control md-static" maxlength="20" placeholder="Código..." />
-								<span class="input-group-addon" id="botonBuscarCodigo"><i class="icofont icofont-search"></i></span>
-							</div>
-						</div>
-						<div class="col-md-1">
-							<div class="md-input-wrapper">
-								<input id="CantidadProducto" name="CantidadProducto" type="text" class="md-form-control md-static" maxlength="250"  />
-								<label for="CantidadProducto">Cantidad</label>
-							</div>
-						</div>
-						<div class="col-md-1">
-							<div class="md-input-wrapper">
-								<input id="PrecioCosto" name="PrecioCosto" type="text" class="md-form-control md-static" maxlength="250"  />
-								<label for="PrecioCosto">Costo</label>
-							</div>
-						</div>
-						<div class="col-md-1">
-							<div class="md-input-wrapper">
-								<input id="PrecioVenta" name="PrecioVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
-								<label for="PrecioVenta">Venta</label>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class="md-input-wrapper">
-								<button id="botonBodegaDestino" name="botonBodegaDestino" type="button" class="btn-lg btn-success waves-effect waves-light btn-block">Bodega Destino  <i class="icofont icofont-home-search"></i></button>
-							</div>
-						</div>
-					</div>
 					{!! Form::close() !!}
 					<div class="row">
 						<div class="col-md-12 table-responsive">
 							<table id="tablaDetalleCompra" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-7">
+		<div class="card">
+			<div class="card-header">
+	        	<center>
+	        		<h5 class="card-header-text">
+	        			Resumen de Compra Masiva Bodega
+	        		</h5>
+	            </center>
+	        </div>
+			 <div class="card-block">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-12 table-responsive">
+							<table id="tablaResumenCompraMasivaBodega" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%">
+								<tfoot>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-5">
+		<div class="card">
+			<div class="card-header">
+	        	<center>
+	        		<h5 class="card-header-text">
+	        			Resumen de Compra Masiva Local
+	        		</h5>
+	            </center>
+	        </div>
+			 <div class="card-block">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-12 table-responsive">
+							<table id="tablaResumenCompraMasivaLocal" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%">
+								<tfoot>
+								</tfoot>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -526,12 +538,37 @@
 
 
 <script Language="Javascript">
+	var ruta = "{{ URL::route('compras') }}"
+	var rutaA = "{{ URL::route('activarCom') }}"
+	var rutaB = "{{ URL::route('comprab') }}"
+	var rutaBP = "{{ URL::route('comprabp') }}"
+	var rutaPR = "{{ URL::route('comprapr') }}"
+	var rutaBE = "{{ URL::route('comprabe') }}"
+	var rutaBB = "{{ URL::route('comprabb') }}"
+	var rutaBC = "{{ URL::route('comprabc') }}"
+	var rutaBPD = "{{ URL::route('comprabpd') }}"
+	
+	var rutaBPM = "{{ URL::route('compraBPM') }}"
+	var rutaRDCM = "{{ URL::route('compraRDCM') }}"
+	var rutaRBD = "{{ URL::route('compraRBD') }}"
+	var rutaBD = "{{ URL::route('compraBD') }}"
+	var rutaEBD = "{{ URL::route('compraEBD') }}"
+	var rutaCSP = "{{ URL::route('compraCSP') }}"
+	var rutaCDC = "{{ URL::route('compraCDC') }}"
+	var rutaFCM = "{{ URL::route('compraFDC') }}"
+	
+		
+	var rutaDC = "{{ URL::route('comprardc') }}"
+	var rutaBDC = "{{ URL::route('comprarbdc') }}"
+	var rutaCDA = "{{ URL::route('comprada') }}"
 	var d = [];
-	d['v_compra_masiva'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_compra_masiva) }}'));
-	d['v_detalle_compra_masiva'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_detalle_compra_masiva) }}'));
-	
 	d['v_locales'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_locales) }}'));
-	
+	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
+	d['v_tipo_dte'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_tipo_dte) }}'));
+	d['v_unidad_medida'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_unidad_medida) }}'));
+
+	d['IdCompra'] = JSON.parse(rhtmlspecialchars('{{ json_encode($IdCompra) }}'));
+
 </script>
 <script src="{{ asset('js/compras/compraMasivaView.js') }}"></script>
 @endsection
