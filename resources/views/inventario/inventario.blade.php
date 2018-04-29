@@ -47,7 +47,18 @@
 		    </div>
 		    <div class="card-block">
 	        	<div class="row">
-					<div class="col-md-12">
+					<div id="divBotonesSec" class="col-md-8" style="display:none;">
+						<button id="btn-sol-inv" type="button" class="btn btn-primary waves-effect waves-light">
+							<span>Solicitar Inventario</span>
+            			</button>
+            			<button id="btn-cer-inv" type="button" class="btn btn-primary waves-effect waves-light">
+							<span>Cerrar Inventario</span>
+            			</button>
+            			<button id="btn-aju-inv" type="button" class="btn btn-primary waves-effect waves-light">
+							<span>Ajustar Inventario</span>
+            			</button>
+					</div>
+					<div class="col-md-4">
 						<button style="float:right;" name="btn-list" id="btn-list" type="button" class="btn btn-primary waves-effect waves-light">
 							<span>Listado de Inventario</span>
             			</button>
@@ -188,31 +199,22 @@
 		</div>
 	</div>
 </div>
-<!-- Modal Proveedor -->
-<!-- <div class="modal fade modal-flex" id="ModalProveedor" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+
+<!-- Modal Inventario -->
+<div class="modal fade modal-flex" id="ModalInventario" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-            	<h6 class="modal-title">REGISTRO PROVEEDOR</h6>
+            	<h6 class="modal-title">TOMA DE INVENTARIO</h6>
             </div>
             <div class="modal-body">
             	{!! Form::open(['id'=>'FormProveedorNew','autocomplete' => 'off']) !!}
-            	<div class="row">
-					<div class="col-sm-6">
-						<div class="md-input-wrapper">
-							<input id="RUTProveedor2" name="RUTProveedor2" type="text" class="md-form-control md-static" maxlength="250" readonly/>
-							<label for="RUTProveedor2">RUT Proveedor</label>
-		                    <small id="ErrorRut2" class="rut-error"></small>
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div class="md-input-wrapper">
-							<input id="NombreFantasia2" name="NombreFantasia2" type="text" class="md-form-control md-static" maxlength="250"/>
-							<label for="NombreFantasia2">Nombre Fantasía</label>
-						</div>
+				<div class="row">
+					<div class="col-md-12 table-responsive">
+						<table id="tablaTomaInventario" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 					</div>
 				</div>
 				{!! Form::close() !!}
@@ -223,7 +225,8 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
+
 <!-- Modal Detalle Compra -->
 <div class="modal fade" id="ModalDetalleCompra" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
@@ -299,11 +302,13 @@
 	var rutaDC = "{{ URL::route('inventariodc') }}"
 	var rutaBPD = "{{ URL::route('inventariobpd') }}"
 	
+	var rutaBB = "{{ URL::route('inventariobb') }}"
+	var rutaCI = "{{ URL::route('inventarioci') }}"
+	
 	var rutaBC = "{{ URL::route('preventabc') }}"
 	var rutaCP = "{{ URL::route('preventacp') }}"
 	
 	var rutaBE = "{{ URL::route('comprabe') }}"
-	var rutaBB = "{{ URL::route('comprabb') }}"
 	var rutaBCs = "{{ URL::route('comprabc') }}"
 	var rutaCDA = "{{ URL::route('preventada') }}"
 	var d = [];
@@ -313,3 +318,4 @@
 </script>
 <script src="{{ asset('js/inventario/inventario.js') }}"></script>
 @endsection
+

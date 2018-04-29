@@ -98,8 +98,30 @@ class InventarioController extends Controller
         $datos = $request->all();
         $model= new Inventario();
         $result = $model->getBusquedaProducto($datos);
-        log::info($result);
         return $result;      
     }
+
+    protected function postbuscarBodega(Request $request){
+        $datos = $request->all();
+        $model= new Inventario();
+        $result = $model->getBuscarBodega($datos['IdBodega']);
+        return $result;        
+    }
+
+    protected function postCerrarInventario(Request $request){
+        $datos = $request->all();
+        $model= new Inventario();
+        $inventario = Inventario::find($datos['IdInventario']);
+        $result = [];
+        if ($datos['caso']==1){
+            $result = $model->getCerrarInventario($inventario);
+        }
+        if ($datos['caso']==2){
+            $result = $model->getAjustarInventario($inventario);
+        }
+        return $result;       
+    }
+
+
 
 }

@@ -37,6 +37,7 @@ class Inventario extends Authenticatable
 
     // Cargar tabla de bodega
     public function listInventario(){
+        // return DB::table('v_inventario')->where('EstadoInventario','<>',5)->get();
         return DB::table('v_inventario')->get();
     }
 
@@ -85,10 +86,14 @@ class Inventario extends Authenticatable
     // Activar / Desactivar bodega
     public function activarInventario($datos){
         $idAdmin = Auth::id();
-        if ($datos->EstadoInventario >0){
+        if ($datos->EstadoInventario == 5){
             $values=array('EstadoInventario'=>0,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
-        }else{
-            $values=array('EstadoInventario'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        }
+        if ($datos->EstadoInventario == 0){
+            $values=array('EstadoInventario'=>5,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+        }
+        if ($datos->EstadoInventario > 0 && $datos->EstadoInventario < 5){
+            return 204;
         }
         return DB::table('inventario')
                 ->where('IdInventario', $datos->IdInventario)
@@ -119,5 +124,34 @@ class Inventario extends Authenticatable
             ->where('IdBodega',$datos['IdBodega'])
             ->where('CodigoBarra',$datos['CodigoBarra'])
             ->get(); 
+    }
+
+    public function getBuscarBodega($IdBodega){
+        return DB::table('v_bodegas_productos')->where('IdBodega',$IdBodega)->get(); 
+    }
+
+    public function getCerrarInventario($datos){
+        $idAdmin = Auth::id();
+        if ($datos->EstadoInventario == 0){
+            $values=array('EstadoInventario'=>1,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+            return DB::table('inventario')
+                ->where('IdInventario', $datos->IdInventario)
+                ->update($values);
+        }else{
+            return 204;
+        }
+    }
+
+    public function getAjustarInventario($datos){
+        $idAdmin = Auth::id();
+        if ($datos->EstadoInventario == 1){
+            $values=array('EstadoInventario'=>3,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
+            return DB::table('inventario')
+                ->where('IdInventario', $datos->IdInventario)
+                ->update($values);
+        }else{
+            return 204;
+        }   
+
     }
 }
