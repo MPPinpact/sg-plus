@@ -11,8 +11,6 @@ var parametroAjax = {
 };
 
 var ManejoRespuestaProcesarD = function(respuesta){
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         bloquearInuts();
         $(".divDetalles").toggle();

@@ -85,6 +85,16 @@
 										<div class="col-md-4"></div>
 									</div>									
 									<br>
+									<div class="row">
+										<div class="col-sm-4"></div>
+					                    <div class="col-sm-4">
+												<label class="form-check-label">
+							                    	<input name="PermitePagoCredito" id="PermitePagoCredito" type="checkbox" class="form-check-input"> Permite Pago de Credito Interno
+							                    </label>
+					                    </div>
+					                    <div class="col-sm-4"></div>
+									</div>
+									<br>
 									<div align="center">
 										<div class="pull-rigth">
 											<div class="divBotones">

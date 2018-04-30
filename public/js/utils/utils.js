@@ -352,12 +352,10 @@ function SaveToDisk(fileURL, fileName) {
 
 //Funcion para salir de la aplicacion
 var Salir = function(){
-    //parametroAjax.ruta=RutaSalir;
-    //parametroAjax.data = $("#formLogout").serialize();
-    //window.location.href = "/";
-    //procesarajax(parametroAjax);
-
-    alert("Hola");
+    parametroAjax.ruta=RutaSalir;
+    parametroAjax.data = $("#formLogout").serialize();
+    window.location.href = "/";
+    procesarajax(parametroAjax);
 }
 
 //verificar rut

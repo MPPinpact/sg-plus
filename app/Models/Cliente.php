@@ -99,11 +99,19 @@ class Cliente extends Authenticatable
     public function buscarClienteDetalleCredito($datos){
         $cliente = DB::table('v_clientes')->where('RUTCliente',$datos['RUTCliente'])->get();
         $result = [];
+        log::info($cliente);
         if ($cliente){
             $result['cliente'] =$cliente;
-            $result['UltimaCompra'] = DB::select("select TotalVenta from v_ventas where RUTCliente = '".$datos['RUTCliente']."' order by IdVenta desc limit 1");
-            $result['MontoAnterior'] = DB::select("select MontoFacturadoAnterior from v_clientes_eecc where RUTCliente = '".$datos['RUTCliente']."' order by IdEECC desc limit 1");
+            $result['UltimaCompra'] = DB::select("select TotalVenta from v_ventas where IdCliente = ".$cliente[0]->IdCliente." order by IdVenta desc limit 1");
+            $result['MontoAnterior'] = DB::select("select MontoFacturadoAnterior from clientes_eecc where IdCliente = ".$cliente[0]->IdCliente." order by IdEECC desc limit 1");
+            $result['MontoActual'] = DB::select("select MontoFacturadoActual from clientes_eecc where IdCliente = ".$cliente[0]->IdCliente." order by IdEECC desc limit 1");
+            $result['UltimoPago'] = DB::select("select MontoAbono from abono_cliente where IdCliente = ".$cliente[0]->IdCliente." and IdAbono in (select max(IdAbono) from abono_cliente where IdCliente = ".$cliente[0]->IdCliente.")");
+            $result['FechaVencimiento'] = DB::select("select FechaVencimiento from clientes_eecc where IdCliente = ".$cliente[0]->IdCliente." order by IdEECC desc limit 1");
+            $result['DeudaTotal'] = DB::select("select CupoAutorizado from clientes where IdCliente= ".$cliente[0]->IdCliente.";");
         }
         return $result;
     }
 }
+
+
+// FechaVencimiento

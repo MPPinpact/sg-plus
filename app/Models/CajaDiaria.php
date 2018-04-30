@@ -38,7 +38,7 @@ class CajaDiaria extends Authenticatable
     }
 
     public function listFormasPago(){
-        return DB::table('v_forma_pago_combo')->get();        
+        return DB::table('v_forma_pago_combo_credito')->get();        
     }
 	
 	// 
