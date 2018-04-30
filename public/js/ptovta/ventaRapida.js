@@ -621,6 +621,7 @@ var AgregarProductoPreVenta= function(){
 	var IdProducto = $("#IdProductoPreVenta").val();
 	
 	if(IdProducto.length > 0){
+		CalcularMontosPreVenta();
 		$('#FormPreVenta').formValidation('validate');
 	}else
 	{
