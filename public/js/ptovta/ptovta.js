@@ -30,6 +30,14 @@ var ManejoRespuestaProcesarPagarCuenta = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta.code==200){
             $("#ModalPagoCreditoCliente").modal("hide");
+            $("#IdClientePagoCredito").val("");
+            $("#RUTClientePagoCredito").val("");
+            $("#NombreClientePagoCredito").val("");
+            $("#MontoFacturadoPagoCredito").val("");
+            $("#FechaVencimientoPagoCredito").val("");
+            $("#DeudaTotalPagoCredito").val("");
+            $("#MontoAPagarPagoCredito").val("");
+            $("#IdFormaPagoCredito").val("").trigger("change");
             $.growl({message:respuesta.respuesta.des_code},{type: "success", allow_dismiss: true,});
         }else{
             $.growl({message:respuesta.respuesta.des_code},{type: "warning", allow_dismiss: true,});

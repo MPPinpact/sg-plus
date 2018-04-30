@@ -108,6 +108,8 @@ class Inventario extends Authenticatable
         if ($datos->EstadoInventario == 0){
             $values=array('EstadoInventario' => 1, 'auFechaModificacion' => date("Y-m-d H:i:s"), 'auUsuarioModificacion'=>$idAdmin, 'FechaCierreInventario' => date("Y-m-d H:i:s"));
             DB::table('inventario')->where('IdInventario', $datos->IdInventario)->update($values);
+            $result = DB::select("update inventario_detalle id left join inventario_detalle ie on id.IdInventarioDetalle = ie.IdInventarioDetalle set id.Diferencia = (ie.StockFisico - ie.StockSistema) where id.IdInventario=".$datos->IdInventario);
+            log::info($result);
             $response['code'] = 200; 
             $response['des_code'] = "Inventario Cerrado";
             $response['v_detalles'] = $this->getDetallesInventario($datos->IdInventario);

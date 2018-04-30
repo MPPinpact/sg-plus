@@ -70,11 +70,6 @@
 		        <div class="row">
 		            <div class="col-sm-12">
 		                <div class="product-edit">
-							<!-- <div class="row">
-								<div id="divVolver" class="col-md-12">
-									<a style="float:right;" id="volverAct" href="#"><u>volver</u></a>
-								</div>
-							</div> -->
 							<div id="divTabs">
 			                    <ul class="nav nav-tabs nav-justified md-tabs " role="tablist">
 			                        <li class="nav-item">
@@ -313,18 +308,10 @@
 	var rutaBDC = "{{ URL::route('inventariobdc') }}"
 	var rutaDC = "{{ URL::route('inventariodc') }}"
 	var rutaBPD = "{{ URL::route('inventariobpd') }}"
-	
 	var rutaBB = "{{ URL::route('inventariobb') }}"
 	var rutaCI = "{{ URL::route('inventarioci') }}"
 	var rutaBF = "{{ URL::route('inventariobf') }}"
-
-
 	
-	var rutaBC = "{{ URL::route('preventabc') }}"
-	var rutaCP = "{{ URL::route('preventacp') }}"
-	
-	var rutaBE = "{{ URL::route('comprabe') }}"
-	var rutaBCs = "{{ URL::route('comprabc') }}"
 	var rutaCDA = "{{ URL::route('preventada') }}"
 	var d = [];
 	d['v_inventario'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_inventario) }}'));
