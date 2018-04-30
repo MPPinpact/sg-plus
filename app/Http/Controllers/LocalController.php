@@ -55,6 +55,9 @@ class LocalController extends Controller
         $datos = $request->all();
         $user= new Usuario();
         $model= new Local();
+
+log::info($datos);
+
         $result['f_registro'] = $model->regLocal($datos);
         $result['v_locales'] = $model->listLocal();
         return $result;
@@ -76,6 +79,7 @@ class LocalController extends Controller
         $model= new Local();
         $result['v_detalles'] = $model->getOneDetalle($datos['IdLocal']);
         $result['v_bodegas'] = $model->bodegasLocal($datos['IdLocal']);
+        $result['v_bodegas_local'] = $model->bodegasPrincipalLocal($datos['IdLocal']);
         return $result;
     }
 

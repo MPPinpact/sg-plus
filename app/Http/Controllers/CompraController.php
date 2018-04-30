@@ -341,7 +341,8 @@ class CompraController extends Controller
     protected function postBuscarBodega(Request $request){
         $datos = $request->all();
         $model= new Compra();
-        $result= $model->getBodegas($datos['IdLocal']);
+        $result['bodegasLocal'] = $model->getBodegas($datos['IdLocal']);
+        $result['bodegasPrincipal'] = $model->getBodegasPrincipal($datos['IdLocal']);
         return $result;
     }
 

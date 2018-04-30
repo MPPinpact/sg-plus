@@ -125,7 +125,7 @@
 </div>
 
 <!--Modal Consulta Stock Producto -->
-<div class="modal fade" id="ModalConsultaStockProducto" tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalConsultaStockProducto" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -175,7 +175,7 @@
 </div>
 
 <!--Modal Consulta Crédito Clientes  -->
-<div class="modal fade" id="ModalConsultaCreditoCliente" tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalConsultaCreditoCliente" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -265,7 +265,7 @@
 </div>
 
 <!-- Modal Pago Credito Interno Clientes -->
-<div class="modal fade" id="ModalPagoCreditoCliente" tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalPagoCreditoCliente" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -351,7 +351,7 @@
 </div>
 
 <!--Modal Asignar Vendedor a la Pre-Venta -->
-<div class="modal fade" id="ModalAsignarVendedor" role="document" style="z-index: 1060; display: none;">
+<div class="modal fade" id="ModalAsignarVendedor"  data-keyboard="false" data-backdrop="static" role="document" style="z-index: 1060; display: none;">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -407,7 +407,7 @@
 </div>
 
 <!--Modal Asignar Cliente a la Pre-Venta -->
-<div class="modal fade" id="ModalAsignarCliente" role="document" style="z-index: 1060; display: none;">
+<div class="modal fade" id="ModalAsignarCliente" role="document"  data-keyboard="false" data-backdrop="static" style="z-index: 1060; display: none;">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -466,7 +466,7 @@
 </div>
 
 <!--Modal Asignar Forma de Pago a la Pre-Venta -->
-<div class="modal fade" id="ModalAsignarFP" role="document" style="z-index: 1060; display: none;">
+<div class="modal fade" id="ModalAsignarFP" role="document"  data-keyboard="false" data-backdrop="static"  style="z-index: 1060; display: none;">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -563,7 +563,7 @@
 </div>
 
 <!-- Modal Ingreso Diferentes Formas de Pago -->
-<div class="modal fade" id="ModalIngresoPago" role="document" style="z-index: 1070; display: none;">
+<div class="modal fade" id="ModalIngresoPago"  data-keyboard="false" data-backdrop="static" role="document" style="z-index: 1070; display: none;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -688,7 +688,7 @@
 </div>
 
 <!-- Modal Pre-Venta -->
-<div class="modal fade" id="ModalPreVenta" role="dialog" style="z-index: 1050; display: none;" >
+<div class="modal fade" id="ModalPreVenta" role="dialog" data-keyboard="false" data-backdrop="static" style="z-index: 1050; display: none;" >
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -879,181 +879,8 @@
     </div>
 </div>
 
-<!-- Modal Venta Pre-Venta -->
-<div class="modal fade" id="ModalVentaPreVenta" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                	<span aria-hidden="true">×</span>
-            	</button>
-            	<h6 id="spanTituloModalVentaPreVenta" class="modal-title">Venta x PreVenta</h6>
-            </div>
-            <div class="modal-body">
-				{!! Form::open(['id'=>'FormVentaPre-Venta','autocomplete' => 'off']) !!}
-					<input type="hidden" name="IdVentaPreVenta" id="IdVentaPreVenta" value="0">
-					
-					<div id="VentaPreVentaStep_1" style="display: none;">
-						<div class="row">
-							<div class="col-md-9">
-								<div class="md-input-wrapper">
-									<input id="IdPreVentaVenta" name="IdPreVentaVenta" type="text" class="md-form-control" maxlength="250" />
-									<label for="IdPreVentaVenta">Nro. Pre-Venta</label>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<button id="botonAgregarPreVenta" name="botonAgregarPreVenta" type="button" class="btn btn-success waves-effect waves-light btn-block">
-									<i class="icon-check"></i>  Agregar PreVenta 
-								</button>
-							</div>
-						</div>	
-						
-						<div class="row">
-							<div class="col-md-12">
-								<div id="wizard">
-									<section>	
-										<form class="wizard-form wizard clearfix" id="basic-forms" action="#" role="application">
-											<div class="content clearfix">
-												<!-- Shopping cart field et start -->
-												<h3 id="basic-forms-h-0__" tabindex="-1" class="title current"> Listado de Compras </h3>
-												<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0__" class="body current" aria-hidden="false">
-													<table id="e-product-list" class="table table-striped table-responsive nowrap dataTable no-footer dtr-inline cart-page" role="grid" style="width: 100%;">
-														<thead>
-															<tr>
-																<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 1023px;">Producto</th>
-																<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 153px;">Precio</th>
-																<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 100px;">Cantidad</th>
-																<th class="sorting_disabled" rowspan="1" colspan="1" style="width: 134px;text-align:center">Action</th>
-															 </tr>
-														  </thead>
-														<tbody>
-															<tr class="odd">
-																<td class="pro-name">
-																	<h6>Man's cloth</h6>
-																	<span>Lorem ipsum dolor sit consec te imperdiet iaculis ipsum..</span>
-																</td>
-																<td>$456</td>
-																<td class="text-center">1</td>
-																<td class="action-icon text-center">
-																	<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
-																</td>
-															</tr>
-															<tr class="even">
-																<td class="pro-name">
-																	<h6> Cosmetic </h6>
-																	<span>Interchargebla lens Digital Camera with APS-C-X Trans CMOS Sens</span>
-																</td>
-																<td>$689</td>
-																<td class="text-center">1</td>
-																<td class="action-icon text-center">
-																	<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
-																</td>
-															</tr>
-															<tr class="odd">
-																<td class="pro-name">
-																	<h6> Jacket man </h6>
-																	<span>Lorem ipsum dolor sit consec te imperdiet iaculis ipsum..</span>
-																</td>
-																<td>$755</td>
-																<td class="text-center">1</td>
-																<td class="action-icon text-center">
-																	<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
-																</td>
-															</tr>
-															<tr class="even">
-																<td class="pro-name">
-																	<h6> Footwear Man </h6>
-																	<span>Lorem ipsum dolor sit consec te imperdiet iaculis ipsum..</span>
-																</td>
-																<td>$989</td>
-																<td class="text-center">2</td>
-																<td class="action-icon text-center">
-																	<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a>
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</fieldset>                               <!-- Shopping cart fieldset end -->
-											</div> 
-										</form>
-									</section>
-								</div>
-							</div>
-						</div>
-						
-						<div class="row" >
-							<div class="col-md-6">
-								<button id="botonCancelarVentaPreVenta" name="botonCancelarVentaPreVenta" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
-									<i class="icofont icofont-ui-close"> </i> Cancelar
-								</button>
-							</div>
-							<div class="col-md-6">
-								<button id="botonContinuarVentaPreVenta" name="botonContinuarVentaPreVenta"  type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
-									<i class="icofont icofont-ui-play"> </i> Continuar Venta
-								</button>
-								
-							</div>
-						</div>
-					</div>
-					
-					<div id="VentaPreVentaStep_2" style="display: none;" >
-						<div class="row">
-							<div class="col-md-12">
-								<div class="md-input-wrapper">
-									<input id="TotalVentaVR" name="TotalVentaVR" type="text" class="md-form-control text-right form-control-lg" maxlength="250" />
-									
-									<label for="TotalVentaVR">Total Venta</label>
-								</div>
-							</div>
-						</div>
-						
-						<div class="row"> <br /> </div>	
-						
-						<div class="row">
-							<div class="col-md-4">
-								<label for="botonVendedor"> Ingrese Vendedor <i class="icofont icofont-business-man"> </i></label>
-								<button id="botonVendedor" name="botonVendedor" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
-									<i class="icofont icofont-business-man"> </i>  Vendedor
-								</button>
-							</div>
-							<div class="col-md-4">
-								<label for="botonCliente"> Seleccione Cliente <i class="icofont icofont-ui-user"> </i></label>
-								<button id="botonCliente" name="botonCliente" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
-									<i class="icofont icofont-ui-user"> </i> Cliente
-								</button>
-							</div>
-							<div class="col-md-4">
-								<label for="botonCliente"> Forma de Pago <i class="icofont icofont-coins"> </i></label>
-								<button id="botonCliente" name="botonCliente" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
-									<i class="icofont icofont-coins"> </i> Forma de Pago
-								</button>
-							</div>
-						</div>
-						
-						<div class="row"> <br /> <br /> <br /> </div>						
-						
-						<div class="row" >
-							<div class="col-md-6">
-								<button id="botonCancelarVenta_2" name="botonCancelarVenta_2" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
-									<i class="icofont icofont-ui-close"> </i> Cancelar
-								</button>
-							</div>
-							<div class="col-md-6">
-								<button id="botonFinalizarVenta" name="botonFinalizarVenta"  type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
-									<i class="icofont icofont-ui-check"></i> Finalizar Venta
-								</button>
-							</div>
-						</div>
-					</div>
-					
-				{!! Form::close() !!}
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Modal Cierre Venta -->
-<div class="modal fade" id="ModalFinalizarVenta" tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalFinalizarVenta"  data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             
@@ -1090,7 +917,7 @@
 </div>
 
 <!-- Modal Cancelar Venta -->
-<div class="modal fade" id="ModalCancelarVenta" tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalCancelarVenta"  data-keyboard="false" data-backdrop="static"  tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             

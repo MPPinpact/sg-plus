@@ -52,7 +52,7 @@ class Local extends Authenticatable
     public function regLocal($datos){
         $idAdmin = Auth::id();
         $datos['IdLocal']==null ? $Id=0 : $Id= $datos['IdLocal'];
-        $sql="select f_registro_local(".$Id.",'".$datos['NombreLocal']."',".$datos['IdEmpresa'].",".$datos['IdEncargadoLocal'].",".$datos['EstadoLocal'].",".$idAdmin.")";
+        $sql="select f_registro_local(".$Id.",'".$datos['NombreLocal']."',".$datos['IdEmpresa'].",".$datos['IdEncargadoLocal'].",".$datos['EstadoLocal'].",".$datos['IdBodegaPrincipal'].",".$idAdmin.")";
         $execute=DB::select($sql);
 
         log::info("SQL: " . $sql);
@@ -76,10 +76,14 @@ class Local extends Authenticatable
     }
 
     public function bodegasLocal($IdLocal){    
-        $result['bodegas'] =  DB::table('v_bodegas')->where('IdLocal',$IdLocal)->get(); 
+        $result['bodegas'] = DB::table('v_bodegas')->where('IdLocal',$IdLocal)->get(); 
         $sql="select SUM(MontoValorizado) as TotalValorizado from v_bodegas where IdLocal=".$IdLocal;
         $result['sum']=DB::select($sql);
         return $result;
+    }
+
+    public function bodegasPrincipalLocal($IdLocal){    
+        return  DB::table('v_bodegas_combo')->where('IdLocal',$IdLocal)->get(); 
     }
 
     public function getOneDetalle($IdLocal){

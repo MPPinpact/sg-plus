@@ -594,6 +594,9 @@ var PersonalizaFormularioVenta = function(){
 
 var PreVenta= function(){
 	_tipoVenta_ = "PreVenta";
+	_idVenta_ = 0;
+
+	CargarTablaProductosPreVenta(null);
 	PersonalizaFormularioVenta();
 	
 	$("#frameProductos").show();
@@ -602,10 +605,12 @@ var PreVenta= function(){
 	$("#botonAgregarProductos").hide();
 	
     $("#PreVentaStep_1").show();
+    $("#NroPreVenta").val("");
+
 	$("#PreVentaStep_2").hide();
 	
 	//destruirTabla('#tablaDetalles');
-	$('#tablaDetalles thead').empty();
+	//$('#tablaDetalles thead').empty();
 	
 	ActualizarTituloVentanaVenta()
 	//$("#spanTituloModalPreVenta").text(_tipoVenta_+": ---- | Local: ---- | Caja: ---- | Vendedor: ------");
@@ -621,6 +626,7 @@ var AgregarProductoPreVenta= function(){
 	var IdProducto = $("#IdProductoPreVenta").val();
 	
 	if(IdProducto.length > 0){
+		CalcularMontosPreVenta();
 		$('#FormPreVenta').formValidation('validate');
 	}else
 	{
@@ -669,6 +675,9 @@ var CancelarPreVenta = function(){
 
 var VentaDirecta = function(){
 	_tipoVenta_ = "Venta";
+	_idVenta_ = 0;
+
+	CargarTablaProductosPreVenta(null);
 	PersonalizaFormularioVenta();
 	
 	$("#frameProductos").show();
@@ -677,10 +686,12 @@ var VentaDirecta = function(){
 	$("#botonAgregarProductos").hide();
 	
     $("#PreVentaStep_1").show();
+    $("#NroPreVenta").val("");
+
 	$("#PreVentaStep_2").hide();
 	
 	//destruirTabla('#tablaDetalles');
-	$('#tablaDetalles thead').empty();
+	//$('#tablaDetalles thead').empty();
 	
 	ActualizarTituloVentanaVenta();
 	//$("#spanTituloModalPreVenta").text(_tipoVenta_+": ---- | Local: ---- | Caja: ---- | Vendedor: ------");
@@ -1232,13 +1243,13 @@ var CargarTablaPagos = function(data){
 
 var CargarTablaProductosPreVenta = function(data){
     if(limpiarImpuestos==1){
+		console.log("limpiarImpuestos: " + limpiarImpuestos);
+
 		destruirTabla('#tablaDetalles');
 		$('#tablaDetalles thead').empty();
-		console.log("limpiarImpuestos: " + limpiarImpuestos);
+		
 	}
     
-	var columnReport = [[4],[5],[6],[7],[8],[9]];       
-	
 	$("#tablaDetalles").dataTable({
 		
 		"footerCallback": function (data){
@@ -1307,17 +1318,6 @@ var CargarTablaProductosPreVenta = function(data){
 				}
 			},	
 		],
-		dom: 'Bfrtip',
-        buttons: [
-            {	extend: 'print',
-				text: 'Imprimir '+_tipoVenta_,
-				className: 'btn btn-inverse-warning',
-				pageSize:'A5',
-				autoPrint: true,
-				exportOptions: {columns: columnReport, modifier: {page: 'all', } },
-			},
-        ]
-		
 	});
 
 	limpiarImpuestos=1;
@@ -1328,6 +1328,105 @@ var CargarTablaProductosPreVenta = function(data){
 	
 	//calcularTotalPreVenta(totalPV);
 };
+
+// var CargarTablaProductosPreVenta = function(data){
+//     if(limpiarImpuestos==1){
+// 		destruirTabla('#tablaDetalles');
+// 		$('#tablaDetalles thead').empty();
+// 		console.log("limpiarImpuestos: " + limpiarImpuestos);
+// 	}
+    
+// 	//var columnReport = [[4],[5],[6],[7],[8],[9]];       
+	
+// 	$("#tablaDetalles").dataTable({
+		
+// 		"footerCallback": function (data){
+// 		var api = this.api(), data;
+// 		// Remove the formatting to get integer data for summation
+// 		var intVal = function (i){
+// 			return typeof i === 'string' ?
+// 				i.replace(/[\$,]/g, '')*1 :
+// 				typeof i === 'number' ?
+// 					i : 0;
+// 		};
+// 		// Total over all pages
+// 		totalPV = api
+// 			.column(8)
+// 			.data()
+// 			.reduce( function (a, b) {
+// 				return intVal(a) + intVal(b);
+// 			}, 0 );
+// 		},
+// 		responsive:false,
+// 		"bSort": false,
+// 		"scrollCollapse": false,
+// 		"paging": false,
+// 		"searching": false,
+// 		"info":false,			
+// 		"pageLength": 50, 
+// 		"columnDefs": [
+// 			{"targets": [ 1 ],"searchable": true},
+// 			{"sWidth": "1px", "aTargets": [8]}
+// 		],
+// 		"data": data,
+// 		"columns":[
+		   
+// 			{"title": "Id","data": "IdDetalle"+_tipoVenta_,visible:0},
+// 			{"title": "Id"+_tipoVenta_,"data": "Id"+_tipoVenta_,visible:0},
+// 			{"title": "IdProducto","data": "IdProducto",visible:0},
+// 			{"title": "Código","data": "CodigoBarra",
+// 						className: "text-right"},
+// 			{"title": "Producto","data": "NombreProducto", 
+// 						width: 800},
+// 			{"title": "Valor","data": "ValorUnitarioVenta", 
+// 						width: 100,
+// 						render: $.fn.dataTable.render.number( '.', ',', 2 ),
+// 						className: "text-right"},
+// 			{"title": "Cant.","data": "Cantidad"+_tipoVenta_, 
+// 						width: 50,
+// 						render: $.fn.dataTable.render.number( '.', ',', 2 ),
+// 						className: "text-center"},
+// 			{"title": "Dcto","data": "MontoDescuento",visible:0},
+// 			{"title": "Total","data": "TotalLinea", 
+// 						width: 100,
+// 						render: $.fn.dataTable.render.number( '.', ',', 2 ),
+// 						className: "text-right"},
+// 			{"title": "",
+// 				"data": "IdDetalle"+_tipoVenta_,
+// 				width: 100,
+// 				"render": function(data, type, row, meta){
+// 					var result = `
+// 					<center>
+					
+// 					 <a href="#" onclick="cambiarEstatusPreventa(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
+// 						<i class="icofont icofont-ui-delete"></i>
+// 					</a>
+// 					</center>`;
+// 					return result;
+// 				}
+// 			},	
+// 		],
+// 		dom: 'Bfrtip',
+//         buttons: [
+//             {	extend: 'print',
+// 				text: 'Imprimir '+_tipoVenta_,
+// 				className: 'btn btn-inverse-warning',
+// 				pageSize:'A5',
+// 				autoPrint: true,
+// 				exportOptions: {columns: columnReport, modifier: {page: 'all', } },
+// 			},
+//         ]
+		
+// 	});
+
+// 	limpiarImpuestos=1;
+// 	console.log("totalPV: " + totalPV);
+// 	$("#TotalPreVenta_").val("$" + totalPV);
+// 	$("#TotalPreVenta").val("$" + totalPV);
+// 	$("#TotalPreVentaFP").val(totalPV);
+	
+// 	//calcularTotalPreVenta(totalPV);
+// };
 
 function printDIV(){
 	var divToPrint = document.getElementById("tablaDetalles");

@@ -82,14 +82,13 @@
 									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
-										<div class="col-sm-2"></div>
-										<div class="col-sm-4">
+										<div class="col-sm-6">
 					                        <div class="md-input-wrapper">
 				                                <input id="NombreLocal" name="NombreLocal" type="text" class="md-form-control" maxlength="250" readonly />
 					                            <label for="NombreLocal">Nombre Local</label>
 					                        </div>
 										</div>
-					                    <div class="col-sm-4">
+					                    <div class="col-sm-6">
 					                        <div class="md-input-wrapper">
 					                        	<select name="IdEmpresa" id="IdEmpresa" class="md-disable md-valid" disabled></select>
 				                                <label for="IdEmpresa">Empresa</label>
@@ -98,11 +97,16 @@
 									</div>
 									<br>
 									<div class="row">
-										<div class="col-sm-2"></div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
 												<select name="IdEncargadoLocal" id="IdEncargadoLocal" class="md-disable md-valid" disabled></select>
 				                                <label for="IdEncargadoLocal">Encargado</label>
+											</div>
+					                    </div>
+					                    <div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+												<select name="IdBodegaPrincipal" id="IdBodegaPrincipal" class="md-disable md-valid" disabled></select>
+				                                <label for="IdBodegaPrincipal">Bodega Principal</label>
 											</div>
 					                    </div>
 					                    <div class="col-sm-4">

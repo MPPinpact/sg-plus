@@ -56,11 +56,11 @@ var crearfecha = function(control){
     }
 
 //////////////////////////////////////crear select original HTML /////////////////////////////////////////////////////
-var crearselect = function(data,control){
+var crearselect = function(data,control,valorselect=0){
     var options = '<option disabled selected hidden>Seleccione...</option>';
     // var options = '';
     for (var i = 0; i < data.length; i++) {
-        options += '<option value="' + data[i].id + '">' + data[i].text + '</option>';
+        options += '<option value="' + data[i].id + '" ' + (valorselect ? ' selected ' : '') + '>' + data[i].text + '</option>';
     }
     $("select#"+control).html(options);   
 }
