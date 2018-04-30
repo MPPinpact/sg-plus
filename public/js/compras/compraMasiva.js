@@ -777,7 +777,7 @@ var buscarBodegas = function(IdLocal){
     parametroAjax.data = {IdLocal:IdLocal};
     respuesta=procesarajax(parametroAjax);
     if (respuesta.code==200){
-        crearselect(respuesta.respuesta,"IdBodega");
+        crearselect(respuesta.respuesta.bodegasLocal,"IdBodega", respuesta.respuesta.bodegasPrincipal.IdBodegaPrincipal);
     }
 }
 

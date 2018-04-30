@@ -267,6 +267,10 @@ class Compra extends Authenticatable
         return DB::table('v_bodegas_combo')->where('IdLocal',$IdLocal)->get();
     }
 
+    public function getBodegasPrincipal($IdLocal){
+        return DB::table('v_locales')->select('IdBodegaPrincipal')->where('IdLocal',$IdLocal)->first();
+    }
+
     public function formatearFecha($d){
         $formato = explode("-", $d);
         $fecha = $formato[2]."-".$formato[1]."-".$formato[0];

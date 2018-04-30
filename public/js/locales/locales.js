@@ -17,6 +17,8 @@ var ManejoRespuestaProcesarD = function(respuesta){
         $("#divVolver").show();
         $("#spanTitulo").text("Detalles");
         bloquearInuts();
+        crearselect(respuesta.respuesta.v_bodegas_local, 'IdBodegaPrincipal');
+
         pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
         cargarTablaBodegas(respuesta.respuesta.v_bodegas.bodegas);
         console.log(respuesta.respuesta.v_bodegas.sum[0].TotalValorizado);
@@ -99,6 +101,7 @@ var cargarTablaLocales = function(data){
                 {"title": "IdLocal","data": "IdLocal",visible:0},
                 {"title": "Nombre","data": "NombreLocal"},
                 {"title": "Encargado Local","data": "IdEncargadoLocal"},
+                {"title": "Bodega Principal","data": "NombreBodegaPrincipal"},
                 {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
                 {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
                 {"title": "Creado por","data": "creador",visible:0},
@@ -145,11 +148,12 @@ var cargarTablaBodegas = function(data){
             "columns":
 			[
 				{"title": "Id","data": "IdBodega",visible:0},
-				{"title": "Nombre Bodega","data": "NombreBodega"},
+                {"title": "Nombre Bodega","data": "NombreBodega"},
 				{"title": "Descripción","data": "DescripcionBodega"},
 				{"title": "Mercadería Valorizada","data": "MontoValorizado",
 					render: $.fn.dataTable.render.number( '.', ',', 2 ),
 					className: "text-right"},
+                {"title": "Bodega Principal","data": "BodegaPrincipal", className: "text-center"}, 
 				{"title": "Estado Local","data": "desEstadoBodega", className: "text-center"},
             ],
         });
@@ -163,6 +167,7 @@ var pintarDatosActualizar= function(data){
     $("#NombreLocal").val(data.NombreLocal);
     $("#IdEmpresa").val(data.IdEmpresa).trigger("change");
     $("#IdEncargadoLocal").val(data.IdEncargadoLocal).trigger("change");
+    $("#IdBodegaPrincipal").val(data.IdBodegaPrincipal);
     $("#EstadoLocal").val(data.EstadoLocal).trigger("change");
 }
 
@@ -203,7 +208,8 @@ var ProcesarLocal = function(){
         var camposNuevo = {
             'IdEmpresa': $('#IdEmpresa').val(),
             'IdEncargadoLocal': $('#IdEncargadoLocal').val(),
-            'EstadoLocal': $('#EstadoLocal').val()
+            'EstadoLocal': $('#EstadoLocal').val(),
+            'IdBodegaPrincipal': $('#IdBodegaPrincipal').val()
         }
         parametroAjax.ruta=ruta;
         parametroAjax.data = $("#FormLocal").serialize() + '&' + $.param(camposNuevo);
@@ -263,6 +269,7 @@ var desbloquearInuts = function(){
     $("#NombreLocal").prop('readonly', false);
     $("#IdEmpresa").prop('disabled', false);
     $("#IdEncargadoLocal").prop('disabled', false);
+    $("#IdBodegaPrincipal").prop('disabled', false);
     $("#EstadoLocal").prop('disabled', false);
 }
 
