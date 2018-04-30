@@ -125,25 +125,37 @@
 									</div>
 									<br>
 									<div class="row">
+										<div class="col-sm-2"></div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
 												<input id="Comentario" name="Comentario" type="text" class="md-form-control md-static" maxlength="250"readonly />
 												<label for="Comentario">Comentario</label>
 											</div>
 										</div>
-										
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
 												<select name="TipoInventario" id="TipoInventario" class="md-disable md-valid md-static" disabled></select>
 												<label for="TipoInventario">Tipo Inventario</label>
 											</div>
 										</div>
-										<div id="divAjusteInventario" class="col-sm-4">
+										<div class="col-sm-2"></div>
+									</div>
+									<div class="row">
+										<div class="col-sm-2"></div>
+										
+										<div class="col-sm-4">
+											<div class="md-input-wrapper">
+												<select name="IdLocal" id="IdLocal" class="md-disable md-valid md-static" disabled></select>
+												<label for="IdLocal">Local</label>
+											</div>
+										</div>
+										<div class="col-sm-4">
 											<div class="md-input-wrapper">
 												<select name="IdBodega" id="IdBodega" class="md-disable md-valid md-static" disabled></select>
 												<label for="IdBodega">Bodega</label>
 											</div>
-										</div> 
+										</div>										 
+										<div class="col-sm-2"></div>
 									</div>
 									<br>
 									<div align="center">
@@ -311,12 +323,13 @@
 	var rutaBB = "{{ URL::route('inventariobb') }}"
 	var rutaCI = "{{ URL::route('inventarioci') }}"
 	var rutaBF = "{{ URL::route('inventariobf') }}"
+	var rutaIBB = "{{ URL::route('inventarioibb') }}"
 	
 	var rutaCDA = "{{ URL::route('preventada') }}"
 	var d = [];
 	d['v_inventario'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_inventario) }}'));
 	d['v_tipo_inventario'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_tipo_inventario) }}'));
-	d['v_bodegas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_bodegas) }}'));
+	d['v_locales'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_locales) }}'));
 </script>
 <script src="{{ asset('js/inventario/inventario.js') }}"></script>
 @endsection

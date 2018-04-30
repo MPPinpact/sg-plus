@@ -59,6 +59,7 @@ var ManejoRespuestaBuscarProducto = function(respuesta){
 
 
 var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
+    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         var cliente = respuesta.respuesta.v_cliente.cliente;
         if (cliente.length > 0){
@@ -93,7 +94,7 @@ var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
                     $("#FechaVencimientoPagoCredito").val(respuesta.respuesta.v_cliente.FechaVencimiento[0].FechaVencimiento);
                 }
                 if (respuesta.respuesta.v_cliente.DeudaTotal.length > 0){
-                    $("#DeudaTotalPagoCredito").val(respuesta.respuesta.v_cliente.DeudaTotal[0].CupoAutorizado);
+                    $("#DeudaTotalPagoCredito").val(respuesta.respuesta.v_cliente.DeudaTotal[0].CupoUtilizado);
                 }
             }
 

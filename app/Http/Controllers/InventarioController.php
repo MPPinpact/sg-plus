@@ -46,7 +46,7 @@ class InventarioController extends Controller
         $model= new Inventario();
         $data['v_inventario'] = $model->listInventario();
         $data['v_tipo_inventario'] = $model->listTipoInventario();
-        $data['v_bodegas'] = $model->listBodega();
+        $data['v_locales'] = $model->listLocales();
         return View::make('inventario.inventario',$data);
     }
 
@@ -128,6 +128,13 @@ class InventarioController extends Controller
         $model= new Inventario();
         $result = $model->getBuscarFamilias($datos);
         return $result;      
+    }
+
+    protected function postBuscarBodegaCombo(Request $request){
+        $datos = $request->all();
+        $model= new Inventario();
+        $result = $model->listBodega($datos);
+        return $result;         
     }
 
 

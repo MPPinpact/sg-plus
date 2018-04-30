@@ -288,6 +288,7 @@ var cargarTablaInventario = function(data){
                         return result;
                     }
                 },
+                {"title": "Local","data": "NombreLocal", className: "text-center"},
                 {"title": "Bodega","data": "NombreBodega", className: "text-center"},
                 {"title": "Tipo Inventario","data": "DesTipoInventario"},
                 {"title": "Fecha Inventario", "data": "FechaInventario", className: "text-center", 
@@ -653,6 +654,7 @@ var pintarDatosActualizar= function(data){
     }
     $("#Comentario").val(data.Comentario);
     $("#TipoInventario").val(data.TipoInventario).trigger("change");
+    $("#IdLocal").val(data.IdLocal).trigger("change");    
     $("#IdBodega").val(data.IdBodega).trigger("change");    
 }
 
@@ -791,7 +793,9 @@ var bloquearInputs = function(){
     $("#FechaTomaInventario").prop('readonly', true);
     $("#Comentario").prop('readonly', true);
     $("#TipoInventario").prop('disabled', true);
+    $("#IdLocal").prop('disabled', true);
     $("#IdBodega").prop('disabled', true);
+    
 }
 
 var desbloquearInputs = function(){
@@ -799,6 +803,7 @@ var desbloquearInputs = function(){
     $("#FechaTomaInventario").prop('readonly', false);
     $("#Comentario").prop('readonly', false);
     $("#TipoInventario").prop('disabled', false);
+    $("#IdLocal").prop('disabled', false);
     $("#IdBodega").prop('disabled', false);
 }
 
@@ -829,7 +834,7 @@ var modificarDetalles = function(){
 }
 
 var crearAllSelect = function(data){
-    crearselect(data.v_bodegas,"IdBodega");
+    crearselect(data.v_locales,"IdLocal");
     crearselect(data.v_tipo_inventario,"TipoInventario");
 }
 
@@ -848,11 +853,19 @@ var BuscarInventarioTotal = function(IdBodega){
 }
 
 var BuscarInventarioTotalFamilia = function(IdFamilia,IdBodega){
-    console.log("busqueda por familia");
     parametroAjax.ruta=rutaBF;
     parametroAjax.data = {IdFamilia:IdFamilia,IdBodega:IdBodega};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaBuscarInventario(respuesta);
+}
+
+var BuscarInventarioBodega = function(IdLocal){
+    parametroAjax.ruta=rutaIBB;
+    parametroAjax.data = {IdLocal:IdLocal};
+    respuesta=procesarajax(parametroAjax);
+    if (respuesta.code==200){
+        crearselect(respuesta.respuesta,"IdBodega");
+    }
 }
 
 
@@ -897,13 +910,6 @@ $(document).ready(function(){
     $("#FechaAjusteInventario").inputmask({ mask: "99-99-9999"});
     cargarTablaInventario(d.v_inventario);
     crearAllSelect(d);
-    // $("#RUTCliente").focusout(function() {
-    //     var valid = $("#RUTCliente").val();
-    //     if (valid.length > 0){
-    //         var res = verificarRut($("#RUTCliente"),1);
-    //         $("#RUTCliente").val(res);
-    //     }else{$("#ErrorRut").text("");}
-    // });
 
     $("#CodigoBarra").focusout(function() {
         var codigo = $("#CodigoBarra").val();
@@ -915,6 +921,11 @@ $(document).ready(function(){
     $('#IdFamiliaToma').on('change', function(e) {
         BuscarInventarioTotalFamilia($('#IdFamiliaToma').val(),NBodega)
     });
+
+    $('#IdLocal').on('change', function(e) {
+        BuscarInventarioBodega($('#IdLocal').val())
+    });
+
 
     $('#FormDetalle').on('keyup keypress', function(e) {
       var keyCode = e.keyCode || e.which;

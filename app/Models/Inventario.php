@@ -47,8 +47,13 @@ class Inventario extends Authenticatable
     }
 
     // Cargar combo de estados Bodegas
-    public function listBodega(){
-        return DB::table('v_bodegas_combo')->get();
+    public function listLocales(){
+        return DB::table('v_locales_combo')->get();
+    }
+
+    // Cargar combo de estados Bodegas
+    public function listBodega($IdLocal){
+        return DB::table('v_bodegas_combo')->where('IdLocal',$IdLocal)->get();
     }
 
     // registrar una nueva bodega
@@ -57,7 +62,8 @@ class Inventario extends Authenticatable
         $datos['IdInventario']==null ? $Id=0 : $Id= $datos['IdInventario'];
         $datos['FechaInventario'] = $this->formatearFecha($datos['FechaInventario']);
         $datos['FechaTomaInventario'] = $this->formatearFecha($datos['FechaTomaInventario']);
-        $sql="select f_registro_inventario(".$Id.",'".$datos['FechaInventario']."','".$datos['FechaTomaInventario']."','".$datos['Comentario']."',".$datos['TipoInventario'].",".$datos['IdBodega'].",".$idAdmin.")";
+        $sql="select f_registro_inventario(".$Id.",'".$datos['FechaInventario']."','".$datos['FechaTomaInventario']."','".$datos['Comentario']."',".$datos['TipoInventario'].",".$datos['IdLocal'].",".$datos['IdBodega'].",".$idAdmin.")";
+        log::info($sql);
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;

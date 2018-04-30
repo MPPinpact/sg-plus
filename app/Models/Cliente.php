@@ -107,7 +107,8 @@ class Cliente extends Authenticatable
             $result['MontoActual'] = DB::select("select MontoFacturadoActual from clientes_eecc where IdCliente = ".$cliente[0]->IdCliente." order by IdEECC desc limit 1");
             $result['UltimoPago'] = DB::select("select MontoAbono from abono_cliente where IdCliente = ".$cliente[0]->IdCliente." and IdAbono in (select max(IdAbono) from abono_cliente where IdCliente = ".$cliente[0]->IdCliente.")");
             $result['FechaVencimiento'] = DB::select("select FechaVencimiento from clientes_eecc where IdCliente = ".$cliente[0]->IdCliente." order by IdEECC desc limit 1");
-            $result['DeudaTotal'] = DB::select("select CupoAutorizado from clientes where IdCliente= ".$cliente[0]->IdCliente.";");
+            $result['CupoAutorizado'] = DB::select("select CupoAutorizado from clientes where IdCliente= ".$cliente[0]->IdCliente.";");
+            $result['DeudaTotal'] = DB::select("select CupoUtilizado from clientes where IdCliente= ".$cliente[0]->IdCliente.";");
         }
         return $result;
     }
