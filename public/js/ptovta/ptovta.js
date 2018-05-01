@@ -11,11 +11,21 @@ var parametroAjax = {
 var ConsultaCreditoCliente = function(){
 	$("#spanTituloModalCreditoCliente").text("Consulta Crédito Interno de Clientes");
     $("#ModalConsultaCreditoCliente").modal();
+
+    $('#ModalConsultaCreditoCliente').on('shown.bs.modal', function() {
+        $('#RUTClienteConsultaCredito').focus().select();
+    });
 }
 
 var PagoCreditoCliente = function(){
+    $("#IdCajaPC").val(_idCaja_);
+
 	$("#spanTituloModalPagoCredito").text("Pago/Abono Crédito Interno de Cliente");
     $("#ModalPagoCreditoCliente").modal();
+
+    $('#ModalPagoCreditoCliente').on('shown.bs.modal', function() {
+        $('#RUTClientePagoCredito').focus().select();
+    });
 }
 
 var ManejoRespuestaProcesarD = function(respuesta){

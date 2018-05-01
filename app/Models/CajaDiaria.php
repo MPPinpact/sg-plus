@@ -106,7 +106,7 @@ class CajaDiaria extends Authenticatable
     }
 	
 	public function listDetallePagoCajasDiaria($IdCaja){
-        return DB::table('v_pagos')->where('IdCaja', $IdCaja)->orderBy('IdPago', 'ASC')->get(); 
+        return DB::table('v_abono_cliente')->where('IdCaja', $IdCaja)->orderBy('IdAbono', 'ASC')->get(); 
     }
 	
 	public function listDetalleVentaFormaPago($IdCaja, $IdFormaPago){

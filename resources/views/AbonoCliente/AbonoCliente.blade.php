@@ -72,7 +72,11 @@
 									{!! Form::open(['id'=>'FormAbonoCliente','autocomplete' => 'off']) !!}
 									{!! Form::hidden('IdAbono', '', ['id'=> 'IdAbono'])!!}
 									{!! Form::hidden('IdClienteAbono', '', ['id'=> 'IdClienteAbono'])!!}
+
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
+									<input type="hidden" name="IdCaja" id="IdCaja">
+									<input type="hidden" name="IdLocal" id="IdLocal">
+									
 									<div class="row">
 										<div class="col-md-2"></div>
 										<div class="col-sm-3">
@@ -141,6 +145,7 @@
 	var rutaA = "{{ URL::route('AbonoClienteAtc') }}"
 	var rutaD = "{{ URL::route('AbonoClienteDet') }}"
 	var rutaBC = "{{ URL::route('AbonoClienteBC') }}"
+	var rutaCD = "{{ URL::route('infoCD') }}"
 	 var d = [];
 	 d['v_abono_cliente'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_abono_cliente) }}'));
 	 d['v_formas_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_pago) }}'));

@@ -18,6 +18,8 @@ var parametroAjax = {
 
 
 $(document).ready(function(){	
+	ProcesarInfoCaja();
+
 	// Botones de cabecera de VentaRapida
 	$(document).on('click','#botonConsultaStock', ConsultaStockProducto);
 	
@@ -279,6 +281,29 @@ $(document).ready(function(){
       }
     });
 	
+	$('#FormConsultaStockProducto').on('keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) { 
+      	  console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+		 e.preventDefault();
+		 return false;
+      }
+    });
+	
+	$('#CodigoProductoConsultaCredito').on('keypress', function(e) {
+    	var keyCode = e.keyCode || e.which;
+      	if (keyCode === 13) { 
+      		console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+
+      		e.preventDefault();
+      		e.stopImmediatePropagation();
+
+      		botonConsultarStockProducto();
+			
+			return false;
+      	}
+    });
+
 	$('#FormIngresoFP').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
@@ -310,6 +335,10 @@ var ConsultaStockProducto = function(){
     
 	$("#spanTituloModalConsultaStockProducto").text("Consulta Sock Producto");
     $("#ModalConsultaStockProducto").modal();
+
+    $('#ModalConsultaStockProducto').on('shown.bs.modal', function() {
+		$('#CodigoProductoConsultaCredito').focus().select();
+	});
 }
 
 var ModalVendedor = function(){
