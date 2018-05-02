@@ -45,7 +45,12 @@ class AbonoCliente extends Authenticatable
     public function regAbonoCliente($datos){        
         $idAdmin = Auth::id();
         $datos['IdAbono']==null ? $Id=0 : $Id= $datos['IdAbono'];
-        $sql="select f_registro_abono(".$Id.",".$datos['IdClienteAbono'].",'".$datos['MontoAbono']."',".$datos['IdFormaPago'].",".$idAdmin.")";
+        $datos['IdCaja']==null ? $IdCaja=0 : $IdCaja=$datos['IdCaja'];
+
+        $sql="select f_registro_abono(".$Id.",".$datos['IdClienteAbono']."," . $IdCaja . ",'".$datos['MontoAbono']."',".$datos['IdFormaPago'].",".$idAdmin.")";
+
+        log::info($sql);
+
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -58,7 +63,12 @@ class AbonoCliente extends Authenticatable
         log::info($datos);
         $idAdmin = Auth::id();
         $Id=0;
-        $sql="select f_registro_abono(".$Id.",".$datos['IdClientePagoCredito'].",'".$datos['MontoAPagarPagoCredito']."',".$datos['IdFormaPagoCredito'].",".$idAdmin.")";
+        $datos['IdCajaPC'] == null ? $IdCaja = 0 : $IdCaja = $datos['IdCajaPC'];
+
+        $sql="select f_registro_abono(" . $Id . "," . $datos['IdClientePagoCredito'] . "," . $IdCaja . ",'" . $datos['MontoAPagarPagoCredito'] . "'," . $datos['IdFormaPagoCredito'] . "," . $idAdmin . ")";
+
+        log::info($sql);
+
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;

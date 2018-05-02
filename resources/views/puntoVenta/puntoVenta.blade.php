@@ -274,6 +274,7 @@
             <div class="modal-body">
 				{!! Form::open(['id'=>'FormPagoCredito','autocomplete' => 'off']) !!}
 					<input type="hidden" name="IdClientePagoCredito" id="IdClientePagoCredito" class="PagoCreditoM">
+					<input type="hidden" name="IdCajaPC" id="IdCajaPC" class="PagoCreditoM">
 					
 					<div class="row" >
 						<div class="col-md-3">

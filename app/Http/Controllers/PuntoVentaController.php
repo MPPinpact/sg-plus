@@ -45,8 +45,7 @@ class PuntoVentaController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getPuntoVenta()
-    {
+    public function getPuntoVenta(){
 		$IdUsuario = Auth::id();
 		$IdLocal = 7;
 		
@@ -61,8 +60,7 @@ class PuntoVentaController extends Controller
         return View::make('puntoVenta.puntoVenta',$data);;
     }
 	
-	 public function postInfoCajaDiaria()
-    {
+	public function postInfoCajaDiaria(){
 		log::info("postInfoCajaDiaria");
 		
 		$IdUsuario = Auth::id();
@@ -74,8 +72,7 @@ class PuntoVentaController extends Controller
         return $result;
     }
     
-    public function getCajaDiaria()
-    {
+    public function getCajaDiaria(){
         $modelCD = new CajaDiaria();
         $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
 		

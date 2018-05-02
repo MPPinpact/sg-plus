@@ -259,9 +259,9 @@ var cargarDetallePagosCajaDiaria = function(data){
 		
 		"columns":
 		[
-			{"title": "Nro. Pago","data": "IdPago",  className: "text-center", render: $.fn.dataTable.render.number( '.', ',', 0 )}, 
+			{"title": "Nro. Pago","data": "IdAbono",  className: "text-center", render: $.fn.dataTable.render.number( '.', ',', 0 )}, 
 			{"title": "Fecha de Pago",
-							"data": "FechaPago", className: "text-center", 
+							"data": "FechaAbono", className: "text-center", 
 							"render": function(data, type, row, meta){
 								if(type === 'display'){
 									data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
@@ -272,7 +272,7 @@ var cargarDetallePagosCajaDiaria = function(data){
 			{"title": "Cliente","data": "NombreCliente", className: "text-left"},
 			{"title": "RUTCliente","data": "RUTCliente", className: "text-left"},
 			{"title": "Forma de Pago","data": "FormaPago", className: "text-left"},
-			{"title": "Monto Recaudado", "data": "MontoPagado", className: "text-right", render: $.fn.dataTable.render.number( '.', ',', 0 )},	
+			{"title": "Monto Recaudado", "data": "MontoAbono", className: "text-right", render: $.fn.dataTable.render.number( '.', ',', 0 )},	
 		],			
 	});
 	limpiarCajaDiariaDetallePagos=1;

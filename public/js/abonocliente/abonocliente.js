@@ -1,5 +1,7 @@
 var RegistroEmpresas  = '';
 var manejoRefresh=limpiarLocales=errorRut=limpiarBodegas=0;
+var _idCaja_ = 0;
+var _idLocal_ = 0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -244,8 +246,48 @@ var verificarRut = function(control,caso){
     }
 }
 
+var ProcesarInfoCaja = function(){
+    parametroAjax.ruta=rutaCD;
+    parametroAjax.data = $("#FormAbonoCliente").serialize();
+    respuesta=procesarajax(parametroAjax);
+    console.log("ProcesarInfoCaja --> Respuesta: " + respuesta);
+    
+    ManejoRespuestaProcesarInfoCaja(respuesta);
+};
+
+var ManejoRespuestaProcesarInfoCaja = function(respuesta){  
+    if(respuesta.code==200){
+        
+        if(respuesta.respuesta!=null){
+            console.log("respuesta.respuesta.v_cajaActual.IdCaja: " + respuesta.respuesta.v_cajaActual[0].IdCaja);
+            console.log("respuesta.respuesta.v_cajaActual.IdLocal: " + respuesta.respuesta.v_cajaActual[0].IdLocal);
+            
+            if(respuesta.respuesta.v_cajaActual==null){
+                _idCaja_= 0;
+                _idLocal_= 0;
+            }else{
+                $("#IdLocal").val(respuesta.respuesta.v_cajaActual[0].IdLocal);
+                $("#IdCaja").val(respuesta.respuesta.v_cajaActual[0].IdCaja);
+                                
+                _idCaja_= respuesta.respuesta.v_cajaActual[0].IdCaja;
+                _idLocal_= respuesta.respuesta.v_cajaActual[0].IdLocal;
+            }    
+        }else{
+            $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
+        }
+        
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+    
+    console.log("Fin de ManejoRespuestaProcesarInfoCaja()");
+}
+
+
 $(document).ready(function(){
     console.log(d);
+    ProcesarInfoCaja();
+
     cargarTablaAbonoCliente(d.v_abono_cliente);
     crearAllSelect(d);
     $("#RUTClienteAbono").focusout(function() {
