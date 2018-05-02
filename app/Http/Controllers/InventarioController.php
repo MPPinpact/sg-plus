@@ -73,14 +73,8 @@ class InventarioController extends Controller
     protected function postCerrarInventario(Request $request){
         $datos = $request->all();
         $model= new Inventario();
-        $inventario = Inventario::find($datos['IdInventario']);
         $result = [];
-        if ($datos['caso']==1){
-            $result = $model->getCerrarInventario($inventario);
-        }
-        if ($datos['caso']==2){
-            $result = $model->getAjustarInventario($inventario);
-        }
+        $result = $model->getManejarInventario($datos);
         return $result;       
     }
 

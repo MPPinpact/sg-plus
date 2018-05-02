@@ -947,4 +947,11 @@ $(document).ready(function(){
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');
     });
+
+
+    $("#PrintPre").click(function(){
+        $("div#CuerpoBoleta").printArea();
+    });
+    JsBarcode("#barcode", "1520");
+
 });
