@@ -99,7 +99,12 @@ var cargarPanelesVenta = function(){
     $("#tablaScoreVendedoresBody").empty();
 
     for(i=0; i < vendedores.length; i++){
-        var avance = (parseFloat(vendedores[i].AcumuladoPeriodo) / parseFloat(vendedores[i].MetaPeriodo) * 100).toLocaleString('cl');
+        var avance = 0;
+        if(vendedores[i].AcumuladoPeriodo>0){
+            avance = (parseFloat(vendedores[i].AcumuladoPeriodo) / parseFloat(vendedores[i].MetaPeriodo) * 100).toLocaleString('cl');
+        }else{
+            vendedores[i].AcumuladoPeriodo = 0;
+        }
         $('#tablaScoreVendedores tr:last').after('<tr><th><img class="img-fluid rounded-circle" src="'+vendedores[i].FotoVendedor+'" alt="User"></th><td>'+vendedores[i].NombreVendedor+'<p><i class="icofont icofont-sale-discount"></i>Comisión: '+parseFloat(vendedores[i].ComisionVendedor).toLocaleString('cl')+'</p></td><td>$'+ parseFloat(vendedores[i].MetaPeriodo).toLocaleString('cl')+'</td><td>$'+parseFloat(vendedores[i].AcumuladoPeriodo).toLocaleString('cl')+'</td><td class="chart">'+avance+'% <span class="pie" style="display: none;">180,180</span></td></tr>');
     }   
 }
