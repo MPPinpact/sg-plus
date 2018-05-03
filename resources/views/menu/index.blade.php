@@ -97,6 +97,8 @@
   {{ HTML::script('plugins/daterangepicker/moment-with-locale-es.js') }}
   {{ HTML::script('plugins/jQuery-contextMenu-master/dist/jquery.contextMenu.min.js') }}
   {{ HTML::script('plugins/validator/valtexto.js') }}
+  {{ HTML::script('plugins/printArea/jquery.printarea.js') }}
+  {{ HTML::script('plugins/jsBarcode/JsBarcode.code39.min.js') }}
   {{ HTML::script('js/utils/utils.js') }}
   {{ HTML::script('js/index/index.js') }}
 </head>

@@ -105,20 +105,19 @@ var ManejoRespuestaProcesarD = function(respuesta){
 
 // Manejo Activar / Desactivar compra
 var ManejoRespuestaProcesarI = function(respuesta){
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
     if(respuesta.code==200){
-        switch(respuesta.respuesta.code){
+        var res = JSON.parse(respuesta.respuesta.f_registro);
+        switch(parseInt(res.code)){
             case 200:
-                $("#spanEstadoInventario").text(respuesta.respuesta.des_code);
-                $.growl({message:respuesta.respuesta.des_code},{type: "success", allow_dismiss: true,});
-                if (respuesta.respuesta.des_code == "Inventario Cerrado"){IdEstadoInventario = 1;}
-                if (respuesta.respuesta.des_code == "Inventario Ajustado"){IdEstadoInventario = 3;}
+                $("#spanEstadoInventario").text(res.des_code);
+                $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
+                if (res.des_code == "Inventario Cerrado"){IdEstadoInventario = 1;}
+                if (res.des_code == "Inventario Ajustado"){IdEstadoInventario = 3;}
                 if(respuesta.respuesta.v_detalles){cargarTablaDetalles(respuesta.respuesta.v_detalles);}
                 if(respuesta.respuesta.v_inventario){cargarTablaInventario(respuesta.respuesta.v_inventario);}
             break;
             case 204:
-                $.growl({message:respuesta.respuesta.des_code},{type: "warning", allow_dismiss: true,});
+                $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
             break;
         }
     }else{
@@ -128,8 +127,6 @@ var ManejoRespuestaProcesarI = function(respuesta){
 
 // Manejo Registro o actualizacion de cabecera de compra
 var ManejoRespuestaProcesarInventario = function(respuesta){
-    console.log(respuesta);
-    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         var res = JSON.parse(respuesta.respuesta.f_registro);
         if(res.code=="200"){ 
@@ -887,19 +884,27 @@ var solicitarInventario = function (){
     BuscarInventarioTotal(NBodega)
 }
 
-var cerrarInventario = function (){
+var ManejoInventario = function(Caso){
+    console.log(Caso);
     parametroAjax.ruta=rutaCI;
-    parametroAjax.data = {IdInventario:NInventario,caso:1};
+    parametroAjax.data = {IdInventario:NInventario,IdBodega:NBodega,Caso:Caso};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarI(respuesta);
 }
 
-var ajustarInventario = function (){
-    parametroAjax.ruta=rutaCI;
-    parametroAjax.data = {IdInventario:NInventario,caso:2};
-    respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaProcesarI(respuesta);
-}
+// var cerrarInventario = function (){
+//     parametroAjax.ruta=rutaCI;
+//     parametroAjax.data = {IdInventario:NInventario,IdBodega:NBodega,caso:1};
+//     respuesta=procesarajax(parametroAjax);
+//     ManejoRespuestaProcesarI(respuesta);
+// }
+
+// var ajustarInventario = function (){
+//     parametroAjax.ruta=rutaCI;
+//     parametroAjax.data = {IdInventario:NInventario,caso:2};
+//     respuesta=procesarajax(parametroAjax);
+//     ManejoRespuestaProcesarI(respuesta);
+// }
 
 
 
@@ -946,8 +951,18 @@ $(document).ready(function(){
     $(document).on('click','#modificarC',modificarDetalles);
     $(document).on('click','#btn-list',volverListado);
     $(document).on('click','#btn-sol-inv',solicitarInventario);
-    $(document).on('click','#btn-cer-inv',cerrarInventario);
-    $(document).on('click','#btn-aju-inv',ajustarInventario);
+    // $(document).on('click','#btn-cer-inv',cerrarInventario);
+    // $(document).on('click','#btn-aju-inv',ajustarInventario);
+
+    // caso cerrar inventario
+    $('#btn-cer-inv').on('click', function(e) {
+        ManejoInventario(1);
+    });
+
+    // caso ajustar inventario
+    $('#btn-aju-inv').on('click', function(e) {
+        ManejoInventario(2);
+    });
     
     $('#FormInventario').formValidation({
         excluded:[':disabled'],

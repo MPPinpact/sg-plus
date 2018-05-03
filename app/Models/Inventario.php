@@ -98,56 +98,26 @@ class Inventario extends Authenticatable
             $values=array('EstadoInventario'=>5,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$idAdmin);
         }
         if ($datos->EstadoInventario > 0 && $datos->EstadoInventario < 5){
-            $response['code'] = 204; 
-            $response['des_code'] = "No se puede eliminar un inventario que esta Cerrado o Finalizado";
+            $response['f_registro'] = '{"code": 204, "des_code": "No se puede eliminar un inventario que esta Cerrado o Finalizado"}';
             return $response;
         }
         DB::table('inventario')->where('IdInventario', $datos->IdInventario)->update($values);
-        $response['code'] = 200; 
-        $response['des_code'] = "Actualización exitosa";
+        $response['f_registro'] = '{"code": 200, "des_code": "Actualización exitosa"}';
         $response['v_inventario'] = $this->listInventario();
         return $response;
     }
 
-    public function getCerrarInventario($datos){
+
+    public function getManejarInventario($datos){
         $idAdmin = Auth::id();
-        if ($datos->EstadoInventario == 0){
-            $values=array('EstadoInventario' => 1, 'auFechaModificacion' => date("Y-m-d H:i:s"), 'auUsuarioModificacion'=>$idAdmin, 'FechaCierreInventario' => date("Y-m-d H:i:s"));
-            DB::table('inventario')->where('IdInventario', $datos->IdInventario)->update($values);
-            $result = DB::select("update inventario_detalle id left join inventario_detalle ie on id.IdInventarioDetalle = ie.IdInventarioDetalle set id.Diferencia = (ie.StockFisico - ie.StockSistema) where id.IdInventario=".$datos->IdInventario);
-            log::info($result);
-            $response['code'] = 200; 
-            $response['des_code'] = "Inventario Cerrado";
-            $response['v_detalles'] = $this->getDetallesInventario($datos->IdInventario);
-        }else{
-            $response['code'] = 204; 
-            $response['des_code'] = "Acción no permitida";
+        $sql="select f_manejar_inventario(".$datos['Caso'].",".$datos['IdInventario'].",".$datos['IdBodega'].",".$idAdmin.")";
+        $execute=DB::select($sql);
+        foreach ($execute[0] as $key => $value) {
+            $response['f_registro']=$value;
         }
+        $response['v_detalles'] = $this->getDetallesInventario($datos['IdInventario']);
         return $response;
     }
-
-    public function getAjustarInventario($datos){
-        $idAdmin = Auth::id();
-        if ($datos->EstadoInventario == 1){
-            $values=array('EstadoInventario' => 3, 'auFechaModificacion' => date("Y-m-d H:i:s"), 'auUsuarioModificacion' => $idAdmin, 'FechaAjusteInventario' => date("Y-m-d H:i:s"));
-            DB::table('inventario')->where('IdInventario', $datos->IdInventario)->update($values);
-            $response['code'] = 200; 
-            $response['des_code'] = "Inventario Ajustado";
-            $response['v_detalles'] = $this->getDetallesInventario($datos->IdInventario);
-        }else{
-            $response['code'] = 204; 
-            $response['des_code'] = "Acción no permitida";
-        }   
-        return $response;
-
-    }
-
-    // public function listProductos($IdBodega){   
-    //     $result['productos'] =  DB::table('v_bodegas_productos')->where('IdBodega',$IdBodega)->get(); 
-    //     $sql="select SUM(MontoValorizado) as TotalValorizado from v_bodegas_productos where IdBodega=".$IdBodega;
-    //     $result['sum']=DB::select($sql);
-    //     return $result;
-    // }
 
     public function getCabeceraInventario($IdInventario){
         return DB::table('v_inventario')->where('IdInventario',$IdInventario)->get(); 

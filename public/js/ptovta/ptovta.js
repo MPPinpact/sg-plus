@@ -69,7 +69,6 @@ var ManejoRespuestaBuscarProducto = function(respuesta){
 
 
 var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
-    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         var cliente = respuesta.respuesta.v_cliente.cliente;
         if (cliente.length > 0){

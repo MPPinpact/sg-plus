@@ -102,12 +102,19 @@ class Cliente extends Authenticatable
         log::info($cliente);
         if ($cliente){
             $result['cliente'] =$cliente;
-            $result['UltimaCompra'] = DB::select("select TotalVenta from v_ventas where IdCliente = ".$cliente[0]->IdCliente." order by IdVenta desc limit 1");
-            $result['MontoAnterior'] = DB::select("select MontoFacturadoAnterior from clientes_eecc where IdCliente = ".$cliente[0]->IdCliente." order by IdEECC desc limit 1");
+            
+            $result['UltimaCompra'] = DB::select("select CONCAT(TotalVenta,' / ', date_format(FechaVenta,'%d-%m-%Y')) as TotalVenta from v_ventas where IdCliente = ".$cliente[0]->IdCliente." order by IdVenta desc limit 1");
+            
+            $result['MontoAnterior'] = DB::select("select CONCAT(MontoFacturadoAnterior,' / ',date_format(FechaVencimiento,'%d-%m-%Y')) as MontoFacturadoAnterior from clientes_eecc where IdCliente = ".$cliente[0]->IdCliente." order by IdEECC desc limit 1");
+            
             $result['MontoActual'] = DB::select("select MontoFacturadoActual from clientes_eecc where IdCliente = ".$cliente[0]->IdCliente." order by IdEECC desc limit 1");
-            $result['UltimoPago'] = DB::select("select MontoAbono from abono_cliente where IdCliente = ".$cliente[0]->IdCliente." and IdAbono in (select max(IdAbono) from abono_cliente where IdCliente = ".$cliente[0]->IdCliente.")");
+            
+            $result['UltimoPago'] = DB::select("select CONCAT(MontoAbono,' / ', date_format(FechaAbono,'%d-%m-%Y')) as MontoAbono from abono_cliente where IdCliente = ".$cliente[0]->IdCliente." and IdAbono in (select max(IdAbono) from abono_cliente where IdCliente = ".$cliente[0]->IdCliente.")");
+            
             $result['FechaVencimiento'] = DB::select("select FechaVencimiento from clientes_eecc where IdCliente = ".$cliente[0]->IdCliente." order by IdEECC desc limit 1");
+            
             $result['CupoAutorizado'] = DB::select("select CupoAutorizado from clientes where IdCliente= ".$cliente[0]->IdCliente.";");
+            
             $result['DeudaTotal'] = DB::select("select CupoUtilizado from clientes where IdCliente= ".$cliente[0]->IdCliente.";");
         }
         return $result;
@@ -115,4 +122,3 @@ class Cliente extends Authenticatable
 }
 
 
-// FechaVencimiento
