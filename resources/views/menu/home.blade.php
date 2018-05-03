@@ -118,7 +118,7 @@
         <!-- 1-1-blocks row end -->
 
         <div class="row">
-            <div class="col-xl-6 col-lg-12">
+            <div class="col-xl-8 col-lg-12">
                     
                     <div class="card">
                         <div class="card-block">
@@ -154,92 +154,56 @@
                                         </td>
                                         
                                     </tr>
-                                    <tr>
-                                        <th>
-                                            <img class="img-fluid rounded-circle" src="assets/images/avatar-4.png" alt="User">
-                                        </th>
-                                        <td>Contract with belife Company
-                                            <p><i class="icofont icofont-clock-time"></i>Created 20.10.2016</p>
-                                        </td>
-                                        <td>$100.000</td>
-                                        <td>$50.000</td>
-                                        <td class="chart">
-                                            <span class="pie" style="display: none;">0.52/1.561</span><svg class="peity" height="30" width="30">
-        <path d="M 15.000000000000002 0 A 15 15 0 0 1 28.00043211809656 22.482564048691025 L 15 15" fill="#2196F3"></path>
-        <path d="M 28.00043211809656 22.482564048691025 A 15 15 0 1 1 14.999999999999996 0 L 15 15" fill="#ccc"></path>
-                                            </svg>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <img class="img-fluid rounded-circle" src="assets/images/avatar-1.png" alt="User">
-                                        </th>
-                                        <td>Web Consultancy project
-                                            <p><i class="icofont icofont-clock-time"></i>Created 20.10.2016</p>
-                                        </td>
-                                        <td>$100.000</td>
-                                        <td>$50.000</td>
-                                        <td class="chart">
-                                            <span class="pie" style="display: none;">1,4</span>
-                                            <svg class="peity" height="30" width="30">
-        <path d="M 15.000000000000002 0 A 15 15 0 0 1 29.265847744427305 10.36474508437579 L 15 15" fill="#2196F3"></path>
-        <path d="M 29.265847744427305 10.36474508437579 A 15 15 0 1 1 14.999999999999996 0 L 15 15" fill="#ccc"></path>
-                                            </svg>
-                                        </td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <img class="img-fluid rounded-circle" src="assets/images/avatar-3.png" alt="User">
-                                        </th>
-                                        <td>Contract with belife Company
-                                            <p><i class="icofont icofont-clock-time"></i>Created 20.10.2016</p>
-                                        </td>
-                                        <td>$100.000</td>
-                                        <td>$50.000</td>
-                                        <td class="chart">
-                                            <span class="pie" style="display: none;">0.52/1.561</span><svg class="peity" height="30" width="30"><path d="M 15.000000000000002 0 A 15 15 0 0 1 28.00043211809656 22.482564048691025 L 15 15" fill="#2196F3"></path><path d="M 28.00043211809656 22.482564048691025 A 15 15 0 1 1 14.999999999999996 0 L 15 15" fill="#ccc"></path></svg>
-                                        </td>
-                        
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <img class="img-fluid rounded-circle" src="assets/images/avatar-1.png" alt="User">
-                                        </th>
-                                        <td>Contract with belife Company
-                                            <p><i class="icofont icofont-clock-time"></i>Created 20.10.2016</p>
-                                        </td>
-                                        <td>$100.000</td>
-                                        <td>$50.000</td>
-                                        <td class="chart">
-                                            <span class="pie" style="display: none;">0.52/1.561</span><svg class="peity" height="30" width="30"><path d="M 15.000000000000002 0 A 15 15 0 0 1 28.00043211809656 22.482564048691025 L 15 15" fill="#2196F3"></path><path d="M 28.00043211809656 22.482564048691025 A 15 15 0 1 1 14.999999999999996 0 L 15 15" fill="#ccc"></path></svg>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <img class="img-fluid rounded-circle" src="assets/images/avatar-2.png" alt="User">
-                                        </th>
-                                        <td>Contract with belife Company
-                                            <p><i class="icofont icofont-clock-time"></i>Created 20.10.2016</p>
-                                        </td>
-                                        <td>$100.000</td>
-                                        <td>$50.000</td>
-                                        <td class="chart">
-                                            <span class="pie" style="display: none;">0.52/1.561</span><svg class="peity" height="30" width="30"><path d="M 15.000000000000002 0 A 15 15 0 0 1 28.00043211809656 22.482564048691025 L 15 15" fill="#2196F3"></path><path d="M 28.00043211809656 22.482564048691025 A 15 15 0 1 1 14.999999999999996 0 L 15 15" fill="#ccc"></path></svg>
-                                        </td>
-                                       
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-xl-4 col-sm-12 grid-item">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="basic-widget basic-widget-purple ">
+                        <i class="icofont icofont-ui-user"></i>
+                        <h5>Visitors</h5>
+                        <div class="counter-txt">
+                          <h4 class="counter-txt counter">10</h4>k
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="basic-widget basic-widget-green m-r-0">
+                        <i class="icofont icofont-music"></i>
+                        <h5>Volume</h5>
+                        <div class="counter-txt">
+                          <h4 class="counter">100</h4>%
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="basic-widget basic-widget-orange">
+                        <i class="icofont icofont-star"></i>
+                        <h5>Rating</h5>
+                        <h4 class="counter">578</h4>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="basic-widget basic-widget-pink m-r-0">
+                        <i class="icofont icofont-trophy-alt"></i>
+                        <h5>Achivement</h5>
+                        <h4 class="counter">20</h4>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
         </div>
         <!-- 2nd row start -->
-        <div class="row">
+        <div class="row" style="display: none;">
           <!-- 1 col start -->
           <div class="col-xl-4 col-sm-12 grid-item">
             <div class="row">
