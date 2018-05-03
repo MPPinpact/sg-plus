@@ -20,7 +20,7 @@ $avatarUser = Auth::user()->usrUrlimage;
   </div>
   <ul class="sidebar-menu">
     <li class="treeview">
-      <a href="#" class="settings-menu">
+      <a href="/home" class="settings-menu">
         <i class="icon-speedometer"></i><span>  Dashboard </span>
       </a>
     </li>

@@ -14,7 +14,14 @@
 </style>
 
 <div class="row">
-	
+    <div class="col-sm-12 p-0">
+        <div class="main-header">
+        	<h4>Punto de Venta</h4>
+    	</div>
+	</div>
+</div>
+
+<div class="row">
 	<div class="col-lg-4 grid-item">
 		<div class="card">
 			<div class="bg-success">

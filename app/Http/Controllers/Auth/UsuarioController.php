@@ -34,6 +34,8 @@ class UsuarioController extends Controller
 
     // Pantalla para seleccionar un perfil despues de iniciar sesion
     protected function getAccesos(){
+        log::info("-->getAccesos();");
+
         $data['title'] = 'Elige acceso';
         $model= new Usuario();
         $data['v_accesos'] = $model->perfilesDisponibles();
@@ -45,6 +47,8 @@ class UsuarioController extends Controller
 
     // Cargar el perfil escogido
     protected function postAccesos(Request $request){
+        log::info("-->postAccesos();");
+        
         $datos = $request->all();
         $model= new Usuario();
 

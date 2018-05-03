@@ -117,12 +117,14 @@
     <!-- Sidebar chat end-->
     <div class="content-wrapper">
       <div class="container-fluid">
-        <br><br>
         @yield('content')
       </div>
     </div>
   </div>
   <script type="text/javascript" src="{{ asset('theme/assets/js/main.min.js') }}"></script>
   <script src="{{ asset('theme/assets/js/menu-horizontal.min.js') }}"></script>
+  <script Language="Javascript">
+    var rutaHome = "{{ URL::route('infoDashboard') }}"
+  </script>
 </body>
 </html>

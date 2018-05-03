@@ -19,6 +19,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/infoDashboard', 'HomeController@getInfoDashboard')->name('infoDashboard');
 
 //CRUD Empresas
 Route::get('/empresas', 'EmpresaController@getEmpresas')->name('empresas');

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Log;
 use Auth;
-
+use App\Models\Home;
 
 class HomeController extends Controller
 {
@@ -31,5 +31,17 @@ class HomeController extends Controller
         }else{
             return view('login');
         }    
+    }
+
+    public function getInfoDashboard(){
+        $model= new Home();
+        $result['ventaAgno'] = $model->resumenVentaLocal('Y');
+        $result['ventaMes'] = $model->resumenVentaLocal('M');
+        $result['ventaSemana'] = $model->resumenVentaLocal('W');
+        $result['ventaDia'] = $model->resumenVentaLocal('D');
+
+        $result['vendedores'] = $model->resumenVentaVendedores();
+
+        return $result;
     }
 }
