@@ -88,7 +88,7 @@ class VendedorController extends Controller
 		$model= new Vendedor();
 		
 		$rutVendedor =  str_replace(".", "", $datos['RUTVendedor']);		
-        log::info("RUTVendedor: ". $rutVendedor);
+        //log::info("RUTVendedor: ". $rutVendedor);
 		
         //$result['v_usuario'] = Usuario::where('usrUserName', $rutVendedor)->first();
 		$result['v_usuario'] = Vendedor::where('RUTVendedor', $rutVendedor)->first();

@@ -1,4 +1,4 @@
-@extends('menu.index')
+@extends('home.index')
 @section('content')
 
 	 <div class="row">

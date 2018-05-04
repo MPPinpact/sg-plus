@@ -1,4 +1,4 @@
-@extends('menu.index')
+@extends('puntoVenta.index')
 @section('content')
 <style type="text/css" media="screen">
 	.nav-tabs .slide{

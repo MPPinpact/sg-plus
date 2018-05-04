@@ -49,7 +49,7 @@ class AbonoCliente extends Authenticatable
 
         $sql="select f_registro_abono(".$Id.",".$datos['IdClienteAbono']."," . $IdCaja . ",'".$datos['MontoAbono']."',".$datos['IdFormaPago'].",".$idAdmin.")";
 
-        log::info($sql);
+        //log::info($sql);
 
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
@@ -59,15 +59,15 @@ class AbonoCliente extends Authenticatable
     }
 
     public function regPagoCredito($datos){
-        log::info("A pagar los cuenta cliente desde el modelo");
-        log::info($datos);
+        //log::info("A pagar los cuenta cliente desde el modelo");
+        //log::info($datos);
         $idAdmin = Auth::id();
         $Id=0;
         $datos['IdCajaPC'] == null ? $IdCaja = 0 : $IdCaja = $datos['IdCajaPC'];
 
         $sql="select f_registro_abono(" . $Id . "," . $datos['IdClientePagoCredito'] . "," . $IdCaja . ",'" . $datos['MontoAPagarPagoCredito'] . "'," . $datos['IdFormaPagoCredito'] . "," . $idAdmin . ")";
 
-        log::info($sql);
+        //log::info($sql);
 
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {

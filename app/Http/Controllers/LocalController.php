@@ -56,7 +56,7 @@ class LocalController extends Controller
         $user= new Usuario();
         $model= new Local();
 
-log::info($datos);
+//log::info($datos);
 
         $result['f_registro'] = $model->regLocal($datos);
         $result['v_locales'] = $model->listLocal();

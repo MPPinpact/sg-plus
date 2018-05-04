@@ -52,7 +52,7 @@ class CicloFacturacion extends Authenticatable
         $Id = $datos['IdCicloFacturacionEECC'];  
 		
         $sql = "select f_generacion_eecc(".$Id.")";
-		log::info($sql);		
+		//log::info($sql);		
 		
         $execute=DB::select($sql);
 		

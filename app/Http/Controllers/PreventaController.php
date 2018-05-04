@@ -88,7 +88,7 @@ class PreventaController extends Controller
         $datos = $request->all();
 		$model = new Preventa();
 		
-		log::info("IdDetallePago: ". $datos['IdDetallePago']);
+		//log::info("IdDetallePago: ". $datos['IdDetallePago']);
 		
 		$pago = $model->getOnePagoPreVenta($datos['IdDetallePago']);		
         $detalle = $model->activarDetallePago($datos['IdDetallePago']);
@@ -107,7 +107,7 @@ class PreventaController extends Controller
 		$IdPreVenta=0;
 		$datos['IdPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['IdPreVenta'];
 		
-		log::info("IdPreVenta: " . $IdPreVenta);
+		//log::info("IdPreVenta: " . $IdPreVenta);
 		
 		if($IdPreVenta==0) {
 			$PreVenta = $model->regPreVentaPuntoVenta($datos);
@@ -116,9 +116,9 @@ class PreventaController extends Controller
 			$IdPreVenta=$obj->{'IdPreVenta'};
 		}
 		
-		// log::info("IdPreVenta: " . $IdPreVenta);
-		// log::info("IdLocalPreVenta: " . $datos['IdLocalPreVenta']);
-		// log::info("IdCajaPreVenta: " . $datos['IdCajaPreVenta']);
+		// //log::info("IdPreVenta: " . $IdPreVenta);
+		// //log::info("IdLocalPreVenta: " . $datos['IdLocalPreVenta']);
+		// //log::info("IdCajaPreVenta: " . $datos['IdCajaPreVenta']);
 		
 		$result['v_cabecera'] = $model->getCabeceraPreventa($IdPreVenta);
         $result['f_registro'] = $model->regDetallePreVentaPuntoVenta($datos);
@@ -134,7 +134,7 @@ class PreventaController extends Controller
 		/* Tengo IdPreVenta? */
 		$IdPreVenta=0;
 		$datos['NroPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['NroPreVenta'];
-		log::info("IdPreVenta: " . $IdPreVenta);
+		//log::info("IdPreVenta: " . $IdPreVenta);
 				
 		$result['f_registro'] = '{"code":200}'; 
 		$result['v_cabecera'] = $model->getCabeceraPreventa($IdPreVenta);
@@ -144,11 +144,11 @@ class PreventaController extends Controller
     }
 
 	protected function postAsignarVendedor(Request $request){
-        log::info("Asignar Vendedor a Pre-Venta ");
+        //log::info("Asignar Vendedor a Pre-Venta ");
 		
 		$datos = $request->all();
-		log::info("IdPreVenta: " . $datos['IdPreVenta']);
-		log::info("IdVendedor: " . $datos['IdVendedorPreVenta']);
+		//log::info("IdPreVenta: " . $datos['IdPreVenta']);
+		//log::info("IdVendedor: " . $datos['IdVendedorPreVenta']);
 		
 		$model= new Preventa();
 		$result['f_registro'] = $model->regVendedorPreVenta($datos);
@@ -157,11 +157,11 @@ class PreventaController extends Controller
     }
 	
 	protected function postAsignarCliente(Request $request){
-        log::info("Asignar Cliente a Pre-Venta ");
+        //log::info("Asignar Cliente a Pre-Venta ");
 		
 		$datos = $request->all();
-		log::info("IdPreVenta: " . $datos['IdPreVenta']);
-		log::info("IdCliente: " . $datos['IdClientePreVenta']);
+		//log::info("IdPreVenta: " . $datos['IdPreVenta']);
+		//log::info("IdCliente: " . $datos['IdClientePreVenta']);
 		
 		$model= new Preventa();
 		$result['f_registro'] = $model->regClientePreVenta($datos);
@@ -212,7 +212,7 @@ class PreventaController extends Controller
 
     protected function postBuscarCliente(Request $request){		
 		$datos = $request->all();	
-		//log::info("Asignar Cliente " . $datos['RUTCliente'] ." a Pre-Venta");
+		////log::info("Asignar Cliente " . $datos['RUTCliente'] ." a Pre-Venta");
 		
 		$venta= new VentaCredito();
         $result['v_cliente'] = $venta->getOneCliente(str_replace(".","",$datos['RUTCliente']));
@@ -280,7 +280,7 @@ class PreventaController extends Controller
 		$datos['IdPreVenta']==null ? $IdPreVenta=$datos['IdPreVenta'] : $IdPreVenta= $datos['IdPreVenta'];
 		
         $resultCierrePreVenta = $model->cerrarPreventa($IdPreVenta);
-		log::info($resultCierrePreVenta);
+		//log::info($resultCierrePreVenta);
 		
 		if($resultCierrePreVenta==1){						
 			$result['f_registro'] = '{"code":200}'; 

@@ -36,83 +36,6 @@ var HideMessage = function(){
 	$("#divChatMin").show("slow");
 }
 
-var cargarPanelesVenta = function(){
-	console.log("cargarPaneles()");
-	
-    parametroAjax.ruta=rutaHome;
-    respuesta=procesarajax(parametroAjax);
-
-    ventaAgno = respuesta.respuesta.ventaAgno;
-    ventaMes = respuesta.respuesta.ventaMes;
-    ventaSemana = respuesta.respuesta.ventaSemana;
-    ventaDia = respuesta.respuesta.ventaDia;
-    vendedores = respuesta.respuesta.vendedores;
-
-	var ventaLocal="";
-	var totalLocales=0;
-
-    for(i=0; i < ventaDia.length; i++){
-    	ventaLocal = ventaLocal + ventaDia[i].NombreLocal + ": $ " + parseFloat(ventaDia[i].TotalVenta).toLocaleString('cl') + "<br>";
-    	totalLocales = parseFloat(totalLocales) + parseFloat(ventaDia[i].TotalVenta);
-    }
-
-    $("#VentaDiaLocal").html(ventaLocal);
-    $("#totalVentaDia").html(parseFloat(totalLocales).toLocaleString('cl'));
-
-	var ventaLocal="";
-	var totalLocales=0;
-
-    for(i=0; i < ventaSemana.length; i++){
-    	ventaLocal = ventaLocal + ventaSemana[i].NombreLocal + ": $ " + parseFloat(ventaSemana[i].TotalVenta).toLocaleString('cl') + "<br>";
-    	totalLocales = parseFloat(totalLocales) + parseFloat(ventaSemana[i].TotalVenta);
-    }
-
-    $("#VentaSemanaLocal").html(ventaLocal);
-    $("#totalVentaSemana").html(parseFloat(totalLocales).toLocaleString('cl'));
-
-    var ventaLocal="";
-	var totalLocales=0;
-
-    for(i=0; i < ventaMes.length; i++){
-    	ventaLocal = ventaLocal + ventaMes[i].NombreLocal + ": $ " + parseFloat(ventaMes[i].TotalVenta).toLocaleString('cl') + "<br>";
-    	totalLocales = parseFloat(totalLocales) + parseFloat(ventaMes[i].TotalVenta);
-    }
-
-    $("#VentaMesLocal").html(ventaLocal);
-	$("#totalVentaMes").html(parseFloat(totalLocales).toLocaleString('cl') );
-	$("#totalMes").html("Venta acumulada en " + meses[ventaMes[0].Mes]);
-
-
-	var ventaLocal="";
-	var totalLocales=0;
-
-    for(i=0; i < ventaAgno.length; i++){
-    	ventaLocal = ventaLocal + ventaAgno[i].NombreLocal + ": $ " + parseFloat(ventaAgno[i].TotalVenta).toLocaleString('cl') + "<br>";
-    	totalLocales = parseFloat(totalLocales) + parseFloat(ventaAgno[i].TotalVenta);
-    }
-
-    $("#VentaAgnoLocal").html(ventaLocal);
-	$("#totalVentaAgno").html(parseFloat(totalLocales).toLocaleString('cl') );
-	$("#totalAgno").html("Venta acumulado el " + ventaAgno[0].Agno);
-
-    //Score Venta 
-    $("#tablaScoreVendedoresBody").empty();
-
-    for(i=0; i < vendedores.length; i++){
-        var avance = 0;
-        if(vendedores[i].AcumuladoPeriodo>0){
-            avance = (parseFloat(vendedores[i].AcumuladoPeriodo) / parseFloat(vendedores[i].MetaPeriodo) * 100).toLocaleString('cl');
-        }else{
-            vendedores[i].AcumuladoPeriodo = 0;
-        }
-        $('#tablaScoreVendedores tr:last').after('<tr><th><img class="img-fluid rounded-circle" src="'+vendedores[i].FotoVendedor+'" alt="User"></th><td>'+vendedores[i].NombreVendedor+'<p><i class="icofont icofont-sale-discount"></i>Comisión: '+parseFloat(vendedores[i].ComisionVendedor).toLocaleString('cl')+'</p></td><td>$'+ parseFloat(vendedores[i].MetaPeriodo).toLocaleString('cl')+'</td><td>$'+parseFloat(vendedores[i].AcumuladoPeriodo).toLocaleString('cl')+'</td><td class="chart">'+avance+'% <span class="pie" style="display: none;">180,180</span></td></tr>');
-    }   
-}
-
-var cargarScoreVendedores = function(){
-    console.log("cargarScoreVendedores()");
-
-}
 
 $(document).ready(function() {
 	// moment en idioma español
@@ -138,6 +61,4 @@ $(document).ready(function() {
 	    }
 	});
 
-	cargarPanelesVenta();
-    cargarScoreVendedores();
 });

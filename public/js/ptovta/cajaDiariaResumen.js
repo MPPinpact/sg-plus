@@ -76,7 +76,7 @@ var cargarCajaDiariaResumen = function(data){
 			
 			$( api.column( 2 ).footer() ).html('$'+totalRecaudado +' ( Total Recaudado )');
 		},
-		
+		responsive:false,
 		bFilter: false, 
 		searching: false,
 		paging: false, 
@@ -132,7 +132,7 @@ var cargarCajaDiariaDetalleVentas = function(data){
 			
 			$( api.column( 2 ).footer() ).html('$'+totalFormaPago+' ( Total Forma Pago )');
 		},
-		
+		responsive:false,
 		bFilter: false, 
 		searching: false,
 		paging: false, 
@@ -199,7 +199,7 @@ var cargarResumenRecaudacion = function(data){
 			
 			$( api.column( 2 ).footer() ).html('$'+totalRecaudado +' ( Total Recaudado )');
 		},
-		
+		responsive:false,
 		bFilter: false, 
 		searching: false,
 		paging: false, 
@@ -249,7 +249,7 @@ var cargarDetallePagosCajaDiaria = function(data){
 			
 			$( api.column( 2 ).footer() ).html('$'+totalRecaudado +' ( Total Recaudado )');
 		},
-		
+		responsive:false,
 		bFilter: false, 
 		searching: false,
 		paging: false, 

@@ -123,7 +123,7 @@ class Venta extends Authenticatable
 		
 		$sql="select f_actualizar_venta_vendedor(".$IdVenta.",".$datos['IdVendedorPreVenta'].",".$IdUsuario.")";
         $execute=DB::select($sql);
-		log::info($sql);
+		//log::info($sql);
 		
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -139,7 +139,7 @@ class Venta extends Authenticatable
 		
 		$sql="select f_actualizar_venta_cliente(".$IdVenta.",".$datos['IdClientePreVenta'].",".$IdUsuario.")";
         $execute=DB::select($sql);
-		log::info($sql);
+		//log::info($sql);
 		
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -195,7 +195,7 @@ class Venta extends Authenticatable
 		else $fpc = $this->formatearFecha($fpc);
 		
         $sql="select f_registro_pago_ventas(".$Id.",".$datos['IdVentaPago'].",".$datos['IdFormaPago'].",'".$datos['CodigoAprobacionTarjeta']."','".$datos['NumeroTransaccionTarjeta']."','".$datos['IdClienteVC']."', '".$fpc."','".$datos['NumeroCuotasCredito']."','".$datos['InteresMensualCredito']."','".$datos['MontoFinalCredito']."','".$datos['MontoCuotaCredito']."','".$datos['MontoPagoEfectivo']."',1,".$idAdmin.")";
-		log::info($sql);
+		//log::info($sql);
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -207,7 +207,7 @@ class Venta extends Authenticatable
     public function regPagoPuntoVenta($datos){
         $idAdmin = Auth::id();
 		
-		//log::info("IdPreVenta: " . $datos['IdPreVentaPago']);
+		////log::info("IdPreVenta: " . $datos['IdPreVentaPago']);
 		
         $datos['IdDetallePago']==null ? $Id=0 : $Id= $datos['IdDetallePago'];
 		
@@ -216,7 +216,7 @@ class Venta extends Authenticatable
 		else $fpc = $this->formatearFecha($fpc);
 		
         $sql="select f_registro_pago_ventas(".$Id.",".$datos['IdPreVentaPago'].",".$datos['IdFormaPagoPreVenta'].",'".$datos['CodigoAprobacionTarjeta']."','".$datos['NumeroTransaccionTarjeta']."','".$datos['IdClienteVC']."', '".$fpc."','".$datos['NumeroCuotasCredito']."','".$datos['InteresMensualCredito']."','".$datos['MontoFinalCredito']."','".$datos['MontoCuotaCredito']."','".$datos['MontoPagoEfectivo']."',1,".$idAdmin.")";
-		//log::info($sql);
+		////log::info($sql);
 		
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
@@ -227,14 +227,14 @@ class Venta extends Authenticatable
 	
 	public function regFinalizarVenta($IdVenta){
 		$sql="select f_finaliza_venta(".$IdVenta.")";
-		//log::info($sql);
+		////log::info($sql);
 		
 		$execute=DB::select($sql);
 		
 		foreach ($execute[0] as $key => $value) {
             $result=$value;
         }
-		//log::info($execute);
+		////log::info($execute);
 		
         //$result['IdVenta'] = 1;
 		return $result;
@@ -297,7 +297,7 @@ class Venta extends Authenticatable
         $IdAdmin = Auth::id();
 		
         $values=array('EstadoVenta'=>2,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$IdAdmin);
-		log::info($values);
+		//log::info($values);
         return DB::table('ventas')
                 ->where('IdVenta', $IdVenta)
                 ->update($values);
@@ -319,7 +319,7 @@ class Venta extends Authenticatable
 		$IdAdmin = Auth::id();
 		
 		$sql="select f_registro_venta_preventa(".$IdPreVenta.",".$IdAdmin.")";
-		//log::info($sql);
+		////log::info($sql);
 		
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {

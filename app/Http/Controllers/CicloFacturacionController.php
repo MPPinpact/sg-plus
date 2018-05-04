@@ -68,7 +68,7 @@ class CicloFacturacionController extends Controller
         $datos = $request->all();
         $model= new CicloFacturacion();
 		
-		log::info("Llegando....");
+		//log::info("Llegando....");
 		
         $result['f_generacion'] = $model->generarEECC($datos);
         return $result;

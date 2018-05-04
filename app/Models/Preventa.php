@@ -99,7 +99,7 @@ class Preventa extends Authenticatable
 		
 		$sql="select f_actualizar_preventa_vendedor(".$IdPreVenta.",".$datos['IdVendedorPreVenta'].",".$IdUsuario.")";
         $execute=DB::select($sql);
-		log::info($sql);
+		//log::info($sql);
 		
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -115,7 +115,7 @@ class Preventa extends Authenticatable
 		
 		$sql="select f_actualizar_preventa_cliente(".$IdPreVenta.",".$datos['IdClientePreVenta'].",".$IdUsuario.")";
         $execute=DB::select($sql);
-		log::info($sql);
+		//log::info($sql);
 		
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -131,7 +131,7 @@ class Preventa extends Authenticatable
 		
         $sql="select f_registro_detalle_preventa(".$Id.",".$datos['IdPreVenta'].",".$datos['IdProductoPreVenta'].",null,'".$datos['CantidadProductoPreVenta']."','".$datos['PrecioProductoPreVenta']."','0','0','0','0','".$datos['TotalLineaPreVenta']."',".$IdUsuario.")";
 
-log::info($sql);
+//log::info($sql);
 
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
@@ -144,7 +144,7 @@ log::info($sql);
     public function regPagoPreVenta($datos){
         $idAdmin = Auth::id();
 		
-		log::info("IdPreVenta: " . $datos['IdPreVentaPago']);
+		//log::info("IdPreVenta: " . $datos['IdPreVentaPago']);
 		
         $datos['IdDetallePago']==null ? $Id=0 : $Id= $datos['IdDetallePago'];
 		
@@ -153,7 +153,7 @@ log::info($sql);
 		else $fpc = $this->formatearFecha($fpc);
 		
         $sql="select f_registro_pago_preventas(".$Id.",".$datos['IdPreVentaPago'].",".$datos['IdFormaPagoPreVenta'].",'".$datos['CodigoAprobacionTarjeta']."','".$datos['NumeroTransaccionTarjeta']."','".$datos['IdClienteVC']."', '".$fpc."','".$datos['NumeroCuotasCredito']."','".$datos['InteresMensualCredito']."','".$datos['MontoFinalCredito']."','".$datos['MontoCuotaCredito']."','".$datos['MontoPagoEfectivo']."',1,".$idAdmin.")";
-		log::info($sql);
+		//log::info($sql);
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;

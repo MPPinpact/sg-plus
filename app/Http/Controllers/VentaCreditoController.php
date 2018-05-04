@@ -69,7 +69,7 @@ class VentaCreditoController extends Controller
     }
 
     protected function postBuscarCliente (Request $request){
-        log::info("Cargar cliente Venta Credito");
+        //log::info("Cargar cliente Venta Credito");
 		
 		$datos = $request->all();
         $usuario= new Usuario();

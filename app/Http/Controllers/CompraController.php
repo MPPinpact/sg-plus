@@ -111,10 +111,10 @@ class CompraController extends Controller
     }
 
     public function getCompraMasivaView(Request $request){
-        log::info("getCompraMasivaView()");
+        //log::info("getCompraMasivaView()");
 
         $datos = $request->all();
-        log::info($datos);
+        //log::info($datos);
 
         $model= new Compra();
 
@@ -187,10 +187,10 @@ class CompraController extends Controller
         
         if($IdCompra==null){
             $result['f_registro_compra'] = $model->regCompraMasiva($datos);
-            log::info("Registro Compra: " . $result['f_registro_compra']);
+            //log::info("Registro Compra: " . $result['f_registro_compra']);
             
             $obj = json_decode($result['f_registro_compra']);
-            log::info($obj->IdCompra);
+            //log::info($obj->IdCompra);
             
             $datos['IdCompra'] = $obj->IdCompra;
             $IdCompra =$obj->IdCompra;
@@ -209,13 +209,13 @@ class CompraController extends Controller
 
     //Registrar Detalle Compra Masiva
     protected function postCargarDetalleCompraMasiva(Request $request){
-        log::info("postCargarDetalleCompraMasiva()");
+        //log::info("postCargarDetalleCompraMasiva()");
         $model= new Compra();
         
         $datos = $request->all();
         $IdCompra = $datos['IdCompra'];
         
-        log::info("IdCompra: ". $IdCompra);
+        //log::info("IdCompra: ". $IdCompra);
 
         $result['v_compra_masiva'] = $model->getCabeceraCompraMasivaFirst($IdCompra);        
         $result['v_detalle_compra_masiva'] = $model->getDetallesCompraMasiva($IdCompra);
@@ -237,13 +237,13 @@ class CompraController extends Controller
 		$IdProducto = $datos['IdProductoBD'];
 		$datos['IdLocal'] = 7;
 		
-        log::info("IdCompraDetalle: " . $IdCompraDetalle);
-        log::info("IdProducto: " . $IdProducto);
+        //log::info("IdCompraDetalle: " . $IdCompraDetalle);
+        //log::info("IdProducto: " . $IdProducto);
 
 
 		if($IdCompraDetalle!=null){
 			$result['f_registro_bodega_destino'] = $model->regCompraMasivaBodegaDestino($datos);
-			log::info("Registro Bodega Destino: " . $result['f_registro_bodega_destino']);			
+			//log::info("Registro Bodega Destino: " . $result['f_registro_bodega_destino']);			
 		}
 		
         $result['v_bodega_destino'] = $model->getBodegasDestinoCompraMasiva($IdCompraDetalle);
@@ -259,11 +259,11 @@ class CompraController extends Controller
 		
 		$datos = $request->all();
 		$IdCompraDetalle = $datos['IdDetalleCompraBD'];
-		log::info("IdCompraDetalle: ". $IdCompraDetalle);
+		//log::info("IdCompraDetalle: ". $IdCompraDetalle);
 		
         $detalle = $model->getOneCompraDetalle($IdCompraDetalle);
         $obj = json_decode($detalle);
-        log::info("IdProducto: " . $obj[0]->IdProducto);
+        //log::info("IdProducto: " . $obj[0]->IdProducto);
 
         $result['v_detalle_compra'] = $detalle = $model->getOneCompraDetalle($IdCompraDetalle);
         $result['v_bodega_destino'] = $model->getBodegasDestinoCompraMasiva($IdCompraDetalle);
@@ -276,7 +276,7 @@ class CompraController extends Controller
 		
 		$datos = $request->all();
 		$IdProducto = $datos['IdProducto'];
-		log::info("IdProducto: ". $IdProducto);
+		//log::info("IdProducto: ". $IdProducto);
 		
         $result['v_stock'] = $modelPRO->listStock($IdProducto);
         return $result;
@@ -295,11 +295,11 @@ class CompraController extends Controller
 		$IdBodega =  $bodegaDestino[0]->IdBodega;
 		$Cantidad =  $bodegaDestino[0]->Cantidad;
 		
-		log::info("IdBodegaDestino: ". $IdBodegaDestino);
-		log::info("IdProducto: " . $bodegaDestino[0]->IdProducto );
-		log::info("IdBodega: " . $bodegaDestino[0]->IdBodega );
-		log::info("IdDetalleCompra: " . $bodegaDestino[0]->IdDetalleCompra );
-		log::info("IdCompra: " . $bodegaDestino[0]->IdCompra );
+		//log::info("IdBodegaDestino: ". $IdBodegaDestino);
+		//log::info("IdProducto: " . $bodegaDestino[0]->IdProducto );
+		//log::info("IdBodega: " . $bodegaDestino[0]->IdBodega );
+		//log::info("IdDetalleCompra: " . $bodegaDestino[0]->IdDetalleCompra );
+		//log::info("IdCompra: " . $bodegaDestino[0]->IdCompra );
 		
 		
         $result['e'] = $model->eliminarAsginacionBodegaDestino($bodegaDestino);
