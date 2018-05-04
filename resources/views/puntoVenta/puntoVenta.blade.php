@@ -11,6 +11,18 @@
 	a{
 	  color: #FFF;
 	}
+
+	.modal-dialog {
+  width:90%;
+  height: 90%;
+  padding: 0;
+  max-width: 2000px;
+}
+
+.modal-content {
+  height: 90%;
+  border-radius: 0;
+}
 </style>
 
 <div class="row">
@@ -697,7 +709,7 @@
 
 <!-- Modal Pre-Venta -->
 <div class="modal fade" id="ModalPreVenta" role="dialog" data-keyboard="false" data-backdrop="static" style="z-index: 1050; display: none;" >
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg" role="document" >
         <div class="modal-content">
             <div class="modal-header">
             	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
