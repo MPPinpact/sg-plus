@@ -28,7 +28,7 @@ var ManejoRespuestaVerBoleta = function(respuesta){
             var ID = $("#NumeroBoletaModal").val();
             console.log(ID);
             JsBarcode("#barcode", ID);
-            $("#ModalBoletaPreventa").modal();
+            $("#ModalBoletaPlantilla").modal();
         }else{
         $.growl({message:respuesta.respuesta.status.des_code},{type: "warning", allow_dismiss: true});
             
