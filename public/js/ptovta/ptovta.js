@@ -92,12 +92,15 @@ var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
                 }
                 $("#EstadoClienteConsultaCredito").val(cliente[0].DetalleEstadoCliente);
             }
-            //Caso pago Credito
-            if (caso == 2){
+            //Caso pago Credito  UltimoMontoFacturadoConsultaCredito
+            if (caso == 2){ 
                 $("#IdClientePagoCredito").val(cliente[0].IdCliente);
                 $("#NombreClientePagoCredito").val(cliente[0].NombreCliente);
-                if (respuesta.respuesta.v_cliente.MontoActual.length > 0){
-                    $("#MontoFacturadoPagoCredito").val(respuesta.respuesta.v_cliente.MontoActual[0].MontoFacturadoActual);
+                // if (respuesta.respuesta.v_cliente.MontoActual.length > 0){
+                //     $("#MontoFacturadoPagoCredito").val(respuesta.respuesta.v_cliente.MontoActual[0].MontoFacturadoActual);
+                // }
+                if (respuesta.respuesta.v_cliente.MontoAnterior.length > 0){
+                    $("#MontoFacturadoPagoCredito").val(respuesta.respuesta.v_cliente.MontoAnterior[0].MontoFacturadoAnterior);
                 }
                 if (respuesta.respuesta.v_cliente.FechaVencimiento.length > 0){
                     $("#FechaVencimientoPagoCredito").val(respuesta.respuesta.v_cliente.FechaVencimiento[0].FechaVencimiento);
