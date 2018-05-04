@@ -324,6 +324,10 @@ $(document).ready(function(){
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');
     });
+
+     $("#PrintPre").click(function(){
+        $("div#CuerpoBoleta").printArea();
+    });
 });
 
 var ActualizarTituloVentanaVenta = function(){
@@ -674,12 +678,44 @@ var ContinuarPreVenta = function(){
 	$("#PreVentaStep_2").show();	
 }
 
+var verDetallesBoleta = function(idPreVenta){
+	console.log("IdPreVenta: " + idPreVenta);
+
+    parametroAjax.ruta=rutaVDB;
+    parametroAjax.data = {idPreVenta:idPreVenta,caso:1};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaVerBoleta(respuesta);
+}
+
+var ManejoRespuestaVerBoleta = function(respuestaBoleta){
+	console.log("ManejoRespuestaVerBoleta()");
+
+	console.log("respuestaBoleta: " + respuestaBoleta.code);
+
+    if(respuestaBoleta.code==200){
+        if(respuestaBoleta.respuesta.status.code==200){
+            $("#CuerpoBoleta").html(respuestaBoleta.respuesta.boleta);
+            var ID = $("#NumeroBoletaModal").val();
+            console.log(ID);
+            JsBarcode("#barcode", ID);
+            $("#ModalBoletaPlantilla").modal();
+        }else{
+        $.growl({message:respuestaBoleta.respuesta.status.des_code},{type: "warning", allow_dismiss: true});
+            
+        }
+
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
+    }
+}
+
 var FinalizarPreVenta = function (){
     
 	if(_tipoVenta_=="PreVenta"){
 		parametroAjax.ruta=rutaPVCP;
 		parametroAjax.data = $("#FormPreVenta").serialize();
 		respuesta=procesarajax(parametroAjax);
+
 	}else if(_tipoVenta_=="Venta"){
 		parametroAjax.ruta=rutaVCP;
 		parametroAjax.data = {IdVenta:_idVenta_};
@@ -688,6 +724,9 @@ var FinalizarPreVenta = function (){
 	
 	var res = JSON.parse(respuesta.respuesta.f_registro);
 	if(res.code==200){
+
+		verDetallesBoleta($('#IdPreVenta').val());
+
 		$("#ModalPreVenta").modal("hide");
 		$.growl({message:" "+_tipoVenta_+" Finalizada exitosamente, ahora el cliente puede pasar por Caja!!!"},{type: "success", allow_dismiss: true,});
 				

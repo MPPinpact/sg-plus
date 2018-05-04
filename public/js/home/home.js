@@ -50,49 +50,67 @@ var cargarPanelesVenta = function(){
 
 	var ventaLocal="";
 	var totalLocales=0;
+    var totalTRX=0;
 
     for(i=0; i < ventaDia.length; i++){
-    	ventaLocal = ventaLocal + ventaDia[i].NombreLocal + ": $ " + parseFloat(ventaDia[i].TotalVenta).toLocaleString('cl') + "<br>";
-    	totalLocales = parseFloat(totalLocales) + parseFloat(ventaDia[i].TotalVenta);
+    	ventaLocal = ventaLocal + ventaDia[i].NombreLocal + ': $ ' + parseFloat(ventaDia[i].TotalVenta).toLocaleString('cl') + ' ['+parseFloat(ventaDia[i].CantidadVentas).toLocaleString('cl')+'] <br>';
+    	
+        totalLocales = parseFloat(totalLocales) + parseFloat(ventaDia[i].TotalVenta);
+        totalTRX = parseFloat(totalTRX) + parseFloat(ventaDia[i].CantidadVentas);
     }
 
+    textTotalLocales = parseFloat(totalLocales).toLocaleString('cl') + ' ['+parseFloat(totalTRX).toLocaleString('cl')+' Ventas]';
+
     $("#VentaDiaLocal").html(ventaLocal);
-    $("#totalVentaDia").html(parseFloat(totalLocales).toLocaleString('cl'));
+    $("#totalVentaDia").html(textTotalLocales);
 
 	var ventaLocal="";
 	var totalLocales=0;
+    var totalTRX=0;
 
     for(i=0; i < ventaSemana.length; i++){
-    	ventaLocal = ventaLocal + ventaSemana[i].NombreLocal + ": $ " + parseFloat(ventaSemana[i].TotalVenta).toLocaleString('cl') + "<br>";
+    	ventaLocal = ventaLocal + ventaSemana[i].NombreLocal + ': $ ' + parseFloat(ventaSemana[i].TotalVenta).toLocaleString('cl') + ' ['+parseFloat(ventaSemana[i].CantidadVentas).toLocaleString('cl')+'] <br>';
     	totalLocales = parseFloat(totalLocales) + parseFloat(ventaSemana[i].TotalVenta);
+        totalTRX = parseFloat(totalTRX) + parseFloat(ventaSemana[i].CantidadVentas);
     }
 
+    textTotalLocales = parseFloat(totalLocales).toLocaleString('cl') + ' ['+parseFloat(totalTRX).toLocaleString('cl')+' Ventas]';
+
+
     $("#VentaSemanaLocal").html(ventaLocal);
-    $("#totalVentaSemana").html(parseFloat(totalLocales).toLocaleString('cl'));
+    $("#totalVentaSemana").html(textTotalLocales);
 
     var ventaLocal="";
 	var totalLocales=0;
+    var totalTRX=0;
 
     for(i=0; i < ventaMes.length; i++){
-    	ventaLocal = ventaLocal + ventaMes[i].NombreLocal + ": $ " + parseFloat(ventaMes[i].TotalVenta).toLocaleString('cl') + "<br>";
+    	ventaLocal = ventaLocal + ventaMes[i].NombreLocal + ': $ ' + parseFloat(ventaMes[i].TotalVenta).toLocaleString('cl') + ' ['+parseFloat(ventaMes[i].CantidadVentas).toLocaleString('cl')+'] <br>';
     	totalLocales = parseFloat(totalLocales) + parseFloat(ventaMes[i].TotalVenta);
+        totalTRX = parseFloat(totalTRX) + parseFloat(ventaMes[i].CantidadVentas);
     }
 
+    textTotalLocales = parseFloat(totalLocales).toLocaleString('cl') + ' ['+parseFloat(totalTRX).toLocaleString('cl')+' Ventas]';
+
     $("#VentaMesLocal").html(ventaLocal);
-	$("#totalVentaMes").html(parseFloat(totalLocales).toLocaleString('cl') );
+	$("#totalVentaMes").html(textTotalLocales);
 	$("#totalMes").html("Venta acumulada en " + meses[ventaMes[0].Mes]);
 
 
 	var ventaLocal="";
 	var totalLocales=0;
+    var totalTRX=0;
 
     for(i=0; i < ventaAgno.length; i++){
-    	ventaLocal = ventaLocal + ventaAgno[i].NombreLocal + ": $ " + parseFloat(ventaAgno[i].TotalVenta).toLocaleString('cl') + "<br>";
+    	ventaLocal = ventaLocal + ventaAgno[i].NombreLocal + ': $ ' + parseFloat(ventaAgno[i].TotalVenta).toLocaleString('cl') + ' ['+parseFloat(ventaAgno[i].CantidadVentas).toLocaleString('cl')+'] <br>';
     	totalLocales = parseFloat(totalLocales) + parseFloat(ventaAgno[i].TotalVenta);
+        totalTRX = parseFloat(totalTRX) + parseFloat(ventaAgno[i].CantidadVentas);
     }
 
+    textTotalLocales = parseFloat(totalLocales).toLocaleString('cl') + ' ['+parseFloat(totalTRX).toLocaleString('cl')+' Ventas]';
+
     $("#VentaAgnoLocal").html(ventaLocal);
-	$("#totalVentaAgno").html(parseFloat(totalLocales).toLocaleString('cl') );
+	$("#totalVentaAgno").html(textTotalLocales);
 	$("#totalAgno").html("Venta acumulado el " + ventaAgno[0].Agno);
 
     //Score Venta 

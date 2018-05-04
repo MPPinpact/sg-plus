@@ -28,7 +28,7 @@ class Boleta extends Authenticatable
             $tabla = "v_preventas_detalle";
             $campo = "IdPreVenta";
             $id = $obj->idPreVenta;
-            $detalles = DB::select("select count(1) as Cant,NombreProducto,ValorUnitarioFinal from v_preventas_detalle where IdPreVenta = ".$obj->idPreVenta." group by NombreProducto,ValorUnitarioFinal");
+            $detalles = DB::select("select count(1) as Cant,NombreProducto,ValorUnitarioVenta from v_preventas_detalle where IdPreVenta = ".$obj->idPreVenta." group by NombreProducto,ValorUnitarioFinal");
             $pagos = DB::select("select FormaPago,MontoPagado from v_preventas_pagos where IdPreVenta =".$obj->idPreVenta);
         }
 
@@ -48,10 +48,10 @@ class Boleta extends Authenticatable
                 <tr>
                     <td>'.$detalle->NombreProducto.'</td>
                     <td>'.$detalle->Cant.'</td>
-                    <td align="right">'.$detalle->ValorUnitarioFinal.'</td>
+                    <td align="right">'.$detalle->ValorUnitarioVenta.'</td>
                 </tr>
             ';
-            $CantTotal = ($detalle->Cant * $detalle->ValorUnitarioFinal);
+            $CantTotal = ($detalle->Cant * $detalle->ValorUnitarioVenta);
             
             $total += $CantTotal;
         }
@@ -139,11 +139,6 @@ class Boleta extends Authenticatable
                         <td colspan="2">
                             <b>FORMAS DE PAGO<b>
                         </td>
-                    </tr>
-
-                    <tr>
-                        <td width="80%">DETALLE</td>
-                        <td width="20%" align="right">CANT</td>
                     </tr>
                     '.$DetallePago.'
                     <tr>

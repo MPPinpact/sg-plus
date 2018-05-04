@@ -960,6 +960,7 @@
 		</div>
     </div>
 </div>
+@include('boleta.boleta')
 
 <script Language="Javascript">
 	var rutaPVBP = "{{ URL::route('preventabpd') }}"
@@ -987,6 +988,9 @@
 	var rutaVCP = "{{ URL::route('ventaVCV') }}"
 	var rutaRV = "{{ URL::route('addPreVentaV') }}"
 	
+	var rutaVDB = "{{ URL::route('boletaV') }}"
+
+	rutaVDB
 	/* Caja Diaria */
 	var rutaCD = "{{ URL::route('infoCD') }}"
 	
