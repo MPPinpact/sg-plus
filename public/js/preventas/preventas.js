@@ -21,6 +21,24 @@ var calcularTotalPreVenta = function(totalPV){
 	$("#TotalPreVentaDetalle").val(totalPV);
 }
 
+var ManejoRespuestaVerBoleta = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta.status.code==200){
+            $("#CuerpoBoleta").html(respuesta.respuesta.boleta);
+            var ID = $("#NumeroBoletaModal").val();
+            console.log(ID);
+            JsBarcode("#barcode", ID);
+            $("#ModalBoletaPlantilla").modal();
+        }else{
+        $.growl({message:respuesta.respuesta.status.des_code},{type: "warning", allow_dismiss: true});
+            
+        }
+
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
+    }
+}
+
 var ManejoRespuestaBuscarProducto = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
@@ -256,6 +274,9 @@ var cargarTablaPreventas = function(data){
                         </a>
                         <a href="#" onclick="cambiarEstatusPreventa(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
                             <i class="icofont icofont-ui-delete"></i>
+                        </a>
+                        <a href="#" onclick="verDetallesBoleta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Imprimir Boleta" data-original-title="Delete">
+                            <i class="icofont icofont-printer"></i>
                         </a>
                         </center>`;
                         return result;
@@ -585,6 +606,13 @@ var cambiarEstatusPreventaD = function(IdDetallePreVenta){
     parametroAjax.data = {IdDetallePreVenta:IdDetallePreVenta};
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaProcesarCD(respuesta);
+}
+
+var verDetallesBoleta = function(idPreVenta){
+    parametroAjax.ruta=rutaVDB;
+    parametroAjax.data = {idPreVenta:idPreVenta,caso:1};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaVerBoleta(respuesta);
 }
 
 var bloquearInputs = function(){
@@ -952,6 +980,5 @@ $(document).ready(function(){
     $("#PrintPre").click(function(){
         $("div#CuerpoBoleta").printArea();
     });
-    JsBarcode("#barcode", "1520");
 
 });

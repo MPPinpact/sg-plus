@@ -23,10 +23,6 @@
 				<div class="col-md-12">
 					<div class="row">
 						<div class="col-md-12">
-							<button style="float:left;" type="button" class="btn btn-success waves-effect" data-toggle="modal" data-target="#ModalBoletaPreventa">
-								Plantilla Boletas
-							</button>
-
 							<button style="float:right;" name="agregar" id="agregar" type="button" class="btn btn-primary waves-effect waves-light">
 								<span>Agregar</span>
                 			</button>
@@ -301,135 +297,7 @@
         </div>
     </div>
 </div>
-
-
-<!-- modal boleta             -->
-<div class="modal fade" id="ModalBoletaPreventa" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="modal-title">Boleta de Preventa</h4>
-            </div>
-            <div class="modal-body" id="CuerpoBoleta" style="font-size:9px">
-            	
-
-            	<table border="1" cellspacing="0" width="100%">
-	            	<tr>
-	            		<td>
-		            		<center>
-								R.U.T 76.445.586-K <br>
-								BOLETA ELECTRONICA <br>
-								N° 0121152 <br>
-		            		</center>
-	            		</td>
-	            	</tr>
-            	</table>
-
-            	<br>
-
-            	<table border="0" cellspacing="0" width="100%">
-            		<tr>
-            			<td>
-            				<b>DEL PEDREGAL SANTIAGO SPA </b><br>
-            			</td>
-            		</tr>
-            		<tr>
-            			<td>
-            				<b>COMERCIALIZACIÓN Y DISTRIBUCIÓN DE ALIMENTOS FRESCOS Y CONGELADOS, EXPORTACIÓN Y ROTISERÍA. </b><br>
-            			</td>
-            		</tr>
-            		<tr>
-            			<td>
-            				<b>CASA MATRIZ </b> GENERAL L ASTRA 688 SANTIAGO <br>
-            			</td>
-            		</tr>
-            		<tr>
-            			<td>
-            				<b>GENERAL L ASTRA 688 SANTIAGO </b><br>
-            			</td>
-            		</tr>
-            		<tr>
-            			<td>
-            				<b>FECHA DE EMISIÓN : 08-04-2018 </b><br>
-            			</td>
-            		</tr>
-            		<tr>
-            			<td>
-            				Vale N° 00000130831 Ejec. CBM - hora 10:51 <br>
-            			</td>
-            		</tr> 
-            		<tr>
-            			<td>
-            				<b>Forma de Pago:</b>
-            			</td>
-            		</tr>   
-            		<tr>
-            			<td>
-            				
-            			</td>
-            		</tr>        		            		            		            		
-            	</table>
-
-            	<br>
-
-            	<table border="0" cellspacing="0" width="100%">
-            		<tr>
-            			<td width="80%">DETALLE</td>
-            			<td align="right">TOTAL</td>
-            		</tr>
-            		<tr>
-            			<td>Articulo 1</td>
-            			<td align="right">990</td>
-            		</tr>
-            		<tr>
-            			<td>Articulo 1</td>
-            			<td align="right">990</td>
-            		</tr>
-            		<tr>
-            			<td>Articulo 1</td>
-            			<td align="right">990</td>
-            		</tr>
-            		<tr>
-            			<td>Articulo 1</td>
-            			<td align="right">990</td>
-            		</tr>
-            	</table>
-
-            	<br>
-
-            	<table border="0" cellspacing="0" width="100%">
-            		<tr>
-            			<td width="80%"><b>TOTAL</b></td>
-            			<td align="right"><b>xxxx</b></td>
-            		</tr>
-            	</table>
-
-            	<br>
-
-            	<table border="0" cellspacing="0" width="100%">
-            		<tr>
-            			<td>
-            				<center>
-            					<svg id="barcode"></svg>
-            				</center>
-            			</td>
-            		</tr>
-            	</table>
-
-            	
-            </div>
-            <div class="modal-footer">
-	        	<button id="PrintPre" type="button" class="btn btn-default waves-effect ">Imprimir</button>
-	        	<button type="button" class="btn btn-default waves-effect ">PDF</button>
-	        	<button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+@include('boleta.boleta')
 <script Language="Javascript">
 	var ruta = "{{ URL::route('preventas') }}"
 	var rutaBC = "{{ URL::route('preventabc') }}"
@@ -444,6 +312,10 @@
 	var rutaBB = "{{ URL::route('comprabb') }}"
 	var rutaBCs = "{{ URL::route('comprabc') }}"
 	var rutaCDA = "{{ URL::route('preventada') }}"
+	var rutaVDB = "{{ URL::route('boletaV') }}"
+
+	
+
 	var d = [];
 	d['v_preventas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_preventas) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));
