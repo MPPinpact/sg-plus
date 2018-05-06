@@ -983,12 +983,14 @@ $(document).ready(function(){
     });
 
     $("#PdfBoleta").click(function(){
-        OpenWindowWithPost('public/pdf/Digitalización rápida en ByN a archivo PDF_1.pdf','','fgfgdrg',BoletaString);
+    var valoresR = 5;
+        var valoresR={codigo:$("#NumeroBoletaModal").val(),cuerpo:BoletaString};
+        OpenWindowWithPost('/pdf/files/boleta.php','','',valoresR);
+
     });
 
     $("#CerrarModal").click(function(){
-        console.log("paso por aqui");
-        $("#ModalBoletaPlantilla").modal("hice");
+        $("#ModalBoletaPlantilla").modal("hide");
         BoletaString = '';
     });
 

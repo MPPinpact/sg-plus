@@ -25,6 +25,25 @@ var calcularTotalVenta = function(totalVenta){
     calcularSaldoPago();
 }
 
+var ManejoRespuestaVerBoleta = function(respuesta){
+    if(respuesta.code==200){
+        if(respuesta.respuesta.status.code==200){
+            BoletaString = respuesta.respuesta.boleta;
+            $("#CuerpoBoleta").html(respuesta.respuesta.boleta);
+            var ID = $("#NumeroBoletaModal").val();
+            console.log(ID);
+            JsBarcode("#barcode", ID);
+            $("#ModalBoletaPlantilla").modal();
+        }else{
+        $.growl({message:respuesta.respuesta.status.des_code},{type: "warning", allow_dismiss: true});
+            
+        }
+
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
+    }
+}
+
 var ManejoRespuestaBuscarProducto = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
@@ -314,6 +333,9 @@ var cargarTablaVentas = function(data){
                         </a>
                         <a href="#" onclick="cambiarEstatusVenta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
                             <i class="icofont icofont-ui-delete"></i>
+                        </a>
+                        <a href="#" onclick="verDetallesBoleta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Imprimir Boleta" data-original-title="Delete">
+                            <i class="icofont icofont-printer"></i>
                         </a>	
                         </center>`;
                         return result;
@@ -965,6 +987,13 @@ var ProcesarDetalleCompra = function(){
     ManejoRespuestaProcesarDetalles(respuesta);
 };
 
+var verDetallesBoleta = function(IdVenta){
+    parametroAjax.ruta=rutaVDB;
+    parametroAjax.data = {IdVenta:IdVenta,caso:2};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaVerBoleta(respuesta);
+}
+
 var validador = function(){
 	console.log("IdVenta Antes de Validar Formulario: " + $("#IdVenta").val());
     $('#FormVentas').formValidation('validate');
@@ -1487,5 +1516,21 @@ $(document).ready(function(){
     })
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');
+    });
+
+    $("#PrintPdfBoletaPre").click(function(){
+        $("div#CuerpoBoleta").printArea();
+    });
+
+    $("#PdfBoleta").click(function(){
+    var valoresR = 5;
+        var valoresR={codigo:$("#NumeroBoletaModal").val(),cuerpo:BoletaString};
+        OpenWindowWithPost('/pdf/files/boleta.php','','',valoresR);
+
+    });
+
+    $("#CerrarModal").click(function(){
+        $("#ModalBoletaPlantilla").modal("hide");
+        BoletaString = '';
     });
 });

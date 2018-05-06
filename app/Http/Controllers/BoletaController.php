@@ -65,6 +65,19 @@ class BoletaController extends Controller
             }
         }
 
+        if ($datos['caso']==2){
+            $venta = Venta::find($datos['IdVenta']);
+            if($venta->EstadoVenta == 2){
+                $model= new Boleta();
+                $result['status']['code'] = 200;
+                $result['status']['des_code'] = "Procesada.!";
+                $result['boleta'] = $model->verBoleta($venta,$datos['caso']);
+            }else{
+                $result['status']['code'] = 204;
+                $result['status']['des_code'] = "solo se puede imprimir una venta cerrada";
+            }
+        }
+
         // $model= new FormaPago ();
         // $result['f_registro'] = $model->regFormaPago($datos);
         // $result['v_formas_de_pago'] = $model->listFormasPago();
