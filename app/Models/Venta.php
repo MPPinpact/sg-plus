@@ -131,6 +131,24 @@ class Venta extends Authenticatable
         return $result;
 	}
 	
+    public function regTipoDTEVenta($datos){
+        $IdUsuario = Auth::id();
+        
+        isset($datos['IdVenta']) ? $IdVenta= $datos['IdVenta'] : $IdVenta=$datos['IdPreVenta'];
+        
+        $datos['IdPreVenta']==null ? $IdVenta=0 : $IdVenta= $datos['IdPreVenta'];     
+        $datos['IdTipoDTEPreVenta']==null ? $datos['IdTipoDTEPreVenta']="null" :$datos['IdTipoDTEPreVenta']=$datos['IdTipoDTEPreVenta'];
+        
+        $sql="select f_actualizar_venta_tipodte(".$IdVenta.",".$datos['IdTipoDTEPreVenta'].",".$IdUsuario.")";
+        $execute=DB::select($sql);
+        //log::info($sql);
+        
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
+
 	public function regClienteVenta($datos){
 		$IdUsuario = Auth::id();
 		 
@@ -315,10 +333,10 @@ class Venta extends Authenticatable
         return $result;
     }
 	
-	public  function cargaPreVenta($IdPreVenta){
+	public  function cargaPreVenta($IdPreVenta, $IdLocal){
 		$IdAdmin = Auth::id();
 		
-		$sql="select f_registro_venta_preventa(".$IdPreVenta.",".$IdAdmin.")";
+		$sql="select f_registro_venta_preventa(".$IdPreVenta.",".$IdLocal.",".$IdAdmin.")";
 		////log::info($sql);
 		
         $execute=DB::select($sql);

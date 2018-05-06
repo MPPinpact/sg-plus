@@ -109,20 +109,36 @@ class Preventa extends Authenticatable
 	}
 	
 	public function regClientePreVenta($datos){
-		$IdUsuario = Auth::id();
-		 
-		$datos['IdPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['IdPreVenta'];		
-		$datos['IdClientePreVenta']==null ? $datos['IdClientePreVenta']="null" :$datos['IdClientePreVenta']=$datos['IdClientePreVenta'];
-		
-		$sql="select f_actualizar_preventa_cliente(".$IdPreVenta.",".$datos['IdClientePreVenta'].",".$IdUsuario.")";
+        $IdUsuario = Auth::id();
+         
+        $datos['IdPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['IdPreVenta'];     
+        $datos['IdClientePreVenta']==null ? $datos['IdClientePreVenta']="null" :$datos['IdClientePreVenta']=$datos['IdClientePreVenta'];
+        
+        $sql="select f_actualizar_preventa_cliente(".$IdPreVenta.",".$datos['IdClientePreVenta'].",".$IdUsuario.")";
         $execute=DB::select($sql);
-		//log::info($sql);
-		
+        //log::info($sql);
+        
         foreach ($execute[0] as $key => $value) {
             $result=$value;
         }
         return $result;
-	}
+    }
+
+    public function regTipoDTEPreVenta($datos){
+        $IdUsuario = Auth::id();
+         
+        $datos['IdPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['IdPreVenta'];     
+        $datos['IdTipoDTEPreVenta']==null ? $datos['IdTipoDTEPreVenta']="null" :$datos['IdTipoDTEPreVenta']=$datos['IdTipoDTEPreVenta'];
+        
+        $sql="select f_actualizar_preventa_tipodte(".$IdPreVenta.",".$datos['IdTipoDTEPreVenta'].",".$IdUsuario.")";
+        $execute=DB::select($sql);
+        //log::info($sql);
+        
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+        return $result;
+    }
 	
 	// Registrar Detalle Pre-Venta desde el Módulo Punto de Venta
     public function regDetallePreVentaPuntoVenta($datos){
@@ -216,6 +232,10 @@ class Preventa extends Authenticatable
         return DB::table('preventas_detalle')
                 ->where('IdDetallePreVenta', $datos[0]->IdDetallePreVenta)
                 ->update($values);
+    }
+
+    public function getPreventa($idPreVenta, $idLocal){
+        return DB::table('v_preventas')->select(DB::raw('COUNT(1) AS PreVenta'))->where('idPreVenta',$idPreVenta)->where('IdLocal', $idLocal)->first(); 
     }
 
     public function getCabeceraPreventa($idPreVenta){

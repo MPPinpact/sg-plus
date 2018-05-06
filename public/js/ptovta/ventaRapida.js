@@ -59,7 +59,11 @@ $(document).ready(function(){
 	
 	$(document).on('click','#botonPreVenta',PreVenta);
 	$(document).on('click','#botonVentaDirecta',VentaDirecta);
-	
+
+	$(document).on('click','#botonTipoDTE',ModalTipoDTE);
+	$(document).on('click','#botonBoleta',AsignaBoleta);
+	$(document).on('click','#botonFactura',AsignaFactura);
+	$(document).on('click','#botonCI',AsignaCI);
 	
 	/* focusout --> lost focus */
 	$("#CodigoProductoPreVenta").focusout(function() {
@@ -330,6 +334,39 @@ $(document).ready(function(){
     });
 });
 
+var AsignaBoleta = function(){
+	AsignaTipoDTE(1, 'Boleta');
+	
+	return false;
+}
+
+var AsignaFactura  = function(){
+	AsignaTipoDTE(2, 'Factura');
+
+	return false;
+}
+
+var AsignaCI  = function(){
+	AsignaTipoDTE(5, 'CI');
+
+	return false;
+}
+
+var AsignaTipoDTE = function(tipoDTE, nombreDTE){
+	console.log("AsignaTipoDTE("+tipoDTE+")");
+	$('#IdTipoDTEPreVenta').val(tipoDTE);
+	$('#IdTipoDTE').val(tipoDTE);
+	$('#botonTipoDTE').text(nombreDTE);
+
+	if(_tipoVenta_=="PreVenta") parametroAjax.ruta=rutaPVDTE;
+	if(_tipoVenta_=="Venta") parametroAjax.ruta=rutaVDTE;
+					
+	parametroAjax.data = $("#FormPreVenta").serialize();
+	respuesta=procesarajax(parametroAjax);
+
+	$("#ModalTipoDTE").modal('toggle');
+}
+
 var ActualizarTituloVentanaVenta = function(){
 	console.log("ActualizarTitulo() _idLocal_: " + _idLocal_ + " | _idCaja_: " + _idCaja_)
 	$("#spanTituloModalPreVenta").text(_tipoVenta_ + ": "+_idVenta_+" | Local: "+_idLocal_+" | Caja: "+_idCaja_+" | Vendedor: "+_nombreVendedor_);
@@ -380,6 +417,16 @@ var ModalCliente = function(){
 	
 	$('#ModalAsignarCliente').on('shown.bs.modal', function() {
 		$('#RUTCliente').focus().select();
+	});
+}
+
+var ModalTipoDTE = function(){
+    
+	$("#spanTituloModalTipoDTE").text("Seleccione el Tipo de Documento");
+    $("#ModalTipoDTE").modal();
+	
+	$('#ModalTipoDTE').on('shown.bs.modal', function() {
+		//$('#RUTCliente').focus().select();
 	});
 }
 
@@ -641,13 +688,13 @@ var PreVenta= function(){
     $("#NroPreVenta").val("");
 
 	$("#PreVentaStep_2").hide();
-	
-	//destruirTabla('#tablaDetalles');
-	//$('#tablaDetalles thead').empty();
-	
+		
 	ActualizarTituloVentanaVenta()
-	//$("#spanTituloModalPreVenta").text(_tipoVenta_+": ---- | Local: ---- | Caja: ---- | Vendedor: ------");
+	
 	$('#IdPreVenta').val(0);
+	$('#IdTipoDTEPreVenta').val(1);
+	$('#botonTipoDTE').text('Boleta');
+
     $("#ModalPreVenta").modal();
 	
 	$('#ModalPreVenta').on('shown.bs.modal', function() {
@@ -711,14 +758,15 @@ var ManejoRespuestaVerBoleta = function(respuestaBoleta){
 
 var FinalizarPreVenta = function (){
     
-	if(_tipoVenta_=="PreVenta"){
+	if(_tipoVenta_=="PreVenta"){					
 		parametroAjax.ruta=rutaPVCP;
 		parametroAjax.data = $("#FormPreVenta").serialize();
 		respuesta=procesarajax(parametroAjax);
 
 	}else if(_tipoVenta_=="Venta"){
 		parametroAjax.ruta=rutaVCP;
-		parametroAjax.data = {IdVenta:_idVenta_};
+		//parametroAjax.data = {IdVenta:_idVenta_};
+		parametroAjax.data = $("#FormPreVenta").serialize();
 		respuesta=procesarajax(parametroAjax);
 	}
 	
@@ -1078,7 +1126,12 @@ var ManejoRespuestaProcesarProductoPreVenta = function(respuesta, origen){
 				
 				CargarTablaPagos(respuesta.respuesta.v_pagos);
 				$("#botonFormaPagoPreVenta").text("Total Pagado: " + $("#TotalPagadoPreVenta").val());
-		
+
+				$('#IdTipoDTEPreVenta').val(respuesta.respuesta.v_cabecera[0].TipoDTE);
+				$('#IdTipoDTE').val(respuesta.respuesta.v_cabecera[0].TipoDTE);
+				$('#botonTipoDTE').text(respuesta.respuesta.v_cabecera[0].DTE);	
+				AsignaTipoDTE($('#IdTipoDTEPreVenta').val(), $('#botonTipoDTE').text());
+				
 				AgregarProductos();
 				if($('#EstadoPreVenta').val()==2){
 					$("#botonVendedorPreVenta").prop('disabled', true);

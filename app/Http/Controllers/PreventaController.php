@@ -134,12 +134,23 @@ class PreventaController extends Controller
 		/* Tengo IdPreVenta? */
 		$IdPreVenta=0;
 		$datos['NroPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['NroPreVenta'];
-		//log::info("IdPreVenta: " . $IdPreVenta);
-				
-		$result['f_registro'] = '{"code":200}'; 
-		$result['v_cabecera'] = $model->getCabeceraPreventa($IdPreVenta);
-        $result['v_detalles'] = $model->getDetallesPreventa($IdPreVenta);
-		$result['v_pagos'] = $model->getDetallePago($IdPreVenta);
+
+        $localActual = $request->session()->get('localUsuario');
+        $IdLocal = $localActual->IdLocal;
+
+		$resultado = $model->getPreventa($IdPreVenta, $IdLocal);
+
+        if( $resultado->PreVenta == 1){
+    		$result['f_registro'] = '{"code":200}'; 
+    		$result['v_cabecera'] = $model->getCabeceraPreventa($IdPreVenta);
+            $result['v_detalles'] = $model->getDetallesPreventa($IdPreVenta);
+    		$result['v_pagos'] = $model->getDetallePago($IdPreVenta);
+        }else{
+            $result['f_registro'] = '{"code":500,"des_code":"Pre-Venta no registrada"}'; 
+            $result['v_cabecera'] = null;
+            $result['v_detalles'] = null;
+            $result['v_pagos'] = null;
+        }
         return $result;
     }
 
@@ -156,16 +167,29 @@ class PreventaController extends Controller
         return $result;
     }
 	
-	protected function postAsignarCliente(Request $request){
+    protected function postAsignarCliente(Request $request){
         //log::info("Asignar Cliente a Pre-Venta ");
-		
-		$datos = $request->all();
-		//log::info("IdPreVenta: " . $datos['IdPreVenta']);
-		//log::info("IdCliente: " . $datos['IdClientePreVenta']);
-		
-		$model= new Preventa();
-		$result['f_registro'] = $model->regClientePreVenta($datos);
-		
+        
+        $datos = $request->all();
+        //log::info("IdPreVenta: " . $datos['IdPreVenta']);
+        //log::info("IdCliente: " . $datos['IdClientePreVenta']);
+        
+        $model= new Preventa();
+        $result['f_registro'] = $model->regClientePreVenta($datos);
+        
+        return $result;
+    }
+
+    protected function postAsignarDTE(Request $request){
+        //log::info("Asignar TipoDTE a Pre-Venta ");
+        
+        $datos = $request->all();
+        //log::info("IdPreVenta: " . $datos['IdPreVenta']);
+        //log::info("IdCliente: " . $datos['IdClientePreVenta']);
+        
+        $model= new Preventa();
+        $result['f_registro'] = $model->regTipoDTEPreVenta($datos);
+        
         return $result;
     }
 	
@@ -277,6 +301,9 @@ class PreventaController extends Controller
         $datos = $request->all();
         $model= new Preventa();
 		
+        //Asignar TipoDTE
+        $result['f_registro'] = $model->regTipoDTEPreVenta($datos);
+
 		$datos['IdPreVenta']==null ? $IdPreVenta=$datos['IdPreVenta'] : $IdPreVenta= $datos['IdPreVenta'];
 		
         $resultCierrePreVenta = $model->cerrarPreventa($IdPreVenta);
