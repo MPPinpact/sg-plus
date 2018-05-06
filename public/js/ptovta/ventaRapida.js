@@ -59,7 +59,11 @@ $(document).ready(function(){
 	
 	$(document).on('click','#botonPreVenta',PreVenta);
 	$(document).on('click','#botonVentaDirecta',VentaDirecta);
-	
+
+	$(document).on('click','#botonTipoDTE',ModalTipoDTE);
+	$(document).on('click','#botonBoleta',AsignaBoleta);
+	$(document).on('click','#botonFactura',AsignaFactura);
+	$(document).on('click','#botonCI',AsignaCI);
 	
 	/* focusout --> lost focus */
 	$("#CodigoProductoPreVenta").focusout(function() {
@@ -324,7 +328,44 @@ $(document).ready(function(){
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');
     });
+
+     $("#PrintPre").click(function(){
+        $("div#CuerpoBoleta").printArea();
+    });
 });
+
+var AsignaBoleta = function(){
+	AsignaTipoDTE(1, 'Boleta');
+	
+	return false;
+}
+
+var AsignaFactura  = function(){
+	AsignaTipoDTE(2, 'Factura');
+
+	return false;
+}
+
+var AsignaCI  = function(){
+	AsignaTipoDTE(5, 'CI');
+
+	return false;
+}
+
+var AsignaTipoDTE = function(tipoDTE, nombreDTE){
+	console.log("AsignaTipoDTE("+tipoDTE+")");
+	$('#IdTipoDTEPreVenta').val(tipoDTE);
+	$('#IdTipoDTE').val(tipoDTE);
+	$('#botonTipoDTE').text(nombreDTE);
+
+	if(_tipoVenta_=="PreVenta") parametroAjax.ruta=rutaPVDTE;
+	if(_tipoVenta_=="Venta") parametroAjax.ruta=rutaVDTE;
+					
+	parametroAjax.data = $("#FormPreVenta").serialize();
+	respuesta=procesarajax(parametroAjax);
+
+	$("#ModalTipoDTE").modal('toggle');
+}
 
 var ActualizarTituloVentanaVenta = function(){
 	console.log("ActualizarTitulo() _idLocal_: " + _idLocal_ + " | _idCaja_: " + _idCaja_)
@@ -376,6 +417,16 @@ var ModalCliente = function(){
 	
 	$('#ModalAsignarCliente').on('shown.bs.modal', function() {
 		$('#RUTCliente').focus().select();
+	});
+}
+
+var ModalTipoDTE = function(){
+    
+	$("#spanTituloModalTipoDTE").text("Seleccione el Tipo de Documento");
+    $("#ModalTipoDTE").modal();
+	
+	$('#ModalTipoDTE').on('shown.bs.modal', function() {
+		//$('#RUTCliente').focus().select();
 	});
 }
 
@@ -637,13 +688,13 @@ var PreVenta= function(){
     $("#NroPreVenta").val("");
 
 	$("#PreVentaStep_2").hide();
-	
-	//destruirTabla('#tablaDetalles');
-	//$('#tablaDetalles thead').empty();
-	
+		
 	ActualizarTituloVentanaVenta()
-	//$("#spanTituloModalPreVenta").text(_tipoVenta_+": ---- | Local: ---- | Caja: ---- | Vendedor: ------");
+	
 	$('#IdPreVenta').val(0);
+	$('#IdTipoDTEPreVenta').val(1);
+	$('#botonTipoDTE').text('Boleta');
+
     $("#ModalPreVenta").modal();
 	
 	$('#ModalPreVenta').on('shown.bs.modal', function() {
@@ -674,20 +725,56 @@ var ContinuarPreVenta = function(){
 	$("#PreVentaStep_2").show();	
 }
 
+var verDetallesBoleta = function(idPreVenta){
+	console.log("IdPreVenta: " + idPreVenta);
+
+    parametroAjax.ruta=rutaVDB;
+    parametroAjax.data = {idPreVenta:idPreVenta,caso:1};
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaVerBoleta(respuesta);
+}
+
+var ManejoRespuestaVerBoleta = function(respuestaBoleta){
+	console.log("ManejoRespuestaVerBoleta()");
+
+	console.log("respuestaBoleta: " + respuestaBoleta.code);
+
+    if(respuestaBoleta.code==200){
+        if(respuestaBoleta.respuesta.status.code==200){
+            $("#CuerpoBoleta").html(respuestaBoleta.respuesta.boleta);
+            var ID = $("#NumeroBoletaModal").val();
+            console.log(ID);
+            JsBarcode("#barcode", ID);
+            $("#ModalBoletaPlantilla").modal();
+        }else{
+        $.growl({message:respuestaBoleta.respuesta.status.des_code},{type: "warning", allow_dismiss: true});
+            
+        }
+
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
+    }
+}
+
 var FinalizarPreVenta = function (){
     
-	if(_tipoVenta_=="PreVenta"){
+	if(_tipoVenta_=="PreVenta"){					
 		parametroAjax.ruta=rutaPVCP;
 		parametroAjax.data = $("#FormPreVenta").serialize();
 		respuesta=procesarajax(parametroAjax);
+
 	}else if(_tipoVenta_=="Venta"){
 		parametroAjax.ruta=rutaVCP;
-		parametroAjax.data = {IdVenta:_idVenta_};
+		//parametroAjax.data = {IdVenta:_idVenta_};
+		parametroAjax.data = $("#FormPreVenta").serialize();
 		respuesta=procesarajax(parametroAjax);
 	}
 	
 	var res = JSON.parse(respuesta.respuesta.f_registro);
 	if(res.code==200){
+
+		verDetallesBoleta($('#IdPreVenta').val());
+
 		$("#ModalPreVenta").modal("hide");
 		$.growl({message:" "+_tipoVenta_+" Finalizada exitosamente, ahora el cliente puede pasar por Caja!!!"},{type: "success", allow_dismiss: true,});
 				
@@ -1039,7 +1126,12 @@ var ManejoRespuestaProcesarProductoPreVenta = function(respuesta, origen){
 				
 				CargarTablaPagos(respuesta.respuesta.v_pagos);
 				$("#botonFormaPagoPreVenta").text("Total Pagado: " + $("#TotalPagadoPreVenta").val());
-		
+
+				$('#IdTipoDTEPreVenta').val(respuesta.respuesta.v_cabecera[0].TipoDTE);
+				$('#IdTipoDTE').val(respuesta.respuesta.v_cabecera[0].TipoDTE);
+				$('#botonTipoDTE').text(respuesta.respuesta.v_cabecera[0].DTE);	
+				AsignaTipoDTE($('#IdTipoDTEPreVenta').val(), $('#botonTipoDTE').text());
+				
 				AgregarProductos();
 				if($('#EstadoPreVenta').val()==2){
 					$("#botonVendedorPreVenta").prop('disabled', true);

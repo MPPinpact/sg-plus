@@ -54,39 +54,60 @@ class Usuario extends Authenticatable
                     if(isset($user[0]->usrPassword) && Hash::check($data['usrPassword'],$user[0]->usrPassword)){
                             $result=$user[0]->idUser;
                             (isset($data['remember'])) ? $bool="true" : $bool="false";  
+
                             Auth::loginUsingId($result,$bool);
                             if (Auth::check()){
-                                    
+                                    //log::info("Auth::check()");
+
                                     $r=$this->resetIntentosFallidos($user[0]->idUser);
                                     
                                     $usuario = Auth::user();
+                                    ////log::info(Auth::user());
                                     
                                     $perfiles = DB::table('v_perfiles_usuarios')
                                     ->where('idUser',$usuario->idUser)
                                     ->where('activoPerfil',1)->get();
                                     
-                                    $nroPerfiles = count($perfiles);
-                                    
-                                    $locales = DB::table('usuarios_locales')
+                                    $locales = DB::table('v_usuarios_locales')
                                     ->where('IdUsuario',$usuario->idUser)
-                                    ->where('Estado',1)->get();
+                                    ->where('EstadoLocal',1)->get();
 
-                                    log::info("Locales del Usuario: " . $usuario->idUser);
-                                    log::info($locales);
-                                    log::info("========================================");
+                                    ////log::info("Locales: " . count($locales) . " - Perfiles: " . count($perfiles));
 
-                                    Session::put('$localesUsuario', $locales);
-                                    Session::put('nroPerfiles', $nroPerfiles);
-                                    
-
-                                    if ($nroPerfiles>1) {
-                                        return '{"code":"200","des_code":"admin/accesos"}';
-                                    } elseif ($nroPerfiles>0 && $nroPerfiles<2) {
-                                        $response = $this->mostrarPanel($perfiles[0]->idPerfil,$perfiles[0]->des_perfil);
-                                        return $response;
-                                    } elseif ($nroPerfiles==0) {
+                                    if( count($locales) == 0) {
                                         Auth::logout();
-                                        return '{"code":"-2","des_code":"Perfil inactivo"}';
+                                        return '{"code":"-2","des_code":"Usuario sin local asignado"}';
+
+                                    }else if( count($locales) == 1) {
+                                        //log::info("Guardando perfil del usuario en Session...");
+                                        Session::put('localUsuario', $locales[0]);
+
+                                    }
+
+                                   
+                                    if( count($perfiles) == 0) {
+                                        Auth::logout();
+                                        return '{"code":"-2","des_code":"Usuario sin perfil asignado"}';
+
+                                    }else  if( count($perfiles) == 1) {
+                                        //log::info("Guardando perfil del usuario en Session...");
+                                        Session::put('perfilUsuario', $perfiles[0]);
+
+                                    }
+
+                                    if ( count($locales) >1 || count($perfiles) > 1 ) {
+                                        Session::put('localesUsuario', $locales);
+                                        Session::put('perfilesUsuario', $perfiles);
+                                        Session::put('multiAcceso', "1");
+                                        return '{"code":"200","des_code":"admin/accesos"}';
+
+                                    }else if ( count($locales) ==1 && count($perfiles) == 1 ) {
+                                        Session::put('multiAcceso', "0");
+                                        return '{"code":"200","des_code":"home"}';
+
+                                    }else{
+                                        return '{"code":"-2","des_code":"Ocurrio un error al iniciar la session"}';
+
                                     }
                             }else{
                                 return '{"code":"-2","des_code":"Ocurrio un error al iniciar la session"}';
@@ -105,14 +126,24 @@ class Usuario extends Authenticatable
     }
  
     // cargar panel de control con los widget´s del usuario actual
-    public function mostrarPanel($idPerfil,$des_perfil){
+    public function mostrarPanel($IdPerfil, $IdLocal){
         $usuario = Auth::user();
-        $result['idPerfil']=$idPerfil;
-        $result['desPerfil']=$des_perfil;
-        $result['v_detalle']=DB::table('v_usuarios')->where('idUser',$usuario->idUser)->get(); 
-        Session::forget('perfiles');
-        Session::put('perfiles', $result);
-        return '{"code":"200","des_code":"home"}';
+
+        $perfil = DB::table('v_perfiles_usuarios')->where('idUser',$usuario->idUser)->where('idPerfil', $IdPerfil)
+                                    ->where('activoPerfil',1)->first();
+
+        Session::put('perfilUsuario', $perfil);
+
+        $local = DB::table('v_usuarios_locales')->where('IdUsuario',$usuario->idUser)->where('IdLocal', $IdLocal)
+                                    ->where('EstadoLocal',1)->first();
+
+        Session::put('localUsuario', $local);
+
+        //Session::forget('perfilesUsuario');
+        //Session::forget('localesUsuario');
+        //log::info("Ruta: " . route('home'));
+
+        return '{"code":"200","des_code":"'. route('home').'"}';
     }
 
     // Listar usuarios registrados
@@ -120,25 +151,10 @@ class Usuario extends Authenticatable
         $p = Session::get('perfiles');
         $idperfil = $p['idPerfil'];
         $result = DB::table('v_usuarios')->get();
-        // switch ($idperfil) {
-        //     case 1:
-        //         break;
-        //     case 2:
-        //         $result = DB::table('v_clientes_tienen_usuarios')
-        //         ->where('IdCliente',$p['v_detalle'][0]->IdCliente)->get();
-        //         break;
-        //     case 3:
-        //         $result = DB::table('v_proveedores_tienen_usuarios')
-        //         ->where('IdProveedor',$p['v_detalle'][0]->IdProveedor)->get();
-        //         break;
-        // }
+        
         return $result;
     }
 
-    // Cargar combo de perfiles de usuario
-    // public function listPerfilesUsuario($data){
-    //     return DB::table('v_perfiles')->get();
-    // }
 
     // Cargar combo de perfiles de usuario
     public function listPerfiles(){
@@ -165,7 +181,6 @@ class Usuario extends Authenticatable
     public function localesDisponibles(){
         $idUser = Auth::id();
 
-        log::info("IdUsuario: ". $idUser);
         $result = DB::table('v_usuarios_locales')
                 ->where('IdUsuario',$idUser)
                 ->where('EstadoLocal',1)
@@ -282,10 +297,10 @@ class Usuario extends Authenticatable
         }catch (Exception $e) {
             DB::rollback();
             $result=0;
-            log::info("##########################################################################");
-            log::info("Ocurrio un error con el usuario: ".$data['usrNombreFull'].", Email: ".$data['usrEmail']." al tratar de actualizar sus datos");
-            log::info("Error: ".$e->getMessage());
-            log::info("##########################################################################");
+            //log::info("##########################################################################");
+            //log::info("Ocurrio un error con el usuario: ".$data['usrNombreFull'].", Email: ".$data['usrEmail']." al tratar de actualizar sus datos");
+            //log::info("Error: ".$e->getMessage());
+            //log::info("##########################################################################");
         }
         return $result;
     }
@@ -301,10 +316,10 @@ class Usuario extends Authenticatable
         } catch (Exception $e) {
             DB::rollback();
             $result=0;
-            log::info("##########################################################################");
-            log::info("Ocurrio un error al tratar de actualizar la imagen de perfil del usuario: ".$idUser);
-            log::info("Error: ".$e->getMessage());
-            log::info("##########################################################################");
+            //log::info("##########################################################################");
+            //log::info("Ocurrio un error al tratar de actualizar la imagen de perfil del usuario: ".$idUser);
+            //log::info("Error: ".$e->getMessage());
+            //log::info("##########################################################################");
         }
         return $result;   
     }
@@ -321,10 +336,10 @@ class Usuario extends Authenticatable
         } catch (Exception $e) {
             DB::rollback();
             $result=$e->getMessage();
-            log::info("##########################################################################");
-            log::info("Ocurrio un error al tratar de eliminar la imagen de perfil del usuario: ".$datos['idUser']);
-            log::info("Error: ".$e->getMessage());
-            log::info("##########################################################################");
+            //log::info("##########################################################################");
+            //log::info("Ocurrio un error al tratar de eliminar la imagen de perfil del usuario: ".$datos['idUser']);
+            //log::info("Error: ".$e->getMessage());
+            //log::info("##########################################################################");
             $res='{"code":"500","des_code":""Ocurrio un error al tratar de eliminar la imagen de perfil"}';
         }
         return $res;
@@ -347,10 +362,10 @@ class Usuario extends Authenticatable
                     }catch (Exception $e) {
                         DB::rollback();
                         $result=$e->getMessage();
-                        log::info("######################################################################");
-                        log::info("Ocurrio un error al tratar de cambiar el password: ".$data['idUser']);
-                        log::info("Error: ".$e->getMessage());
-                        log::info("######################################################################");
+                        //log::info("######################################################################");
+                        //log::info("Ocurrio un error al tratar de cambiar el password: ".$data['idUser']);
+                        //log::info("Error: ".$e->getMessage());
+                        //log::info("######################################################################");
                         return '{"code":"-1","des_code":"Ocurrio un error al tratar de cambiar el password"}';
                     }
                 }else{
@@ -381,10 +396,10 @@ class Usuario extends Authenticatable
         }catch (Exception $e) {
             DB::rollback();
             $result=$e->getMessage();
-            log::info("######################################################################");
-            log::info("Ocurrio un error al tratar de recuperar el password del usuario : ".$datos['usrEmail']);
-            log::info("Error: ".$e->getMessage());
-            log::info("######################################################################");
+            //log::info("######################################################################");
+            //log::info("Ocurrio un error al tratar de recuperar el password del usuario : ".$datos['usrEmail']);
+            //log::info("Error: ".$e->getMessage());
+            //log::info("######################################################################");
             return '{"code":"500","des_code":"Ocurrio un error al intentar recuperar el password"}';
         }
         $usrNombreFull = DB::table('v_usuarios')
@@ -412,7 +427,7 @@ class Usuario extends Authenticatable
         try {
             $result= Mail::to($email)->send(new Correo($data));
             return '{"code":"200","des_code":"Su nueva contraseña ha sido enviada via email"}';
-            // Log::info("El resultado de result: ".$result);
+            // //log::info("El resultado de result: ".$result);
             // Mail::send('auth.emails.reinicioClave', $data, function ($message) use ($asunto,$destinatario,$containfile,$pathToFile){
             //     $message->from('moraanto2017@gmail.com', 'Portal de Proveedores');
             //     $message->to($destinatario)->subject($asunto);
@@ -426,13 +441,13 @@ class Usuario extends Authenticatable
             //     return '{"code":"500","des_code":"Ocurrio un error mientras se enviaba el correo"}';
             // }
         } catch (Exception $e) {
-            log::info($e);
-            log::info("##########################################################################");
-            log::info("Ocurrio un error al enviar el correo electronico para: ".$email);
-            log::info("Asunto: ".$asunto);
-            log::info("Contenido: ".$contenido);
-            log::info("Error: ".$e->getMessage());
-            log::info("##########################################################################");
+            //log::info($e);
+            //log::info("##########################################################################");
+            //log::info("Ocurrio un error al enviar el correo electronico para: ".$email);
+            //log::info("Asunto: ".$asunto);
+            //log::info("Contenido: ".$contenido);
+            //log::info("Error: ".$e->getMessage());
+            //log::info("##########################################################################");
             return '{"code":"500","des_code":"Ocurrio un error al enviar el email de recuperación"}';
         }
     }

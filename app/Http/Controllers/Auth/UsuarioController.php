@@ -34,26 +34,23 @@ class UsuarioController extends Controller
 
     // Pantalla para seleccionar un perfil despues de iniciar sesion
     protected function getAccesos(){
-        log::info("-->getAccesos();");
+        //log::info("-->getAccesos();");
 
-        $data['title'] = 'Elige acceso';
         $model= new Usuario();
-        $data['v_accesos'] = $model->perfilesDisponibles();
-        $data['v_lcoales_usuario'] = $model->localesDisponibles();
-
-        log::info("Nro. Locales: " . count($data['v_lcoales_usuario']));
-        return View::make('accesos.accesos',$data);
+        return View::make('accesos.accesos');
     }
 
     // Cargar el perfil escogido
     protected function postAccesos(Request $request){
-        log::info("-->postAccesos();");
+        //log::info("-->postAccesos();");
         
         $datos = $request->all();
         $model= new Usuario();
 
+        //console.log$datos);
+
         if (count($datos)>0){
-            $result = $model->mostrarPanel($datos['idPerfil'],$datos['des_perfil']);
+            $result = $model->mostrarPanel($datos['IdPerfil'], $datos['IdLocal']);
         }else{
             $result = '{"code":"500","des_code":"Haga doble click sobre la fila deseada"}';
         }
@@ -65,7 +62,7 @@ class UsuarioController extends Controller
         $datos = $request->all();
         $model= new Usuario();
 		
-		log::info($datos);
+		//console.log$datos);
 		
 		
         $result['v_usuario'] = $model->getBuscarUsuario($datos['IdUsuario']);

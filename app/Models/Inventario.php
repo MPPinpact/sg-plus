@@ -63,7 +63,7 @@ class Inventario extends Authenticatable
         $datos['FechaInventario'] = $this->formatearFecha($datos['FechaInventario']);
         $datos['FechaTomaInventario'] = $this->formatearFecha($datos['FechaTomaInventario']);
         $sql="select f_registro_inventario(".$Id.",'".$datos['FechaInventario']."','".$datos['FechaTomaInventario']."','".$datos['Comentario']."',".$datos['TipoInventario'].",".$datos['IdLocal'].",".$datos['IdBodega'].",".$idAdmin.")";
-        log::info($sql);
+        //log::info($sql);
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;

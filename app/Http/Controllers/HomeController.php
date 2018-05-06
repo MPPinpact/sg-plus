@@ -24,10 +24,16 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (Auth::check()){
-            return view('menu.home');
+            if ($request->session()->has('localUsuario')) {
+                return view('home.home');
+
+            }else{
+                return view('accesos.accesos');
+                
+            }
         }else{
             return view('login');
         }    

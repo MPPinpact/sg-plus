@@ -33,8 +33,8 @@ class CajaDiaria extends Authenticatable
     ];
 
     // Cargar tabla de impuesto
-    public function listCajasDiarias(){
-        return DB::table('v_cajas_diarias')->where('EstadoCaja', '>', 0)->get();
+    public function listCajasDiarias($IdLocal){
+        return DB::table('v_cajas_diarias')->where('EstadoCaja', '>', 0)->where('IdLocal', $IdLocal)->get();
     }
 
     public function listFormasPago(){
@@ -43,31 +43,31 @@ class CajaDiaria extends Authenticatable
 	
 	// 
     public function resumenVentas($IdVenta){
-		log::info("Modelo Cajas Diarias --> resumenVentas");
+		//log::info("Modelo Cajas Diarias --> resumenVentas");
 		return DB::table('v_resumen_ventas')->where('IdCaja', '=', $IdVenta)->groupBy('FormaPago')->get();
     }
 
 	// 
     public function resumenVentasDetallePago($IdVenta){
-		log::info("Modelo Cajas Diarias --> resumenVentasDetallePago");
+		//log::info("Modelo Cajas Diarias --> resumenVentasDetallePago");
 		return DB::table('v_resumen_ventas')->where('IdCaja', '=', $IdVenta)->groupBy('FormaPago')->get();
     }
 
 	// 
     public function resumenPagos($IdVenta){
-		log::info("Modelo Cajas Diarias --> resumenPagos");
+		//log::info("Modelo Cajas Diarias --> resumenPagos");
         return DB::table('v_resumen_ventas')->where('IdCaja', '=', $IdVenta)->get();
     }
 	
 	// 
     public function resumenOM($IdVenta){
-		log::info("Modelo Cajas Diarias --> resumenOM");
+		//log::info("Modelo Cajas Diarias --> resumenOM");
         return DB::table('v_resumen_ventas')->where('IdCaja', '=', $IdVenta)->get();
     }
 	
 	// 
     public function getCajaActivaLocal($IdLocal){
-		//log::info("Modelo Cajas Diarias --> getCajaActivaLocal");
+		////log::info("Modelo Cajas Diarias --> getCajaActivaLocal");
         return DB::table('v_cajas_abiertas')->where('IdLocal', '=', $IdLocal)->get();
     }
 	
@@ -126,7 +126,7 @@ class CajaDiaria extends Authenticatable
         $datos['IdCliente']==null ? $datos['IdCliente']=0 : $datos['IdCliente']= $datos['IdCliente'];
         $datos['FechaVenta'] = $this->formatearFecha($datos['FechaVenta']);
         $sql="select f_registro_venta(".$Id.",".$datos['IdCliente'].",".$datos['IdVendedor'].",".$datos['IdLocal'].",".$datos['IdCaja'].",'".$datos['FechaVenta']."',".$idAdmin.")";
-        log::info($sql);
+        //log::info($sql);
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -191,7 +191,7 @@ class CajaDiaria extends Authenticatable
 		else $fpc = $this->formatearFecha($fpc);
 		
         $sql="select f_registro_pago_ventas(".$Id.",".$datos['IdVentaPago'].",".$datos['IdFormaPago'].",'".$datos['CodigoAprobacionTarjeta']."','".$datos['NumeroTransaccionTarjeta']."','".$datos['IdClienteVC']."', '".$fpc."','".$datos['NumeroCuotasCredito']."','".$datos['InteresMensualCredito']."','".$datos['MontoFinalCredito']."','".$datos['MontoCuotaCredito']."','".$datos['MontoPagoEfectivo']."',1,".$idAdmin.")";
-		log::info($sql);
+		//log::info($sql);
 		
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
@@ -202,10 +202,10 @@ class CajaDiaria extends Authenticatable
 	
 	public function regFinalizarVenta($IdVenta){
 		$sql="select f_finaliza_venta(".$IdVenta.")";
-		log::info($sql);
+		//log::info($sql);
 		
 		$execute=DB::select($sql);
-		log::info($execute);
+		//log::info($execute);
 		
 		return "{IdVenta, 1}";
 		//return DB::select($sql);
@@ -267,13 +267,13 @@ class CajaDiaria extends Authenticatable
     }
 
     public function cerrarVenta($IdVenta){
-        log::info("cerrarVenta()");
-        log::info($IdVenta);
+        //log::info("cerrarVenta()");
+        //log::info($IdVenta);
 		
         $IdAdmin = Auth::id();
         $values=array('EstadoVenta'=>2,'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$IdAdmin);
 		
-		log::info($values);
+		//log::info($values);
 		
         return DB::table('ventas')
                 ->where('IdVenta', $IdVenta)
@@ -281,13 +281,13 @@ class CajaDiaria extends Authenticatable
     }
 	
 	public function cerrarCajaDiaria($IdCaja){
-        log::info("cerrarCajaDiaria()");
-        log::info("IdCaja: " .$IdCaja);
+        //log::info("cerrarCajaDiaria()");
+        //log::info("IdCaja: " .$IdCaja);
 		
         $IdAdmin = Auth::id();
         $values=array('EstadoCaja'=>2,'FechaCierre'=>date("Y-m-d H:i:s"),'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$IdAdmin);
 		
-		log::info($values);
+		//log::info($values);
 		
         return DB::table('caja_diaria')
                 ->where('IdCaja', $IdCaja)
@@ -295,14 +295,14 @@ class CajaDiaria extends Authenticatable
     }
 	
 	public function abrirCajaDiaria($IdLocal){
-        log::info("abrirCajaDiaria()");
-        log::info("IdLocal: " .$IdLocal);
+        //log::info("abrirCajaDiaria()");
+        //log::info("IdLocal: " .$IdLocal);
 		
         $IdUsuario = Auth::id();
 		 		
 		$sql="select f_abrir_caja_diaria(".$IdLocal.",".$IdUsuario.")";
         $execute=DB::select($sql);
-		log::info($sql);
+		//log::info($sql);
 		
         foreach ($execute[0] as $key => $value) {
             $result=$value;

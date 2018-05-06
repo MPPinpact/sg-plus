@@ -85,7 +85,7 @@ class Cliente extends Authenticatable
     public function listMovimientos($IdCliente){
         $sql="select * from v_clientes_movimientos where IdCliente=".$IdCliente." and EstadoMovimiento=1 and MONTH(FechaMovimiento) >= MONTH(now()) order by IdMovimiento asc";
 		$sql="SELECT * FROM v_clientes_movimientos WHERE IdCliente=".$IdCliente." AND EstadoMovimiento=1 ORDER BY FechaMovimiento DESC";
-		log::info($sql);
+		//log::info($sql);
         $result=DB::select($sql);
         return $result;
     }
@@ -99,7 +99,7 @@ class Cliente extends Authenticatable
     public function buscarClienteDetalleCredito($datos){
         $cliente = DB::table('v_clientes')->where('RUTCliente',$datos['RUTCliente'])->get();
         $result = [];
-        log::info($cliente);
+        //log::info($cliente);
         if ($cliente){
             $result['cliente'] =$cliente;
             

@@ -191,6 +191,7 @@ Route::post('/addPreVentaPV', 'PreventaController@postAddPreVentaPreVenta')->nam
 Route::post('/addProductPV', 'PreventaController@postAddProductPreVenta')->name('addProductPV');
 Route::post('/asginarVen', 'PreventaController@postAsignarVendedor')->name('asginarVen');
 Route::post('/asginarCli', 'PreventaController@postAsignarCliente')->name('asginarCli');
+Route::post('/asginarDTE', 'PreventaController@postAsignarDTE')->name('asginarDTE');
 
 Route::post('/infoCD', 'PuntoVentaController@postInfoCajaDiaria')->name('infoCD');
 
@@ -202,6 +203,7 @@ Route::post('/PtoBuscarP', 'PuntoVentaController@postBuscarProductosC')->name('P
 Route::post('/addProductV', 'VentaController@postAddProductVenta')->name('addProductV');
 Route::post('/asignarVenVen', 'VentaController@postAsignarVendedor')->name('asignarVenVen');
 Route::post('/asignarCliVen', 'VentaController@postAsignarCliente')->name('asignarCliVen');
+Route::post('/asginarDTEVen', 'VentaController@postAsignarDTE')->name('asginarDTEVen');
 Route::post('/ventaRP', 'VentaController@postRegistrarPagoPuntoVenta')->name('ventaRP');
 Route::post('/ventaEP', 'VentaController@postDetallePagoActiva')->name('ventaEP');
 Route::post('/ventaVCV', 'VentaController@postCerrarVenta')->name('ventaVCV');

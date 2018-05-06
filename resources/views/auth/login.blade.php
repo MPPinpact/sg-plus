@@ -28,12 +28,12 @@
                             <form id="FormLogin" class="form-horizontal" novalidate>
                                 <div class="md-input-wrapper form-group">
                                     <input type="text" class="md-form-control md-static" name="usrUserName" id="usrUserName"/>
-                                    <label>Login</label>
+                                    <label for id="usrUserName">Login</label>
                                     <small id="ErrorRut" class="rut-error"></small>
                                 </div>
                                 <div class="md-input-wrapper form-group">
                                     <input type="password" class="md-form-control md-static" name="usrPassword" id="usrPassword"/>
-                                    <label>Password</label>
+                                    <label for id="usrPassword">Password</label>
                                 </div>
                                 <div class="md-float-group b-none m-b-20">
                                     <div class="rkmd-checkbox checkbox-rotate checkbox-ripple">
@@ -67,7 +67,7 @@
                             <form id="FormPasswd" class="form-horizontal" novalidate>
                                 <div class="md-input-wrapper form-group">
                                     <input type="email" name="usrEmail" id="usrEmail" class="md-form-control md-static" />
-                                    <label>Email</label>
+                                    <label for id="usrEmail" >Email</label>
                                 </div>
                                 <div class="text-center m-b-20">
                                     <button type="button" id="VolverLogin" class="btn btn-default waves-effect">Cancelar</button>

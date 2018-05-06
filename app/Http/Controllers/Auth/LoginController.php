@@ -15,6 +15,7 @@ use View;
 use Redirect;
 use SerializesModels;
 use Log;
+use Session;
 
 use App\Models\Usuario;
 
@@ -56,10 +57,14 @@ class LoginController extends Controller
     }
 
     public function login(Request $request){
+        //log::info("LoginController->login()");
         $data= $request->All();
+
         if ($data['usrUserName'] && $data['usrPassword']){
             $model= new Usuario();
             $result = $model->verificarUsuario($data);
+            //log::info($result);
+            
             return $result;  
         }else{
             return '{"code":"-2","des_code":"Debe ingresar valores correctos"}';
@@ -70,6 +75,12 @@ class LoginController extends Controller
         $idUser = Auth::id();
         $model= new Usuario();
         $result = $model->registrarVisita($idUser);
+
+        Session::forget('localUsuario');
+        Session::forget('perfilUsuario');
+        Session::forget('localUsuario');
+        Session::forget('perfilUsuario');
+
         $this->guard()->logout();
         $request->session()->invalidate();
         return redirect('/');

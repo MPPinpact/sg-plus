@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>{{ config('app.name', 'Laravel') }}</title>
+  <title>{{ config('app.name', 'Laravel') }} :: Punto Venta</title>
   <link rel="shortcut icon" href="{{ asset('theme/assets/images/favicon.png') }}" type="image/x-icon">
   <link rel="icon" href="{{ asset('theme/assets/images/favicon.ico') }}" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
@@ -49,7 +49,7 @@
   <script type="text/javascript" src="{{ asset('theme/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('theme/bower_components/popper.js/js/popper.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('theme/bower_components/bootstrap/js/bootstrap.min.js') }}"></script>
-  <script src="{{ asset('theme/assets/plugins/waves/js/waves.min.js') }}"></script>
+  
   <script type="text/javascript" src="{{ asset('theme/bower_components/jquery-slimscroll/js/jquery.slimscroll.js') }}"></script>
   <script type="text/javascript" src="{{ asset('theme/assets/plugins/jquery.nicescroll/js/jquery.nicescroll.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('theme/bower_components/classie/js/classie.js') }}"></script>
@@ -123,8 +123,8 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="{{ asset('theme/assets/js/main.min.js') }}"></script>
-  <script src="{{ asset('theme/assets/js/menu-horizontal.min.js') }}"></script>
+  <script src="{{ asset('js/ptovta/main.js') }}" type="text/javascript" ></script>
+  
   <script Language="Javascript">
     var rutaHome = "{{ URL::route('infoDashboard') }}"
   </script>

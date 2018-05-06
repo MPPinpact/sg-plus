@@ -1,4 +1,4 @@
-@extends('menu.index')
+@extends('puntoVenta.index')
 @section('content')
 <style type="text/css" media="screen">
 	.nav-tabs .slide{
@@ -695,6 +695,70 @@
     </div>
 </div>
 
+<!-- Modal Selección TipoDTE -->
+<div class="modal fade" id="ModalTipoDTE" role="document"  data-keyboard="false" data-backdrop="static"  style="z-index: 1060; display: none;">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h6 id="spanTituloModalTipoDTE" class="modal-title">-----</h6>
+			</div>
+			<div class="modal-body">
+				{!! Form::open(['id'=>'FormTipoDTE','autocomplete' => 'off']) !!}
+					<input type="hidden" name="IdTipoDTE" id="IdTipoDTE">
+										
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-sm-3">
+									<button name="botonBoleta" id="botonBoleta" href="#!" class="btn-xlg waves-effect waves-light btn-primary btn-block">
+										<i class="icofont icofont-ebook"></i><br>Boleta  
+									</button>
+								</div>
+								<div class="col-sm-3">
+									<button name="botonFactura" id="botonFactura" class="btn-xlg waves-effect waves-light btn-primary btn-block">
+										<i class="icofont icofont-ebook"></i><br>Factura
+									</button>	
+								</div>
+							
+								<div class="col-sm-3">
+									<button name="botonCI" id="botonCI" class="btn-xlg waves-effect waves-light btn-primary btn-block">
+										<i class="icofont icofont-ebook"></i><br>C.I.
+									</button>
+								</div>
+								<div class="col-sm-3">
+									<button name="boton----" id="boton----" class="btn-xlg waves-effect waves-light btn-primary btn-block" disabled="true">
+										<i class="icofont icofont-ebook"></i><br>------
+									</button>
+								</div>
+							</div>
+						</div>															
+					</div>
+					
+					<div class="row"><br /><br /><br /><br /></div>
+					<div class="row"><br /><br /><br /><br /></div>
+					<div class="row"><br /><br /><br /><br /></div>
+
+					<div class="row" id="">
+						<div class="col-md-6">
+							<button id="botonCancelarTippDTE" name="botonCancelarTippDTE" href="#!"  type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
+								<i class="icofont icofont-ui-close"></i> Cerrar
+							</button>
+						</div>
+						<div class="col-md-6">
+							<button id="botonConfirmarTipoDTE" name="botonConfirmarTipoDTE" type="button" href="#!"  class="btn-xlg btn-success waves-effect waves-light btn-block">
+								<i class="icofont icofont-ui-check"></i>  Confirmar DTE
+							</button>
+						</div>
+					</div>	
+				{!! Form::close() !!}
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- Modal Pre-Venta -->
 <div class="modal fade" id="ModalPreVenta" role="dialog" data-keyboard="false" data-backdrop="static" style="z-index: 1050; display: none;" >
     <div class="modal-dialog modal-lg" role="document">
@@ -708,6 +772,7 @@
             <div class="modal-body">
 				{!! Form::open(['id'=>'FormPreVenta','autocomplete' => 'off']) !!}
 					<input type="hidden" name="IdPreVenta" id="IdPreVenta">
+					<input type="hidden" name="IdPreVentaPreVenta" id="IdPreVentaPreVenta">
 					<input type="hidden" name="EstadoPreVenta" id="EstadoPreVenta">
 					<input type="hidden" name="IdProductoPreVenta" id="IdProductoPreVenta">	
 					<input type="hidden" name="TotalLineaPreVenta" id="TotalLineaPreVenta">	
@@ -724,6 +789,7 @@
 					<input type="hidden" name="IdLocalPreVenta" id="IdLocalPreVenta">
 					<input type="hidden" name="IdCajaPreVenta" id="IdCajaPreVenta">
 					<input type="hidden" name="IdDetallePreVenta" id="IdDetallePreVenta">
+					<input type="hidden" name="IdTipoDTEPreVenta" id="IdTipoDTEPreVenta">
 					
 					<div id="PreVentaStep_1" style="display: none;">
 						<div class="row" id="frameProductos">
@@ -860,6 +926,23 @@
 								</button>
 							</div>
 						</div>
+
+						<div class="row"> <br /> </div>
+
+						<div class="row">
+							<div class="col-md-4">
+								<label for="botonTipoDTE"> Seleccione Tipo DTE <i class="icofont icofont-copy-alt"> </i></label>
+								<button id="botonTipoDTE" name="botonTipoDTE" href="#!" type="button" data-toggle="modal" data-target="#meta-Modal" class="btn-xlg btn-primary waves-effect waves-light btn-block">
+									<i class="icofont icofont-copy-alt"> </i> Tipo DTE
+								</button>
+							</div>
+							<div class="col-md-4">
+								
+							</div>
+							<div class="col-md-4">
+								
+							</div>
+						</div>
 						
 						<div class="row"> <br /> <br /> <br /> </div>						
 						
@@ -960,6 +1043,7 @@
 		</div>
     </div>
 </div>
+@include('boleta.boleta')
 
 <script Language="Javascript">
 	var rutaPVBP = "{{ URL::route('preventabpd') }}"
@@ -968,6 +1052,7 @@
 	var rutaPVBV = "{{ URL::route('buscarVen') }}"
 	var rutaPVAV = "{{ URL::route('asginarVen') }}"
 	var rutaPVAC = "{{ URL::route('asginarCli') }}"
+	var rutaPVDTE = "{{ URL::route('asginarDTE') }}"
 	var rutaPVBC = "{{ URL::route('preventabc') }}"
 	var rutaFP = "{{ URL::route('preventaRP')  }}"
 	var rutaEP = "{{ URL::route('preventaEP') }}"
@@ -986,7 +1071,11 @@
 	var rutaVEP = "{{ URL::route('ventaEP') }}"
 	var rutaVCP = "{{ URL::route('ventaVCV') }}"
 	var rutaRV = "{{ URL::route('addPreVentaV') }}"
-	
+	var rutaVDTE = "{{ URL::route('asginarDTEVen') }}"
+
+	var rutaVDB = "{{ URL::route('boletaV') }}"
+
+	rutaVDB
 	/* Caja Diaria */
 	var rutaCD = "{{ URL::route('infoCD') }}"
 	

@@ -84,7 +84,7 @@ class VentaController extends Controller
 		$IdVenta=0;
 		$datos['IdPreVenta']==null ? $IdVenta=0 : $IdVenta= $datos['IdPreVenta'];
 		
-		log::info("IdVenta: " . $IdVenta);
+		//log::info("IdVenta: " . $IdVenta);
 		
 		if($IdVenta==0) {
 			$ResultVenta = $model->regVentaPuntoVenta($datos);
@@ -93,7 +93,7 @@ class VentaController extends Controller
 			$IdVenta=$obj->{'IdVenta'};
 		}
 		
-		log::info("IdVenta: " . $IdVenta);
+		//log::info("IdVenta: " . $IdVenta);
 		
 		$result['v_cabecera'] = $model->getCabeceraVenta($IdVenta);
         $result['f_registro'] = $model->regDetalleVentaPuntoVenta($datos);
@@ -102,11 +102,11 @@ class VentaController extends Controller
     }
 	
 	protected function postAsignarVendedor(Request $request){
-        log::info("Asignar Vendedor a Venta ");
+        //log::info("Asignar Vendedor a Venta ");
 		
 		$datos = $request->all();
-		log::info("IdVenta: " . $datos['IdPreVenta']);
-		log::info("IdVendedor: " . $datos['IdVendedorPreVenta']);
+		//log::info("IdVenta: " . $datos['IdPreVenta']);
+		//log::info("IdVendedor: " . $datos['IdVendedorPreVenta']);
 		
 		$model= new Venta();
 		$result['f_registro'] = $model->regVendedorVenta($datos);
@@ -115,15 +115,28 @@ class VentaController extends Controller
     }
 	
 	protected function postAsignarCliente(Request $request){
-        log::info("Asignar Cliente a Venta ");
+        //log::info("Asignar Cliente a Venta ");
 		
 		$datos = $request->all();
-		log::info("IdVenta: " . $datos['IdPreVenta']);
-		log::info("IdCliente: " . $datos['IdClientePreVenta']);
+		//log::info("IdVenta: " . $datos['IdPreVenta']);
+		//log::info("IdCliente: " . $datos['IdClientePreVenta']);
 		
 		$model= new Venta();
 		$result['f_registro'] = $model->regClienteVenta($datos);
 		
+        return $result;
+    }
+
+    protected function postAsignarDTE(Request $request){
+        //log::info("Asignar TipoDTE a Pre-Venta ");
+        
+        $datos = $request->all();
+        //log::info("IdPreVenta: " . $datos['IdPreVenta']);
+        //log::info("IdCliente: " . $datos['IdClientePreVenta']);
+        
+        $model= new Venta();
+        $result['f_registro'] = $model->regTipoDTEVenta($datos);
+        
         return $result;
     }
 
@@ -180,16 +193,19 @@ class VentaController extends Controller
 		
 		/* Tengo IdPreVenta? */
 		$IdPreVenta=0;
+        $IdLocal=0;
+
 		$datos['NroPreVenta']==null ? $IdPreVenta=0 : $IdPreVenta= $datos['NroPreVenta'];
-		//log::info("IdPreVenta: " . $IdPreVenta);
+        $datos['IdLocalPreVenta']==null ? $IdLocal=0 : $IdLocal= $datos['IdLocalPreVenta'];
+		////log::info("IdPreVenta: " . $IdPreVenta);
 		
 		$model= new Venta();
-		$ResultVenta = $model->cargaPreVenta($IdPreVenta);
+		$ResultVenta = $model->cargaPreVenta($IdPreVenta, $IdLocal);
 		$newVenta = json_decode($ResultVenta);
 		$IdVenta = $newVenta->IdVenta;
 		
-		//log::info($ResultVenta);
-		//log::info("IdVenta: " .$IdVenta);
+		////log::info($ResultVenta);
+		////log::info("IdVenta: " .$IdVenta);
 		if($IdVenta!=0){
 			$result['f_registro'] = '{"code":200}'; 
 			$result['v_cabecera'] = $model->getCabeceraVenta($IdVenta);
@@ -205,7 +221,7 @@ class VentaController extends Controller
         $datos = $request->all();
 		$model = new Venta();
 		
-		log::info("IdDetallePago: ". $datos['IdDetallePago']);
+		//log::info("IdDetallePago: ". $datos['IdDetallePago']);
 		
 		$pago = $model->getOnePagoVenta($datos['IdDetallePago']);		
         $detalle = $model->activarDetallePago($datos['IdDetallePago']);
@@ -228,11 +244,11 @@ class VentaController extends Controller
         $datos = $request->all();
 		$model = new Venta();
 		$IdVenta = $datos['IdVenta'];
-		log::info($datos);
-		log::info("En el controller...");
-		log::info("Inicio Función Finaliza Venta: " . $IdVenta );
+		//log::info($datos);
+		//log::info("En el controller...");
+		//log::info("Inicio Función Finaliza Venta: " . $IdVenta );
 		$result = $model->regFinalizarVenta($IdVenta);
-		log::info("FIn Función Finaliza Venta: " . $IdVenta);
+		//log::info("FIn Función Finaliza Venta: " . $IdVenta);
         return $result;
     }
 	
@@ -243,7 +259,7 @@ class VentaController extends Controller
         $result['v_detalles'] = $model->getDetallesVenta($datos['IdVenta']);
 		$result['v_pagos'] = $model->getDetallePago($datos['IdVenta']);
 		
-		log::info($result['v_pagos']);
+		//log::info($result['v_pagos']);
         return $result;
     }
 
@@ -308,14 +324,17 @@ class VentaController extends Controller
         $datos = $request->all();
         $model= new Venta();
 		
-		$datos['IdVenta']==null ? $IdVenta=$datos['IdPreVenta'] : $IdVenta= $datos['IdVenta'];
+        //Asignar TipoDTE
+        $result['f_registro'] = $model->regTipoDTEVenta($datos);
+
+		isset($datos['IdVenta']) ? $IdVenta= $datos['IdVenta'] : $IdVenta=$datos['IdPreVenta'];
 		
         $resultCierreVenta = $model->cerrarVenta($IdVenta);
-		log::info($resultCierreVenta);
+		//log::info($resultCierreVenta);
 		
 		if($resultCierreVenta==1){
 			$resultFinalizaVenta = $model->regFinalizarVenta($IdVenta);
-			log::info($resultFinalizaVenta);
+			//log::info($resultFinalizaVenta);
 			$finalizaVenta = json_decode($resultFinalizaVenta);
 						
 			if($finalizaVenta->code==200){

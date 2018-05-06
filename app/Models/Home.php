@@ -34,16 +34,16 @@ class Home extends Authenticatable
     public function resumenVentaLocal($tiempo){
         switch ($tiempo) {
             case 'Y':
-                 return DB::table('v_dashboard_ventas')->select(DB::raw('NombreLocal, Agno, SUM(TotalVenta) AS TotalVenta'))->whereRaw('Agno = YEAR(Now())')->groupBy('IdLocal')->get();
+                 return DB::table('v_dashboard_ventas')->select(DB::raw('NombreLocal, Agno, SUM(TotalVenta) AS TotalVenta, COUNT(IdVenta) AS CantidadVentas'))->whereRaw('Agno = YEAR(Now())')->groupBy('IdLocal')->get();
                 break;
             case 'M':
-                 return DB::table('v_dashboard_ventas')->select(DB::raw('NombreLocal, Mes, SUM(TotalVenta) AS TotalVenta'))->whereRaw('Mes = MONTH(Now())')->groupBy('IdLocal')->get();
+                 return DB::table('v_dashboard_ventas')->select(DB::raw('NombreLocal, Mes, SUM(TotalVenta) AS TotalVenta, COUNT(IdVenta) AS CantidadVentas'))->whereRaw('Mes = MONTH(Now())')->groupBy('IdLocal')->get();
                 break;
             case 'W':
-                 return DB::table('v_dashboard_ventas')->select(DB::raw('NombreLocal, Semana, SUM(TotalVenta) AS TotalVenta'))->whereRaw('Semana = WEEK(NOW())')->groupBy('IdLocal')->get();
+                 return DB::table('v_dashboard_ventas')->select(DB::raw('NombreLocal, Semana, SUM(TotalVenta) AS TotalVenta, COUNT(IdVenta) AS CantidadVentas'))->whereRaw('Semana = WEEK(NOW())')->groupBy('IdLocal')->get();
                 break;
             case 'D':
-                 return DB::table('v_dashboard_ventas')->select(DB::raw('NombreLocal, FechaVenta, SUM(TotalVenta) AS TotalVenta'))->whereRaw('DATE_FORMAT(FechaVenta, "%Y-%m-%d") = DATE_FORMAT(NOW(), "%Y-%m-%d")')->groupBy('IdLocal')->get();
+                 return DB::table('v_dashboard_ventas')->select(DB::raw('NombreLocal, FechaVenta, SUM(TotalVenta) AS TotalVenta, COUNT(IdVenta) AS CantidadVentas'))->whereRaw('DATE_FORMAT(FechaVenta, "%Y-%m-%d") = DATE_FORMAT(NOW(), "%Y-%m-%d")')->groupBy('IdLocal')->get();
                 break;
 
         }

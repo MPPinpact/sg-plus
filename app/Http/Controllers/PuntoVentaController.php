@@ -45,26 +45,36 @@ class PuntoVentaController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getPuntoVenta(){
+    public function getPuntoVenta(Request $request){
+        //log::info("getPuntoVenta()");
+
 		$IdUsuario = Auth::id();
-		$IdLocal = 7;
-		
-        $modelCD = new CajaDiaria();
-        $data['v_puntoVenta'] = array();
-		
-		$data['_usuarioActual_']= Usuario::find($IdUsuario);
-		$data['_localActual_']= Usuario::find($IdLocal);
-		$data['_cajaActual_']= $modelCD->getCajaActivaLocal($IdLocal);
-		
-        $data['v_formas_pago'] = $modelCD->listFormasPago();
-        return View::make('puntoVenta.puntoVenta',$data);;
+        if ($request->session()->has('localUsuario')) {
+            $localActual = $request->session()->get('localUsuario');
+            $IdLocal = $localActual->IdLocal;
+            
+            $modelCD = new CajaDiaria();
+            $data['v_puntoVenta'] = array();
+            
+            $data['_usuarioActual_']= Usuario::find($IdUsuario);
+            $data['_localActual_']= Usuario::find($IdLocal);
+            $data['_cajaActual_']= $modelCD->getCajaActivaLocal($IdLocal);
+            
+            $data['v_formas_pago'] = $modelCD->listFormasPago();
+            return View::make('puntoVenta.puntoVenta',$data);;
+
+        }else{
+            return View::make('accesos.accesos');
+        }
+        
     }
 	
-	public function postInfoCajaDiaria(){
-		log::info("postInfoCajaDiaria");
+	public function postInfoCajaDiaria(Request $request){
+		//log::info("postInfoCajaDiaria()");
 		
 		$IdUsuario = Auth::id();
-		$IdLocal = 7;
+        $localActual = $request->session()->get('localUsuario');
+        $IdLocal = $localActual->IdLocal;
 		
         $modelCD = new CajaDiaria();
 		$result['v_cajaActual']= $modelCD->getCajaActivaLocal($IdLocal);
@@ -72,20 +82,27 @@ class PuntoVentaController extends Controller
         return $result;
     }
     
-    public function getCajaDiaria(){
+    public function getCajaDiaria(Request $request){
+        //log::info("getCajaDiaria()");
+
+        $localActual = $request->session()->get('localUsuario');
+        $IdLocal = $localActual->IdLocal;
+
         $modelCD = new CajaDiaria();
-        $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
-		
-		//log::info($data['v_cajas_diarias']);
-		
+        $data['v_cajas_diarias'] = $modelCD->listCajasDiarias($IdLocal);
+
         return View::make('puntoVenta.cajaDiaria',$data);
     }
 	
     public function getCajaDiariaResumen(Request $request){
+        //log::info("getCajaDiariaResumen()");
+
         $datos = $request->all();
 		$modelCD = new CajaDiaria();
 		
-		$IdLocal = 7;
+		$localActual = $request->session()->get('localUsuario');
+        $IdLocal = $localActual->IdLocal;
+
 		$v_cajaActual = $modelCD->getCajaActivaLocal($IdLocal);
 		$obj = json_decode($v_cajaActual);
 		
@@ -98,10 +115,14 @@ class PuntoVentaController extends Controller
     }
 	
 	public function getCajaDiariaCierre(Request $request){
+        //log::info("getCajaDiariaCierre()");
+
         $datos = $request->all();
 		$modelCD = new CajaDiaria();
 		
-		$IdLocal = 7;
+		$localActual = $request->session()->get('localUsuario');
+        $IdLocal = $localActual->IdLocal;
+
 		$v_cajaActual = $modelCD->getCajaActivaLocal($IdLocal);
 		$obj = json_decode($v_cajaActual);
 		
@@ -114,7 +135,10 @@ class PuntoVentaController extends Controller
     }
 	
 	public function postCajaDiariaCierre(Request $request){
-        $IdLocal = 7;
+        //log::info("postCajaDiariaCierre()");
+
+        $localActual = $request->session()->get('localUsuario');
+        $IdLocal = $localActual->IdLocal;
 		
 		$datos = $request->all();
 		$modelCD = new CajaDiaria();
@@ -126,18 +150,17 @@ class PuntoVentaController extends Controller
 		$data['v_cajaActual'] = $modelCD->getCajaActivaLocal($IdLocal);
 		
 		return $data;
-		
-        //return View::make('puntoVenta.cajaDiariaCierre',$data);
     }
 
     public function postCajaDiariaResumen(Request $request){
+        //log::info("postCajaDiariaResumen()");
+
         $datos = $request->all();
         $modelCD = new CajaDiaria();
         $result = $modelCD->listCajasDiariasResumen($datos['IdCaja']);
         return $result;
     }
 	
-	/* Fecha: 2018-04-21 :: AAA */
 	public function postDetalleVentaFormaPago(Request $request){
 		//log::info("postDetalleVentaFormaPago");
 		
@@ -148,20 +171,16 @@ class PuntoVentaController extends Controller
 		$IdCaja = $datos['IdCaja'];
 		$IdFormaPago = $datos['IdFormaPago'];
 		
-		// log::info("IdLocal: " . $IdLocal);
-		// log::info("IdCaja: " . $IdCaja);
-		// log::info("IdFormaPago: " . $IdFormaPago);
-		
         $result = $modelCD->listDetalleVentaFormaPago($IdCaja, $IdFormaPago);
         return $result;
     }
 	
-	
-	
-	public function getCajaDiariaResumenVenta()
-	{
+	public function getCajaDiariaResumenVenta(Request $request){
 		$modelCD = new CajaDiaria();
-		$IdLocal = 7;
+		
+        $localActual = $request->session()->get('localUsuario');
+        $IdLocal = $localActual->IdLocal;
+
 		$data['v_cajaActual'] = $modelCD->getCajaActivaLocal($IdLocal);
 		$obj = json_decode($data['v_cajaActual']);
 		
@@ -170,19 +189,25 @@ class PuntoVentaController extends Controller
         return View::make('puntoVenta.cajaDiariaResumenVenta',$data);
 	}
 	
-	public function getCajaDiariaDetalle()
-	{
+	public function getCajaDiariaDetalle(Request $request){
 		$modelCD = new CajaDiaria();
-        $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
-		log::info($data['v_cajas_diarias']);
+
+        $localActual = $request->session()->get('localUsuario');
+        $IdLocal = $localActual->IdLocal;
+
+        $data['v_cajas_diarias'] = $modelCD->listCajasDiarias($IdLocal);
+		//log::info($data['v_cajas_diarias']);
         return View::make('puntoVenta.cajaDiariaDetalle',$data);
 	}
 	
-	public function getCajaDiariaDetalleVenta()
-	{
+	public function getCajaDiariaDetalleVenta(Request $request){
 		$modelCD = new CajaDiaria();
-        $data['v_cajas_diarias'] = $modelCD->listCajasDiarias();
-		log::info($data['v_cajas_diarias']);
+        
+        $localActual = $request->session()->get('localUsuario');
+        $IdLocal = $localActual->IdLocal;
+
+        $data['v_cajas_diarias'] = $modelCD->listCajasDiarias($IdLocal);
+		//log::info($data['v_cajas_diarias']);
         return View::make('puntoVenta.cajaDiariaDetalleVenta',$data);
 	}
 	
@@ -246,7 +271,7 @@ class PuntoVentaController extends Controller
 	protected function postDetallePagoActiva(Request $request){
         $datos = $request->all();
 		$model = new Venta();
-		log::info("IdDetallePago: ". $datos['IdDetallePago']);
+		//log::info("IdDetallePago: ". $datos['IdDetallePago']);
 		$pago = $model->getOnePagoVenta($datos['IdDetallePago']);		
         $detalle = $model->activarDetallePago($datos['IdDetallePago']);
         $result['v_pagos'] = $model->getDetallePago($pago->IdVenta);
@@ -265,12 +290,10 @@ class PuntoVentaController extends Controller
         $datos = $request->all();
 		$model = new Venta();
 		$IdVenta = $datos['IdVenta'];
-		log::info($datos);
-		log::info("En el controller...");
-		log::info("Inicio Función Finaliza Venta: " . $IdVenta );
-		$finalizaVenta = $model->regFinalizarVenta($IdVenta);
-		//log::info($finalizaVenta);
-		log::info("FIn Función Finaliza Venta: " . $IdVenta);
+
+		//log::info("Inicio Función Finaliza Venta: " . $IdVenta );
+		$finalizaVenta = $model->regFinalizarVenta($IdVenta);		
+		//log::info("FIn Función Finaliza Venta: " . $IdVenta);
         return;
     }
 	
@@ -281,7 +304,6 @@ class PuntoVentaController extends Controller
         $result['v_detalles'] = $model->getDetallesVenta($datos['IdVenta']);
 		$result['v_pagos'] = $model->getDetallePago($datos['IdVenta']);
 		
-		log::info($result['v_pagos']);
         return $result;
     }
 
@@ -349,7 +371,7 @@ class PuntoVentaController extends Controller
         $datos = $request->all();
         $model= new Venta();
         $result = $model->cerrarVenta($datos['IdVenta']);
-        log::info($result);
+        //log::info($result);
         return $result;   
     }
 
