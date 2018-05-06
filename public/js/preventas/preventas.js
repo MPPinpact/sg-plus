@@ -1,5 +1,5 @@
 var manejoRefresh=limpiarLocales=limpiarImpuestos=errorRut=errorRut2=errorRut3=limpiarBodegas=NPreventa=0;
-
+var BoletaString = '';
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
     'tipo': 'POST',
@@ -24,6 +24,7 @@ var calcularTotalPreVenta = function(totalPV){
 var ManejoRespuestaVerBoleta = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta.status.code==200){
+            BoletaString = respuesta.respuesta.boleta;
             $("#CuerpoBoleta").html(respuesta.respuesta.boleta);
             var ID = $("#NumeroBoletaModal").val();
             console.log(ID);
@@ -977,8 +978,19 @@ $(document).ready(function(){
     });
 
 
-    $("#PrintPre").click(function(){
+    $("#PrintPdfBoletaPre").click(function(){
         $("div#CuerpoBoleta").printArea();
     });
+
+    $("#PdfBoleta").click(function(){
+        OpenWindowWithPost('public/pdf/Digitalización rápida en ByN a archivo PDF_1.pdf','','fgfgdrg',BoletaString);
+    });
+
+    $("#CerrarModal").click(function(){
+        console.log("paso por aqui");
+        $("#ModalBoletaPlantilla").modal("hice");
+        BoletaString = '';
+    });
+
 
 });

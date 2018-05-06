@@ -15,8 +15,8 @@
             </div>
             <div class="modal-footer">
 	        	<button id="PrintPre" type="button" class="btn btn-default waves-effect ">Imprimir</button>
-	        	<button type="button" class="btn btn-default waves-effect ">PDF</button>
-	        	<button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
+	        	<button id="PdfBoleta" type="button" class="btn btn-default waves-effect ">PDF</button>
+	        	<button id="CerrarModal" type="button" class="btn btn-default waves-effect">Cerrar</button>
             </div>
         </div>
     </div>
