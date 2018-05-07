@@ -557,7 +557,7 @@
 						</div>										
 					</div>
 					
-					<div class="row"><br /></div>
+					<div class="row"><br /><br /><br /><br /></div>
 					
 					<div class="row" id="">
 						<div class="col-md-6">
@@ -682,6 +682,8 @@
 							</div>
 						</div>
 					</div>
+					
+					<div class="row"><br /><br /><br /><br /><br /></div>
 					
 					<div class="row" id="divBotonM_FPE" style="display:none;">						
 						<div class="col-md-12">

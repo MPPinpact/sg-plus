@@ -91,6 +91,21 @@ $(document).ready(function(){
 		}
     });
 
+    $("#CodigoVendedor").focusout(function() {
+        var valid = $("#CodigoVendedor");
+
+         if (valid.length > 0){
+            var res = verificarRUTVendedor($("#CodigoVendedor"));
+            $("#CodigoVendedor").val(res);
+
+        }else{
+			$("#ErrorRutCredito").text("");
+		}
+
+    });
+
+    
+
 	/* Manejo de Variables de Session  */
 	$('#IdVendedorPreVenta').on("change", function() {
 		_idVendedor_=$("#IdVendedorPreVenta").val();
@@ -122,6 +137,11 @@ $(document).ready(function(){
 	$("#NumeroCuotasCredito").change(function() {
 		CalcularMontoCuotas();
     });
+
+	$("#NumeroCuotasCredito").focusin(function() {
+		$("#NumeroCuotasCredito").select();
+	});
+    
 	
 	$("#MontoAFinanciar").change(function() {
 		$("#MontoPagoEfectivo").val($("#MontoAFinanciar").val());
@@ -235,7 +255,9 @@ $(document).ready(function(){
 		 	e.preventDefault();
 		 	e.stopImmediatePropagation();
 
-		 	buscarVendedor($("#CodigoVendedor").val());
+		 	verificarRUTVendedor($("#CodigoVendedor"));
+
+		 	//buscarVendedor($("#CodigoVendedor").val());
 		 	return false;
       	}
     });
@@ -889,6 +911,18 @@ var verificarRut = function(control,caso){
         if (caso==2){errorRut2 = 1;$("#ErrorRut2").text("Rut invalido");}
         if (caso==3){errorRut3 = 1;$("#ErrorRut3").text("Rut invalido");}
 		if (caso==4){errorRut4 = 1;$("#ErrorRutCredito").text("Rut invalido");}
+        return control.val();
+    }
+}
+
+var verificarRUTVendedor = function(control){
+    var res = Valida_Rut(control);
+    var format = formateaRut(control.val(), res);
+    if (format != false){
+        buscarVendedor(format);
+        return format;
+    }else{
+        
         return control.val();
     }
 }

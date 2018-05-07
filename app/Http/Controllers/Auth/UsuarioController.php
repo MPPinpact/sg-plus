@@ -37,7 +37,7 @@ class UsuarioController extends Controller
         //log::info("-->getAccesos();");
         $model= new Usuario();
 
-        if ( $request->session()->has('localUsuario') && $request->session()->has('perfilUsuario') ) {
+        if ( $request->session()->has('localUsuario') and $request->session()->has('perfilUsuario') ) {
             return View::make('accesos.accesos');
 
         }else{
