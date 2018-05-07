@@ -5,9 +5,9 @@ require_once('tcpdf_include.php');
 
 
 // create new PDF document
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-class MYPDF extends TCPDF {
+// $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
+class MYPDF extends TCPDF {
 	//Page header
 	public function Header() {
 		// Logo
@@ -15,16 +15,15 @@ class MYPDF extends TCPDF {
 		//$this->Image($image_file, 5, 10, 200, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
 	}
-
 	// Page footer
 	public function Footer() {
 		// Position at 15 mm from bottom
-		// $this->SetY(-15);
+		$this->SetY(-15);
 		// Set font
-		// $this->SetFont('helvetica', 'I', 8);
-		// $this->SetFont('times', 'B', 20);
+		$this->SetFont('helvetica', 'I', 8);
+		$this->SetFont('times', 'I', 20);
 		// Page number
-		// $this->Cell(0, 10, '', 0, false, 'C', 0, '', 0, false, 'T', 'M');
+		$this->Cell(0, 10, '', 0, false, 'C', 0, '', 0, false, 'T', 'M');
 
 	}
 }
@@ -50,9 +49,9 @@ $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+$pdf->SetMargins(0, 0, 0);
+$pdf->SetHeaderMargin(0);
+$pdf->SetFooterMargin(0);
 
 // set auto page breaks
 $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
@@ -129,17 +128,14 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 // $pdf->AddPage('P', 'LEGAL');
 // Personalizado
 $pdf->AddPage('P', 'A7');
-
 // output the HTML content
 $pdf->writeHTML($html, true, false, true, false, '');
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 // reset pointer to the last page
-// $pdf->lastPage();
-
+$pdf->lastPage();
+$pdf->Close();
 // ---------------------------------------------------------
 
 //Close and output PDF document
-
 echo($pdf->Output('Boleta.pdf', 'I'));
+// ---------------------------------------------------------

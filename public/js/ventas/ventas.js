@@ -1518,15 +1518,13 @@ $(document).ready(function(){
         data.element.parents('.form-group').removeClass('has-success');
     });
 
-    $("#PrintPdfBoletaPre").click(function(){
+    $("#PrintPre").click(function(){
         $("div#CuerpoBoleta").printArea();
     });
 
     $("#PdfBoleta").click(function(){
-    var valoresR = 5;
         var valoresR={codigo:$("#NumeroBoletaModal").val(),cuerpo:BoletaString};
-        OpenWindowWithPost('/pdf/files/boleta.php','','',valoresR);
-
+        OpenWindowWithPost('/pdf/files/boleta.php','','_blank',valoresR);
     });
 
     $("#CerrarModal").click(function(){
