@@ -132,6 +132,10 @@ var cargarScoreVendedores = function(){
 
 }
 
+var goShortcut = function(shortcut){
+     window.location.assign("http://sg-plus.int/"+shortcut);
+}
+
 $(document).ready(function() {
 	// moment en idioma español
 	// moment.locale('es');
@@ -158,4 +162,8 @@ $(document).ready(function() {
 
 	cargarPanelesVenta();
     cargarScoreVendedores();
+
+    $('.goShortcut').click(function() {
+          goShortcut($(this).data('datac'));
+    });
 });

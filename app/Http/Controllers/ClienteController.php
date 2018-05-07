@@ -75,6 +75,8 @@ class ClienteController extends Controller
         $model= new Cliente();
         $result['v_detalles'] = $model->getDetallesClientes($datos['IdCliente']);
         $result['v_movimientos'] = $model->listMovimientos($datos['IdCliente']);
+        $result['v_movimientos_ultimo_eecc'] = $model->listMovimientosUltimoEECC($datos['IdCliente']);
+        $result['v_movimientos_proximo_eecc'] = $model->listMovimientosProximoEECC($datos['IdCliente']);
         $result['v_eecc'] = $model->listeecc($datos['IdCliente']);
         return $result;
     }

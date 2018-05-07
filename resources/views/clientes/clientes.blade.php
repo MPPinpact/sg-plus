@@ -2,7 +2,7 @@
 @section('content')
 <style type="text/css" media="screen">
 	.nav-tabs .slide{
-		 width: calc(100% / 3)!important;
+		 width: calc(100% / 5)!important;
 	}
 </style>
 <div class="row">
@@ -60,12 +60,30 @@
 		                            </a>
 		                            <div class="slide"></div>
 		                        </li>
+		                        <li class="nav-item">
+		                            <a id="aFacturacionActual" class="nav-link" data-toggle="tab" href="#TabFacturacionActual" role="tab">
+		                                <div class="f-26">
+		                                    <i class="icofont icofont-document-search"></i>
+		                                </div>
+		                                Facturación Actual
+		                            </a>
+		                            <div class="slide"></div>
+		                        </li>
 								<li class="nav-item">
+		                            <a id="aProximaFacturacion" class="nav-link" data-toggle="tab" href="#TabProximaFacturacion" role="tab">
+		                                <div class="f-26">
+		                                    <i class="icofont icofont-document-search"></i>
+		                                </div>
+		                                Próxima Facturación
+		                            </a>
+		                            <div class="slide"></div>
+		                        </li>
+		                        <li class="nav-item">
 		                            <a id="aMovimientos" class="nav-link" data-toggle="tab" href="#TabMovimientos" role="tab">
 		                                <div class="f-26">
 		                                    <i class="icofont icofont-document-search"></i>
 		                                </div>
-		                                Movimientos
+		                                Todos los Movimientos
 		                            </a>
 		                            <div class="slide"></div>
 		                        </li>
@@ -156,6 +174,20 @@
 											</div>
 										</div>
 									{!! Form::close() !!}
+		                        </div>
+		                        <div class="tab-pane" id="TabFacturacionActual" role="tabpanel">
+									<div class="row">
+										<div class="col-md-12 table-responsive">
+											<table id="tablaFacturacionActual" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+										</div>
+									</div>
+		                        </div>
+		                        <div class="tab-pane" id="TabProximaFacturacion" role="tabpanel">
+									<div class="row">
+										<div class="col-md-12 table-responsive">
+											<table id="tablaProximaFacturacion" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+										</div>
+									</div>
 		                        </div>
 		                        <div class="tab-pane" id="TabMovimientos" role="tabpanel">
 									<div class="row">

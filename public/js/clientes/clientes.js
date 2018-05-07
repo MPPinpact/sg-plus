@@ -1,5 +1,5 @@
 var RegistroEmpresas  = '';
-var manejoRefresh=limpiarLocales=errorRut=limpiarBodegas=limpiarMovimientos=limpiarEECC=0;
+var manejoRefresh=limpiarLocales=errorRut=limpiarBodegas=limpiarMovimientos=limpiarEECC=limpiarMovimientosA=limpiarMovimientosP=0;
 
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
@@ -17,7 +17,10 @@ var ManejoRespuestaProcesarD = function(respuesta){
         bloquearInuts();
         pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
         cargarTablaMovimientos(respuesta.respuesta.v_movimientos);
+        cargarTablaMovimientosActual(respuesta.respuesta.v_movimientos_ultimo_eecc);
+        cargarTablaMovimientosProximo(respuesta.respuesta.v_movimientos_proximo_eecc);
         cargarTablaEECC(respuesta.respuesta.v_eecc);
+
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -65,7 +68,11 @@ var ManejoRespuestaProcesar = function(respuesta){
 };
 
 var cargarTablaClientes = function(data){
-    if(limpiarLocales==1){destruirTabla('#tablaClientes');$('#tablaClientes thead').empty();}
+    if(limpiarLocales==1){
+        destruirTabla('#tablaClientes');
+        $('#tablaClientes thead').empty();
+    }
+
         $("#tablaClientes").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
@@ -96,10 +103,19 @@ var cargarTablaClientes = function(data){
                 {"title": "Id","data": "IdCliente",visible:0},
                 {"title": "RUT Cliente","data": "RUTCliente"},
                 {"title": "Nombre Cliente","data": "NombreCliente"},
-                {"title": "Direccion Cliente","data": "DireccionCliente"},
                 {"title": "Dia de Pago","data": "DiaPago"},
-                {"title": "Cupo Autorizado","data": "CupoAutorizado"},
-                {"title": "Cupo Utilizado","data": "CupoUtilizado"},
+                {"title": "Cupo Autorizado","data": "CupoAutorizado",
+                             render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                            className: "text-center"},
+                {"title": "Cupo Utilizado","data": "CupoUtilizado",
+                             render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                            className: "text-center"},
+                {"title": "Monto Facturado","data": "MontoUltimaFacturacion", 
+                            render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                            className: "text-center"},
+                {"title": "Saldo Facturación","data": "SaldoAnteriorUF",
+                            render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                            className: "text-center"},
                 {"title": "Estado Cliente","data": "DetalleEstadoCliente"}
             ],
         });
@@ -107,7 +123,11 @@ var cargarTablaClientes = function(data){
 };
 
 var cargarTablaMovimientos = function(data){
-    if(limpiarMovimientos==1){destruirTabla('#tablaClientesMovimientos');$('#tablaClientesMovimientos thead').empty();}
+    if(limpiarMovimientos==1){
+        destruirTabla('#tablaClientesMovimientos');
+        $('#tablaClientesMovimientos thead').empty();
+    }
+
         $("#tablaClientesMovimientos").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
@@ -149,8 +169,95 @@ var cargarTablaMovimientos = function(data){
         limpiarMovimientos=1;
 };
 
+var cargarTablaMovimientosProximo = function(data){
+    if(limpiarMovimientosP==1){
+        destruirTabla('#tablaProximaFacturacion');
+        $('#tablaProximaFacturacion thead').empty();
+    }
+
+        $("#tablaProximaFacturacion").dataTable({
+            responsive:false,
+            "aLengthMenu": DataTableLengthMenu,
+            "pagingType": "full_numbers",
+            "language": LenguajeTabla,
+            "columnDefs": [
+                {"targets": [ 1 ],"searchable": true},
+                {"sWidth": "1px", "aTargets": [6]}
+            ],
+            "data": data,
+            "columns":[
+                {"title": "Id","data": "IdMovimiento",visible:0},
+                {
+                    "title": "Fecha Movimiento", 
+                    "data": "FechaMovimiento",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "title": "Fecha Vencimiento", 
+                    "data": "FechaVencimiento",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },                
+                {"title": "Tipo Movimiento","data": "TipoMovimiento"},
+                {"title": "N° Documento","data": "NumeroDocumento"},
+                {"title": "Descripción","data": "DescripcionMovimiento"},
+                {"title": "Monto","data": "MontoMovimiento"}
+            ],
+        });
+        limpiarMovimientosP=1;
+};
+
+var cargarTablaMovimientosActual = function(data){
+    if(limpiarMovimientosA==1){
+        destruirTabla('#tablaFacturacionActual');
+        $('#tablaFacturacionActual thead').empty();
+    }
+
+        $("#tablaFacturacionActual").dataTable({
+            responsive:false,
+            "aLengthMenu": DataTableLengthMenu,
+            "pagingType": "full_numbers",
+            "language": LenguajeTabla,
+            "columnDefs": [
+                {"targets": [ 1 ],"searchable": true},
+                {"sWidth": "1px", "aTargets": [5]}
+            ],
+            "data": data,
+            "columns":[
+                {"title": "Id","data": "IdMovimiento",visible:0},
+                {"title": "Fecha Movimiento", 
+                    "data": "FechaMovimiento",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },
+                {"title": "Tipo Movimiento","data": "TipoMovimiento"},
+                {"title": "N° Documento","data": "NumeroDocumento"},
+                {"title": "Descripción","data": "DescripcionMovimiento"},
+                {"title": "Monto","data": "MontoMovimiento"}
+            ],
+        });
+        limpiarMovimientosA=1;
+};
+
 var cargarTablaEECC = function(data){
-    if(limpiarEECC==1){destruirTabla('#tablaClientesEECC');$('#tablaClientesEECC thead').empty();}
+    if(limpiarEECC==1){
+        destruirTabla('#tablaClientesEECC');
+        $('#tablaClientesEECC thead').empty();
+    }
+
         $("#tablaClientesEECC").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
@@ -181,6 +288,7 @@ var cargarTablaEECC = function(data){
         });
         limpiarEECC=1;
 };
+
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
     $("#IdCliente").val(data.IdCliente);
@@ -272,11 +380,20 @@ var modificarCliente = function(){
 var volverTabs = function(){
     $("#spanTitulo").text("");
     $(".divDetalles").toggle();
+    
     $("#aDetalles").addClass("active");
-    $("#aMovimientos").removeClass("active");
-    $("#aEECC").removeClass("active");
     $("#TabDetalles").addClass("active");
+
+    $("#aFacturacionActual").removeClass("active");
+    $("#TabFacturacionActual").removeClass("active");
+
+    $("#aProximaFacturacion").removeClass("active");
+    $("#TabProximaFacturacion").removeClass("active");
+
+    $("#aMovimientos").removeClass("active");    
     $("#TabMovimientos").removeClass("active");
+
+    $("#aEECC").removeClass("active");
     $("#TabEECC").removeClass("active");
 }
 

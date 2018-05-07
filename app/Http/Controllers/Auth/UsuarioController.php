@@ -33,11 +33,26 @@ class UsuarioController extends Controller
     }
 
     // Pantalla para seleccionar un perfil despues de iniciar sesion
-    protected function getAccesos(){
+    protected function getAccesos(Request $request){
         //log::info("-->getAccesos();");
-
         $model= new Usuario();
-        return View::make('accesos.accesos');
+
+        if ( $request->session()->has('localUsuario') && $request->session()->has('perfilUsuario') ) {
+            return View::make('accesos.accesos');
+
+        }else{
+            Session::forget('localUsuario');
+            Session::forget('perfilUsuario');
+            Session::forget('localUsuario');
+            Session::forget('perfilUsuario');
+
+            $this->guard()->logout();
+            $request->session()->invalidate();
+            return redirect('/');
+        }
+
+        
+        
     }
 
     // Cargar el perfil escogido

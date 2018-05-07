@@ -123,7 +123,7 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="{{ asset('theme/assets/js/main.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/index/main.js') }}"></script>
   <script src="{{ asset('theme/assets/js/menu-horizontal.min.js') }}"></script>
   <script Language="Javascript">
     var rutaHome = "{{ URL::route('infoDashboard') }}"

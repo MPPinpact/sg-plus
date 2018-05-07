@@ -15,7 +15,7 @@ var ManejoRespuestaProcesarD = function(respuesta){
         bloquearInuts();
         $("#divVolver").show();
         pintarDatosActualizar(respuesta.respuesta);
-        //cargarTablaProductos(respuesta.respuesta.v_productos);
+
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});       
     }
@@ -69,15 +69,15 @@ var ManejoRespuestaProcesarGeneracionEECC = function(respuesta){
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
-                $(".divDetalles").toggle();
-                $(".divBotones").toggle();
-                $('#FormCicloFacturacion')[0].reset();
-                $('#IdCicloFacturacion').val("");
+                
+                volverTabs();
                 cargartablaCicloFacturacions(respuesta.respuesta.v_ciclos_facturacion);
                 break;
+
             case '-2':
                 $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
                 break;
+
             default:
                 $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
                 break;
@@ -117,9 +117,17 @@ var cargartablaCicloFacturacions = function(data){
                     }
                 },
                 {"title": "IdCicloFacturacion","data": "IdCicloFacturacion",visible:0},
-                {"title": "Dia de Pago","data": "DiaPago"},
-                {"title": "Dia de Facturación","data": "DiaFacturacion"},
-                {"title": "Estado Ciclo","data": "DetalleEstadoCiclo"},
+                {"title": "Dia de Pago","data": "DiaPago", className: "text-center"},
+                {"title": "Dia de Facturación","data": "DiaFacturacion", className: "text-center"},
+                {"title": "Última Facturación","data": "InicioUltimaFacturacion", className: "text-center", 
+                            "render": function(data, type, row, meta){
+                                if(type === 'display'){
+                                    data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY HH:mm:ss");
+                                }
+                                return data;
+                            }
+                },
+                {"title": "Estado Ciclo","data": "DetalleEstadoCiclo", className: "text-center"},
 				
                 {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
                 {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
@@ -137,6 +145,9 @@ var pintarDatosActualizar= function(data){
 	$("#IdCicloFacturacionEECC").val(data.IdCicloFacturacion);
     $("#DiaCorte").val(data.DiaPago);
     $("#DiaFacturacion").val(data.DiaFacturacion);
+    $("#InicioUltimaFacturacion").val(data.InicioUltimaFacturacion);
+    $("#FinUltimaFacturacion").val(data.FinUltimaFacturacion);
+
     $("#EstadoCiclo").val(data.EstadoCiclo).trigger("change");
 }
 
@@ -235,6 +246,7 @@ var volverTabs = function(){
     $(".divDetalles").toggle(); 
     $("#detalles").addClass("active");
     $("#adetalles").addClass("active");
+
     $("#productos").removeClass("active");
     $("#aproductos").removeClass("active");  
 }

@@ -42,7 +42,7 @@ class Cliente extends Authenticatable
 
     // Cargar combo de estados de Estado (Activo / Inactivo)
     public function listEstados(){
-        return DB::table('v_estados')->get();
+        return DB::table('v_estados_clientes')->get();
     }
 
     // Cargar combo Familia
@@ -83,9 +83,22 @@ class Cliente extends Authenticatable
     }
 
     public function listMovimientos($IdCliente){
-        $sql="select * from v_clientes_movimientos where IdCliente=".$IdCliente." and EstadoMovimiento=1 and MONTH(FechaMovimiento) >= MONTH(now()) order by IdMovimiento asc";
-		$sql="SELECT * FROM v_clientes_movimientos WHERE IdCliente=".$IdCliente." AND EstadoMovimiento=1 ORDER BY FechaMovimiento DESC";
-		//log::info($sql);
+        $sql="SELECT * FROM v_clientes_movimientos WHERE IdCliente=".$IdCliente." AND IdEstadoMovimiento=1 ORDER BY FechaMovimiento DESC";
+        //log::info($sql);
+        $result=DB::select($sql);
+        return $result;
+    }
+
+    public function listMovimientosUltimoEECC($IdCliente){
+        $sql="SELECT IdEECC, IdMovimiento, FechaMovimiento, NumeroDocumento, TipoMovimiento, DescripcionMovimiento, MontoMovimiento FROM  v_clientes_eecc_detalle WHERE IdEECC = (SELECT IdEECC FROM clientes_eecc WHERE IdCliente=".$IdCliente." ORDER BY FechaCorte DESC LIMIT 1);";
+        //log::info($sql);
+        $result=DB::select($sql);
+        return $result;
+    }
+
+    public function listMovimientosProximoEECC($IdCliente){
+        $sql="SELECT IdMovimiento, FechaMovimiento, FechaVencimiento, NumeroDocumento, TipoMovimiento, DescripcionMovimiento, MontoMovimiento FROM  v_clientes_movimientos cm WHERE cm.IdCliente = ".$IdCliente." AND FechaVencimiento = (SELECT fechaProximaCuota FROM v_clientes cl WHERE cl.IdCliente = cm.IdCliente);";
+        //log::info($sql);
         $result=DB::select($sql);
         return $result;
     }

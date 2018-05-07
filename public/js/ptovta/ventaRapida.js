@@ -464,6 +464,9 @@ var BotonPagoEfectivo = function (){
 	$("#divBotonM_FPE").hide();
 	$("#divBotonAC_FPE").show();
 	$("#botonGuardarFormaPago").text("Continuar");
+	$("#botonGuardarFormaPago").prop('disabled', false);
+    $("#botonGuardarFormaPago").removeClass("btn-danger");
+    $("#botonGuardarFormaPago").addClass("btn-success");
     //desbloquearInputsFPE();
 	
 	$('#ModalIngresoPago').on('shown.bs.modal', function() {
@@ -1177,26 +1180,29 @@ var ManejoRespuestaBuscarCliente = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
             if(respuesta.respuesta.v_cliente!=null){
-				
-				$("#IdClientePreVenta").val(respuesta.respuesta.v_cliente[0].IdCliente);
+
+				var EstadoClienteVC = respuesta.respuesta.v_cliente[0].EstadoCliente;
+				if(EstadoClienteVC==2) $("#IdClientePreVenta").val("");
+				else $("#IdClientePreVenta").val(respuesta.respuesta.v_cliente[0].IdCliente);	
+
+				$("#IdClientePreVenta").val(respuesta.respuesta.v_cliente[0].IdCliente);	
 				$("#NombreClientePreVenta").val(respuesta.respuesta.v_cliente[0].NombreCliente);
+				$("#EstadoClientePreVenta").val(respuesta.respuesta.v_cliente[0].DetalleEstadoCliente);
 				$("#CA_ClientePreVenta").val(respuesta.respuesta.v_cliente[0].CupoAutorizado);
 				$("#CU_ClientePreVenta").val(respuesta.respuesta.v_cliente[0].CupoUtilizado);
 				$("#CD_ClientePreVenta").val($("#CA_ClientePreVenta").val() - $("#CU_ClientePreVenta").val() );
-				$("#CD_ClientePreVenta").val(parseFloat($("#CD_ClientePreVenta").val()).toLocaleString('cl'));
-				
-				$("#EstadoClientePreVenta").val(respuesta.respuesta.v_cliente[0].DetalleEstadoCliente);
+				$("#CD_ClientePreVenta").val(parseFloat($("#CD_ClientePreVenta").val()).toLocaleString('cl'));					
 				$("#PC_ClientePreVenta").val(moment(respuesta.respuesta.v_cliente[0].fechaProximaCuota, 'YYYY-MM-DD',true).format("DD-MM-YYYY"));   
-				
+					
 				console.log("Actualiza Cliente en DB...");
 				if(_tipoVenta_=="PreVenta") parametroAjax.ruta=rutaPVAC;
 				if(_tipoVenta_=="Venta") parametroAjax.ruta=rutaVAC;
-					
+						
 				parametroAjax.data = $("#FormPreVenta").serialize();
 				respuesta=procesarajax(parametroAjax);
 				
-				AsignarClientePreVenta();
-				$("#RUTCliente").focus().select();
+				if(EstadoClienteVC==1) AsignarClientePreVenta();
+				$("#RUTCliente").focus().select();			
 				
             }else{
 				// var rut = $("#RUTProveedor").val();
@@ -1295,6 +1301,30 @@ var ManejoRespuestaBuscarClienteVC = function(respuesta){
             $("#IdClienteVC").val(respuesta.respuesta.v_cliente[0].IdCliente);
             $("#NombreClienteCredito").val(respuesta.respuesta.v_cliente[0].NombreCliente);
             $("#FechaPrimeraCuota").val(respuesta.respuesta.v_fechas.fechaPago);
+
+            $("#bontonEstadoClienteVC").text("CLIENTE " + respuesta.respuesta.v_cliente[0].DetalleEstadoCliente);
+            if(respuesta.respuesta.v_cliente[0].EstadoCliente==1) {
+                $("#bontonEstadoClienteVC").removeClass("btn-danger");
+                $("#bontonEstadoClienteVC").addClass("btn-success");
+
+                $("#botonGuardarFormaPago").prop('disabled', false);
+                $("#botonGuardarFormaPago").text("Continuar");
+                $("#botonGuardarFormaPago").removeClass("btn-danger");
+                $("#botonGuardarFormaPago").addClass("btn-success");
+
+            }else if(respuesta.respuesta.v_cliente[0].EstadoCliente==2) {
+                $("#bontonEstadoClienteVC").removeClass("btn-success");
+                $("#bontonEstadoClienteVC").addClass("btn-danger");
+
+                $("#botonGuardarFormaPago").text("VENTA NO PERMITIDA");
+                $("#botonGuardarFormaPago").removeClass("btn-success");
+                $("#botonGuardarFormaPago").addClass("btn-danger");
+                $("#botonGuardarFormaPago").prop('disabled', true);
+
+            }
+
+            $("#bontonEstadoClienteVC").show();
+
         }else{
             $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
         }

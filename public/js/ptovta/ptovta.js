@@ -9,6 +9,7 @@ var parametroAjax = {
 };
 
 var ConsultaCreditoCliente = function(){
+    $("#bontonEstadoCliente").hide();
 	$("#spanTituloModalCreditoCliente").text("Consulta Crédito Interno de Clientes");
     $("#ModalConsultaCreditoCliente").modal();
 
@@ -91,6 +92,18 @@ var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
                     $("#UltimoMontoFacturadoConsultaCredito").val(respuesta.respuesta.v_cliente.MontoAnterior[0].MontoFacturadoAnterior);
                 }
                 $("#EstadoClienteConsultaCredito").val(cliente[0].DetalleEstadoCliente);
+
+                $("#bontonEstadoCliente").text(cliente[0].DetalleEstadoCliente);
+                if(cliente[0].EstadoCliente==1) {
+                    $("#bontonEstadoCliente").removeClass("btn-danger");
+                    $("#bontonEstadoCliente").addClass("btn-success");
+                }else if(cliente[0].EstadoCliente==2) {
+                    $("#bontonEstadoCliente").removeClass("btn-success");
+                    $("#bontonEstadoCliente").addClass("btn-danger");
+                }
+
+                $("#bontonEstadoCliente").show();
+
             }
             //Caso pago Credito  UltimoMontoFacturadoConsultaCredito
             if (caso == 2){ 
@@ -149,6 +162,8 @@ var cargarTablaProductos = function(data){
 }
 
 var pintarDatosCreditoClientes = function(data){
+    console.log("pintarDatosCreditoClientes()");
+
     $("#IdClienteConsultaCredito").val(data.IdCliente);
     $("#NombreClienteConsultaCredito").val(data.NombreCliente);
     $("#CreditoAutorizadoConsultaCredito").val(data.CupoAutorizado);
@@ -159,6 +174,9 @@ var pintarDatosCreditoClientes = function(data){
     $("#UltimoPagoConsultaCredito").val("");
     $("#UltimoMontoFacturadoConsultaCredito").val("");
     $("#EstadoClienteConsultaCredito").val(data.DetalleEstadoCliente);
+
+    $("#bontonEstadoCliente").text(data.DetalleEstadoCliente);
+    $("#bontonEstadoCliente").show();
 }
 
 var limpiarDatosCreditoClientes = function(){
@@ -171,6 +189,8 @@ var limpiarDatosCreditoClientes = function(){
     $("#UltimoPagoConsultaCredito").val("");
     $("#UltimoMontoFacturadoConsultaCredito").val("");
     $("#EstadoClienteConsultaCredito").val("");   
+    $("#bontonEstadoCliente").text("");
+
 }
 
 var pintarDatosPagoCreditoClientes = function(data){

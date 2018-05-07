@@ -164,21 +164,25 @@
                 <div class="col-xl-4 col-sm-12 grid-item">
                   <div class="row">
                     <div class="col-sm-6">
-                      <div class="basic-widget basic-widget-purple ">
-                        <i class="icofont icofont-ui-user"></i>
-                        <h5>Visitors</h5>
-                        <div class="counter-txt">
-                          <h4 class="counter-txt counter">10</h4>k
-                        </div>
+                      <div class="basic-widget basic-widget-purple">
+                        <a href="{{ route('ptovta') }}" class="waves-effect" >
+                          <i class="icon-calculator"></i>
+                          <h5>Punto Venta</h5>
+                          <div class="counter-txt">
+                            <h4 class="counter-txt counter"></h4>
+                          </div>
+                        </a>
                       </div>
                     </div>
                     <div class="col-sm-6">
-                      <div class="basic-widget basic-widget-green m-r-0">
-                        <i class="icofont icofont-music"></i>
-                        <h5>Volume</h5>
+                      <div class="basic-widget basic-widget-green">
+                        <a href="{{ route('cajaDiariaResumen') }}" class="waves-effect" >
+                        <i class="icofont icofont-coins"></i>
+                        <h5>Caja Diaria</h5>
                         <div class="counter-txt">
-                          <h4 class="counter">100</h4>%
+                          <h4 class="counter"></h4>
                         </div>
+                      </a>
                       </div>
                     </div>
                    
@@ -186,16 +190,24 @@
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="basic-widget basic-widget-orange">
-                        <i class="icofont icofont-star"></i>
-                        <h5>Rating</h5>
-                        <h4 class="counter">578</h4>
+                        <a href="{{ route('clientes') }}" class="waves-effect" >
+                        <i class="icofont icofont-id-card"></i>
+                        <h5>Clientes</h5>
+                        <div class="counter-txt">
+                          <h4 class="counter"></h4>
+                        </div>
+                      </a>
                       </div>
                     </div>
                     <div class="col-sm-6">
-                      <div class="basic-widget basic-widget-pink m-r-0">
-                        <i class="icofont icofont-trophy-alt"></i>
-                        <h5>Achivement</h5>
-                        <h4 class="counter">20</h4>
+                      <div class="basic-widget basic-widget-pink goShortcut" data-datac="compras">
+                         <a href="{{ route('compraMasivaList') }}" class="waves-effect" >
+                        <i class="icofont icofont-listing-number"></i>
+                        <h5>Compras</h5>
+                         <div class="counter-txt">
+                          <h4 class="counter"></h4>
+                        </div>
+                      </a>
                       </div>
                     </div>
                     

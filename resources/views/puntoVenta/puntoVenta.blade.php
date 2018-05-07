@@ -1,5 +1,6 @@
 @extends('puntoVenta.index')
 @section('content')
+<?php date_default_timezone_set('America/Santiago'); ?> 
 <style type="text/css" media="screen">
 	.nav-tabs .slide{
 		 width: calc(100% / 3)!important;
@@ -199,12 +200,18 @@
 								<small id="ErrorRutConsultaCredito" class="rut-error"></small>
 							</div>
 						</div>
-						<div class="col-md-9">
+						<div class="col-md-4">
 							<div class="md-input-wrapper">
 								<input id="NombreClienteConsultaCredito" name="NombreClienteConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" readonly />
 								<label for="NombreClienteConsultaCredito">Nombre Cliente</label>
 							</div>
 						</div>
+						<div class="col-md-5">
+							<div class="md-input-wrapper">
+								<button id="bontonEstadoCliente" class="btn btn-danger waves-effect waves-light js-dynamic-disable btn-block" style="display: none;" >--------</button>
+							</div>
+						</div>
+						
 					</div>
 					
 					<div class="row">
@@ -252,7 +259,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="md-input-wrapper">
-								<input id="EstadoClienteConsultaCredito" name="EstadoClienteConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" readonly />
+								<input id="EstadoClienteConsultaCredito" name="EstadoClienteConsultaCredito" type="text" class="md-form-control md-form-control-lg md-static ConsultaCreditoCliente" maxlength="250" readonly />
 								<label for="EstadoClienteConsultaCredito">Estado Cliente</label>
 							</div>
 						</div>
@@ -610,12 +617,18 @@
 									<small id="ErrorRutCredito" class="rut-error"></small>
 								</div>
 							</div>
-							<div class="col-md-9">
+							<div class="col-md-4">
 								<div class="md-input-wrapper">
 									<input id="NombreClienteCredito" name="NombreClienteCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
 									<label for="NombreClienteCredito">Nombre Cliente</label>
 								</div>
 							</div>
+							<div class="col-md-5">
+								<div class="md-input-wrapper">
+									<button id="bontonEstadoClienteVC" class="btn btn-danger waves-effect waves-light js-dynamic-disable btn-block" style="display: none;" disabled="true" >--------</button>
+								</div>
+							</div>
+
 						</div>
 						<div class="row">
 							<div class="col-md-4">
@@ -776,7 +789,7 @@
 					<input type="hidden" name="EstadoPreVenta" id="EstadoPreVenta">
 					<input type="hidden" name="IdProductoPreVenta" id="IdProductoPreVenta">	
 					<input type="hidden" name="TotalLineaPreVenta" id="TotalLineaPreVenta">	
-					<input type="hidden" name="FechaPreVenta" id="FechaPreVenta" value="<?php echo date("Y-m-d"); ?>">	
+					<input type="hidden" name="FechaPreVenta" id="FechaPreVenta" value="<?php echo date('Y-m-d'); ?>">	
 					<input type="hidden" name="IdVendedorPreVenta" id="IdVendedorPreVenta">
 					<input type="hidden" name="NombreVendedorPreVenta" id="NombreVendedorPreVenta">
 					<input type="hidden" name="IdClientePreVenta" id="IdClientePreVenta">

@@ -85,6 +85,26 @@
 					                        </div>
 					                    </div>
 									</div>
+
+									<div class="row">
+										<div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+				                                <input id="InicioUltimaFacturacion" name="InicioUltimaFacturacion" type="text" class="md-form-control" maxlength="2" readonly />
+					                            <label for="InicioUltimaFacturacion">Fecha Inicio Última Facturación</label>
+					                        </div>
+										</div>
+					                    <div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+					                        	<input id="FinUltimaFacturacion" name="FinUltimaFacturacion" type="text" class="md-form-control" maxlength="2" readonly />
+					                            <label for="FinUltimaFacturacion">Fecha Fin Última Facturación</label>
+					                        </div>
+					                    </div>
+					                    <div class="col-sm-4">
+					                        <div class="md-input-wrapper">
+					                        	
+					                        </div>
+					                    </div>
+									</div>
 									
 									<div align="center">
 										<div class="pull-rigth">

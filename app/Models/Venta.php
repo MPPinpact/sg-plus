@@ -94,6 +94,9 @@ class Venta extends Authenticatable
 		$datos['IdCajaPreVenta']==null ? $datos['IdCajaPreVenta']="null" :$datos['IdCajaPreVenta']=$datos['IdCajaPreVenta'];
 		
 		$sql="select f_registro_venta(".$IdVenta.",".$datos['IdClientePreVenta'].",".$datos['IdVendedorPreVenta'].",".$datos['IdLocalPreVenta'].",".$datos['IdCajaPreVenta'].",'".$datos['FechaPreVenta']."',".$IdUsuario.")";
+
+        log:info("regVentaPuntoVenta: " . $sql);
+
         $execute=DB::select($sql);
 		
         foreach ($execute[0] as $key => $value) {
@@ -274,6 +277,9 @@ class Venta extends Authenticatable
     public function formatearFecha($d){
         $formato = explode("-", $d);
         $fecha = $formato[2]."-".$formato[1]."-".$formato[0];
+
+        log::info("antes: " . $d . " --> " . $fecha );
+
         return $fecha;
     }
 

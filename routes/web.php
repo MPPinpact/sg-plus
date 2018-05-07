@@ -174,7 +174,7 @@ Route::post('/ventaDetallesActiva', 'VentaController@postventaDetallesActiva')->
 Route::post('/ventasPre', 'VentaController@postCargarPreventa')->name('ventasPre');
 
 //Pantalla punto de venta
-Route::get('/ptovta', 'PuntoVentaController@getPuntoVenta')->name('ptovta');
+Route::any('/ptovta', 'PuntoVentaController@getPuntoVenta')->name('ptovta');
 Route::get('/cajaDiaria', 'PuntoVentaController@getCajaDiaria')->name('cajaDiaria');
 Route::get('/cajaDiariaResumen', 'PuntoVentaController@getCajaDiariaResumen')->name('cajaDiariaResumen');
 Route::get('/cajaDiariaCierre', 'PuntoVentaController@getCajaDiariaCierre')->name('cajaDiariaCierre');

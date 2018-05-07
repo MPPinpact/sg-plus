@@ -71,6 +71,8 @@ class CicloFacturacionController extends Controller
 		//log::info("Llegando....");
 		
         $result['f_generacion'] = $model->generarEECC($datos);
+        $result['v_ciclos_facturacion'] = $model->listCicloFacturacion();
+        
         return $result;
     }
 	
