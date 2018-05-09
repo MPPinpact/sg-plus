@@ -293,7 +293,7 @@ var cargarTablaPreventas = function(data){
                         return data;
                     }
                 },
-                {"title": "Nombre Local","data": "NombreLocal",visible:0},
+                {"title": "Nombre Local","data": "NombreLocal"},
                 {"title": "RUT Cliente","data": "RUTCliente", className: "text-center"},
                 {"title": "Nombre Cliente","data": "NombreCliente"},
                 {"title": "Nombre Vendedor","data": "NombreVendedor",visible:0},

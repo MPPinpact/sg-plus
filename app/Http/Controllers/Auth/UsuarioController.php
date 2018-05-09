@@ -63,9 +63,10 @@ class UsuarioController extends Controller
         $model= new Usuario();
 
         //console.log$datos);
-
+        $IdPerfil = Session::get('perfilUsuario')->idPerfil;
+        
         if (count($datos)>0){
-            $result = $model->mostrarPanel($datos['IdPerfil'], $datos['IdLocal']);
+            $result = $model->mostrarPanel($IdPerfil, $datos['IdLocal']);
         }else{
             $result = '{"code":"500","des_code":"Haga doble click sobre la fila deseada"}';
         }

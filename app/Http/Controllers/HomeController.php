@@ -27,7 +27,10 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         if (Auth::check()){
-            if ( $request->session()->has('localUsuario') && $request->session()->has('perfilUsuario') ) {
+            log::info("localUsuario: " .  $request->session()->has('localUsuario') );
+            log::info("perfilUsuario: " . $request->session()->has('perfilUsuario') );
+
+            if ( $request->session()->has('localUsuario') and  $request->session()->has('perfilUsuario') ) {
                 return view('home.home');
 
             }else{

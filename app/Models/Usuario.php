@@ -127,7 +127,11 @@ class Usuario extends Authenticatable
  
     // cargar panel de control con los widget´s del usuario actual
     public function mostrarPanel($IdPerfil, $IdLocal){
+        log::info("mostrarPanel()");
         $usuario = Auth::user();
+
+        log::info("IdPerfil: " . $IdPerfil);
+        log::info("IdLocal: " . $IdLocal);
 
         $perfil = DB::table('v_perfiles_usuarios')->where('idUser',$usuario->idUser)->where('idPerfil', $IdPerfil)
                                     ->where('activoPerfil',1)->first();

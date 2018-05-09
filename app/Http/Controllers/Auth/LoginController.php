@@ -78,8 +78,8 @@ class LoginController extends Controller
 
         Session::forget('localUsuario');
         Session::forget('perfilUsuario');
-        Session::forget('localUsuario');
-        Session::forget('perfilUsuario');
+        Session::forget('localesUsuario');
+        Session::forget('perfilesUsuario');
 
         $this->guard()->logout();
         $request->session()->invalidate();

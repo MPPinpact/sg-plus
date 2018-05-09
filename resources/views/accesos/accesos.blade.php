@@ -1,6 +1,18 @@
 @extends('accesos.index')
-@section('content')
+       
+@if( !session()->has('perfilUsuario') or !session()->has('localesUsuario') )
+    @section('content')
+             <script Language="Javascript">
+                var v_salir = 0;
+                var ruta = "{{ URL::route('accesos') }}"
+                var RutaSalir = "{{ URL::route('logout') }}";
+                var d = [];      
+            </script>
+            <script src="{{ asset('js/accesos/accesos.js') }}"></script>
+    @endsection       
+@endif
 
+@section('content')
 <div class="row">
     <div class="col-sm-12 p-0">
         <div class="main-header">
@@ -10,9 +22,7 @@
 </div>
 
 <form id="FormSelectLocal" class="form-horizontal" novalidate>
-    <input type="hidden" name="IdLocal" id="IdLocal" />
-    <input type='hidden' name='IdPerfil' id='IdPerfil' value='{{ Session::get('perfilUsuario')->idPerfil }}' />
-
+    <input type="hidden" name='IdLocal' id='IdLocal' />
 </form>
 
 @if (count(Session::get('localesUsuario')) > 1)
