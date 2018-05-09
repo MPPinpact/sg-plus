@@ -29,6 +29,8 @@ class Boleta extends Authenticatable
             $id = $obj->idPreVenta;
             $detalles = DB::select("select count(1) as Cant,NombreProducto,ValorUnitarioVenta from v_preventas_detalle where IdPreVenta = ".$obj->idPreVenta." group by NombreProducto,ValorUnitarioFinal");
             $pagos = DB::select("select FormaPago,MontoPagado from v_preventas_pagos where IdPreVenta =".$obj->idPreVenta);
+            
+            $local = DB::select("select DireccionLocal, UrlLogo from v_preventas where idPreVenta =".$obj->idPreVenta);
 
             $DetalleFactura = '';
             $total = 0;
@@ -48,14 +50,14 @@ class Boleta extends Authenticatable
 
         }
 
-        // log::info($obj);
-
         if ($caso==2){ 
             $tittle= "VENTA ".$obj->IdVenta; 
             $numero = "N° ".$obj->IdVenta;
             $id = $obj->IdVenta;
             $detalles = DB::select("select CantidadVenta, NombreProducto, ValorUnitarioVenta from v_ventas_detalle where IdVenta = ".$obj->IdVenta);
             $pagos = DB::select("select FormaPago,MontoPagado from v_ventas_pagos where IdVenta=".$obj->IdVenta);
+            $local = DB::select("select DireccionLocal, UrlLogo from v_ventas where IdVenta =".$obj->IdVenta);
+
 
             $DetalleFactura = '';
             $total = 0;
@@ -131,7 +133,7 @@ class Boleta extends Authenticatable
                 </tr>
                 <tr>
                     <td>
-                        <b>CASA MATRIZ </b> GENERAL L ASTRA 688 SANTIAGO
+                        <b>'.$local[0]->DireccionLocal.'</b> Dirección local
                     </td>
                 </tr>
                 <tr>
@@ -143,12 +145,7 @@ class Boleta extends Authenticatable
                     <td>
                         <b>HORA DE EMISIÓN : '.$FechaNow->format('H:i:s').' </b>
                     </td>
-                </tr>
-                <tr>
-                    <td>
-                        Vale N° 00000130831 Ejec. CBM - hora 10:51
-                    </td>
-                </tr>                                                                             
+                </tr>                                                                            
             </table>
             <table border="0" cellspacing="0" width="100%">
                 <tr>

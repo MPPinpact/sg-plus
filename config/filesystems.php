@@ -66,6 +66,10 @@ return [
             'driver' => 'local',
             'root'   => storage_path('../public/imgUsuarios'),
         ],
+        'imgLogosLocales' => [
+            'driver' => 'local',
+            'root'   => storage_path('../public/imgLogosLocales'),
+        ],
 
     ],
 

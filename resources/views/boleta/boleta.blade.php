@@ -9,18 +9,20 @@
                 <h4 class="modal-title">Boleta de Preventa</h4>
             </div>
             <div class="modal-body" style="height:350px;width:auto;overflow-y: scroll;overflow-x:hidden;">
-            	<center>
-            		<div id="CuerpoBoleta" style="height:auto;"></div>
-                    <table border="0" cellspacing="0" width="100%">
-                        <tr>
-                            <td>
-                                <center>
-                                    <svg id="barcode"></svg>
-                                </center>
-                            </td>
-                        </tr>
-                    </table>
-                </center>
+            	<div id="CuerpoBoleta">
+                    <center>
+                        <div id="DetalleBoleta" style="height:auto;">   </div>
+                        <table border="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td>
+                                    <center>
+                                        <svg id="barcode"></svg>
+                                    </center>
+                                </td>
+                            </tr>
+                        </table>
+                    </center>
+                </div>
             </div>
             <div class="modal-footer">
 	        	<button id="PrintPre" type="button" class="btn btn-default waves-effect ">Imprimir</button>

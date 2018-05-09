@@ -77,44 +77,70 @@
 		                        <div class="tab-pane active" id="detalles" role="tabpanel">
                    					<br><br>
                    					{!! Form::open(['id'=>'FormLocal','autocomplete' => 'off']) !!}
-									{!! Form::hidden('IdLocal', '', [
-									'id'            => 'IdLocal',
-									'class'         => 'form-control'])!!}
+									{!! Form::hidden('IdLocal', '', ['id'=> 'IdLocal'])!!}
+									{!! Form::text('urlImage', '', ['id'=> 'urlImage'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
-										<div class="col-sm-6">
+										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="NombreLocal" name="NombreLocal" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="NombreLocal" name="NombreLocal" type="text" class="md-form-control md-valid" maxlength="250" readonly />
 					                            <label for="NombreLocal">Nombre Local</label>
 					                        </div>
 										</div>
-					                    <div class="col-sm-6">
+					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
 					                        	<select name="IdEmpresa" id="IdEmpresa" class="md-disable md-valid" disabled></select>
 				                                <label for="IdEmpresa">Empresa</label>
 					                        </div>
 					                    </div>
-									</div>
-									<br>
-									<div class="row">
-										<div class="col-sm-4">
+					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
 												<select name="IdEncargadoLocal" id="IdEncargadoLocal" class="md-disable md-valid" disabled></select>
 				                                <label for="IdEncargadoLocal">Encargado</label>
-											</div>
+					                        </div>
 					                    </div>
-					                    <div class="col-sm-4">
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-sm-3">
 					                        <div class="md-input-wrapper">
-												<select name="IdBodegaPrincipal" id="IdBodegaPrincipal" class="md-disable md-valid" disabled></select>
+												<select name="IdBodegaPrincipal" id="IdBodegaPrincipal" class="md-disable md-valid" disabled>
+												</select>
 				                                <label for="IdBodegaPrincipal">Bodega Principal</label>
 											</div>
 					                    </div>
-					                    <div class="col-sm-4">
+					                    <div class="col-sm-3">
+					                        <div class="md-input-wrapper">
+					                        	<input id="DireccionLocal" name="DireccionLocal" type="text" class="md-form-control md-valid" maxlength="250" readonly />
+					                            <label for="DireccionLocal">Dirección Local</label>
+											</div>
+					                    </div>
+					                    <div class="col-sm-6">
 					                        <div class="md-input-wrapper">
 												<select name="EstadoLocal" id="EstadoLocal" class="md-disable md-valid" disabled></select>
 				                                <label for="EstadoLocal">Estado</label>
 											</div>
 					                    </div>
+									</div>
+									<br>
+									<div id="divImageLogo" style="display:none;">
+										@php  
+											$avatarImg = 'asd';
+											(strlen($avatarImg) > 10) ? $avatar=$avatarImg : $avatar="img/default-logo.png";
+										@endphp
+										<center>
+										<img id="imgLogo" src="{{ asset($avatar) }}" alt="Img notificación" width="30%" height="50%">
+										</center>
+									</div>
+									<br>
+									<div class="row">
+					                    <div class="col-sm-4"></div>
+					                    <div class="col-sm-4">
+											<input type="file" id="img" name="img" class="custom-file-input" accept="image/jpg" disabled>
+											<span class="custom-file-control">Examinar...</span>
+			                         		<label class="help-block">Archivo png o jpg no mayor a 10 megabytes (MB)</label>
+					                    </div>
+					                    <div class="col-sm-4"></div>
 									</div>
 									<br>
 									<div align="center">

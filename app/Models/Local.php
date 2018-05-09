@@ -52,10 +52,8 @@ class Local extends Authenticatable
     public function regLocal($datos){
         $idAdmin = Auth::id();
         $datos['IdLocal']==null ? $Id=0 : $Id= $datos['IdLocal'];
-        $sql="select f_registro_local(".$Id.",'".$datos['NombreLocal']."',".$datos['IdEmpresa'].",".$datos['IdEncargadoLocal'].",".$datos['EstadoLocal'].",".$datos['IdBodegaPrincipal'].",".$idAdmin.")";
+        $sql="select f_registro_local(".$Id.",'".$datos['NombreLocal']."',".$datos['IdEmpresa'].",".$datos['IdEncargadoLocal'].",".$datos['EstadoLocal'].",".$datos['IdBodegaPrincipal'].",'".$datos['DireccionLocal']."','".$datos['UrlLogo']."',".$idAdmin.")";
         $execute=DB::select($sql);
-
-        //log::info("SQL: " . $sql);
         foreach ($execute[0] as $key => $value) {
             $result['f_registro_local']=$value;
         }

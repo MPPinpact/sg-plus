@@ -29,9 +29,8 @@ var ManejoRespuestaVerBoleta = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta.status.code==200){
             BoletaString = respuesta.respuesta.boleta;
-            $("#CuerpoBoleta").html(respuesta.respuesta.boleta);
+            $("#DetalleBoleta").html(respuesta.respuesta.boleta);
             var ID = $("#NumeroBoletaModal").val();
-            console.log(ID);
             JsBarcode("#barcode", ID);
             $("#ModalBoletaPlantilla").modal();
         }else{

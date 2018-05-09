@@ -18,9 +18,9 @@ var ManejoRespuestaProcesarD = function(respuesta){
         $("#spanTitulo").text("Detalles");
         bloquearInuts();
         crearselect(respuesta.respuesta.v_bodegas_local, 'IdBodegaPrincipal');
-
         pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
         cargarTablaBodegas(respuesta.respuesta.v_bodegas.bodegas);
+        $("#divImageLogo").show();
         console.log(respuesta.respuesta.v_bodegas.sum[0].TotalValorizado);
         $("#TotalMontoValorizadoL").val(respuesta.respuesta.v_bodegas.sum[0].TotalValorizado);
     }else{
@@ -47,6 +47,7 @@ var ManejoRespuestaProcesarI = function(respuesta){
 // Manejo Registro o actualizacion de empresa
 var ManejoRespuestaProcesar = function(respuesta){
     if(respuesta.code==200){
+        var Img = JSON.parse(respuesta.respuesta.urlImage);
         var res = JSON.parse(respuesta.respuesta.f_registro.f_registro_local);
         switch(res.code) {
             case '200':
@@ -55,6 +56,8 @@ var ManejoRespuestaProcesar = function(respuesta){
                 $(".divBotones").toggle();
                 $('#FormLocal')[0].reset();
                 $('#IdLocal').val("");
+                $("#divImageLogo").show();
+                // $('#imgLogo').attr('src',data.UrlLogo)+ '?' + Math.random();
                 cargarTablaLocales(respuesta.respuesta.v_locales);
                 break;
             case '-2':
@@ -112,25 +115,25 @@ var cargarTablaLocales = function(data){
             ],
         });
         limpiarLocales=1;
-    if (data.length>0){seleccionarTablaLocales();}
+    // if (data.length>0){seleccionarTablaLocales();}
 };
 
-var seleccionarTablaLocales = function(data){
-    var tableB = $('#tablaLocales').dataTable();
-    $('#tablaLocales tbody').on('click', 'tr', function (e) {
-        tableB.$('tr.selected').removeClass('selected');
-        $(this).addClass('selected');
-        RegistroLocales = TablaTraerCampo('tablaLocales',this);
-    });
-    // $('#tablaLocales tbody').on('dblclick', 'tr', function () {
-    //     bloquearInuts();
-    //     $("#divVolver").show();
-    //     $("#divBtnModificar").show();
-    //     $("#divBtnAceptar").hide();
-    //     cargarFormulario();
-    //     pintarDatosActualizar(RegistroLocales);
-    // });
-}
+// var seleccionarTablaLocales = function(data){
+//     var tableB = $('#tablaLocales').dataTable();
+//     $('#tablaLocales tbody').on('click', 'tr', function (e) {
+//         tableB.$('tr.selected').removeClass('selected');
+//         $(this).addClass('selected');
+//         RegistroLocales = TablaTraerCampo('tablaLocales',this);
+//     });
+//     // $('#tablaLocales tbody').on('dblclick', 'tr', function () {
+//     //     bloquearInuts();
+//     //     $("#divVolver").show();
+//     //     $("#divBtnModificar").show();
+//     //     $("#divBtnAceptar").hide();
+//     //     cargarFormulario();
+//     //     pintarDatosActualizar(RegistroLocales);
+//     // });
+// }
 
 var cargarTablaBodegas = function(data){
     if(limpiarBodegas==1){destruirTabla('#tablaBodegas');}
@@ -161,10 +164,19 @@ var cargarTablaBodegas = function(data){
 };
 
 var pintarDatosActualizar= function(data){
+    console.log(data);
+    // console.log(data.DireccionLocal);
+    console.log(data.UrlLogo);
+    // imgLogo
     $(".md-form-control").addClass("md-valid");
     // $("#spanTitulo").text("Editar Local");
     $("#IdLocal").val(data.IdLocal);
     $("#NombreLocal").val(data.NombreLocal);
+    if(data.UrlLogo!=null){
+        $("#urlImage").val(data.UrlLogo);
+        $('#imgLogo').attr('src',data.UrlLogo)+ '?' + Math.random();
+    }
+    $("#DireccionLocal").val(data.DireccionLocal);
     $("#IdEmpresa").val(data.IdEmpresa).trigger("change");
     $("#IdEncargadoLocal").val(data.IdEncargadoLocal).trigger("change");
     $("#IdBodegaPrincipal").val(data.IdBodegaPrincipal);
@@ -192,6 +204,7 @@ var BotonCancelar = function(){
 }
 
 var BotonAgregar = function(){
+    $("#divImageLogo").hide();
     $("#spanTitulo").text("Registrar Local");
     $("#idUser").val("");
     $(".comboclear").val('').trigger("change");
@@ -211,10 +224,21 @@ var ProcesarLocal = function(){
             'EstadoLocal': $('#EstadoLocal').val(),
             'IdBodegaPrincipal': $('#IdBodegaPrincipal').val()
         }
+
+        var form = $('#FormLocal').get(0);
+        var formData = new FormData(form);
+        // formData.append("detalle", detalle);
+        // formData.append("proveedores", proveedores);
+        // console.log(form);
+        // console.log(formData);
+        parametroAjax.data=formData;
         parametroAjax.ruta=ruta;
-        parametroAjax.data = $("#FormLocal").serialize() + '&' + $.param(camposNuevo);
-        respuesta=procesarajax(parametroAjax);
+        respuesta=procesarajaxfile(parametroAjax);
         ManejoRespuestaProcesar(respuesta);
+        // parametroAjax.ruta=ruta;
+        // parametroAjax.data = $("#FormLocal").serialize() + '&' + $.param(camposNuevo);
+        // respuesta=procesarajax(parametroAjax);
+        // ManejoRespuestaProcesar(respuesta);
     }
 };
 
@@ -263,6 +287,8 @@ var bloquearInuts = function(){
     $("#IdEmpresa").prop('disabled', true);
     $("#IdEncargadoLocal").prop('disabled', true);
     $("#EstadoLocal").prop('disabled', true);
+    $("#DireccionLocal").prop('readonly', true);
+    $("#img").prop('disabled', true);
 }
 
 var desbloquearInuts = function(){
@@ -271,6 +297,8 @@ var desbloquearInuts = function(){
     $("#IdEncargadoLocal").prop('disabled', false);
     $("#IdBodegaPrincipal").prop('disabled', false);
     $("#EstadoLocal").prop('disabled', false);
+    $("#img").prop('disabled', false);
+    $("#DireccionLocal").prop('readonly', false);
 }
 
 var modificarLocal = function(){
