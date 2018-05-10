@@ -147,7 +147,47 @@ class Boleta extends Authenticatable
                 </tr>                                                                            
             </table>
             <br />
-            <table border="0" cellspacing="0" width="100%" style="font-size: 8px; font-family: Arial, Helvetica, sans-serif;">
+            <table border="0" cellspacing="0" width="100%" style="font-size: 10px; font-family: Arial, Helvetica, sans-serif;">
+                <tr class="tableHead" style="font-weight: bold;" >
+                    <td width="60%">DETALLE COMPRA</td>
+                    <td width="20%">CANT</td>
+                    <td width="20%"align="right">TOTAL</td>
+                </tr>
+            '.$DetalleFactura.'
+                <tr>
+                    <td colspan="2"><b>TOTAL</b></td>
+                    <td align="right"><b>'.number_format($total, 2,",", ".").'</b></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><br></td>
+                </tr>
+                <tr>
+                    <td colspan="3"  style="font-weight: bold;">DETALLE PAGO</td>
+                </tr>
+            '.$DetallePago.'
+            </table>
+            <br />
+            <table border="0" cellspacing="0" width="100%" style="font-size: 11px; font-family: Arial, Helvetica, sans-serif;">
+                <tr class="tableHead" style="font-weight: bold;" >
+                    <td width="60%">DETALLE COMPRA</td>
+                    <td width="20%">CANT</td>
+                    <td width="20%"align="right">TOTAL</td>
+                </tr>
+            '.$DetalleFactura.'
+                <tr>
+                    <td colspan="2"><b>TOTAL</b></td>
+                    <td align="right"><b>'.number_format($total, 2,",", ".").'</b></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><br></td>
+                </tr>
+                <tr>
+                    <td colspan="3"  style="font-weight: bold;">DETALLE PAGO</td>
+                </tr>
+            '.$DetallePago.'
+            </table>
+            <br />
+            <table border="0" cellspacing="0" width="100%" style="font-size: 12px; font-family: Arial, Helvetica, sans-serif;">
                 <tr class="tableHead" style="font-weight: bold;" >
                     <td width="60%">DETALLE COMPRA</td>
                     <td width="20%">CANT</td>
