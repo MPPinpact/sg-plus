@@ -65,7 +65,7 @@ class Boleta extends Authenticatable
                 $DetalleFactura .= '
                 <tr>
                 <td>'.$detalle->NombreProducto.'</td>
-                <td>'.number_format($detalle->CantidadVenta, 2, ",", ".").'</td>
+                <td align="center">'.number_format($detalle->CantidadVenta, 2, ",", ".").'</td>
                 <td align="right">'.number_format($detalle->ValorUnitarioVenta, 2, ",", ".").'</td>
                 </tr>
                 ';
@@ -146,8 +146,9 @@ class Boleta extends Authenticatable
                     </td>
                 </tr>                                                                            
             </table>
-            <table border="0" cellspacing="0" width="100%">
-                <tr>
+            <br />
+            <table border="0" cellspacing="0" width="100%" style="font-size: 6px; font-family: Arial, Helvetica, sans-serif;">
+                <tr class="tableHead" style="font-weight: bold;" >
                     <td width="60%">DETALLE COMPRA</td>
                     <td width="20%">CANT</td>
                     <td width="20%"align="right">TOTAL</td>
@@ -161,8 +162,7 @@ class Boleta extends Authenticatable
                     <td colspan="3"><br></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><b>DETALLE PAGO</b></td>
-                    <td align="right"></td>
+                    <td colspan="3"  style="font-weight: bold;">DETALLE PAGO</td>
                 </tr>
             '.$DetallePago.'
             </table>
