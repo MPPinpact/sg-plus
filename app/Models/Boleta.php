@@ -40,8 +40,8 @@ class Boleta extends Authenticatable
                 $DetalleFactura .= '
                 <tr>
                 <td>'.$detalle->NombreProducto.'</td>
-                <td>'.$detalle->Cant.'</td>
-                <td align="right">'.$detalle->ValorUnitarioVenta.'</td>
+                <td>'.number_format($detalle->Cant, 2, ",", ".").'</td>
+                <td align="right">'.number_format($detalle->ValorUnitarioVenta, 2, ",", ".").'</td>
                 </tr>
                 ';
                 $CantTotal = ($detalle->Cant * $detalle->ValorUnitarioVenta);
@@ -65,8 +65,8 @@ class Boleta extends Authenticatable
                 $DetalleFactura .= '
                 <tr>
                 <td>'.$detalle->NombreProducto.'</td>
-                <td>'.$detalle->CantidadVenta.'</td>
-                <td align="right">'.$detalle->ValorUnitarioVenta.'</td>
+                <td>'.number_format($detalle->CantidadVenta, 2, ",", ".").'</td>
+                <td align="right">'.number_format($detalle->ValorUnitarioVenta, 2, ",", ".").'</td>
                 </tr>
                 ';
                 $CantTotal = ($detalle->CantidadVenta * $detalle->ValorUnitarioVenta);
@@ -84,7 +84,7 @@ class Boleta extends Authenticatable
             $DetallePago .= '
             <tr>
             <td colspan="2">'.$pago->FormaPago.'</td>
-            <td align="right">'.$pago->MontoPagado.'</td>
+            <td align="right">'.number_format($pago->MontoPagado, 2, ",", ".").'</td>
             </tr>
             ';
             $totalPago += $pago->MontoPagado;
@@ -92,7 +92,7 @@ class Boleta extends Authenticatable
 
         return 
         '
-        <div style="font-size:07px;">
+        <div style="font-size:7px;">
             <input type="hidden" id="NumeroBoletaModal" value="'.$id.'">
             <table border="1" cellspacing="0" width="100%">
                 <tr>
@@ -155,7 +155,7 @@ class Boleta extends Authenticatable
             '.$DetalleFactura.'
                 <tr>
                     <td colspan="2"><b>TOTAL</b></td>
-                    <td align="right"><b>'.$total.'.00</b></td>
+                    <td align="right"><b>'.number_format($total, 2,",", ".").'</b></td>
                 </tr>
                 <tr>
                     <td colspan="3"><br></td>
