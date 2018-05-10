@@ -147,7 +147,7 @@ class Boleta extends Authenticatable
                 </tr>                                                                            
             </table>
             <br />
-            <table border="0" cellspacing="0" width="100%" style="font-size: 6px; font-family: Arial, Helvetica, sans-serif;">
+            <table border="0" cellspacing="0" width="100%" style="font-size: 8px; font-family: Arial, Helvetica, sans-serif;">
                 <tr class="tableHead" style="font-weight: bold;" >
                     <td width="60%">DETALLE COMPRA</td>
                     <td width="20%">CANT</td>
