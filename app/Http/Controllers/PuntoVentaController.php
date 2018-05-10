@@ -144,7 +144,9 @@ class PuntoVentaController extends Controller
 		$modelCD = new CajaDiaria();
 		
 		$IdCaja = $datos['IdCaja'];
-		$data['cerrarCaja'] =  $modelCD->cerrarCajaDiaria($IdCaja);
+        $MontoCierre = $datos['MontoCierreEfectivo'];
+
+		$data['cerrarCaja'] =  $modelCD->cerrarCajaDiaria($IdCaja, $MontoCierre);
 		$cierreCaja = $modelCD->abrirCajaDiaria($IdLocal);
 		
 		$data['v_cajaActual'] = $modelCD->getCajaActivaLocal($IdLocal);

@@ -17,16 +17,11 @@
 	        <div class="card-header">
 	        	<center>
 	        		<h5 class="card-header-text">
-	        			Caja Diaria Actual -> Resumen Caja Diaria 
+	        			Caja Diaria Actual -> Cierre Caja Diaria 
 	        		</h5>
                 </center>
 	        </div>
-			{!! Form::open(['id'=>'FormCajaDiaria','autocomplete' => 'off']) !!}
-				<input type="hidden" name="IdLocal" id="IdLocal">
-				<input type="hidden" name="IdCaja" id="IdCaja">
-				<input type="hidden" name="IdFormaPago" id="IdFormaPago">
-				<input type="hidden" name="IdVenta" id="IdVenta">
-			{!! Form::close() !!}	
+			
 			
 			<div class="card-block">
 				<div class="col-md-12">
@@ -79,43 +74,54 @@
 	        		</h5>
                 </center>
 	        </div>
+	        {!! Form::open(['id'=>'FormCajaDiaria','autocomplete' => 'off']) !!}
+				<input type="hidden" name="IdLocal" id="IdLocal">
+				<input type="hidden" name="IdCaja" id="IdCaja">
+				<input type="hidden" name="IdFormaPago" id="IdFormaPago">
+				<input type="hidden" name="IdVenta" id="IdVenta">
+			
 	        <div class="card-block">
-				
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="md-input-wrapper">
-							<input id="CreditoAutorizadoConsultaCredito" name="CreditoAutorizadoConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" />
-							<label for="CreditoAutorizadoConsultaCredito">Crédito Autorizado</label>
+							<input id="MontoCierreEfectivo" name="MontoCierreEfectivo" type="text" class="md-form-control md-static" maxlength="250" />
+							<label for="MontoCierreEfectivo">Monto Cierre Efectivo</label>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="md-input-wrapper">
-							<input id="CreditoUtilizadoConsultaCredito" name="CreditoUtilizadoConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" />
-							<label for="CreditoUtilizadoConsultaCredito">Crédito Utilizado</label>
+							<input id="MontoCierreTC" name="MontoCierreTC" type="text" class="md-form-control md-static" maxlength="250" readonly/>
+							<label for="MontoCierreTC">Monto Cierre Tarjeta Crédito</label>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="md-input-wrapper">
-							<input id="CreditoDisponibleConsultaCredito" name="CreditoDisponibleConsultaCredito" type="text" class="md-form-control md-static ConsultaCreditoCliente" maxlength="250" readonly />
-							<label for="CreditoDisponibleConsultaCredito">Crédito Disponible</label>
+							<input id="MontoCierreTD" name="MontoCierreTD" type="text" class="md-form-control md-static" maxlength="250" readonly />
+							<label for="MontoCierreTD">Monto Cierre Tarjeta Débito</label>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="md-input-wrapper">
+							<input id="MontoCierreCI" name="MontoCierreCI" type="text" class="md-form-control md-static" maxlength="250" readonly />
+							<label for="MontoCierreCI">Monto Cierre Crédito Interno</label>
 						</div>
 					</div>
 				</div>
 				
 				<div class="row" id="">
 					<div class="col-md-3">
-						<button id="cancelarCajaDiaria" style="float: right;" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block" data-dismiss="modal">
-							Cerrar Caja
-						</button>
+						<a id="cancelarCajaDiaria" style="float: right;"  href="{{ route('cajaDiaria') }}" class="btn btn-xlg btn-danger waves-effect waves-light btn-block">
+							<span>Volver al Menu Caja Diaria</span>
+						</a>
 					</div>
 					<div class="col-md-3">
-						<button id="botonCerrarCajaDiaria" style="float: right;" type="button" class="btn-xlg btn-success waves-effect waves-light btn-block" data-dismiss="modal">
+						<button id="botonCerrarCajaDiaria" style="float: right;" type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
 							Cerrar Caja
 						</button>
 					</div>
 				</div>	
-				
 	        </div>
+	        {!! Form::close() !!}	
 		</div>
 	</div>
 </div>

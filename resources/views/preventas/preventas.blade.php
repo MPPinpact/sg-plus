@@ -314,8 +314,6 @@
 	var rutaCDA = "{{ URL::route('preventada') }}"
 	var rutaVDB = "{{ URL::route('boletaV') }}"
 
-	
-
 	var d = [];
 	d['v_preventas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_preventas) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));

@@ -6,7 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title">Boleta de Preventa</h4>
+                <h4 class="modal-title">Impresión de Ticket</h4>
             </div>
             <div class="modal-body" style="height:350px;width:auto;overflow-y: scroll;overflow-x:hidden;">
             	<div id="CuerpoBoleta">

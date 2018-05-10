@@ -1088,9 +1088,9 @@
 	var rutaRV = "{{ URL::route('addPreVentaV') }}"
 	var rutaVDTE = "{{ URL::route('asginarDTEVen') }}"
 
-	var rutaVDB = "{{ URL::route('boletaV') }}"
-
-	rutaVDB
+	var rutaVDPV = "{{ URL::route('boletaV') }}"
+	var rutaVDV = "{{ URL::route('boletaV') }}"
+	
 	/* Caja Diaria */
 	var rutaCD = "{{ URL::route('infoCD') }}"
 	

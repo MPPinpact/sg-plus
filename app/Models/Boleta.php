@@ -20,17 +20,18 @@ class Boleta extends Authenticatable
 {
 
     public function verBoleta($obj,$caso){
+        log::info("verBoleta(".$obj.",".$caso.")");
 
-        $empresa = DB::table('v_empresas')->where('EstadoEmpresa',1) ->limit(1)->get();
-        
+        $local = DB::table('v_locales')->where('IdLocal',$obj->IdLocal)->limit(1)->first();
+        $empresa = DB::table('v_empresas')->where('IdEmpresa',$local->IdEmpresa)->limit(1)->first();
+
         if ($caso==1){ 
-            $tittle= "PREVENTA ".$obj->idPreVenta; 
+            $tittle= "PREVENTA"; // N° ".$obj->idPreVenta; 
             $numero = "N° ".$obj->idPreVenta;
             $id = $obj->idPreVenta;
-            $detalles = DB::select("select count(1) as Cant,NombreProducto,ValorUnitarioVenta from v_preventas_detalle where IdPreVenta = ".$obj->idPreVenta." group by NombreProducto,ValorUnitarioFinal");
-            $pagos = DB::select("select FormaPago,MontoPagado from v_preventas_pagos where IdPreVenta =".$obj->idPreVenta);
-            
-            $local = DB::select("select DireccionLocal, UrlLogo from v_preventas where idPreVenta =".$obj->idPreVenta);
+            $detalles = DB::select("select CantidadPreVenta as Cant,NombreProducto,ValorUnitarioVenta from v_preventas_detalle where IdPreVenta = ".$obj->idPreVenta." group by NombreProducto,ValorUnitarioFinal");
+           
+           $pagos = DB::select("select FormaPago,MontoPagado from v_preventas_pagos where IdPreVenta =".$obj->idPreVenta);
 
             $DetalleFactura = '';
             $total = 0;
@@ -51,13 +52,11 @@ class Boleta extends Authenticatable
         }
 
         if ($caso==2){ 
-            $tittle= "VENTA ".$obj->IdVenta; 
+            $tittle= "VENTA ";  // N° ".$obj->IdVenta; 
             $numero = "N° ".$obj->IdVenta;
             $id = $obj->IdVenta;
             $detalles = DB::select("select CantidadVenta, NombreProducto, ValorUnitarioVenta from v_ventas_detalle where IdVenta = ".$obj->IdVenta);
             $pagos = DB::select("select FormaPago,MontoPagado from v_ventas_pagos where IdVenta=".$obj->IdVenta);
-            $local = DB::select("select DireccionLocal, UrlLogo from v_ventas where IdVenta =".$obj->IdVenta);
-
 
             $DetalleFactura = '';
             $total = 0;
@@ -101,7 +100,7 @@ class Boleta extends Authenticatable
                         <table border="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="text-align:center;">
-                                    '.$empresa[0]->RUT.'
+                                    '.$local->RUTEmpresa.'
                                 </td>
                             </tr>
                             <tr>
@@ -123,17 +122,17 @@ class Boleta extends Authenticatable
             <table border="0" cellspacing="0" width="100%">
                 <tr>
                     <td>
-                        <b>'.$empresa[0]->NombreFantasia.'</b>
+                        <b>'.$empresa->NombreFantasia.'</b>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <b>'.$empresa[0]->Giro.'</b>
+                        <b>'.$empresa->Giro.'</b>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <b>'.$local[0]->DireccionLocal.'</b> Dirección local
+                        <b>'.$local->DireccionLocal.'</b> Dirección local
                     </td>
                 </tr>
                 <tr>

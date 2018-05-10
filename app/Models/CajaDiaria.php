@@ -280,18 +280,30 @@ class CajaDiaria extends Authenticatable
                 ->update($values);
     }
 	
-	public function cerrarCajaDiaria($IdCaja){
+	public function cerrarCajaDiaria($IdCaja, $MontoCierre){
         //log::info("cerrarCajaDiaria()");
         //log::info("IdCaja: " .$IdCaja);
 		
+        // $IdAdmin = Auth::id();
+        
+        // $values=array('EstadoCaja'=>2,'FechaCierre'=>date("Y-m-d H:i:s"),'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$IdAdmin);
+
+        // return DB::table('caja_diaria')->where('IdCaja', $IdCaja)->update($values);
+
         $IdAdmin = Auth::id();
-        $values=array('EstadoCaja'=>2,'FechaCierre'=>date("Y-m-d H:i:s"),'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$IdAdmin);
-		
-		//log::info($values);
-		
-        return DB::table('caja_diaria')
-                ->where('IdCaja', $IdCaja)
-                ->update($values);
+        $FechaCierre = date('Y-m-d');
+
+        $sql="select f_caja_diaria_cerrar(".$IdCaja.",".$IdAdmin.",'".$FechaCierre."','".$MontoCierre."')";
+        log::info($sql);
+
+        $execute=DB::select($sql);
+        
+        foreach ($execute[0] as $key => $value) {
+            $result=$value;
+        }
+
+        return $result;
+
     }
 	
 	public function abrirCajaDiaria($IdLocal){
@@ -300,7 +312,7 @@ class CajaDiaria extends Authenticatable
 		
         $IdUsuario = Auth::id();
 		 		
-		$sql="select f_abrir_caja_diaria(".$IdLocal.",".$IdUsuario.")";
+		$sql="select f_caja_diaria_abrir(".$IdLocal.",".$IdUsuario.")";
         $execute=DB::select($sql);
 		//log::info($sql);
 		

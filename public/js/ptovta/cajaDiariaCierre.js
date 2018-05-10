@@ -60,7 +60,7 @@ var titulosListados = function(){
 }	
 
 var CerrarCajaDiaria = function(){
-	console.log("verDetalleVentasFormaPago(IdFormaPago)");
+	console.log("CerrarCajaDiaria()");
 	
 	parametroAjax.ruta=rutaCDCC;
     parametroAjax.data = $("#FormCajaDiaria").serialize();

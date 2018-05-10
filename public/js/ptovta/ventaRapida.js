@@ -104,8 +104,6 @@ $(document).ready(function(){
 
     });
 
-    
-
 	/* Manejo de Variables de Session  */
 	$('#IdVendedorPreVenta').on("change", function() {
 		_idVendedor_=$("#IdVendedorPreVenta").val();
@@ -141,7 +139,6 @@ $(document).ready(function(){
 	$("#NumeroCuotasCredito").focusin(function() {
 		$("#NumeroCuotasCredito").select();
 	});
-    
 	
 	$("#MontoAFinanciar").change(function() {
 		$("#MontoPagoEfectivo").val($("#MontoAFinanciar").val());
@@ -751,12 +748,22 @@ var ContinuarPreVenta = function(){
 }
 
 var verDetallesBoleta = function(idPreVenta){
-	console.log("IdPreVenta: " + idPreVenta);
+	console.log("Id"+_tipoVenta_+": " + idPreVenta);
 
-    parametroAjax.ruta=rutaVDB;
-    parametroAjax.data = {idPreVenta:idPreVenta,caso:1};
-    respuesta=procesarajax(parametroAjax);
-    ManejoRespuestaVerBoleta(respuesta);
+	if(_tipoVenta_=="PreVenta") {
+	    parametroAjax.ruta=rutaVDPV;
+	    parametroAjax.data = {idPreVenta:idPreVenta,caso:1};
+	    respuesta=procesarajax(parametroAjax);
+	    //ManejoRespuestaVerBoleta(respuesta);
+
+	}else if(_tipoVenta_=="Venta") {
+		parametroAjax.ruta=rutaVDPV;
+	    parametroAjax.data = {idPreVenta:idPreVenta,caso:2};
+	    respuesta=procesarajax(parametroAjax);
+	    
+	}
+
+	ManejoRespuestaVerBoleta(respuesta);
 }
 
 var ManejoRespuestaVerBoleta = function(respuestaBoleta){
@@ -766,7 +773,7 @@ var ManejoRespuestaVerBoleta = function(respuestaBoleta){
 
     if(respuestaBoleta.code==200){
         if(respuestaBoleta.respuesta.status.code==200){
-            $("#CuerpoBoleta").html(respuestaBoleta.respuesta.boleta);
+            $("#DetalleBoleta").html(respuestaBoleta.respuesta.boleta);
             var ID = $("#NumeroBoletaModal").val();
             console.log(ID);
             JsBarcode("#barcode", ID);

@@ -348,21 +348,6 @@ var cargarTablaLocales = function(data){
 			{"title": "Nombre Local","data": "NombreLocal"},
 			{"title": "Nombre Empresa","data": "NombreFantasia"}
 		],   
-		dom: 'Bfrtip',
-		buttons: 
-		[
-			{
-				extend: 'print',
-				text: 'Imprimir PreVenta',
-				title:'Detalles Preventa N° '+NPreventa,
-				className: 'btn btn-inverse-warning',
-				pageSize:'A4',
-				autoPrint: true,	
-				exportOptions: {
-					columns: columnReport,
-				}					
-			},
-		]
 	});
 
 	limpiarImpuestos=1;

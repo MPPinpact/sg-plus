@@ -42,19 +42,15 @@ class BoletaController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    // public function getFormaPago()
-    // {
-    //     $model= new FormaPago();
-    //     $data['v_formas_de_pago'] = $model->listFormasPago();
-    //     return View::make('formaspago.formaspago',$data);
-    // }
-
     //Registrar o actualizar proveedor
     protected function postBoletaVer(Request $request){
+        log::info("postBoletaVer()");
+
         $datos = $request->all();
         if ($datos['caso']==1){
             $preventa = Preventa::find($datos['idPreVenta']);
-            if($preventa->EstadoPreVenta == 2){
+
+            if($preventa->EstadoPreVenta == 2 or $preventa->EstadoPreVenta == 3){
                 $model= new Boleta();
                 $result['status']['code'] = 200;
                 $result['status']['des_code'] = "Procesada.!";
@@ -66,8 +62,9 @@ class BoletaController extends Controller
         }
 
         if ($datos['caso']==2){
-            $venta = Venta::find($datos['IdVenta']);
-            if($venta->EstadoVenta == 2){
+            $venta = Venta::find(isset($datos['IdVenta']) ? $datos['IdVenta'] : $datos['idPreVenta'] );
+
+            if($venta->EstadoVenta == 2 or $venta->EstadoVenta == 3){
                 $model= new Boleta();
                 $result['status']['code'] = 200;
                 $result['status']['des_code'] = "Procesada.!";

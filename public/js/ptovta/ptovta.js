@@ -319,6 +319,7 @@ $(document).ready(function(){
             $("#RUTClientePagoCredito").val(res);
         }else{$("#ErrorRutPagoCredito").text("");}
     });
+    
     crearAllSelect(d);
     // Botones de cabecera de compra
     $(document).on('click','#botonConsultaCredito', ConsultaCreditoCliente);
@@ -329,12 +330,7 @@ $(document).ready(function(){
     $(document).on('click','#botonCanelarPago',CerrarPagoCredito);
     $(document).on('click','#botonConsultarStockProducto',botonConsultarStockProducto);
     $(document).on('click','#cancelarBPS',botonCerrarStockProducto);
-
-	//cargarInfoCajaDiaria(ptovta.cajaActual[0]);
 	
-	
-    // $(document).on('click','#modificar',modificarCabeceras);
-    // $(document).on('click','#volverAct',volverTabs);
     $('#FormPagoCredito').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
