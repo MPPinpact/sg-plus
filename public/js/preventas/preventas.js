@@ -984,7 +984,7 @@ $(document).ready(function(){
 
     $("#PdfBoleta").click(function(){
         var valoresR={codigo:$("#NumeroBoletaModal").val(),cuerpo:BoletaString};
-        OpenWindowWithPost('/pdf/files/boleta.php','','_blank',valoresR);
+        OpenWindowWithPost('pdf/files/boleta.php','','_blank',valoresR);
     });
 
     $("#CerrarModal").click(function(){
