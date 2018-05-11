@@ -1,5 +1,37 @@
-@extends('boleta.index')
-@section('content')
+
+<style>
+  .TextoGrande {
+    font-family :arial;
+    font-size   : 12.5pt;
+    font-weight :bold;
+  }
+
+/* ESTILO TEXTO GIRO EMPRESA */
+  .TextoGiro {
+    font-family :arial;
+    font-size   :12pt;
+  }
+
+/* TITULO DE TABLAS */
+  .TablaTitulo
+  {
+  background:#D8D8D8;
+  font-family: verdana;
+  font-size:10pt;
+  text-align:left;
+  border-bottom:2px solid black;
+  }
+
+  /* TITULO DE TABLAS */
+  .TablaDetalle
+  {
+  /* background:#D8D8D8; */
+  font-family: verdana;
+  font-size:10pt;
+  text-align:left;
+  }
+</style>
+
 <!-- modal boleta             -->
 <div class="modal fade" id="ModalBoletaPlantilla" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
