@@ -31,7 +31,6 @@
   text-align:left;
   }
 </style>
-
 <!-- modal boleta             -->
 <div class="modal fade" id="ModalBoletaPlantilla" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -43,6 +42,7 @@
                 <h4 class="modal-title">Impresión de Ticket</h4>
             </div>
             <div class="modal-body" style="height:450px;width:auto;overflow-y: scroll;overflow-x:hidden;">
+              <input type="hidden" id="NumeroBoletaModal">
             	<div id="CuerpoBoleta">
                     <center>
                         <div id="DetalleBoleta" style="height:auto;">   </div>
@@ -66,3 +66,5 @@
         </div>
     </div>
 </div>
+
+

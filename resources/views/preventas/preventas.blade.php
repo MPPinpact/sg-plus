@@ -313,6 +313,8 @@
 	var rutaBCs = "{{ URL::route('comprabc') }}"
 	var rutaCDA = "{{ URL::route('preventada') }}"
 	var rutaVDB = "{{ URL::route('boletaV') }}"
+	var rutaPDF = "{{ URL::route('boletaPDF') }}"
+	
 
 	var d = [];
 	d['v_preventas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_preventas) }}'));

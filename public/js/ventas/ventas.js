@@ -987,6 +987,7 @@ var ProcesarDetalleCompra = function(){
 };
 
 var verDetallesBoleta = function(IdVenta){
+    $("#NumeroBoletaModal").val(IdVenta)
     parametroAjax.ruta=rutaVDB;
     parametroAjax.data = {IdVenta:IdVenta,caso:2};
     respuesta=procesarajax(parametroAjax);
@@ -1522,8 +1523,12 @@ $(document).ready(function(){
     });
 
     $("#PdfBoleta").click(function(){
-        var valoresR={codigo:$("#NumeroBoletaModal").val(),cuerpo:BoletaString};
-        OpenWindowWithPost('/pdf/files/boleta.php','','_blank',valoresR);
+        var valores={
+            _token : $("#_token").val(),
+            IdVenta:$("#NumeroBoletaModal").val(), 
+            caso: 2
+        };
+        OpenWindowWithPost(rutaPDF,'','_blank',valores);
     });
 
     $("#CerrarModal").click(function(){

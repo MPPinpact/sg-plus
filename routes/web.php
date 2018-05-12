@@ -244,6 +244,9 @@ Route::post('/inventarioibb', 'InventarioController@postBuscarBodegaCombo')->nam
 
 
 Route::post('/boletaV', 'BoletaController@postBoletaVer')->name('boletaV');
+Route::post('/boletaPDF', 'BoletaController@postBoletaPdf')->name('boletaPDF');
+
+
 
 
 //CRUD Abono Cliente

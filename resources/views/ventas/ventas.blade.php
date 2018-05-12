@@ -567,7 +567,7 @@
 		</div>
     </div>
 </div>
-@include('boleta.boleta')
+@include('boleta.boleta') 
 <script Language="Javascript">
 	var ruta = "{{ URL::route('ventas') }}"
 	var rutaB = "{{ URL::route('ventab') }}"
@@ -594,6 +594,8 @@
 	var rutaBCs = "{{ URL::route('comprabc') }}"
 	
 	var rutaVDB = "{{ URL::route('boletaV') }}"
+	var rutaPDF = "{{ URL::route('boletaPDF') }}"
+
 
 	var d = [];   
 	

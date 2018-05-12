@@ -1,5 +1,6 @@
 var manejoRefresh=limpiarLocales=limpiarImpuestos=errorRut=errorRut2=errorRut3=limpiarBodegas=NPreventa=0;
 var BoletaString = '';
+var BoletaEmpresa = BoletaLocal = BoletaDetalles = BoletaPagos = [];
 var parametroAjax = {
     'token': $('input[name=_token]').val(),
     'tipo': 'POST',
@@ -27,7 +28,6 @@ var ManejoRespuestaVerBoleta = function(respuesta){
             BoletaString = respuesta.respuesta.boleta;
             $("#DetalleBoleta").html(respuesta.respuesta.boleta);
             var ID = $("#NumeroBoletaModal").val();
-            console.log(ID);
             JsBarcode("#barcode", ID);
             $("#ModalBoletaPlantilla").modal();
         }else{
@@ -610,6 +610,7 @@ var cambiarEstatusPreventaD = function(IdDetallePreVenta){
 }
 
 var verDetallesBoleta = function(idPreVenta){
+    $("#NumeroBoletaModal").val(idPreVenta)
     parametroAjax.ruta=rutaVDB;
     parametroAjax.data = {idPreVenta:idPreVenta,caso:1};
     respuesta=procesarajax(parametroAjax);
@@ -983,8 +984,12 @@ $(document).ready(function(){
     });
 
     $("#PdfBoleta").click(function(){
-        var valoresR={codigo:$("#NumeroBoletaModal").val(),cuerpo:BoletaString};
-        OpenWindowWithPost('pdf/files/boleta.php','','_blank',valoresR);
+        var valores={
+            _token : $("#_token").val(),
+            idPreVenta:$("#NumeroBoletaModal").val(), 
+            caso: 1
+        };
+        OpenWindowWithPost(rutaPDF,'','_blank',valores);
     });
 
     $("#CerrarModal").click(function(){
@@ -993,4 +998,4 @@ $(document).ready(function(){
     });
 
 
-});
+}); 
