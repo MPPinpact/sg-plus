@@ -50,9 +50,8 @@ class BoletaController extends Controller
 
     protected function postBoletaVer(Request $request){
         $datos = $request->all();
-        if ($datos['caso']==1){
+ if ($datos['caso']==1){
             $preventa = Preventa::find($datos['idPreVenta']);
-
             if($preventa->EstadoPreVenta == 2 or $preventa->EstadoPreVenta == 3){
                 $model= new Boleta();
                 $result['status']['code'] = 200;
