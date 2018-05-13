@@ -21,7 +21,14 @@ class Boleta extends Authenticatable
 
     public function verBoleta($obj,$caso){
         $local = DB::table('v_locales')->where('IdLocal',$obj->IdLocal)->get();
+        log::info("---------------------------------------------------------------------------");
+        log::info($local);
+        log::info("---------------------------------------------------------------------------");
         $empresa = DB::table('v_empresas')->where('IdEmpresa',$local[0]->IdEmpresa)->get();
+        log::info("---------------------------------------------------------------------------");
+        log::info($empresa);
+        log::info("---------------------------------------------------------------------------");
+
         if ($caso==1){ 
             $tittle= "PREVENTA"; // N° ".$obj->idPreVenta; 
             $numero = "N° ".$obj->idPreVenta;
