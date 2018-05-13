@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "54008a40775ea8a4d01f894b9c85fcbc",
+    "content-hash": "2d5ed5060ba2233217fe8680264d8ed7",
     "packages": [
         {
             "name": "codeitnowin/barcode",

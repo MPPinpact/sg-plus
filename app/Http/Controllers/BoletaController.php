@@ -50,9 +50,10 @@ class BoletaController extends Controller
 
     protected function postBoletaVer(Request $request){
         $datos = $request->all();
-        if ($datos['caso']==1){
+	log::info($datos);
+ if ($datos['caso']==1){
             $preventa = Preventa::find($datos['idPreVenta']);
-
+log::info($preventa);
             if($preventa->EstadoPreVenta == 2 or $preventa->EstadoPreVenta == 3){
                 $model= new Boleta();
                 $result['status']['code'] = 200;
@@ -137,8 +138,8 @@ class BoletaController extends Controller
         PDF::SetAutoPageBreak(TRUE, 0);
         PDF::AddPage('P',$pageLayout);
         PDF::writeHTML($html_content, true, false, true, false, '');
+        PDF::IncludeJS('print(true);');
         PDF::Output(uniqid().'_SamplePDF.pdf', 'I');
-
     }
 
 }

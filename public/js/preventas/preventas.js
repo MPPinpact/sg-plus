@@ -19,7 +19,7 @@ var calcularMontos = function(CantidadPreVenta,ValorUnitarioVenta,FactorImpuesto
 }
 
 var calcularTotalPreVenta = function(totalPV){
-	$("#TotalPreVentaDetalle").val(totalPV);
+    $("#TotalPreVentaDetalle").val(totalPV);
 }
 
 var ManejoRespuestaVerBoleta = function(respuesta){
@@ -254,7 +254,7 @@ var cargarTablaPreventas = function(data){
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
-			"pageLength": 50, 
+            "pageLength": 50, 
             "language": LenguajeTabla,
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
@@ -281,7 +281,7 @@ var cargarTablaPreventas = function(data){
                         return result;
                     }
                 },
-				{"title": "Nor. Pre-Venta","data": "idPreVenta", className: "text-center"},
+                {"title": "Nor. Pre-Venta","data": "idPreVenta", className: "text-center"},
                 {"title": "Fecha Preventa", 
                     "data": "FechaPreVenta", className: "text-center", 
                     "render": function(data, type, row, meta){
@@ -296,8 +296,8 @@ var cargarTablaPreventas = function(data){
                 {"title": "Nombre Cliente","data": "NombreCliente"},
                 {"title": "Nombre Vendedor","data": "NombreVendedor",visible:0},
                 {"title": "Total","data": "TotalPreVenta",
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							className: "text-right"},
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            className: "text-right"},
                 {"title": "EstadoPreVenta","data": "EstadoPreVenta",visible:0},
                 {"title": "Estado","data": "desEstadoPreventa", className: "text-center"}
             ],
@@ -309,8 +309,8 @@ var cargarTablaDetalles = function(data){
     if(limpiarImpuestos==1){destruirTabla('#tablaDetalles');$('#tablaDetalles thead').empty();}
         var columnReport = [[5],[6],[7],[12]];       
         $("#tablaDetalles").dataTable({
-			
-			"footerCallback": function (data){
+            
+            "footerCallback": function (data){
             var api = this.api(), data;
             // Remove the formatting to get integer data for summation
             var intVal = function (i){
@@ -326,14 +326,14 @@ var cargarTablaDetalles = function(data){
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
-			},
+            },
             responsive:false,
             "bSort": false,
             "scrollCollapse": false,
             "paging": false,
             "searching": false,
-            "info":false,			
-			"pageLength": 50, 
+            "info":false,           
+            "pageLength": 50, 
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
                 {"sWidth": "1px", "aTargets": [8]}
@@ -361,41 +361,41 @@ var cargarTablaDetalles = function(data){
                 {"title": "IdProducto","data": "IdProducto",visible:0},
                 {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
                 {"title": "Nombre Producto","data": "NombreProducto", 
-							width: 200},
+                            width: 200},
                 {"title": "Cantidad","data": "CantidadPreVenta", 
-							width: 50,
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							className: "text-center"},
+                            width: 50,
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            className: "text-center"},
                 {"title": "Valor Unitario","data": "ValorUnitarioVenta", 
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							className: "text-right"},
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            className: "text-right"},
                 {"title": "Factor Impuesto","data": "FactorImpuesto",visible:0},
                 {"title": "Valor Impuestos","data": "ValorImpuestos",visible:0},
                 {"title": "Monto Descuento","data": "MontoDescuento",
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							className: "text-right"},
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            className: "text-right"},
                 {"title": "Valor Unitario Final","data": "ValorUnitarioFinal",
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							visible:0},
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            visible:0},
                 {"title": "Total Linea","data": "TotalLinea", 
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							className: "text-right"},
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            className: "text-right"},
                 {"title": "Estado","data": "EstadoPreVentaDetalle",visible:0},
                 {"title": "Estado","data": "desEstadoPreventaDetalle",visible:0}
             ],   
             dom: 'Bfrtip',
             buttons: [
-				{
-					extend: 'print',
-					text: 'Imprimir PreVenta',
-					title:'Detalles Preventa N° '+NPreventa,
-					className: 'btn btn-inverse-warning',
-					pageSize:'A4',
-					autoPrint: true,	
-					exportOptions: {
+                {
+                    extend: 'print',
+                    text: 'Imprimir PreVenta',
+                    title:'Detalles Preventa N° '+NPreventa,
+                    className: 'btn btn-inverse-warning',
+                    pageSize:'A4',
+                    autoPrint: true,    
+                    exportOptions: {
                         columns: columnReport,
-                    }					
-				},
+                    }                   
+                },
                 {
                     extend: 'pdf',
                     text: 'Finalizar Pre-venta',
@@ -427,8 +427,8 @@ var cargarTablaDetalles = function(data){
             ]
         });
 
-	limpiarImpuestos=1;
-	calcularTotalPreVenta(totalPV);
+    limpiarImpuestos=1;
+    calcularTotalPreVenta(totalPV);
 };
 
 var pintarDatosActualizar= function(data){
@@ -509,7 +509,7 @@ var volverListado = function(){
 
 var BotonAgregarDetalle = function (){
     $("#spanTituloModal").text("Registrar Detalle");
-	$("#guardar").text("Continuar");
+    $("#guardar").text("Continuar");
     $("#divBotonM").hide();
     $("#divBotonesAC").show();
     // $('#FormDetalle')[0].reset();
@@ -656,7 +656,7 @@ var desbloquearInputsDetalles = function(){
 
 var modificarCabeceras = function(){
     $("#spanTitulo").text("Editar Pre-Venta");
-	$("#guardar").text("Guardar");
+    $("#guardar").text("Guardar");
     $("#divVolver").hide();
     // $(".divBotones").toggle();
     $("#div-mod").hide();

@@ -1,4 +1,3 @@
-
 <style>
 .TextoGrande {
   font-family :arial;
@@ -66,6 +65,3 @@
     </div>
   </div>
 </div>
-</div>
-
-

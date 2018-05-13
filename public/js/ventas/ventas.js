@@ -19,9 +19,9 @@ var calcularMontos = function(CantidadVenta,ValorUnitarioVenta,FactorImpuesto,Mo
 
 var calcularTotalVenta = function(totalVenta){
     $("#TotalVentaDetalle").val(totalVenta);
-	$("#TotalVentaPago").val(totalVenta);
+    $("#TotalVentaPago").val(totalVenta);
     $("#TotalVenta").val(totalVenta);
-	$("#MontoPagoEfectivo").val(totalVenta);
+    $("#MontoPagoEfectivo").val(totalVenta);
     calcularSaldoPago();
 }
 
@@ -86,7 +86,7 @@ var ManejoRespuestaBuscarCliente = function(respuesta){
 }
 
 var ManejoRespuestaBuscarClienteVC = function(respuesta){
-	console.log("ManejoRespuestaBuscarClienteVC...");
+    console.log("ManejoRespuestaBuscarClienteVC...");
     if(respuesta.code==200){
         if(respuesta.respuesta.v_cliente!=null){
             $("#IdClienteVC").val(respuesta.respuesta.v_cliente[0].IdCliente);
@@ -264,13 +264,13 @@ var ManejoRespuestaProcesar = function(respuesta){
             NVenta = res.IdVenta;
             $("#div-mod").hide();
             $("#div-acep").hide();
-			
+            
             $("#aCabecera").removeClass("active");
             $("#TabCabecera").removeClass("active");
-			
+            
             $("#TabDetalles").addClass("active");
             $("#aDetalles").addClass("active");
-			
+            
             $("#divTabs").show();
             $("#divVolver").show();               
         }
@@ -313,7 +313,7 @@ var cargarTablaVentas = function(data){
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
             "pagingType": "full_numbers",
-			"pageLength": 50, 
+            "pageLength": 50, 
             "language": LenguajeTabla,
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
@@ -335,14 +335,14 @@ var cargarTablaVentas = function(data){
                         </a>
                         <a href="#" onclick="verDetallesBoleta(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Imprimir Boleta" data-original-title="Delete">
                             <i class="icofont icofont-printer"></i>
-                        </a>	
+                        </a>    
                         </center>`;
                         return result;
                     }
                 },
                 {"title": "Id","data": "IdVenta", 
-							render: $.fn.dataTable.render.number( '.', ',', 0 ),
-							className: "text-center"},
+                            render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                            className: "text-center"},
                 {
                     "title": "Fecha Venta", 
                     "data": "FechaVenta", className: "text-center", 
@@ -358,8 +358,8 @@ var cargarTablaVentas = function(data){
                 {"title": "Nombre Cliente","data": "NombreCliente"},
                 {"title": "Nombre Vendedor","data": "NombreVendedor"},
                 {"title": "Total","data": "TotalVenta",
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							className: "text-right"},
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            className: "text-right"},
                 {"title": "Estado Venta","data": "EstadoVenta",visible:0},
                 {"title": "Estado","data": "DesEstadoVenta", className: "text-center"}
             ],
@@ -371,7 +371,7 @@ var cargarTablaDetalles = function(data){
     if(limpiarImpuestos==1){destruirTabla('#tablaDetalles');$('#tablaDetalles thead').empty();}
         var columnReport = [[5],[6],[9],[11],[12]];       
         $("#tablaDetalles").dataTable({
-			"footerCallback": function (data){
+            "footerCallback": function (data){
             var api = this.api(), data;
             // Remove the formatting to get integer data for summation
             var intVal = function (i){
@@ -387,14 +387,14 @@ var cargarTablaDetalles = function(data){
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
-			},
+            },
             responsive:false,
             "bSort": false,
             "scrollCollapse": false,
             "paging": false,
             "searching": false,
-            "info":false,			
-			"pageLength": 50, 
+            "info":false,           
+            "pageLength": 50, 
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
                 {"sWidth": "1px", "aTargets": [8]}
@@ -422,41 +422,41 @@ var cargarTablaDetalles = function(data){
                 {"title": "IdProducto","data": "IdProducto",visible:0},
                 {"title": "IdUnidadMedida","data": "IdUnidadMedida",visible:0},
                 {"title": "Nombre Producto","data": "NombreProducto", 
-							width: 200},
+                            width: 200},
                 {"title": "Cantidad","data": "CantidadVenta", 
-							width: 50,
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							className: "text-center"},
+                            width: 50,
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            className: "text-center"},
                 {"title": "Valor Unitario","data": "ValorUnitarioVenta", 
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							className: "text-right"},
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            className: "text-right"},
                 {"title": "Factor Impuesto","data": "FactorImpuesto",visible:0},
                 {"title": "Valor Impuestos","data": "ValorImpuestos",visible:0},
                 {"title": "Monto Descuento","data": "MontoDescuento",
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							className: "text-right"},
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            className: "text-right"},
                 {"title": "Valor Unitario Final","data": "ValorUnitarioFinal",
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							visible:0},
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            visible:0},
                 {"title": "Total Linea","data": "TotalLinea", 
-							render: $.fn.dataTable.render.number( '.', ',', 2 ),
-							className: "text-right"},
+                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            className: "text-right"},
                 {"title": "Estado","data": "EstadoVentaDetalle",visible:0},
                 {"title": "Estado","data": "desEstadoVentaDetalle",visible:0}
             ],   
             dom: 'Bfrtip',
             buttons: [
                 {text: 'Agregar PreVenta', className: 'btn btn-inverse-primary waves-effect waves-light botonAgregarPreVenta'},
-				{text: 'Agregar Producto', className: 'btn btn-inverse-primary waves-effect waves-light botonAgregarProducto'},
-				{text: 'Finalizar Venta', className: 'btn btn-inverse-primary waves-effect waves-light CerrarVenta'},
-				{
+                {text: 'Agregar Producto', className: 'btn btn-inverse-primary waves-effect waves-light botonAgregarProducto'},
+                {text: 'Finalizar Venta', className: 'btn btn-inverse-primary waves-effect waves-light CerrarVenta'},
+                {
                     extend: 'pdf',
                     text: 'Imprimir Venta',
                     className: 'btn btn-inverse-primary waves-effect waves-light ImprimirVenta',
                     // orientation:'landscape',  //Hoja Horizontal
                     pageSize:'A4',
                     title:'Detalle Venta N° '+NVenta,
-					filename:'DetalleVenta_'+NVenta,
+                    filename:'DetalleVenta_'+NVenta,
                     exportOptions: {columns: columnReport, modifier: {page: 'all', } }, 
                     customize : function(doc){
                         doc.defaultStyle.fontSize = 8; 
@@ -475,14 +475,14 @@ var cargarTablaDetalles = function(data){
             ]
         });
 
-	limpiarImpuestos=1;
-	calcularTotalVenta(totalVenta);
+    limpiarImpuestos=1;
+    calcularTotalVenta(totalVenta);
 };
 
 var cargarTablaPagos = function(data){
     if(limpiarPagos==1) { destruirTabla('#tablaPagos'); $('#tablaPagos thead').empty();}
         $("#tablaPagos").dataTable({
-			"footerCallback": function (data){
+            "footerCallback": function (data){
             var api = this.api(), data;
             // Remove the formatting to get integer data for summation
             var intVal = function (i){
@@ -503,14 +503,14 @@ var cargarTablaPagos = function(data){
                 '$'+pageTotal +' ( $'+ total +' total)'
             );
             
-			},
+            },
             responsive:false,
             "bSort": false,
             "scrollCollapse": false,
             "paging": false,
             "searching": false,
-            "info":false,			
-			"pageLength": 50, 
+            "info":false,           
+            "pageLength": 50, 
             "data": data,
             "columns":[
                 {
@@ -537,10 +537,10 @@ var cargarTablaPagos = function(data){
             
         });
 
-	limpiarPagos=1;
-	console.log("Total Pagos: " + totalPago);
-	$("#TotalPagado").val(totalPago);
-	calcularSaldoPago();
+    limpiarPagos=1;
+    console.log("Total Pagos: " + totalPago);
+    $("#TotalPagado").val(totalPago);
+    calcularSaldoPago();
 };
 
 
@@ -551,7 +551,7 @@ var pintarDatosActualizar = function(data){
     $("#IdCliente").val(data.IdCliente);
     $("#FechaVenta").val(moment(data.FechaVenta, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY"));
     $("#RUTCliente").val(data.RUTCliente);
-	$("#IdEstadoVenta").val(data.EstadoVenta);
+    $("#IdEstadoVenta").val(data.EstadoVenta);
     $("#NombreCliente").val(data.NombreCliente);
     $("#TotalVenta").val(data.TotalVenta);
 }
@@ -580,14 +580,14 @@ var BotonAgregar = function(){
     $("#IdVenta").val("");
     $('#FormVentas')[0].reset();
     $('#FormDetalle')[0].reset();
-	$("#divTabs").hide();
+    $("#divTabs").hide();
     $("#div-mod").hide();
     $("#div-acep").show();
     var now = moment().format('DD-MM-YYYY')
     $("#FechaVenta").val(now);
-	
-	cargarTablaDetalles();
-	$(".botonAgregarProducto").show();
+    
+    cargarTablaDetalles();
+    $(".botonAgregarProducto").show();
 }
 
 var BotonCancelar = function(){
@@ -595,7 +595,7 @@ var BotonCancelar = function(){
     $(".md-form-control").removeClass("md-valid");
     $('#FormVentas')[0].reset();
     $('#FormDetalle')[0].reset();
-	$("#IdVenta").val("");
+    $("#IdVenta").val("");
     $("#divTabs").show();
     $("#div-mod").hide();
     $("#div-acep").hide();
@@ -624,55 +624,55 @@ var volverListado = function(){
 }
 
 var BotonAgregarPreVenta = function(){
-	console.log("Boton agregar preventa...");
-	$("#ModalAgregarPreVenta").modal();	
+    console.log("Boton agregar preventa...");
+    $("#ModalAgregarPreVenta").modal(); 
     $("#NumeroPreVenta").focus();
     // $("#IdVentaPreVenta").val($("#IdVenta").val());  
-	// $('#ModalAgregarPreVenta').on('shown.bs.modal', function() {
-	// 	$('#NumeroPreVenta').focus().select();
-	// });
+    // $('#ModalAgregarPreVenta').on('shown.bs.modal', function() {
+    //  $('#NumeroPreVenta').focus().select();
+    // });
 }  
 
 
 var BotonFinalizarVenta = function(){
-	console.log("Boton Finalizar Venta...");
-	$("#divBotonAC_FV").show();
-	$("#ModalFinalizarVenta").modal();	
+    console.log("Boton Finalizar Venta...");
+    $("#divBotonAC_FV").show();
+    $("#ModalFinalizarVenta").modal();  
 }  
 
 var BotonFinalizarVentaOK = function(){
-	console.log("Boton Finalizar Venta OK...");
-	parametroAjax.ruta=rutaFV;
+    console.log("Boton Finalizar Venta OK...");
+    parametroAjax.ruta=rutaFV;
     parametroAjax.data = $("#FormVentas").serialize();
     respuesta=procesarajax(parametroAjax);
     console.log("Respuesta: " + respuesta);
-	console.log(respuesta);
+    console.log(respuesta);
     if(respuesta.respuesta.IdVenta){
         if(respuesta.respuesta.IdVenta==1){ location.reload(); }
     }
 } 
 
 var BotonFinalizarVentaNO = function(){
-	console.log("Boton Finalizar Venta NO...");
-	
-	$("#ModalFinalizarVenta").modal("hide");
+    console.log("Boton Finalizar Venta NO...");
+    
+    $("#ModalFinalizarVenta").modal("hide");
 }  
 
 var BotonCancelarVenta = function(){
-	console.log("Boton Cancelar Venta...");
-	
-	$("#divBotonAC_CV").show();
-	$("#ModalCancelarVenta").modal();	
+    console.log("Boton Cancelar Venta...");
+    
+    $("#divBotonAC_CV").show();
+    $("#ModalCancelarVenta").modal();   
 }  
 
 var BotonCancelarVentaOK = function(){
-	window.location.href = ruta;
+    window.location.href = ruta;
 }
 
 var BotonCancelarVentaNO = function(){
-	console.log("Boton Cancelar Venta NO...");
-	
-	$("#ModalCancelarVenta").modal("hide");	
+    console.log("Boton Cancelar Venta NO...");
+    
+    $("#ModalCancelarVenta").modal("hide"); 
 }
 
 var cargarInteresCuotas = function(data){
@@ -681,10 +681,10 @@ var cargarInteresCuotas = function(data){
 }
 
 var calcularMontoCuotas = function(){
-	var montoCredito = $("#MontoAFinanciar").val();
-	var numeroCuotas = $("#NumeroCuotasCredito").val();
-	var interesMensual = $("#InteresMensualCredito").val();
-	
+    var montoCredito = $("#MontoAFinanciar").val();
+    var numeroCuotas = $("#NumeroCuotasCredito").val();
+    var interesMensual = $("#InteresMensualCredito").val();
+    
     var montoFinalCredito = montoCredito * ( 1 + (numeroCuotas * interesMensual/100));
     var montoCuota = montoFinalCredito / numeroCuotas;
     $("#MontoFinalCredito").val(Math.round(montoFinalCredito));
@@ -692,139 +692,139 @@ var calcularMontoCuotas = function(){
 }
 
 var BotonPagoCredito = function (){
-	console.log("Pago Credito");
-	ProcesarCargaPreferencias();
-	
-	$("#IdVentaPago").val($("#IdVenta").val());
-	$("#IdFormaPago").val(3);
-	
-	var  MontoAPagar = ( parseFloat($("#SaldoPago").val()) * -1);
-	$("#MontoPagoEfectivo").val(MontoAPagar);
-	$("#MontoAFinanciar").val(MontoAPagar);
-	
-	calcularMontoCuotas();
-	
-	$("#FechaPrimeraCuota").val("");
-	$("#NumeroTransaccionTarjeta").val(0);
-	$("#CodigoAprobacionTarjeta").val(0);
-	
-	$("#InfoAddTC").hide();
-	$("#InfoAddCredito").show();
+    console.log("Pago Credito");
+    ProcesarCargaPreferencias();
+    
+    $("#IdVentaPago").val($("#IdVenta").val());
+    $("#IdFormaPago").val(3);
+    
+    var  MontoAPagar = ( parseFloat($("#SaldoPago").val()) * -1);
+    $("#MontoPagoEfectivo").val(MontoAPagar);
+    $("#MontoAFinanciar").val(MontoAPagar);
+    
+    calcularMontoCuotas();
+    
+    $("#FechaPrimeraCuota").val("");
+    $("#NumeroTransaccionTarjeta").val(0);
+    $("#CodigoAprobacionTarjeta").val(0);
+    
+    $("#InfoAddTC").hide();
+    $("#InfoAddCredito").show();
 
-	$("#divBotonM_FPE").hide();
-	$("#divBotonAC_FPE").show();
-	$("#guardarFPE").text("Continuar");
-	
+    $("#divBotonM_FPE").hide();
+    $("#divBotonAC_FPE").show();
+    $("#guardarFPE").text("Continuar");
+    
     $("#spanTituloModalPagoEfectivo").text("Registrar Pago Crédito Interno");
-	$("#ModalDetallePagoEfectivo").modal();	
-	
+    $("#ModalDetallePagoEfectivo").modal(); 
+    
     desbloquearInputsFPE();
-	
-	$('#ModalDetallePagoEfectivo').on('shown.bs.modal', function() {
-		$('#RUTClienteCredito').focus().select();
-	});
+    
+    $('#ModalDetallePagoEfectivo').on('shown.bs.modal', function() {
+        $('#RUTClienteCredito').focus().select();
+    });
 }
 
 var BotonPagoTD = function (){
-	console.log("Pago TD");
-	
-	$("#IdVentaPago").val($("#IdVenta").val());
-	$("#IdFormaPago").val(1);
-	
-	var  MontoAPagar = ( parseFloat($("#SaldoPago").val()) * -1);
-	$("#MontoPagoEfectivo").val(MontoAPagar);
-	$("#NumeroTransaccionTarjeta").val(0);
-	$("#CodigoAprobacionTarjeta").val(0);
-	$("#FechaPrimeraCuota").val("01-01-2000");
-	$("#NumeroCuotasCredito").val(0);
-	$("#InteresMensualCredito").val(0);
-	$("#MontoFinalCredito").val(0);
+    console.log("Pago TD");
+    
+    $("#IdVentaPago").val($("#IdVenta").val());
+    $("#IdFormaPago").val(1);
+    
+    var  MontoAPagar = ( parseFloat($("#SaldoPago").val()) * -1);
+    $("#MontoPagoEfectivo").val(MontoAPagar);
+    $("#NumeroTransaccionTarjeta").val(0);
+    $("#CodigoAprobacionTarjeta").val(0);
+    $("#FechaPrimeraCuota").val("01-01-2000");
+    $("#NumeroCuotasCredito").val(0);
+    $("#InteresMensualCredito").val(0);
+    $("#MontoFinalCredito").val(0);
     $("#MontoCuotaCredito").val(0);
-	
+    
     $("#spanTituloModalPagoEfectivo").text("Registrar Pago Tarjeta de Debito / RedBanc / Tarjeta RUT");
-	$("#ModalDetallePagoEfectivo").modal();	
-	
-	$("#InfoAddTC").show();
-	$("#InfoAddCredito").hide();
-	
-	$("#divBotonM_FPE").hide();
-	$("#divBotonAC_FPE").show();
-	$("#guardarFPE").text("Continuar");
+    $("#ModalDetallePagoEfectivo").modal(); 
+    
+    $("#InfoAddTC").show();
+    $("#InfoAddCredito").hide();
+    
+    $("#divBotonM_FPE").hide();
+    $("#divBotonAC_FPE").show();
+    $("#guardarFPE").text("Continuar");
     desbloquearInputsFPE();
-	
-	$('#ModalDetallePagoEfectivo').on('shown.bs.modal', function() {
-		$('#NumeroTransaccionTarjeta').focus().select();
-	});
+    
+    $('#ModalDetallePagoEfectivo').on('shown.bs.modal', function() {
+        $('#NumeroTransaccionTarjeta').focus().select();
+    });
 }
 
 var BotonPagoTC = function (){
-	console.log("Pago TC");
-	
-	$("#IdVentaPago").val($("#IdVenta").val());
-	$("#IdFormaPago").val(2);
-	
-	var  MontoAPagar = ( parseFloat($("#SaldoPago").val()) * -1);
-	$("#MontoPagoEfectivo").val(MontoAPagar);
-	$("#NumeroTransaccionTarjeta").val(0);
-	$("#CodigoAprobacionTarjeta").val(0);
-	$("#FechaPrimeraCuota").val("01-01-2000");
-	$("#NumeroCuotasCredito").val(0);
-	$("#InteresMensualCredito").val(0);
-	$("#MontoFinalCredito").val(0);
+    console.log("Pago TC");
+    
+    $("#IdVentaPago").val($("#IdVenta").val());
+    $("#IdFormaPago").val(2);
+    
+    var  MontoAPagar = ( parseFloat($("#SaldoPago").val()) * -1);
+    $("#MontoPagoEfectivo").val(MontoAPagar);
+    $("#NumeroTransaccionTarjeta").val(0);
+    $("#CodigoAprobacionTarjeta").val(0);
+    $("#FechaPrimeraCuota").val("01-01-2000");
+    $("#NumeroCuotasCredito").val(0);
+    $("#InteresMensualCredito").val(0);
+    $("#MontoFinalCredito").val(0);
     $("#MontoCuotaCredito").val(0);
-	
+    
     $("#spanTituloModalPagoEfectivo").text("Registrar Pago Tarjeta de Crédito / VISA / MASTERCARD ");
-	$("#ModalDetallePagoEfectivo").modal();	
-	
-	$("#InfoAddTC").show();
-	$("#InfoAddCredito").hide();
-	
-	$("#divBotonM_FPE").hide();
-	$("#divBotonAC_FPE").show();
-	$("#guardarFPE").text("Continuar");
+    $("#ModalDetallePagoEfectivo").modal(); 
+    
+    $("#InfoAddTC").show();
+    $("#InfoAddCredito").hide();
+    
+    $("#divBotonM_FPE").hide();
+    $("#divBotonAC_FPE").show();
+    $("#guardarFPE").text("Continuar");
     desbloquearInputsFPE();
-	
-	$('#ModalDetallePagoEfectivo').on('shown.bs.modal', function() {
-		$('#NumeroTransaccionTarjeta').focus().select();
-	});
+    
+    $('#ModalDetallePagoEfectivo').on('shown.bs.modal', function() {
+        $('#NumeroTransaccionTarjeta').focus().select();
+    });
 }
 
 var BotonPagoEfectivo = function (){
-	console.log("Pago Efectivo");
-	
-	$("#IdVentaPago").val($("#IdVenta").val());
-	$("#IdFormaPago").val(0);
-	
-	var  MontoAPagar = ( parseFloat($("#SaldoPago").val()) * -1);
-	$("#MontoPagoEfectivo").val(MontoAPagar);
-	$("#NumeroTransaccionTarjeta").val(0);
-	$("#CodigoAprobacionTarjeta").val(0);
-	$("#FechaPrimeraCuota").val("01-01-2000");
-	$("#NumeroCuotasCredito").val(0);
-	$("#InteresMensualCredito").val(0);
-	$("#MontoFinalCredito").val(0);
+    console.log("Pago Efectivo");
+    
+    $("#IdVentaPago").val($("#IdVenta").val());
+    $("#IdFormaPago").val(0);
+    
+    var  MontoAPagar = ( parseFloat($("#SaldoPago").val()) * -1);
+    $("#MontoPagoEfectivo").val(MontoAPagar);
+    $("#NumeroTransaccionTarjeta").val(0);
+    $("#CodigoAprobacionTarjeta").val(0);
+    $("#FechaPrimeraCuota").val("01-01-2000");
+    $("#NumeroCuotasCredito").val(0);
+    $("#InteresMensualCredito").val(0);
+    $("#MontoFinalCredito").val(0);
     $("#MontoCuotaCredito").val(0);
-	
+    
     $("#spanTituloModalPagoEfectivo").text("Registrar Pago Efectivo");
-	$("#ModalDetallePagoEfectivo").modal();	
-	
-	$("#InfoAddTC").hide();
-	$("#InfoAddCredito").hide();
-	
-	$("#divBotonM_FPE").hide();
-	$("#divBotonAC_FPE").show();
-	$("#guardarFPE").text("Continuar");
+    $("#ModalDetallePagoEfectivo").modal(); 
+    
+    $("#InfoAddTC").hide();
+    $("#InfoAddCredito").hide();
+    
+    $("#divBotonM_FPE").hide();
+    $("#divBotonAC_FPE").show();
+    $("#guardarFPE").text("Continuar");
     desbloquearInputsFPE();
-	
-	$('#ModalDetallePagoEfectivo').on('shown.bs.modal', function() {
-		$('#MontoPagoEfectivo').focus().select();
-	});
+    
+    $('#ModalDetallePagoEfectivo').on('shown.bs.modal', function() {
+        $('#MontoPagoEfectivo').focus().select();
+    });
 }
 
 var BotonCancelarFPEe = function(){
     $("#ModalDetallePagoEfectivo").modal("hide");
     
-	$("#divBotonM_FPE").hide();
+    $("#divBotonM_FPE").hide();
     $("#divBotonAC_FPE").hide();
     $('#FormFPE')[0].reset();
     
@@ -835,17 +835,17 @@ var ProcesarCargaPreferencias = function(){
     parametroAjax.ruta=rutaPVC;
     parametroAjax.data = $("#FormFPE").serialize();
     respuesta=procesarajax(parametroAjax);
-	console.log("Respuesta: " + respuesta);
-	
+    console.log("Respuesta: " + respuesta);
+    
     ManejoRespuestaProcesarCargaPreferencias(respuesta);
 };
 
-var ManejoRespuestaProcesarCargaPreferencias = function(respuesta){	
+var ManejoRespuestaProcesarCargaPreferencias = function(respuesta){ 
     if(respuesta.code==200){
         if(respuesta.respuesta!=null){
             if(respuesta.respuesta.IdCliente==0){
                 $("#NumeroCuotasCredito").val(6);
-				$("#InteresMensualCredito").val(2.5);
+                $("#InteresMensualCredito").val(2.5);
             }else{
                 $("#NumeroCuotasCredito").val(respuesta.respuesta.v_pvc.NumeroMaxCuotas);
                 $("#InteresMensualCredito").val(respuesta.respuesta.v_pvc.InteresMensual);
@@ -872,8 +872,8 @@ var ManejoRespuestaProcesarFPE = function(respuesta){
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
                 $("#ModalDetallePagoEfectivo").modal("hide");
-				
-				$(".divBotonesC").toggle();
+                
+                $(".divBotonesC").toggle();
                 $('#IdVenta2').val("");
                 $('#FormFPE')[0].reset();
                 cargarTablaPagos(respuesta.respuesta.v_pagos);
@@ -892,7 +892,7 @@ var ManejoRespuestaProcesarFPE = function(respuesta){
 
 var BotonAgregarDetalle = function (){
     $("#spanTituloModal").text("Registrar Detalle");
-	$("#guardar").text("Continuar");
+    $("#guardar").text("Continuar");
     $("#divBotonM").hide();
     $("#divBotonesAC").show();
     // $('#FormDetalle')[0].reset();
@@ -923,45 +923,45 @@ var BotonCancelarDetalle = function(){
 }
 
 var calcularSaldoPago = function(){
-		var totalPagado = parseFloat($("#TotalPagado").val());
-		var totalVendido = parseFloat($("#TotalVentaPago").val());
-		var saldoFinal = totalPagado - totalVendido;		
-		$("#SaldoPago").val(saldoFinal);
-		
-		console.log("Saldo Pendiente de Pago: " + saldoFinal +" - TotalPagado: " + totalPagado + " - TotalVendido: " +totalVendido);
-	}
+        var totalPagado = parseFloat($("#TotalPagado").val());
+        var totalVendido = parseFloat($("#TotalVentaPago").val());
+        var saldoFinal = totalPagado - totalVendido;        
+        $("#SaldoPago").val(saldoFinal);
+        
+        console.log("Saldo Pendiente de Pago: " + saldoFinal +" - TotalPagado: " + totalPagado + " - TotalVendido: " +totalVendido);
+    }
 
-	$("#NumeroCuotasCredito").change(function() {
-		calcularMontoCuotas();
+    $("#NumeroCuotasCredito").change(function() {
+        calcularMontoCuotas();
     });
-	
-	$("#MontoAFinanciar").change(function() {
-		$("#MontoPagoEfectivo").val($("#MontoAFinanciar").val());
-		calcularMontoCuotas();
+    
+    $("#MontoAFinanciar").change(function() {
+        $("#MontoPagoEfectivo").val($("#MontoAFinanciar").val());
+        calcularMontoCuotas();
     });
-	
-	$("#InteresMensualCredito").change(function() {
-		calcularMontoCuotas();
-    });	
-	
-	$("#TotalPagado").change(function() {
-		calcularSaldoPago();
+    
+    $("#InteresMensualCredito").change(function() {
+        calcularMontoCuotas();
+    }); 
+    
+    $("#TotalPagado").change(function() {
+        calcularSaldoPago();
     });
-	
-	$("#RUTClienteCredito").focusout(function() {
+    
+    $("#RUTClienteCredito").focusout(function() {
         var valid = $("#RUTClienteCredito").val();
         if (valid.length > 0){
             var res = verificarRut($("#RUTClienteCredito"),4);
             $("#RUTClienteCredito").val(res);
         }else{
-			$("#ErrorRutCredito").text("");
-		}
+            $("#ErrorRutCredito").text("");
+        }
     });
-	
-	$("#TotalVentaPago").change(function() {
-		calcularSaldoPago();
+    
+    $("#TotalVentaPago").change(function() {
+        calcularSaldoPago();
     });
-	
+    
 // var ProcesarProveedor = function(){
 //     var nombre = $("#NombreFantasia2").val();
 //     parametroAjax.ruta=rutaPR;
@@ -995,12 +995,12 @@ var verDetallesBoleta = function(IdVenta){
 }
 
 var validador = function(){
-	console.log("IdVenta Antes de Validar Formulario: " + $("#IdVenta").val());
+    console.log("IdVenta Antes de Validar Formulario: " + $("#IdVenta").val());
     $('#FormVentas').formValidation('validate');
 };
 
 var validadorFPE = function(){
-	console.log("IdVenta Antes de Validar Formulario FormFPE: " + $("#IdVenta").val());
+    console.log("IdVenta Antes de Validar Formulario FormFPE: " + $("#IdVenta").val());
     $('#FormFPE').formValidation('validate');
 };
 
@@ -1067,12 +1067,12 @@ var ManejoRespuestaEliminarPago = function(respuesta){
                     cargarTablaPagos(respuesta.respuesta.v_pagos);
                     break;
                 case '-2':
-					$.growl({message:"Error---"},{type: "warning", allow_dismiss: true,});
-					break;
-				default:
-					$.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
-					break;
-			}
+                    $.growl({message:"Error---"},{type: "warning", allow_dismiss: true,});
+                    break;
+                default:
+                    $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+                    break;
+            }
         }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
@@ -1089,7 +1089,7 @@ var ManejoRespuestaProcesarPagos = function(respuesta){
                 $("#ModalDetallePagoEfectivo").modal("hide");
                 $('#IdDetallePago').val("");
                 $('#FormPagos')[0].reset();
-				
+                
                 cargarTablaPagos(respuesta.respuesta.v_pagos);
                 break;
             case '-2':
@@ -1155,7 +1155,7 @@ var bloquearInputsFPE = function(){
 
 var modificarCabeceras = function(){
     $("#spanTitulo").text("Editar Pre-Venta");
-	$("#guardar").text("Guardar");
+    $("#guardar").text("Guardar");
     $("#divVolver").hide();
     // $(".divBotones").toggle();
     $("#div-mod").hide();
@@ -1200,13 +1200,13 @@ var verificarRut = function(control,caso){
         if (caso==1){buscarCliente(format);$("#ErrorRut").text("");}
         // if (caso==2){$("#ErrorRut2").text("");}
         // if (caso==3){buscarEmpresa(format);$("#ErrorRut3").text("");}
-		if (caso==4){buscarClienteVC(format);$("#ErrorRutCredito").text("");}
+        if (caso==4){buscarClienteVC(format);$("#ErrorRutCredito").text("");}
         return format;
     }else{
         if (caso==1){errorRut = 1;$("#ErrorRut").text("Rut invalido");}
         if (caso==2){errorRut2 = 1;$("#ErrorRut2").text("Rut invalido");}
         if (caso==3){errorRut3 = 1;$("#ErrorRut3").text("Rut invalido");}
-		if (caso==4){errorRut4 = 1;$("#ErrorRutCredito").text("Rut invalido");}
+        if (caso==4){errorRut4 = 1;$("#ErrorRutCredito").text("Rut invalido");}
         return control.val();
     }
 }
@@ -1272,27 +1272,27 @@ var CerrarVenta = function (){
     parametroAjax.ruta=rutaCV;
     parametroAjax.data = {IdVenta:NVenta};
     respuesta=procesarajax(parametroAjax);
-	$(".CerrarVenta").hide();
-	$(".botonAgregarProducto").hide();
-	$.growl({message:"Venta cerrada exitosamente!!!"},{type: "success", allow_dismiss: true,});
+    $(".CerrarVenta").hide();
+    $(".botonAgregarProducto").hide();
+    $.growl({message:"Venta cerrada exitosamente!!!"},{type: "success", allow_dismiss: true,});
     console.log(respuesta);
     console.log(respuesta.respuesta);
 }
 
 var ImprimirVenta = function (){
-	
-	if(parseInt($("#IdEstadoVenta").val()) == 1){
-		CerrarVenta();
-	}
-	
+    
+    if(parseInt($("#IdEstadoVenta").val()) == 1){
+        CerrarVenta();
+    }
+    
 }
 
 var RegistrarPago = function (){
-	console.log("Registrar Pago...");
+    console.log("Registrar Pago...");
 }
 
 var FinalizarVenta = function (){
-	console.log("Finalizar Venta...");
+    console.log("Finalizar Venta...");
 }
 
 var limpiarFormDetalle = function(){
@@ -1368,24 +1368,24 @@ $(document).ready(function(){
     $(document).on('click','#modificarC',modificarDetalles);
     $(document).on('click','#btn-list',volverListado);
     $(document).on('click','.CerrarVenta',CerrarVenta);
-	$(document).on('click','.ImprimirVenta',ImprimirVenta);
-	$(document).on('click','.RegistrarPago',RegistrarPago);
-	$(document).on('click','.FinalizarVenta',FinalizarVenta);
-	//Botones FP
-	$(document).on('click','#pagoEfectivo',BotonPagoEfectivo);
-	$(document).on('click','#botonPagoTC',BotonPagoTC);
-	$(document).on('click','#botonPagoTD',BotonPagoTD);
-	$(document).on('click','#botonPagoCredito',BotonPagoCredito);
-	
-	$(document).on('click','#guardarFPE',validadorFPE);
-	
-	$(document).on('click','#botonFinalizarVenta',BotonFinalizarVenta);
-	$(document).on('click','#botonFinalizarVenta_OK',BotonFinalizarVentaOK);
-	$(document).on('click','#botonFinalizarVenta_Cancel',BotonFinalizarVentaNO);
-	
-	$(document).on('click','#botonCancelarVenta',BotonCancelarVenta);
-	$(document).on('click','#botonCancelarVenta_OK',BotonCancelarVentaOK);
-	$(document).on('click','#botonCancelarVenta_Cancel',BotonCancelarVentaNO);
+    $(document).on('click','.ImprimirVenta',ImprimirVenta);
+    $(document).on('click','.RegistrarPago',RegistrarPago);
+    $(document).on('click','.FinalizarVenta',FinalizarVenta);
+    //Botones FP
+    $(document).on('click','#pagoEfectivo',BotonPagoEfectivo);
+    $(document).on('click','#botonPagoTC',BotonPagoTC);
+    $(document).on('click','#botonPagoTD',BotonPagoTD);
+    $(document).on('click','#botonPagoCredito',BotonPagoCredito);
+    
+    $(document).on('click','#guardarFPE',validadorFPE);
+    
+    $(document).on('click','#botonFinalizarVenta',BotonFinalizarVenta);
+    $(document).on('click','#botonFinalizarVenta_OK',BotonFinalizarVentaOK);
+    $(document).on('click','#botonFinalizarVenta_Cancel',BotonFinalizarVentaNO);
+    
+    $(document).on('click','#botonCancelarVenta',BotonCancelarVenta);
+    $(document).on('click','#botonCancelarVenta_OK',BotonCancelarVentaOK);
+    $(document).on('click','#botonCancelarVenta_Cancel',BotonCancelarVentaNO);
 
     $(document).on('click','.botonAgregarProducto',BotonAgregarProducto);
     // $(document).on('click','.botonAgregarProducto',BotonAgregarProducto);
@@ -1395,8 +1395,8 @@ $(document).ready(function(){
     $(document).on('click','#botonCancelarPreVenta',CancelarPreVenta);
 
    
-	
-	
+    
+    
     $('#FormDetalle').on('keyup keypress', function(e) {
       var keyCode = e.keyCode || e.which;
       if (keyCode === 13) { 
@@ -1404,12 +1404,12 @@ $(document).ready(function(){
         return false;
       }
     });
-	
-	$('#FormFPE').on('keyup keypress', function(e) {
+    
+    $('#FormFPE').on('keyup keypress', function(e) {
       var keyCode = e.keyCode || e.which;
       if (keyCode === 13) { 
-		 e.preventDefault();
-		 return false;
+         e.preventDefault();
+         return false;
       }
     });
 
@@ -1441,8 +1441,8 @@ $(document).ready(function(){
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');
     });
-	
-	$('#FormFPE').formValidation({
+    
+    $('#FormFPE').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
         fields: {
