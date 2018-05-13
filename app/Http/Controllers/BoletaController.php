@@ -21,6 +21,10 @@ use Storage;
 use DB;
 use PDF;
 
+use CodeItNow\BarcodeBundle\Utils\QrCode;
+use CodeItNow\BarcodeBundle\Utils\BarcodeGenerator;
+use DNS1D;
+
 use App\Models\Preventa;
 use App\Models\Venta;
 use App\Models\Boleta;
@@ -70,7 +74,7 @@ class BoletaController extends Controller
                 $result['boleta'] = $model->verBoleta($venta,$datos['caso']);
             }else{
                 $result['status']['code'] = 204;
-                $result['status']['des_code'] = "solo se puede imprimir una venta cerrada";
+                $result['status']['des_code'] = "solo se puede imprimir una venta cerrada 332";
             }
         }
         return $result;
@@ -81,9 +85,6 @@ class BoletaController extends Controller
     protected function postBoletaPdf(Request $request){
         $datos = $request->all();
         $model= new Boleta();
-        log::info($datos);
-        
-        // $pdf = new MYPDF(PDF_PAGE_ORIENTATION, 'px', $pageLayout, true, 'UTF-8', false);
 
         if ($datos['caso']==1){
             PDF::SetTitle('PREVENTA');
@@ -91,6 +92,7 @@ class BoletaController extends Controller
             $preventa = Preventa::find($datos['idPreVenta']);
             if($preventa->EstadoPreVenta == 2 or $preventa->EstadoPreVenta == 3){
                 $model= new Boleta();
+                // Cuerpo de la boleta
                 $html_content = $model->verBoleta($preventa,$datos['caso']);
             }else{
                 $result['status']['code'] = 204;
@@ -105,6 +107,7 @@ class BoletaController extends Controller
             $venta = Venta::find(isset($datos['IdVenta']) ? $datos['IdVenta'] : $datos['idPreVenta'] );
             if($venta->EstadoVenta == 2 or $venta->EstadoVenta == 3){
                 $model= new Boleta();
+                // Cuerpo de la boleta
                 $html_content = $model->verBoleta($venta,$datos['caso']);
             }else{
                 $result['status']['code'] = 204;
@@ -113,32 +116,30 @@ class BoletaController extends Controller
             }
         }
 
-
-
+        $html_content .= 
+        '<table border="0" cellspacing="0" width="100%" style="text-align:center;">
+            <tr>
+                <td width="100%">
+                    <img align=center src="data:image/png;base64,'.DNS1D::getBarcodePNG($codigo, "C39+").'" alt="barcode"/> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    '.$codigo.'
+                </td>
+            </tr>
+        </table>';
 
         $width = 80;  
-        $height = 200; 
+        $height = ($datos['height'] / 2.5);
         $pageLayout = array($width, $height);
-
-
-
-
-        $html_content .= '<img src="/imgUsuarios/idUser-3.jpg" width="50" height="50" alt="no found">';
-
-
-
-
-        PDF::SetMargins(0, 1, 1);
-        // PDF::SetHeaderMargin(0);
-        // PDF::SetFooterMargin(0);
+        PDF::SetMargins(0, 1, 3);
+        PDF::SetAutoPageBreak(TRUE, 0);
         PDF::AddPage('P',$pageLayout);
         PDF::writeHTML($html_content, true, false, true, false, '');
-        // PDF::IncludeJS("print();");
+        PDF::IncludeJS('print(true);');
         PDF::Output(uniqid().'_SamplePDF.pdf', 'I');
-
     }
-
-
 
 }
 

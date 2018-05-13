@@ -11,7 +11,8 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "~5.0",
         "styde/html": "~1.1",
-        "elibyy/tcpdf-laravel": "5.5.*"
+        "elibyy/tcpdf-laravel": "5.5.*",
+        "milon/barcode": "^5.3"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
