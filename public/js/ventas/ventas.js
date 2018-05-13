@@ -1524,6 +1524,7 @@ $(document).ready(function(){
 
     $("#PdfBoleta").click(function(){
         var valores={
+            height : $("#DetalleBoleta").height(),
             _token : $("#_token").val(),
             IdVenta:$("#NumeroBoletaModal").val(), 
             caso: 2

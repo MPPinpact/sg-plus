@@ -31,10 +31,8 @@ var ManejoRespuestaVerBoleta = function(respuesta){
             JsBarcode("#barcode", ID);
             $("#ModalBoletaPlantilla").modal();
         }else{
-        $.growl({message:respuesta.respuesta.status.des_code},{type: "warning", allow_dismiss: true});
-            
+            $.growl({message:respuesta.respuesta.status.des_code},{type: "warning", allow_dismiss: true});
         }
-
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
     }
@@ -985,6 +983,7 @@ $(document).ready(function(){
 
     $("#PdfBoleta").click(function(){
         var valores={
+            height : $("#DetalleBoleta").height(),
             _token : $("#_token").val(),
             idPreVenta:$("#NumeroBoletaModal").val(), 
             caso: 1

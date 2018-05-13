@@ -103,6 +103,7 @@ class ComposerStaticInit078a509baa05d7886157e03ccecab399
         array (
             'Cron\\' => 5,
             'Collective\\Html\\' => 16,
+            'CodeItNow\\' => 10,
         ),
         'A' => 
         array (
@@ -277,6 +278,10 @@ class ComposerStaticInit078a509baa05d7886157e03ccecab399
         array (
             0 => __DIR__ . '/..' . '/laravelcollective/html/src',
         ),
+        'CodeItNow\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
@@ -304,6 +309,10 @@ class ComposerStaticInit078a509baa05d7886157e03ccecab399
             'Mockery' => 
             array (
                 0 => __DIR__ . '/..' . '/mockery/mockery/library',
+            ),
+            'Milon\\Barcode' => 
+            array (
+                0 => __DIR__ . '/..' . '/milon/barcode/src',
             ),
         ),
         'J' => 
@@ -368,6 +377,7 @@ class ComposerStaticInit078a509baa05d7886157e03ccecab399
         'App\\Models\\AbonoCliente' => __DIR__ . '/../..' . '/app/Models/AbonoCliente.php',
         'App\\Models\\Bodega' => __DIR__ . '/../..' . '/app/Models/Bodega.php',
         'App\\Models\\Boleta' => __DIR__ . '/../..' . '/app/Models/Boleta.php',
+        'App\\Models\\BoletaDev' => __DIR__ . '/../..' . '/app/Models/Boleta - copia.php',
         'App\\Models\\CajaDiaria' => __DIR__ . '/../..' . '/app/Models/CajaDiaria.php',
         'App\\Models\\CicloFacturacion' => __DIR__ . '/../..' . '/app/Models/CicloFacturacion.php',
         'App\\Models\\Cliente' => __DIR__ . '/../..' . '/app/Models/Cliente.php',
@@ -402,6 +412,44 @@ class ComposerStaticInit078a509baa05d7886157e03ccecab399
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
         'Carbon\\Exceptions\\InvalidDateException' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINArgumentException' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINArgumentException.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINBarcode' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINBarcode.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINBarcode1D' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINBarcode1D.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINColor' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINColor.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINDrawException' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINDrawException.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINDrawing' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINDrawing.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINFont' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINFont.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINFontFile' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINFontFile.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINFontPhp' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINFontPhp.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINLabel' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINLabel.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINParseException' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINParseException.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINcodabar' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINcodabar.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINcode11' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINcode11.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINcode128' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINcode128.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINcode39' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINcode39.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINcode39extended' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINcode39extended.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINcode93' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINcode93.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINean13' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINean13.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINean8' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINean8.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINgs1128' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINgs1128.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINi25' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINi25.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINintelligentmail' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINintelligentmail.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINisbn' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINisbn.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINmsi' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINmsi.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINothercode' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINothercode.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINpostnet' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINpostnet.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINs25' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINs25.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINupca' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINupca.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINupce' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINupce.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINupcext2' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINupcext2.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\CINupcext5' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/CINupcext5.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\Drawer\\CINDraw' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/Drawer/CINDraw.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\Drawer\\CINDrawJPG' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/Drawer/CINDrawJPG.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\Drawer\\CINDrawPNG' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/Drawer/CINDrawPNG.php',
+        'CodeItNow\\BarcodeBundle\\Generator\\JoinDraw' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Generator/JoinDraw.php',
+        'CodeItNow\\BarcodeBundle\\Utils\\BarcodeGenerator' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Utils/BarcodeGenerator.php',
+        'CodeItNow\\BarcodeBundle\\Utils\\BarcodeType' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Utils/BarcodeType.php',
+        'CodeItNow\\BarcodeBundle\\Utils\\QrCode' => __DIR__ . '/..' . '/codeitnowin/barcode/CodeItNow/BarcodeBundle/Utils/QrCode.php',
         'Collective\\Html\\Componentable' => __DIR__ . '/..' . '/laravelcollective/html/src/Componentable.php',
         'Collective\\Html\\Eloquent\\FormAccessible' => __DIR__ . '/..' . '/laravelcollective/html/src/Eloquent/FormAccessible.php',
         'Collective\\Html\\FormBuilder' => __DIR__ . '/..' . '/laravelcollective/html/src/FormBuilder.php',
@@ -1859,6 +1907,15 @@ class ComposerStaticInit078a509baa05d7886157e03ccecab399
         'League\\Flysystem\\Util\\ContentListingFormatter' => __DIR__ . '/..' . '/league/flysystem/src/Util/ContentListingFormatter.php',
         'League\\Flysystem\\Util\\MimeType' => __DIR__ . '/..' . '/league/flysystem/src/Util/MimeType.php',
         'League\\Flysystem\\Util\\StreamHasher' => __DIR__ . '/..' . '/league/flysystem/src/Util/StreamHasher.php',
+        'Milon\\Barcode\\BarcodeServiceProvider' => __DIR__ . '/..' . '/milon/barcode/src/Milon/Barcode/BarcodeServiceProvider.php',
+        'Milon\\Barcode\\DNS1D' => __DIR__ . '/..' . '/milon/barcode/src/Milon/Barcode/DNS1D.php',
+        'Milon\\Barcode\\DNS2D' => __DIR__ . '/..' . '/milon/barcode/src/Milon/Barcode/DNS2D.php',
+        'Milon\\Barcode\\Datamatrix' => __DIR__ . '/..' . '/milon/barcode/src/Milon/Barcode/Datamatrix.php',
+        'Milon\\Barcode\\Facades\\DNS1DFacade' => __DIR__ . '/..' . '/milon/barcode/src/Milon/Barcode/Facades/DNS1DFacade.php',
+        'Milon\\Barcode\\Facades\\DNS2DFacade' => __DIR__ . '/..' . '/milon/barcode/src/Milon/Barcode/Facades/DNS2DFacade.php',
+        'Milon\\Barcode\\PDF417' => __DIR__ . '/..' . '/milon/barcode/src/Milon/Barcode/PDF417.php',
+        'Milon\\Barcode\\QRcode' => __DIR__ . '/..' . '/milon/barcode/src/Milon/Barcode/QRcode.php',
+        'Milon\\Barcode\\WrongCheckDigitException' => __DIR__ . '/..' . '/milon/barcode/src/Milon/Barcode/WrongCheckDigitException.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
         'Mockery\\Adapter\\Phpunit\\MockeryTestCase' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCase.php',

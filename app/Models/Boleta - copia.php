@@ -16,7 +16,7 @@ use Auth;
 use Empresa;
 
 
-class Boleta extends Authenticatable
+class BoletaDev extends Authenticatable
 {
 
     public function verBoleta($obj,$caso){
