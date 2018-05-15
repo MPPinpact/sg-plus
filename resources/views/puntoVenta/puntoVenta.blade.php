@@ -1059,7 +1059,6 @@
     </div>
 </div>
 @include('boleta.boleta')
-
 <script Language="Javascript">
 	var rutaPVBP = "{{ URL::route('preventabpd') }}"
 	var rutaPVAP = "{{ URL::route('addProductPV') }}"
@@ -1093,6 +1092,9 @@
 	
 	/* Caja Diaria */
 	var rutaCD = "{{ URL::route('infoCD') }}"
+	//Ruta para imprimir pdf
+	var rutaPDF = "{{ URL::route('boletaPDF') }}"
+
 	
 	var d = [];
 	d['v_formas_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_pago) }}'));

@@ -42,6 +42,7 @@
       </div>
       <div class="modal-body" style="height:450px;width:auto;overflow-y: scroll;overflow-x:hidden;">
         <input type="hidden" id="NumeroBoletaModal">
+        <input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">        
         <center>
           <div id="CuerpoBoleta" style="width:303px;">
             <div id="DetalleBoleta"></div>

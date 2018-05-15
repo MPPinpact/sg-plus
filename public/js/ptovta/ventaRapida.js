@@ -147,7 +147,37 @@ $(document).ready(function(){
 	
 	$("#InteresMensualCredito").change(function() {
 		CalcularMontoCuotas();
+    });
+
+    $("#PrintPre").click(function(){
+        $("div#CuerpoBoleta").printArea();
+    });
+
+    $("#PdfBoleta").click(function(){
+    	if (_tipoVenta_ == 'Venta'){
+	        var valores={
+	            height : $("#DetalleBoleta").height(),
+	            _token : $("#_token").val(),
+	            IdVenta:$("#NumeroBoletaModal").val(), 
+	            caso: 2
+	        };
+    	}
+  		
+  		if (_tipoVenta_ == 'PreVenta'){
+	    	var valores={
+	            height : $("#DetalleBoleta").height(),
+	            _token : $("#_token").val(),
+	            idPreVenta:$("#NumeroBoletaModal").val(), 
+	            caso: 1
+	        };
+    	}
+        OpenWindowWithPost(rutaPDF,'','_blank',valores);
     });	
+
+    $("#CerrarModal").click(function(){
+        $("#ModalBoletaPlantilla").modal("hide");
+        BoletaString = '';
+    });
 
 	$('#FormPreVenta').formValidation({
         excluded:[':disabled'],
@@ -346,10 +376,6 @@ $(document).ready(function(){
     })
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');
-    });
-
-     $("#PrintPre").click(function(){
-        $("div#CuerpoBoleta").printArea();
     });
 });
 
@@ -750,6 +776,7 @@ var ContinuarPreVenta = function(){
 var verDetallesBoleta = function(idPreVenta){
 	console.log("Id"+_tipoVenta_+": " + idPreVenta);
 
+	$("#NumeroBoletaModal").val(idPreVenta);
 	if(_tipoVenta_=="PreVenta") {
 	    parametroAjax.ruta=rutaVDPV;
 	    parametroAjax.data = {idPreVenta:idPreVenta,caso:1};
@@ -758,7 +785,7 @@ var verDetallesBoleta = function(idPreVenta){
 
 	}else if(_tipoVenta_=="Venta") {
 		parametroAjax.ruta=rutaVDPV;
-	    parametroAjax.data = {idPreVenta:idPreVenta,caso:2};
+	    parametroAjax.data = {IdVenta:idPreVenta,caso:2};
 	    respuesta=procesarajax(parametroAjax);
 	    
 	}
@@ -809,9 +836,6 @@ var FinalizarPreVenta = function (){
 
 		$("#ModalPreVenta").modal("hide");
 		$.growl({message:" "+_tipoVenta_+" Finalizada exitosamente, ahora el cliente puede pasar por Caja!!!"},{type: "success", allow_dismiss: true,});
-				
-		console.log(respuesta);
-		console.log(respuesta.respuesta);
 	}
 }
 

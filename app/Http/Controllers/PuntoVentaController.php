@@ -46,7 +46,7 @@ class PuntoVentaController extends Controller
      */
 
     public function getPuntoVenta(Request $request){
-        //log::info("getPuntoVenta()");
+        // log::info("getPuntoVenta()");
 
 		$IdUsuario = Auth::id();
         if ($request->session()->has('localUsuario')) {
