@@ -63,8 +63,6 @@ class LoginController extends Controller
         if ($data['usrUserName'] && $data['usrPassword']){
             $model= new Usuario();
             $result = $model->verificarUsuario($data);
-            //log::info($result);
-            
             return $result;  
         }else{
             return '{"code":"-2","des_code":"Debe ingresar valores correctos"}';
@@ -75,14 +73,11 @@ class LoginController extends Controller
         $idUser = Auth::id();
         $model= new Usuario();
         $result = $model->registrarVisita($idUser);
-
         Session::forget('localUsuario');
         Session::forget('perfilUsuario');
         Session::forget('localesUsuario');
         Session::forget('perfilesUsuario');
-
-        $this->guard()->logout();
-        $request->session()->invalidate();
+        Auth::logout();
         return redirect('/');
     }
 }

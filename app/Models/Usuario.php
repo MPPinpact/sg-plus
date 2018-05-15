@@ -54,16 +54,11 @@ class Usuario extends Authenticatable
                     if(isset($user[0]->usrPassword) && Hash::check($data['usrPassword'],$user[0]->usrPassword)){
                             $result=$user[0]->idUser;
                             (isset($data['remember'])) ? $bool="true" : $bool="false";  
-
                             Auth::loginUsingId($result,$bool);
                             if (Auth::check()){
-                                    //log::info("Auth::check()");
-
                                     $r=$this->resetIntentosFallidos($user[0]->idUser);
-                                    
                                     $usuario = Auth::user();
-                                    ////log::info(Auth::user());
-                                    
+
                                     $perfiles = DB::table('v_perfiles_usuarios')
                                     ->where('idUser',$usuario->idUser)
                                     ->where('activoPerfil',1)->get();
@@ -72,27 +67,22 @@ class Usuario extends Authenticatable
                                     ->where('IdUsuario',$usuario->idUser)
                                     ->where('EstadoLocal',1)->get();
 
-                                    ////log::info("Locales: " . count($locales) . " - Perfiles: " . count($perfiles));
-
                                     if( count($locales) == 0) {
                                         Auth::logout();
                                         return '{"code":"-2","des_code":"Usuario sin local asignado"}';
 
                                     }else if( count($locales) == 1) {
-                                        //log::info("Guardando perfil del usuario en Session...");
                                         Session::put('localUsuario', $locales[0]);
-
                                     }
 
                                    
                                     if( count($perfiles) == 0) {
+                                        log::info("sin perfiles, logout");
                                         Auth::logout();
                                         return '{"code":"-2","des_code":"Usuario sin perfil asignado"}';
 
                                     }else  if( count($perfiles) == 1) {
-                                        //log::info("Guardando perfil del usuario en Session...");
                                         Session::put('perfilUsuario', $perfiles[0]);
-
                                     }
 
                                     if ( count($locales) >1 || count($perfiles) > 1 ) {
@@ -107,7 +97,6 @@ class Usuario extends Authenticatable
 
                                     }else{
                                         return '{"code":"-2","des_code":"Ocurrio un error al iniciar la session"}';
-
                                     }
                             }else{
                                 return '{"code":"-2","des_code":"Ocurrio un error al iniciar la session"}';
@@ -127,11 +116,7 @@ class Usuario extends Authenticatable
  
     // cargar panel de control con los widget´s del usuario actual
     public function mostrarPanel($IdPerfil, $IdLocal){
-        log::info("mostrarPanel()");
         $usuario = Auth::user();
-
-        log::info("IdPerfil: " . $IdPerfil);
-        log::info("IdLocal: " . $IdLocal);
 
         $perfil = DB::table('v_perfiles_usuarios')->where('idUser',$usuario->idUser)->where('idPerfil', $IdPerfil)
                                     ->where('activoPerfil',1)->first();
@@ -142,11 +127,6 @@ class Usuario extends Authenticatable
                                     ->where('EstadoLocal',1)->first();
 
         Session::put('localUsuario', $local);
-
-        //Session::forget('perfilesUsuario');
-        //Session::forget('localesUsuario');
-        //log::info("Ruta: " . route('home'));
-
         return '{"code":"200","des_code":"'. route('home').'"}';
     }
 
@@ -155,7 +135,6 @@ class Usuario extends Authenticatable
         $p = Session::get('perfiles');
         $idperfil = $p['idPerfil'];
         $result = DB::table('v_usuarios')->get();
-        
         return $result;
     }
 

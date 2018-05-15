@@ -20,8 +20,8 @@ class Boleta extends Authenticatable
 {
 
     public function verBoleta($obj,$caso){
-        $local = DB::table('v_locales')->where('IdLocal',$obj->IdLocal)->get();
-        $empresa = DB::table('v_empresas')->where('IdEmpresa',$local[0]->IdEmpresa)->get();
+        $local = DB::table('v_locales')->where('IdLocal',$obj->IdLocal)->first();
+        $empresa = DB::table('v_empresas')->where('IdEmpresa',$local->IdEmpresa)->first();
         if ($caso==1){ 
             $tittle= "PREVENTA"; // N° ".$obj->idPreVenta; 
             $numero = "N° ".$obj->idPreVenta;
@@ -91,7 +91,7 @@ class Boleta extends Authenticatable
                         <table border="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="text-align:center;">
-                                    '.$local[0]->RUTEmpresa.'
+                                    '.$local->RUTEmpresa.'
                                 </td>
                             </tr>
                             <tr>
@@ -113,17 +113,17 @@ class Boleta extends Authenticatable
             <table border="0" cellspacing="0" width="100%">
                 <tr>
                     <td>
-                        <b>'.$empresa[0]->NombreFantasia.'</b>
+                        <b>'.$empresa->NombreFantasia.'</b>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <b>'.$empresa[0]->Giro.'</b>
+                        <b>'.$empresa->Giro.'</b>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <b>'.$local[0]->DireccionLocal.'</b>
+                        <b>'.$local->DireccionLocal.'</b>
                     </td>
                 </tr>
             </table>
