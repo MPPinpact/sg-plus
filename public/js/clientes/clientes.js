@@ -110,12 +110,12 @@ var cargarTablaClientes = function(data){
                 {"title": "Cupo Utilizado","data": "CupoUtilizado",
                              render: $.fn.dataTable.render.number( '.', ',', 0 ),
                             className: "text-center"},
-                // {"title": "Monto Facturado","data": "MontoUltimaFacturacion", 
-                //             render: $.fn.dataTable.render.number( '.', ',', 0 ),
-                //             className: "text-center"},
-                // {"title": "Saldo Facturación","data": "SaldoAnteriorUF",
-                //             render: $.fn.dataTable.render.number( '.', ',', 0 ),
-                //             className: "text-center"},
+                {"title": "Monto Facturado","data": "MontoUltimaFacturacion", 
+                             render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                             className: "text-center"},
+                {"title": "Saldo Facturación","data": "SaldoAnteriorUF",
+                             render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                             className: "text-center"},
                 {"title": "Estado Cliente","data": "DetalleEstadoCliente"}
             ],
         });
