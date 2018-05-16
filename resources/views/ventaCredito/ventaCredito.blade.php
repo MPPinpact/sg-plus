@@ -66,14 +66,14 @@
 									<div class="row">
 										<div class="col-sm-2">
 					                        <div class="md-input-wrapper">
-				                                <input id="IdVenta" name="IdVenta" type="text" class="md-form-control" maxlength="11" readonly />
+				                                <input id="IdVenta" name="IdVenta" type="text" class="md-form-control md-static" maxlength="11" readonly />
 					                            <label for="IdVenta">Nro. Venta</label>
 					                        </div>
 										</div>
 
 										 <div class="col-sm-2">
 					                        <div class="md-input-wrapper">
-					                        	<input id="RUTCliente" name="RUTCliente" type="text" class="md-form-control" maxlength="12" readonly />
+					                        	<input id="RUTCliente" name="RUTCliente" type="text" class="md-form-control md-static" maxlength="12" readonly />
 				                                <label for="RUTCliente">RUT Cliente</label>
 		                        				<small id="ErrorRut" class="rut-error"></small>
 					                        </div>
@@ -89,13 +89,13 @@
 									<div class="row">
 										<div class="col-sm-3">
 					                        <div class="md-input-wrapper">
-												<input id="MontoCredito" name="MontoCredito" type="text" class="md-form-control" maxlength="13" readonly />
+												<input id="MontoCredito" name="MontoCredito" type="text" class="md-form-control md-static" maxlength="13" readonly />
 				                                <label for="MontoCredito">Monto a Financiar</label>
 											</div>
 					                    </div>
 					                    <div class="col-sm-3">
 					                        <div class="md-input-wrapper">
-												<input id="NumeroCuotas" name="NumeroCuotas" type="text" class="md-form-control md-static" maxlength="13" readonly />
+												<input id="NumeroCuotas" name="NumeroCuotas" type="text" class="md-form-control md-static md-static" maxlength="13" readonly />
 				                                <label for="NumeroCuotas">Nro de Cuotas</label>
 											</div>
 					                    </div>

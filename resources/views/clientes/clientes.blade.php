@@ -108,14 +108,14 @@
 										<div class="row">
 											<div class="col-sm-4">
 						                        <div class="md-input-wrapper">
-					                                <input id="RUTCliente" name="RUTCliente" type="text" class="md-form-control" maxlength="14" readonly />
+					                                <input id="RUTCliente" name="RUTCliente" type="text" class="md-form-control md-static" maxlength="14" readonly />
 	                            					<label for="RUTCliente">RUT Cliente</label>
 							                        <small id="ErrorRut" class="rut-error"></small>
 						                        </div>
 											</div>
 						                    <div class="col-sm-8">
 						                        <div class="md-input-wrapper">
-						                        	<input id="NombreCliente" name="NombreCliente" type="text" class="md-form-control" maxlength="250" readonly />
+						                        	<input id="NombreCliente" name="NombreCliente" type="text" class="md-form-control md-static" maxlength="250" readonly />
 	                            					<label for="NombreCliente">Nombre del Cliente</label>
 						                        </div>
 						                    </div>
@@ -123,7 +123,7 @@
 										<div class="row">
 											<div class="col-sm-12">
 						                        <div class="md-input-wrapper">
-					                                <input id="DireccionCliente" name="DireccionCliente" type="text" class="md-form-control" maxlength="250" readonly />
+					                                <input id="DireccionCliente" name="DireccionCliente" type="text" class="md-form-control md-static" maxlength="250" readonly />
 	                            					<label for="DireccionCliente">Dirección Cliente</label>
 												</div>
 						                    </div>
@@ -131,13 +131,13 @@
 										<div class="row">
 						                    <div class="col-sm-6">
 						                        <div class="md-input-wrapper">
-						                        	<input id="CupoAutorizado" name="CupoAutorizado" type="text" class="md-form-control" maxlength="10" readonly />
+						                        	<input id="CupoAutorizado" name="CupoAutorizado" type="text" class="md-form-control md-static" maxlength="10" readonly />
 	                            					<label for="CupoAutorizado">Cupo Autorizado</label>
 						                        </div>
 						                    </div>
 											<div class="col-sm-6">
 						                        <div class="md-input-wrapper">
-						                        	<input id="CupoUtilizado" name="CupoUtilizado" type="text" class="md-form-control" maxlength="10" readonly />
+						                        	<input id="CupoUtilizado" name="CupoUtilizado" type="text" class="md-form-control md-static" maxlength="10" readonly />
 	                            					<label for="CupoUtilizado">Cupo Utilizado</label>
 						                        </div>
 											</div>

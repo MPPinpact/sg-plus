@@ -68,13 +68,13 @@
 									<div class="row">
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="DiaCorte" name="DiaCorte" type="text" class="md-form-control" maxlength="2" readonly />
+				                                <input id="DiaCorte" name="DiaCorte" type="text" class="md-form-control md-static" maxlength="2" readonly />
 					                            <label for="DiaCorte">Dia de Pago</label>
 					                        </div>
 										</div>
 					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-					                        	<input id="DiaFacturacion" name="DiaFacturacion" type="text" class="md-form-control" maxlength="2" readonly />
+					                        	<input id="DiaFacturacion" name="DiaFacturacion" type="text" class="md-form-control md-static" maxlength="2" readonly />
 					                            <label for="DiaFacturacion">Dia de Facturación</label>
 					                        </div>
 					                    </div>
@@ -89,13 +89,13 @@
 									<div class="row">
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="InicioUltimaFacturacion" name="InicioUltimaFacturacion" type="text" class="md-form-control" maxlength="2" readonly />
+				                                <input id="InicioUltimaFacturacion" name="InicioUltimaFacturacion" type="text" class="md-form-control md-static" maxlength="2" readonly />
 					                            <label for="InicioUltimaFacturacion">Fecha Inicio Última Facturación</label>
 					                        </div>
 										</div>
 					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-					                        	<input id="FinUltimaFacturacion" name="FinUltimaFacturacion" type="text" class="md-form-control" maxlength="2" readonly />
+					                        	<input id="FinUltimaFacturacion" name="FinUltimaFacturacion" type="text" class="md-form-control md-static" maxlength="2" readonly />
 					                            <label for="FinUltimaFacturacion">Fecha Fin Última Facturación</label>
 					                        </div>
 					                    </div>

@@ -119,14 +119,14 @@ var cargartablaCicloFacturacions = function(data){
                 {"title": "IdCicloFacturacion","data": "IdCicloFacturacion",visible:0},
                 {"title": "Dia de Pago","data": "DiaPago", className: "text-center"},
                 {"title": "Dia de Facturación","data": "DiaFacturacion", className: "text-center"},
-                {"title": "Última Facturación","data": "InicioUltimaFacturacion", className: "text-center", 
-                            "render": function(data, type, row, meta){
-                                if(type === 'display'){
-                                    data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY HH:mm:ss");
-                                }
-                                return data;
-                            }
-                },
+                // {"title": "Última Facturación","data": "InicioUltimaFacturacion", className: "text-center", 
+                            // "render": function(data, type, row, meta){
+                            //     if(type === 'display'){
+                            //         data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY HH:mm:ss");
+                            //     }
+                            //     return data;
+                            // }
+                // },
                 {"title": "Estado Ciclo","data": "DetalleEstadoCiclo", className: "text-center"},
 				
                 {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},

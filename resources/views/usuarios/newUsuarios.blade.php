@@ -91,20 +91,20 @@
 									<div class="row">
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input id="usrUserName" name="usrUserName" type="text" class="md-form-control" maxlength="12" readonly />
+												<input id="usrUserName" name="usrUserName" type="text" class="md-form-control md-static" maxlength="12" readonly />
 												<label>Login</label>
 												<small id="ErrorRut" class="rut-error"></small>
 											</div>
 										</div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input id="usrNombreFull" name="usrNombreFull" type="text" class="md-form-control vtNombrelmayall" maxlength="50" readonly />
+												<input id="usrNombreFull" name="usrNombreFull" type="text" class="md-form-control vtNombrelmayall md-static" maxlength="50" readonly />
 												<label>Nombres</label>
 											</div>
 										</div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input id="usrEmail" name="usrEmail" type="text" class="md-form-control" maxlength="50" readonly />
+												<input id="usrEmail" name="usrEmail" type="text" class="md-form-control md-static" maxlength="50" readonly />
 												<label for="usrEmail">Email:</label>
 											</div>
 										</div>
@@ -113,7 +113,7 @@
 									<div class="row">
 										<div class="col-md-4" id="divSpanPerfiles">
 											<div class="md-input-wrapper">
-												<input id="usrUltimaVisita" name="usrUltimaVisita" type="text" class="md-form-control md-valid" maxlength="50" readonly />
+												<input id="usrUltimaVisita" name="usrUltimaVisita" type="text" class="md-form-control md-valid md-static" maxlength="50" readonly />
 												<label for="usrUltimaVisita">Última visita:</label>
 											</div>
 										</div>
@@ -135,25 +135,25 @@
 										<div class="row">
 											<div class="col-md-3">
 												<div class="md-input-wrapper">
-													<input id="auCreadoEl" name="auCreadoEl" type="text" class="md-form-control md-valid" maxlength="50" readonly />
+													<input id="auCreadoEl" name="auCreadoEl" type="text" class="md-form-control md-valid md-static" maxlength="50" readonly />
 													<label for="auCreadoEl">Creado el:</label>
 												</div>
 											</div>
 											<div class="col-md-3">
 												<div class="md-input-wrapper">
-													<input id="creador" name="creador" type="text" class="md-form-control md-valid" maxlength="50" readonly />
+													<input id="creador" name="creador" type="text" class="md-form-control md-valid md-static" maxlength="50" readonly />
 													<label for="creador">Creado por:</label>
 												</div>
 											</div>
 											<div class="col-md-3">
 												<div class="md-input-wrapper">
-													<input id="auModificadoEl" name="auModificadoEl" type="text" class="md-form-control md-valid" maxlength="50" readonly />
+													<input id="auModificadoEl" name="auModificadoEl" type="text" class="md-form-control md-valid md-static" maxlength="50" readonly />
 													<label for="auModificadoEl">modificado el:</label>
 												</div>
 											</div>
 											<div class="col-md-3">
 												<div class="md-input-wrapper">
-													<input id="modificador" name="modificador" type="text" class="md-form-control md-valid" maxlength="50" readonly />
+													<input id="modificador" name="modificador" type="text" class="md-form-control md-valid md-static" maxlength="50" readonly />
 													<label for="modificador">modificado por:</label>
 												</div>
 											</div>

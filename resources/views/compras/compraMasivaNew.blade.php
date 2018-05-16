@@ -550,12 +550,11 @@
 									
 				<div class="row">
 					<div class="col-md-12">
-						
+						<center>
 							<h3 id="NombreProductoStock" tabindex="-1" class="title current"> Stock del Producto</h3>
-							<span id="NombreProductoStock">Pan con Queso</span>
-							
-							<table id="tablaStockProducto" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
-							
+						</center>
+						<!-- <span id="NombreProductoStock"></span> -->
+						<table id="tablaStockProducto" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 					</div> 
 				</div>
 				

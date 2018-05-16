@@ -78,7 +78,7 @@
                    					<br><br>
                    					{!! Form::open(['id'=>'FormLocal','autocomplete' => 'off']) !!}
 									{!! Form::hidden('IdLocal', '', ['id'=> 'IdLocal'])!!}
-									{!! Form::text('urlImage', '', ['id'=> 'urlImage'])!!}
+									{!! Form::hidden('urlImage', '', ['id'=> 'urlImage'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
 										<div class="col-sm-4">

@@ -38,13 +38,13 @@
 					<div class="row">
 						<div class="col-sm-4">
 							<div class="md-input-wrapper">
-								<input id="NombreImpuesto" name="NombreImpuesto" type="text" class="md-form-control" maxlength="250" readonly />
+								<input id="NombreImpuesto" name="NombreImpuesto" type="text" class="md-form-control md-static" maxlength="250" readonly />
 								<label for="NombreImpuesto">Nombre Impuesto</label>
 							</div>
 						</div>
 						<div class="col-sm-4">
 							<div class="md-input-wrapper">
-								<input id="ValorImpuesto" name="ValorImpuesto" type="text" class="md-form-control" maxlength="20" readonly />
+								<input id="ValorImpuesto" name="ValorImpuesto" type="text" class="md-form-control md-static" maxlength="20" readonly />
 								<label for="ValorImpuesto">Valor Impuesto</label>
 							</div>
 						</div>

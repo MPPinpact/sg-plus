@@ -84,19 +84,19 @@
 									<div class="row">
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="RUTProveedor">RUT Proveedor</label>
 					                        </div>
 										</div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-				                                <input id="CodigoProveedor" name="CodigoProveedor" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="CodigoProveedor" name="CodigoProveedor" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="CodigoProveedor">Codigo Proveedor</label>
 					                        </div>
 										</div>
 					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="RazonSocialProveedor" name="RazonSocialProveedor" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="RazonSocialProveedor" name="RazonSocialProveedor" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="RazonSocialProveedor">Razon Social</label>
 					                        </div>
 					                    </div>
@@ -105,19 +105,19 @@
 									<div class="row">
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-				                                <input id="NombreFantasia" name="NombreFantasia" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="NombreFantasia" name="NombreFantasia" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="NombreFantasia">Nombre Fantasia</label>
 					                        </div>
 										</div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="Direccion" name="Direccion" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="Direccion" name="Direccion" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="Direccion">Dirección</label>
 					                        </div>
 										</div>
 					                    <div class="col-sm-4">
 											<div class="md-input-wrapper">
-				                                <input id="Telefeno" name="Telefeno" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="Telefeno" name="Telefeno" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="Telefeno">Teléfono</label>
 					                        </div>
 					                    </div>
@@ -127,7 +127,7 @@
 										<div class="col-sm-2"></div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-				                                <input id="Vendedor" name="Vendedor" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="Vendedor" name="Vendedor" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="Vendedor">Vendedor</label>
 					                        </div>
 					                    </div>

@@ -8,15 +8,18 @@ var parametroAjax = {
     'async': false
 };
 
-var StockProducto = function(IdProducto){
+var StockProducto = function(IdProducto,NombreProducto){
+	console.log("Estoy 1111");
 	console.log("StockProducto");
+	// console.log(IdProducto);
+	// console.log(NombreProducto);
 	
 	parametroAjax.ruta=rutaCSP;
     parametroAjax.data = {IdProducto:IdProducto};
     respuesta=procesarajax(parametroAjax);
     cargarTablaStockProducto(respuesta.respuesta.v_stock);
 	
-	$("#NombreProductoStock").text("Stock del Producto: Pan con Queso...");
+	$("#NombreProductoStock").text("Stock del Producto: "+NombreProducto);
 	$("#ModalStockProducto").modal();
 	
 	
@@ -460,11 +463,11 @@ var cargarResultadoBusquedaProducto = function(data){
 				}
 			},
 			{"title": "",
-				"data": "IdProducto",
+				"data": null,
 				"render": function(data, type, row, meta){
 					var result = `
 					<center>
-					<a href="#" onclick="StockProducto(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Stock Producto" data-original-title="Delete">
+					<a href="#" onclick="StockProducto(`+data.IdProducto+`,'`+data.NombreProducto+`');" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Stock Producto" data-original-title="Delete">
 						<i class="icofont icofont-search"></i>
 					</a>
 					

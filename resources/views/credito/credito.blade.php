@@ -75,19 +75,19 @@
 									<div class="row">
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="FechaInicio" name="FechaInicio" type="text" class="md-form-control" maxlength="250" data-mask="99-99-9999" readonly />
+				                                <input id="FechaInicio" name="FechaInicio" type="text" class="md-form-control md-static" maxlength="250" data-mask="99-99-9999" readonly />
 					                            <label for="FechaInicio">Fecha Inicio</label>
 					                        </div>
 										</div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="FechaFin" name="FechaFin" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="FechaFin" name="FechaFin" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="FechaFin">Fecha Fin</label>
 					                        </div>
 										</div>
 					                    <div class="col-sm-4">
 					                       	<div class="md-input-wrapper">
-				                                <input id="InteresMensual" name="InteresMensual" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="InteresMensual" name="InteresMensual" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="InteresMensual">Interes Mensual</label>
 					                        </div>
 					                    </div>
@@ -96,19 +96,19 @@
 									<div class="row">
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="NumeroMaxCuotas" name="NumeroMaxCuotas" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="NumeroMaxCuotas" name="NumeroMaxCuotas" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="NumeroMaxCuotas">Numero Max Cuotas</label>
 					                        </div>
 										</div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="TolenranciaDiasPrimeraCuota" name="TolenranciaDiasPrimeraCuota" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="TolenranciaDiasPrimeraCuota" name="TolenranciaDiasPrimeraCuota" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="TolenranciaDiasPrimeraCuota">Tolerancia de Días</label>
 					                        </div>
 										</div>
 					                    <div class="col-sm-4">
 					                       	<div class="md-input-wrapper">
-				                                <input id="AdvertenciaDeudaVencida" name="AdvertenciaDeudaVencida" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="AdvertenciaDeudaVencida" name="AdvertenciaDeudaVencida" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="AdvertenciaDeudaVencida">Advertencia Deuda Vencida</label>
 					                        </div>
 					                    </div>
@@ -117,7 +117,7 @@
 										<div class="col-sm-2"></div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-				                                <input id="MontoMantencionCuenta" name="MontoMantencionCuenta" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="MontoMantencionCuenta" name="MontoMantencionCuenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="MontoMantencionCuenta">Monto Mantencion</label>
 					                        </div>
 					                    </div>

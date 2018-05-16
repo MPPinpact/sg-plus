@@ -84,20 +84,20 @@
 									<div class="row">
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input id="RUT" name="RUT" type="text" class="md-form-control" maxlength="12" readonly />
+												<input id="RUT" name="RUT" type="text" class="md-form-control md-static" maxlength="12" readonly />
 												<label for="RUT">RUT</label>
 												<small id="ErrorRut" class="rut-error"></small>
 											</div>
 										</div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input id="RazonSocial" name="RazonSocial" type="text" class="md-form-control" maxlength="250" readonly />
+												<input id="RazonSocial" name="RazonSocial" type="text" class="md-form-control md-static" maxlength="250" readonly />
 												<label for="RazonSocial">Razon Social</label>
 											</div>
 										</div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input id="NombreFantasia" name="NombreFantasia" type="text" class="md-form-control" maxlength="250" readonly />
+												<input id="NombreFantasia" name="NombreFantasia" type="text" class="md-form-control md-static" maxlength="250" readonly />
 												<label for="NombreFantasia">Nombre Fantasia:</label>
 											</div>
 										</div>
@@ -107,7 +107,7 @@
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
 												<div class="md-input-wrapper">
-													<input id="Giro" name="Giro" type="text" class="md-form-control" maxlength="250" readonly />
+													<input id="Giro" name="Giro" type="text" class="md-form-control md-static" maxlength="250" readonly />
 													<label for="Giro">Giro:</label>
 												</div>
 											</div>

@@ -114,19 +114,19 @@
 									<div class="row">
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input id="CodigoBarra" name="CodigoBarra" type="text" class="md-form-control" maxlength="20" readonly />
+												<input id="CodigoBarra" name="CodigoBarra" type="text" class="md-form-control md-static" maxlength="20" readonly />
 												<label for="CodigoBarra">Código Barra</label>
 											</div>
 										</div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-												<input id="CodigoProveedor" name="CodigoProveedor" type="text" class="md-form-control" maxlength="20" readonly />
+												<input id="CodigoProveedor" name="CodigoProveedor" type="text" class="md-form-control md-static" maxlength="20" readonly />
 												<label for="CodigoProveedor">Código Proveedor</label>
 											</div>
 					                    </div>
 					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-												<input id="NombreProducto" name="NombreProducto" type="text" class="md-form-control" maxlength="250" readonly />
+												<input id="NombreProducto" name="NombreProducto" type="text" class="md-form-control md-static" maxlength="250" readonly />
 												<label for="NombreProducto">Nombre Producto</label>
 											</div>
 					                    </div>
@@ -135,14 +135,14 @@
 									<div class="row">
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input id="DescripcionProducto" name="DescripcionProducto" type="text" class="md-form-control" maxlength="250" readonly />
+												<input id="DescripcionProducto" name="DescripcionProducto" type="text" class="md-form-control md-static" maxlength="250" readonly />
 												<label for="DescripcionProducto">Descripción Producto</label>
 											</div>
 										</div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
 					                        	 <div class="md-input-wrapper">
-					                                <input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control" maxlength="14" />
+					                                <input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control md-static" maxlength="14" />
 	                            					<label for="RUTProveedor">Rut Último proveedor</label>
 							                        <small id="ErrorRut" class="rut-error"></small>
 						                        </div>               
@@ -160,7 +160,7 @@
 										<div class="col-sm-3">
 											<div class="form-check">
 							                 	<label class="form-check-label">
-							                    	<input name="SeVende" id="SeVende" type="checkbox" class="form-check-input"> Se Vende
+							                    	<input name="SeVende" id="SeVende" type="checkbox" class="form-check-input md-static"> Se Vende
 							                    </label>
 						                    </div>
 										</div>
@@ -206,31 +206,31 @@
 									<div class="row">
 										<div class="col-sm-2">
 											<div class="md-input-wrapper">
-												<input id="StockMinimo" name="StockMinimo" type="text" class="md-form-control" maxlength="5" readonly />
+												<input id="StockMinimo" name="StockMinimo" type="text" class="md-form-control md-static" maxlength="5" readonly />
 												<label for="StockMinimo">Stock Minimo</label>
 											</div>
 										</div>
 										<div class="col-sm-2">
 					                        <div class="md-input-wrapper">
-												<input id="StockMaximo" name="StockMaximo" type="text" class="md-form-control" maxlength="5" readonly />
+												<input id="StockMaximo" name="StockMaximo" type="text" class="md-form-control md-static" maxlength="5" readonly />
 												<label for="StockMaximo">Stock Maximo</label>
 											</div>
 					                    </div>
 					                    <div class="col-sm-2">
 					                        <div class="md-input-wrapper">
-												<input id="StockRecomendado" name="StockRecomendado" type="text" class="md-form-control" maxlength="5" readonly />
+												<input id="StockRecomendado" name="StockRecomendado" type="text" class="md-form-control md-static" maxlength="5" readonly />
 												<label for="StockRecomendado">Stock Recomendado</label>
 											</div>
 					                    </div>
 					                    <div class="col-sm-3">
 					                        <div class="md-input-wrapper">
-												<input id="PrecioVentaSugerido" name="PrecioVentaSugerido" type="text" class="md-form-control" maxlength="15" readonly />
+												<input id="PrecioVentaSugerido" name="PrecioVentaSugerido" type="text" class="md-form-control md-static" maxlength="15" readonly />
 												<label for="PrecioVentaSugerido">Precio Venta Sugerido</label>
 											</div>
 										</div>
 										<div class="col-sm-3">
 											<div class="md-input-wrapper">
-												<input id="PrecioUltimaCompra" name="PrecioUltimaCompra" type="text" class="md-form-control" maxlength="15" readonly />
+												<input id="PrecioUltimaCompra" name="PrecioUltimaCompra" type="text" class="md-form-control md-static" maxlength="15" readonly />
 												<label for="PrecioUltimaCompra">Precio Ultima Compra</label>
 											</div>
 					                    </div>

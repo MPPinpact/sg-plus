@@ -58,6 +58,7 @@ class Cliente extends Authenticatable
         $idAdmin = Auth::id();
         $datos['IdCliente']==null ? $Id=0 : $Id= $datos['IdCliente'];
         $sql="select f_registro_cliente(".$Id.",'".$datos['RUTCliente']."','".$datos['NombreCliente']."','".$datos['DireccionCliente']."','".$datos['CupoAutorizado']."','".$datos['CupoUtilizado']."',".$datos['IdCicloFacturacion'].",".$datos['EstadoCliente'].",".$idAdmin.")";
+        log::info($sql);
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;

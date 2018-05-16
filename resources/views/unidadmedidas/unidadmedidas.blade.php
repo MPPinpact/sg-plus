@@ -39,7 +39,7 @@
 						<div class="col-sm-2"></div>
 						<div class="col-sm-4">
 	                        <div class="md-input-wrapper">
-                                <input id="NombreUnidadMedida" name="NombreUnidadMedida" type="text" class="md-form-control" maxlength="250" readonly />
+                                <input id="NombreUnidadMedida" name="NombreUnidadMedida" type="text" class="md-form-control md-static" maxlength="250" readonly />
 	                            <label for="NombreUnidadMedida">Nombre Unidad Medida</label>
 	                        </div>
 						</div>

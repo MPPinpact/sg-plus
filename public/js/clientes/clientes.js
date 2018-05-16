@@ -68,6 +68,7 @@ var ManejoRespuestaProcesar = function(respuesta){
 };
 
 var cargarTablaClientes = function(data){
+    console.log(data);
     if(limpiarLocales==1){
         destruirTabla('#tablaClientes');
         $('#tablaClientes thead').empty();
@@ -80,7 +81,6 @@ var cargarTablaClientes = function(data){
             "language": LenguajeTabla,
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
-                {"sWidth": "1px", "aTargets": [8]}
             ],
             "data": data,
             "columns":[
@@ -110,12 +110,12 @@ var cargarTablaClientes = function(data){
                 {"title": "Cupo Utilizado","data": "CupoUtilizado",
                              render: $.fn.dataTable.render.number( '.', ',', 0 ),
                             className: "text-center"},
-                {"title": "Monto Facturado","data": "MontoUltimaFacturacion", 
-                            render: $.fn.dataTable.render.number( '.', ',', 0 ),
-                            className: "text-center"},
-                {"title": "Saldo Facturación","data": "SaldoAnteriorUF",
-                            render: $.fn.dataTable.render.number( '.', ',', 0 ),
-                            className: "text-center"},
+                // {"title": "Monto Facturado","data": "MontoUltimaFacturacion", 
+                //             render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                //             className: "text-center"},
+                // {"title": "Saldo Facturación","data": "SaldoAnteriorUF",
+                //             render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                //             className: "text-center"},
                 {"title": "Estado Cliente","data": "DetalleEstadoCliente"}
             ],
         });

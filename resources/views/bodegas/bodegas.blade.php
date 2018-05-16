@@ -85,13 +85,13 @@
 										<div class="col-sm-2"></div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-				                                <input id="NombreBodega" name="NombreBodega" type="text" class="md-form-control" maxlength="250" readonly />
+				                                <input id="NombreBodega" name="NombreBodega" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="NombreBodega">Nombre Bodega</label>
 					                        </div>
 										</div>
 					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
-					                        	<input id="DescripcionBodega" name="DescripcionBodega" type="text" class="md-form-control" maxlength="250" readonly />
+					                        	<input id="DescripcionBodega" name="DescripcionBodega" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="DescripcionBodega">Descripción Bodega</label>
 					                        </div>
 					                    </div>
