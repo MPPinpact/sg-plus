@@ -20,12 +20,15 @@ use Mail;
 use Storage;
 use DB;
 
+use App\Models\PuntoVenta;
 use App\Models\CajaDiaria;
 use App\Models\Cliente;
 use App\Models\Venta;
 use App\Models\Usuario;
 use App\Models\Producto;
 use App\Models\AbonoCliente;
+use App\Models\FormaPago;
+use App\Models\Vendedor;
 
 class PuntoVentaController extends Controller
 {
@@ -407,5 +410,39 @@ class PuntoVentaController extends Controller
         return $result;
     }
     
+    protected function getConfigPuntoVenta(Request $request){
+        $modelCD = new CajaDiaria();
+        $modelFP = new FormaPago();
+        $modelVDD = new Vendedor();
+        $modelVTA = new Venta();
+
+        $modelPTO = new PuntoVenta();
+
+
+        if ($request->session()->has('localUsuario')) {
+            $localActual = $request->session()->get('localUsuario');
+
+            $data['v_formas_pago'] = $modelFP->listFormasPago();
+            $data['v_tipo_dte'] = $modelCD->listTipoDte();
+            $data['v_bodegas'] = $modelVTA->getBodegas($localActual->IdLocal);
+            $data['v_vendedores'] = $modelVDD->listVendedor();
+            $data['v_opciones'] = $modelPTO->listOpcionesPuntoVenta($localActual->IdLocal);
+
+            return View::make('puntoVenta.configPuntoVenta', $data);
+        }else{
+            return redirect('home');
+        }
+    }
+    
+    protected function postConfigPuntoVenta(Request $request){
+        $datos = $request->all();
+        $modelPTO = new PuntoVenta();
+
+        $result['f_registro'] = $modelPTO->regOpcionesPuntoVenta($datos);
+
+        $result = '{"code":200}';
+
+        return $result;
+    }    
 
 }
