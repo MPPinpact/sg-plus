@@ -4,6 +4,7 @@ $nroPerfiles = Session::get('nroPerfiles');
 $avatarUser = Auth::user()->usrUrlimage;
 (strlen($avatarUser) > 10) ? $avatar=$avatarUser : $avatar="img/default.jpg";
 @endphp
+
 <section class="sidebar" id="sidebar-scroll">
   <div class="user-panel">
     <div class="f-left image"><img src="{{ asset($avatar) }}" alt="User Image" class="rounded-circle">
@@ -41,7 +42,7 @@ $avatarUser = Auth::user()->usrUrlimage;
           </a>
         </li>
         <li>
-          <a class="waves-effect" href="{{ route('ventas') }}">
+          <a class="waves-effect" href="{{ route('preventas') }}">
             <i class="icon-arrow-right"></i>
             Pre-Venta
           </a>
@@ -53,9 +54,9 @@ $avatarUser = Auth::user()->usrUrlimage;
           </a>
         </li>
         <li>
-          <a class="waves-effect" href="{{ route('ventas') }}">
-            <i class="icon-arrow-right"></i>
-            Consulta Crédito
+          <a class="waves-effect" href="{{ route('puntoVentaConfig') }}">
+            <i class="icofont icofont-settings"></i>
+            Configuración Punto Venta
           </a>
         </li>
       </ul>

@@ -199,6 +199,9 @@ Route::post('/buscarCDC', 'PuntoVentaController@postBuscarClienteDetalleCredito'
 Route::post('/pagarCuenta', 'PuntoVentaController@postPagarCuenta')->name('pagarCuenta');
 Route::post('/PtoBuscarP', 'PuntoVentaController@postBuscarProductosC')->name('PtoBuscarP');
 
+Route::get('/puntoVentaConfig', 'PuntoVentaController@getConfigPuntoVenta')->name('puntoVentaConfig');
+Route::post('/puntoVentaConfig', 'PuntoVentaController@postConfigPuntoVenta')->name('puntoVentaConfig');
+
 /* Formulario Venta -> Punto de Venta */
 Route::post('/addProductV', 'VentaController@postAddProductVenta')->name('addProductV');
 Route::post('/asignarVenVen', 'VentaController@postAsignarVendedor')->name('asignarVenVen');

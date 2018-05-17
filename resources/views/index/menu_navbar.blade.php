@@ -69,14 +69,5 @@ $localActual = Session::get('localUsuario');
         </ul>
       </li>
     </ul>
-    <!-- search -->
-    <div id="morphsearch" class="morphsearch">
-      <form class="morphsearch-form">
-        <input class="morphsearch-input" type="search" placeholder="Search..."/>
-        <button class="morphsearch-submit" type="submit">Search</button>
-      </form>
-      <div class="morphsearch-content"></div>
-    </div>
-    <!-- search end -->
   </div>
 </nav>
