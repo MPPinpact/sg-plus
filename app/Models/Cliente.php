@@ -56,7 +56,7 @@ class Cliente extends Authenticatable
         $datos['RUTCliente'] = $model->LimpiarRut($datos['RUTCliente']);
         $idAdmin = Auth::id();
         $datos['IdCliente']==null ? $Id=0 : $Id= $datos['IdCliente'];
-        $sql="select f_registro_cliente(".$Id.",'".$datos['RUTCliente']."','".$datos['NombreCliente']."','".$datos['DireccionCliente']."','".$datos['CupoAutorizado']."','".$datos['CupoUtilizado']."',".$datos['IdCicloFacturacion'].",".$datos['EstadoCliente'].",".$idAdmin.")";
+        $sql="select f_registro_cliente(".$Id.",'".$datos['RUTCliente']."','".$datos['NombreCliente']."','".$datos['DireccionCliente']."','".$datos['TelefonoCliente']."','".$datos['CupoAutorizado']."','".$datos['CupoUtilizado']."',".$datos['IdCicloFacturacion'].",".$datos['EstadoCliente'].",".$idAdmin.")";
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
@@ -82,17 +82,17 @@ class Cliente extends Authenticatable
     }
 
     public function listMovimientos($IdCliente){
-        $sql="SELECT * FROM v_clientes_movimientos WHERE IdCliente=".$IdCliente." AND IdEstadoMovimiento=1 ORDER BY FechaMovimiento DESC";
+        $sql="SELECT * FROM v_clientes_movimientos WHERE IdCliente=".$IdCliente." AND EstadoMovimiento=1 ORDER BY FechaMovimiento DESC";
         //log::info($sql);
         $result=DB::select($sql);
         return $result;
     }
 
     public function listMovimientosUltimoEECC($IdCliente){
-        $sql="SELECT IdEECC, IdMovimiento, FechaMovimiento, NumeroDocumento, TipoMovimiento, DescripcionMovimiento, MontoMovimiento FROM  v_clientes_eecc_detalle WHERE IdEECC = (SELECT IdEECC FROM clientes_eecc WHERE IdCliente=".$IdCliente." ORDER BY FechaCorte DESC LIMIT 1);";
-        //log::info($sql);
-        $result=DB::select($sql);
-        return $result;
+        // $sql="SELECT IdEECC, IdMovimiento, FechaMovimiento, NumeroDocumento, TipoMovimiento, DescripcionMovimiento, MontoMovimiento FROM  v_clientes_eecc_detalle WHERE IdEECC = (SELECT IdEECC FROM clientes_eecc WHERE IdCliente=".$IdCliente." ORDER BY FechaCorte DESC LIMIT 1);";
+        // //log::info($sql);
+        // $result=DB::select($sql);
+        // return $result;
     }
 
     public function listMovimientosProximoEECC($IdCliente){

@@ -10,6 +10,8 @@ var parametroAjax = {
 };
 
 var ManejoRespuestaProcesarD = function(respuesta){
+    console.log(respuesta);
+    console.log(respuesta.respuesta);
     if(respuesta.code==200){
         $(".divDetalles").toggle();
         $("#divVolver").show();
@@ -290,11 +292,13 @@ var cargarTablaEECC = function(data){
 };
 
 var pintarDatosActualizar= function(data){
+    console.log(data);
     $(".md-form-control").addClass("md-valid");
     $("#IdCliente").val(data.IdCliente);
     $("#RUTCliente").val(data.RUTCliente);
     $("#NombreCliente").val(data.NombreCliente);
     $("#DireccionCliente").val(data.DireccionCliente);
+    $("#TelefonoCliente").val(data.TelefonoCliente);
     $("#DiaPago").val(data.DiaPago);
     $("#CupoAutorizado").val(data.CupoAutorizado);
     $("#CupoUtilizado").val(data.CupoUtilizado);
@@ -354,6 +358,7 @@ var bloquearInuts = function(){
     $("#RUTCliente").prop('readonly', true);
     $("#NombreCliente").prop('readonly', true);
     $("#DireccionCliente").prop('readonly', true);
+    $("#TelefonoCliente").prop('readonly', true);
     $("#CupoAutorizado").prop('readonly', true);
     $("#CupoUtilizado").prop('readonly', true);
     $("#IdCicloFacturacion").prop('disabled', true);
@@ -364,6 +369,7 @@ var desbloquearInuts = function(){
     $("#RUTCliente").prop('readonly', false);
     $("#NombreCliente").prop('readonly', false);
     $("#DireccionCliente").prop('readonly', false);
+    $("#TelefonoCliente").prop('readonly', false);
     $("#CupoAutorizado").prop('readonly', false);
     $("#CupoUtilizado").prop('readonly', false);
     $("#IdCicloFacturacion").prop('disabled', false);
@@ -417,6 +423,7 @@ var verificarRut = function(control){
 }
 
 $(document).ready(function(){
+    $("#TelefonoCliente").inputmask({ mask: "9-9999-9999"});
     $("#RUTCliente").focusout(function() {
         var valid = $("#RUTCliente").val();
         if (valid.length > 0){
@@ -450,6 +457,13 @@ $(document).ready(function(){
                     notEmpty: {
                         message: 'El campo es requerido.'
                     },
+                }
+            },
+            'TelefonoCliente': {
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    }
                 }
             },
             'DireccionCliente': {

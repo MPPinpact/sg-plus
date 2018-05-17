@@ -121,7 +121,13 @@
 						                    </div>
 										</div>
 										<div class="row">
-											<div class="col-sm-12">
+											<div class="col-sm-3">
+						                        <div class="md-input-wrapper">
+					                                <input id="TelefonoCliente" name="TelefonoCliente" type="text" class="md-form-control md-static" maxlength="250" readonly />
+	                            					<label for="TelefonoCliente">Teléfono Cliente</label>
+												</div>
+						                    </div>
+											<div class="col-sm-9">
 						                        <div class="md-input-wrapper">
 					                                <input id="DireccionCliente" name="DireccionCliente" type="text" class="md-form-control md-static" maxlength="250" readonly />
 	                            					<label for="DireccionCliente">Dirección Cliente</label>
