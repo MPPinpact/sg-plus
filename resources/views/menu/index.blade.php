@@ -18,6 +18,14 @@
   <link rel="icon" href="{{ asset('theme/assets/images/favicon.ico') }}" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style type="text/css">
+    .modal-backdrop{
+      z-index: 1000 !important;
+    }
+    .modal .fade{
+      z-index: 1020 !important;
+    }
+  </style>
   <script language="JavaScript" type="text/javascript">
     var v_salir = 0;
     var RutaSalir = "{{ URL::route('logout') }}";

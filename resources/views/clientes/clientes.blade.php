@@ -135,33 +135,33 @@
 						                    </div>
 										</div>
 										<div class="row">
-						                    <div class="col-sm-6">
+						                    <div class="col-sm-4">
 						                        <div class="md-input-wrapper">
 						                        	<input id="CupoAutorizado" name="CupoAutorizado" type="text" class="md-form-control md-static" maxlength="10" readonly />
 	                            					<label for="CupoAutorizado">Cupo Autorizado</label>
 						                        </div>
 						                    </div>
-											<div class="col-sm-6">
+											<div class="col-sm-4">
 						                        <div class="md-input-wrapper">
 						                        	<input id="CupoUtilizado" name="CupoUtilizado" type="text" class="md-form-control md-static" maxlength="10" readonly />
 	                            					<label for="CupoUtilizado">Cupo Utilizado</label>
 						                        </div>
 											</div>
-										</div>
-										<div class="row">
-						                    <div class="col-sm-6">
+						                    <div class="col-sm-4">
 						                        <div class="md-input-wrapper">
 					                                <select name="IdCicloFacturacion" id="IdCicloFacturacion" class="md-disable md-valid" disabled></select>
 													<label for="IdCicloFacturacion">Día de Pago</label>
 						                        </div>
 						                    </div>
+										</div>
+<!-- 										<div class="row">
 											<div class="col-sm-6">
 						                        <div class="md-input-wrapper">
 						                        	<select name="EstadoCliente" id="EstadoCliente" class="md-disable md-valid" disabled></select>
 													<label for="EstadoCliente">Estado Cliente</label>
 						                        </div>
 											</div>
-										</div>
+										</div> -->
 										<div align="center">
 											<div class="pull-rigth">
 												<div class="divBotones">

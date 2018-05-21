@@ -236,7 +236,7 @@
 					                    </div>
 									</div>
 									<br>
-									<div class="row">
+									<!-- <div class="row">
 										<div class="col-sm-4"></div>
 										<div class="col-sm-4">
 					                        <div class="md-input-wrapper">
@@ -246,7 +246,7 @@
 					                    </div>
 										<div class="col-sm-4"></div>
 									</div>
-									<br>
+									<br> -->
 									<div align="center">
 										<div class="divBotones">
 											<button id="modificar" type="button" class="btn btn-primary waves-effect waves-light">

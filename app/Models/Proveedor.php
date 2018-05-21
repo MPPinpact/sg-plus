@@ -53,6 +53,7 @@ class Proveedor extends Authenticatable
     // registrar una nueva proveedor
     public function regProveedor($datos){
         $idAdmin = Auth::id();
+        $datos['EstadoProveedor'] = 1;
         $datos['IdProveedor']==null ? $Id=0 : $Id= $datos['IdProveedor'];
         $sql="select f_registro_proveedor(".$Id.",'".$datos['RUTProveedor']."','".$datos['CodigoProveedor']."','".$datos['RazonSocialProveedor']."','".$datos['NombreFantasia']."','".$datos['Direccion']."','".$datos['Telefeno']."','".$datos['Vendedor']."',".$datos['EstadoProveedor'].",".$idAdmin.")";
         $execute=DB::select($sql);

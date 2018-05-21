@@ -179,7 +179,7 @@ var pintarDatosActualizar= function(data){
     $("#Direccion").val(data.Direccion);
     $("#Telefeno").val(data.Telefeno);
     $("#Vendedor").val(data.Vendedor);
-    $("#EstadoProveedor").val(data.EstadoProveedor).trigger("change");
+    // $("#EstadoProveedor").val(data.EstadoProveedor).trigger("change");
 }
 
 var BotonCancelar = function(){
@@ -259,7 +259,7 @@ var bloquearInuts = function(){
     $("#Direccion").prop('readonly', true);
     $("#Telefeno").prop('readonly', true);
     $("#Vendedor").prop('readonly', true);
-    $("#EstadoProveedor").prop('disabled', true);
+    // $("#EstadoProveedor").prop('disabled', true);
 }
 
 var desbloquearInuts = function(){
@@ -270,7 +270,7 @@ var desbloquearInuts = function(){
     $("#Direccion").prop('readonly', false);
     $("#Telefeno").prop('readonly', false);
     $("#Vendedor").prop('readonly', false);
-    $("#EstadoProveedor").prop('disabled', false);
+    // $("#EstadoProveedor").prop('disabled', false);
 }
 
 var modificarBodega = function(){
@@ -294,6 +294,7 @@ var crearAllSelect = function(data){
 }
 
 $(document).ready(function(){
+    $("#Telefeno").inputmask({ mask: "9-9999-9999"});
     cargarTablaProveedores(d.v_proveedores);
     crearAllSelect(d);
     $(document).on('click','#guardar',validador);
@@ -312,14 +313,14 @@ $(document).ready(function(){
                     },
                 }
             },
-            'CodigoProveedor': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
+            // 'CodigoProveedor': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
             'RazonSocialProveedor': {
                 validators: {
                     notEmpty: {
@@ -327,22 +328,22 @@ $(document).ready(function(){
                     }
                 }
             },
-            'NombreFantasia': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
-            'Direccion': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
+            // 'NombreFantasia': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
+            // 'Direccion': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
             'Telefeno': {
                 verbose: false,
                 validators: {
@@ -351,22 +352,22 @@ $(document).ready(function(){
                     },
                 }
             },
-            'Vendedor': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
-            'EstadoProveedor': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
+            // 'Vendedor': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
+            // 'EstadoProveedor': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
         }
     })
     .on('success.form.fv', function(e){

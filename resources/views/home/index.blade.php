@@ -14,6 +14,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{{ config('app.name', 'Laravel') }}</title>
+  <style type="text/css">
+    .modal-backdrop{
+      z-index: 1000 !important;
+    }
+    .modal .fade{
+      z-index: 1020 !important;
+    }
+  </style>
   <link rel="shortcut icon" href="{{ asset('theme/assets/images/favicon.png') }}" type="image/x-icon">
   <link rel="icon" href="{{ asset('theme/assets/images/favicon.ico') }}" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">

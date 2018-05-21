@@ -285,7 +285,7 @@ var pintarDatosActualizar= function(data){
     if ((data.EsProductoCombo) == 1){ $( "#EsProductoCombo" ).prop( "checked", true ); }
     if ((data.Descontinuado) == 1){ $( "#Descontinuado" ).prop( "checked", true ); }
     if ((data.SeVende) == 1){$( "#SeVende" ).prop( "checked", true ); }
-    $("#EstadoProducto").val(data.EstadoProducto).trigger("change");
+    // $("#EstadoProducto").val(data.EstadoProducto).trigger("change");
 }
 
 var BotonCancelar = function(){
@@ -322,13 +322,10 @@ var ProcesarImpuesto = function(){
 
 var ProcesarProducto = function(){
     if(errorRut == 0){
-        parametroAjax.ruta=ruta;
-
         if ($('#SeVende').is(":checked")){ $('#SeVende').val(1) }else{ $('#SeVende').val(0) }
         if ($('#SeCompra').is(":checked")){ $('#SeCompra').val(1) }else{ $('#SeCompra').val(0) }
         if ($('#EsProductoCombo').is(":checked")){ $('#EsProductoCombo').val(1) }else{ $('#EsProductoCombo').val(2) }
         if ($('#Descontinuado').is(":checked")){ $('#Descontinuado').val(1) }else{ $('#Descontinuado').val(2) }
-
         var camposNuevo = {
             'IdUltimoProveedor': $('#IdUltimoProveedor').val(),
             'IdFamilia': $('#IdFamilia').val(),
@@ -340,6 +337,7 @@ var ProcesarProducto = function(){
             'Descontinuado': $('#Descontinuado').val(),
             'EstadoProducto': $('#EstadoProducto').val()
         }
+        parametroAjax.ruta=ruta;
         parametroAjax.data = $("#FormProducto").serialize() + '&' + $.param(camposNuevo);
         respuesta=procesarajax(parametroAjax);
         ManejoRespuestaProcesar(respuesta);
@@ -402,7 +400,7 @@ var bloquearInuts = function(){
     $("#SeVende").prop('disabled', true);
     $("#EsProductoCombo").prop('disabled', true);
     $("#Descontinuado").prop('disabled', true);
-    $("#EstadoProducto").prop('disabled', true);
+    // $("#EstadoProducto").prop('disabled', true);
 }
 
 var desbloquearInuts = function(){
@@ -422,7 +420,7 @@ var desbloquearInuts = function(){
     $("#SeVende").prop('disabled', false);
     $("#EsProductoCombo").prop('disabled', false);
     $("#Descontinuado").prop('disabled', false);
-    $("#EstadoProducto").prop('disabled', false);
+    // $("#EstadoProducto").prop('disabled', false);
 }
 
 var modificarProducto = function(){
@@ -556,19 +554,23 @@ $(document).ready(function(){
                     },
                 }
             },
-            'CodigoProveedor': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
+            // 'CodigoProveedor': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
             'NombreProducto': {
                 validators: {
                     notEmpty: {
                         message: 'El campo es requerido.'
-                    }
+                    },
+                    stringLength: {
+                        min: 4,
+                        message: 'Debe tener mas de 3 caracteres'
+                    },
                 }
             },
             'DescripcionProducto': {
@@ -587,14 +589,14 @@ $(document).ready(function(){
                     },
                 }
             },
-            'StockMaximo': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
+            // 'StockMaximo': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
             'StockRecomendado': {
                 verbose: false,
                 validators: {
@@ -627,30 +629,22 @@ $(document).ready(function(){
                     },
                 }
             },
-            'IdSubFamilia': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
-            'IdUnidadMedida': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
-            'EstadoProducto': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
+            // 'IdSubFamilia': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
+            // 'IdUnidadMedida': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
         }
     })
     .on('success.form.fv', function(e){

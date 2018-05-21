@@ -31,7 +31,7 @@
 }
 </style>
 <!-- modal boleta             -->
-<div class="modal fade" id="ModalBoletaPlantilla" tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalBoletaPlantilla" tabindex="-1" role="dialog" style="z-index: 1021;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

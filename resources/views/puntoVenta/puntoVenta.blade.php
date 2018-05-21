@@ -133,7 +133,7 @@
 </div>
 
 <!--Modal Consulta Stock Producto -->
-<div class="modal fade" id="ModalConsultaStockProducto" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalConsultaStockProducto" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" style="z-index: 1020 !important;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -183,7 +183,7 @@
 </div>
 
 <!--Modal Consulta Crédito Clientes  -->
-<div class="modal fade" id="ModalConsultaCreditoCliente" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalConsultaCreditoCliente" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" style="z-index: 1020 !important;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -279,7 +279,7 @@
 </div>
 
 <!-- Modal Pago Credito Interno Clientes -->
-<div class="modal fade" id="ModalPagoCreditoCliente" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalPagoCreditoCliente" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" style="z-index: 1020 !important;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -366,7 +366,7 @@
 </div>
 
 <!--Modal Asignar Vendedor a la Pre-Venta -->
-<div class="modal fade" id="ModalAsignarVendedor"  data-keyboard="false" data-backdrop="static" role="document" style="z-index: 1060; display: none;">
+<div class="modal fade" id="ModalAsignarVendedor"  data-keyboard="false" data-backdrop="static" role="document" style="z-index: 1022; display: none;">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -422,7 +422,7 @@
 </div>
 
 <!--Modal Asignar Cliente a la Pre-Venta -->
-<div class="modal fade" id="ModalAsignarCliente" role="document"  data-keyboard="false" data-backdrop="static" style="z-index: 1060; display: none;">
+<div class="modal fade" id="ModalAsignarCliente" role="document"  data-keyboard="false" data-backdrop="static" style="z-index: 1020; display: none;">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -481,7 +481,7 @@
 </div>
 
 <!--Modal Asignar Forma de Pago a la Pre-Venta -->
-<div class="modal fade" id="ModalAsignarFP" role="document"  data-keyboard="false" data-backdrop="static"  style="z-index: 1060; display: none;">
+<div class="modal fade" id="ModalAsignarFP" role="document"  data-keyboard="false" data-backdrop="static"  style="z-index: 1025; display: none;">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -578,7 +578,7 @@
 </div>
 
 <!-- Modal Ingreso Diferentes Formas de Pago -->
-<div class="modal fade" id="ModalIngresoPago"  data-keyboard="false" data-backdrop="static" role="document" style="z-index: 1070; display: none;">
+<div class="modal fade" id="ModalIngresoPago"  data-keyboard="false" data-backdrop="static" role="document" style="z-index: 1025; display: none;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -591,7 +591,7 @@
 				{!! Form::open(['id'=>'FormIngresoFP','autocomplete' => 'off']) !!}
 					<input type="hidden" name="IdPreVentaPago" id="IdPreVentaPago">
 					<input type="hidden" name="IdDetallePago" id="IdDetallePago" value="">
-					<input type="hidden" name="IdFormaPagoPreVenta" id="IdFormaPagoPreVenta" value="0">
+					<input type="hidden" name="IdFormaPagoPreVenta" id="IdFormaPagoPreVenta">
 					<input type="hidden" name="IdClienteVC" id="IdClienteVC" value="0">
 					
 					<div class="row" id="InfoAddTC">
@@ -711,7 +711,7 @@
 </div>
 
 <!-- Modal Selección TipoDTE -->
-<div class="modal fade" id="ModalTipoDTE" role="document"  data-keyboard="false" data-backdrop="static"  style="z-index: 1060; display: none;">
+<div class="modal fade" id="ModalTipoDTE" role="document"  data-keyboard="false" data-backdrop="static"  style="z-index: 1025; display: none;">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -775,7 +775,7 @@
 </div>
 
 <!-- Modal Pre-Venta -->
-<div class="modal fade" id="ModalPreVenta" role="dialog" data-keyboard="false" data-backdrop="static" style="z-index: 1050; display: none;" >
+<div class="modal fade" id="ModalPreVenta" role="dialog" data-keyboard="false" data-backdrop="static" style="z-index: 1021; display: none;" >
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -804,8 +804,7 @@
 					<input type="hidden" name="IdLocalPreVenta" id="IdLocalPreVenta">
 					<input type="hidden" name="IdCajaPreVenta" id="IdCajaPreVenta">
 					<input type="hidden" name="IdDetallePreVenta" id="IdDetallePreVenta">
-					<input type="hidden" name="IdTipoDTEPreVenta" id="IdTipoDTEPreVenta">
-					
+					<input type="hidden" name="IdTipoDTEPreVenta" id="IdTipoDTEPreVenta">					
 					<div id="PreVentaStep_1" style="display: none;">
 						<div class="row" id="frameProductos">
 							<div class="col-md-2">
@@ -986,7 +985,7 @@
 </div>
 
 <!-- Modal Cierre Venta -->
-<div class="modal fade" id="ModalFinalizarVenta"  data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalFinalizarVenta"  data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" style="z-index: 1020 !important;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             
@@ -1023,7 +1022,7 @@
 </div>
 
 <!-- Modal Cancelar Venta -->
-<div class="modal fade" id="ModalCancelarVenta"  data-keyboard="false" data-backdrop="static"  tabindex="-1" role="dialog">
+<div class="modal fade" id="ModalCancelarVenta"  data-keyboard="false" data-backdrop="static"  tabindex="-1" role="dialog" style="z-index: 1020 !important;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             

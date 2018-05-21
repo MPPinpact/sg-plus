@@ -292,7 +292,6 @@ var cargarTablaEECC = function(data){
 };
 
 var pintarDatosActualizar= function(data){
-    console.log(data);
     $(".md-form-control").addClass("md-valid");
     $("#IdCliente").val(data.IdCliente);
     $("#RUTCliente").val(data.RUTCliente);
@@ -302,8 +301,8 @@ var pintarDatosActualizar= function(data){
     $("#DiaPago").val(data.DiaPago);
     $("#CupoAutorizado").val(data.CupoAutorizado);
     $("#CupoUtilizado").val(data.CupoUtilizado);
-    $("#EstadoCliente").val(data.EstadoCliente).trigger("change");
     $("#IdCicloFacturacion").val(data.IdCicloFacturacion).trigger("change");
+    // $("#EstadoCliente").val(data.EstadoCliente).trigger("change");
 }
 
 var BotonCancelar = function(){
@@ -362,7 +361,7 @@ var bloquearInuts = function(){
     $("#CupoAutorizado").prop('readonly', true);
     $("#CupoUtilizado").prop('readonly', true);
     $("#IdCicloFacturacion").prop('disabled', true);
-    $("#EstadoCliente").prop('disabled', true);
+    // $("#EstadoCliente").prop('disabled', true);
 }
 
 var desbloquearInuts = function(){
@@ -373,7 +372,7 @@ var desbloquearInuts = function(){
     $("#CupoAutorizado").prop('readonly', false);
     $("#CupoUtilizado").prop('readonly', false);
     $("#IdCicloFacturacion").prop('disabled', false);
-    $("#EstadoCliente").prop('disabled', false);
+    // $("#EstadoCliente").prop('disabled', false);
 }
 
 var modificarCliente = function(){
@@ -466,13 +465,13 @@ $(document).ready(function(){
                     }
                 }
             },
-            'DireccionCliente': {
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    }
-                }
-            },
+            // 'DireccionCliente': {
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         }
+            //     }
+            // },
             'CupoAutorizado': {
                 verbose: false,
                 validators: {
@@ -481,14 +480,14 @@ $(document).ready(function(){
                     },
                 }
             },
-            'CupoUtilizado': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
+            // 'CupoUtilizado': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
             'IdCicloFacturacion': {
                 verbose: false,
                 validators: {
@@ -497,14 +496,14 @@ $(document).ready(function(){
                     },
                 }
             },
-            'EstadoCliente': {
-                verbose: false,
-                validators: {
-                    notEmpty: {
-                        message: 'El campo es requerido.'
-                    },
-                }
-            },
+            // 'EstadoCliente': {
+            //     verbose: false,
+            //     validators: {
+            //         notEmpty: {
+            //             message: 'El campo es requerido.'
+            //         },
+            //     }
+            // },
         }
     })
     .on('success.form.fv', function(e){

@@ -82,19 +82,19 @@
 									'class'         => 'form-control'])!!}
 									<input type="hidden" name="_token" id="_token" value="{!! csrf_token() !!}">
 									<div class="row">
-										<div class="col-sm-4">
+										<div class="col-sm-3">
 					                        <div class="md-input-wrapper">
 				                                <input id="RUTProveedor" name="RUTProveedor" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="RUTProveedor">RUT Proveedor</label>
 					                        </div>
 										</div>
-										<div class="col-sm-4">
+										<div class="col-sm-3">
 											<div class="md-input-wrapper">
 				                                <input id="CodigoProveedor" name="CodigoProveedor" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="CodigoProveedor">Codigo Proveedor</label>
 					                        </div>
 										</div>
-					                    <div class="col-sm-4">
+					                    <div class="col-sm-6">
 					                        <div class="md-input-wrapper">
 				                                <input id="RazonSocialProveedor" name="RazonSocialProveedor" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="RazonSocialProveedor">Razon Social</label>
@@ -109,35 +109,35 @@
 					                            <label for="NombreFantasia">Nombre Fantasia</label>
 					                        </div>
 										</div>
-										<div class="col-sm-4">
+										<div class="col-sm-3">
 					                        <div class="md-input-wrapper">
 				                                <input id="Direccion" name="Direccion" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="Direccion">Dirección</label>
 					                        </div>
 										</div>
-					                    <div class="col-sm-4">
+					                    <div class="col-sm-2">
 											<div class="md-input-wrapper">
 				                                <input id="Telefeno" name="Telefeno" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="Telefeno">Teléfono</label>
 					                        </div>
 					                    </div>
-									</div>
-									<br>
-									<div class="row">
-										<div class="col-sm-2"></div>
-										<div class="col-sm-4">
+										<div class="col-sm-3">
 											<div class="md-input-wrapper">
 				                                <input id="Vendedor" name="Vendedor" type="text" class="md-form-control md-static" maxlength="250" readonly />
 					                            <label for="Vendedor">Vendedor</label>
 					                        </div>
 					                    </div>
+									</div>
+									<!-- <br>
+									<div class="row">
+										<div class="col-sm-2"></div>
 					                    <div class="col-sm-4">
 					                        <div class="md-input-wrapper">
 												<select name="EstadoProveedor" id="EstadoProveedor" class="md-disable md-valid" disabled></select>
 				                                <label for="EstadoProveedor">Estado</label>
 											</div>
 					                    </div>
-									</div>
+									</div> -->
 									<br>
 									<div align="center">
 										<div class="pull-rigth">
