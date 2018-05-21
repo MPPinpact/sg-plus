@@ -817,15 +817,15 @@ var ManejoRespuestaVerBoleta = function(respuestaBoleta){
 
 var FinalizarPreVenta = function (){
     
+	var TablaDetalles = $("#tablaDetalles").dataTable();
+	if(TablaDetalles.fnGetData().length < 1){
+        $.growl({message:"Debe Seleccionar al Menos un Producto a Vender"},{type: "warning", allow_dismiss: true});
+		return;
+	}
 	if(_tipoVenta_=="PreVenta"){					
-		var TablaDetalles = $("#tablaDetalles").dataTable();
 		var IdVendedor = $("#IdVendedorPreVenta").val();
 		var IdTipoDTE = $("#IdTipoDTEPreVenta").val();
 		var IdFormaPago = $("#IdFormaPagoPreVenta").val();
-		if(TablaDetalles.fnGetData().length < 1){
-            $.growl({message:"Debe Seleccionar al Menos un Producto a Vender"},{type: "warning", allow_dismiss: true});
-			return;
-		}
 		if (IdVendedor.length < 1){
             $.growl({message:"Debe Seleccionar Vendedor"},{type: "warning", allow_dismiss: true});
 			return;
@@ -833,7 +833,7 @@ var FinalizarPreVenta = function (){
 		if (IdTipoDTE.length < 1){
             $.growl({message:"Debe Seleccionar Tipo de DTE"},{type: "warning", allow_dismiss: true});
 			return;
-		}
+		}	
 		if (IdFormaPago.length < 1){
             $.growl({message:"Debe Seleccionar Forma de Pago"},{type: "warning", allow_dismiss: true});
 			return;
@@ -842,12 +842,11 @@ var FinalizarPreVenta = function (){
 		parametroAjax.data = $("#FormPreVenta").serialize();
 		respuesta=procesarajax(parametroAjax);
 	}else if(_tipoVenta_=="Venta"){
-		parametroAjax.ruta=rutaVCP;
 		//parametroAjax.data = {IdVenta:_idVenta_};
+		parametroAjax.ruta=rutaVCP;
 		parametroAjax.data = $("#FormPreVenta").serialize();
 		respuesta=procesarajax(parametroAjax);
 	}
-	
 	var res = JSON.parse(respuesta.respuesta.f_registro);
 	if(res.code==200){
 
