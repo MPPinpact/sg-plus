@@ -180,17 +180,17 @@ var cargarTablaProductos = function(data){
             ],
         });
         limpiarLocales=1;
-    if (data.length>0){seleccionarTablaProductos();}
+    // if (data.length>0){seleccionarTablaProductos();}
 };
 
-var seleccionarTablaProductos = function(data){
-    var tableB = $('#tablaProductos').dataTable();
-    $('#tablaProductos tbody').on('click', 'tr', function (e) {
-        tableB.$('tr.selected').removeClass('selected');
-        $(this).addClass('selected');
-        RegistroEmpresas = TablaTraerCampo('tablaProductos',this);
-    });
-}
+// var seleccionarTablaProductos = function(data){
+//     var tableB = $('#tablaProductos').dataTable();
+//     $('#tablaProductos tbody').on('click', 'tr', function (e) {
+//         tableB.$('tr.selected').removeClass('selected');
+//         $(this).addClass('selected');
+//         RegistroEmpresas = TablaTraerCampo('tablaProductos',this);
+//     });
+// }
 
 var cargarTablaImpuestos = function(data){
     if(limpiarImpuestos==1){destruirTabla('#tablaImpuestos');$('#tablaImpuestos thead').empty();}

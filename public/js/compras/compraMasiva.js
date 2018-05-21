@@ -72,6 +72,8 @@ var BotonBuscarCodigo = function(){
 
 var BuscarProducto = function(){
 	console.log("BotonBuscar");
+	// console.log("Estoy pasando por aqui");
+	// return;
 	
 	var largoTXT = $.trim($("#InfoProducto").val());
 	

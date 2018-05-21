@@ -398,15 +398,13 @@ class PuntoVentaController extends Controller
 
     protected function postBuscarProductosC(Request $request){
         $datos = $request->all();
-        $producto = Producto::where('CodigoBarra', '=', $datos['CodigoProducto'])->first();
         $result['Existe'] = 0;
-        
+        $producto = Producto::where('NombreProducto', 'like', '%'. $datos['InfoProducto'] .'%')->orWhere('CodigoBarra', $datos['InfoProducto'])->orWhere('DescripcionProducto', $datos['InfoProducto'])->get();
         if ($producto != null){
             $result['Existe'] = 1;
             $model= new Producto();
-            $result['v_stock'] = $model->listStock($producto->IdProducto);
+            $result['v_stock'] = $model->listStock($producto[0]->IdProducto);
         }
-		
         return $result;
     }
     

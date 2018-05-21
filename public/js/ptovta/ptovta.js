@@ -61,8 +61,18 @@ var ManejoRespuestaProcesarPagarCuenta = function(respuesta){
 var ManejoRespuestaBuscarProducto = function(respuesta){
     if(respuesta.code==200){
         if (respuesta.respuesta.Existe == 0){ $.growl({message:"Código de producto no encontrado"},{type: "warning", allow_dismiss: true,}); }
-        respuesta.respuesta.v_stock ? $("#NombreProductoConsulta").text(respuesta.respuesta.v_stock[0].NombreProducto) : $("#NombreProductoConsulta").text("") 
-        cargarTablaProductos(respuesta.respuesta.v_stock);
+        if (respuesta.respuesta.v_stock){
+            var v_stock = [];
+            if (respuesta.respuesta.v_stock.length == 0){
+                $("#NombreProductoConsulta").text("")
+                $.growl({message:"Producto sin stock"},{type: "warning", allow_dismiss: true,});
+            }
+            if (respuesta.respuesta.v_stock.length > 0){
+                $("#NombreProductoConsulta").text(respuesta.respuesta.v_stock[0].NombreProducto);
+                v_stock = respuesta.respuesta.v_stock;
+            }
+            cargarTablaProductos(v_stock);
+        }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -284,23 +294,37 @@ var CerrarPagoCredito = function(){
     $('#FormPagoCredito')[0].reset();
 }
 
+// var botonConsultarStockProducto = function(){
+//     var VarCodigoProducto = $("#CodigoProductoConsultaCredito").val();
+//     if (VarCodigoProducto.length > 1){
+//         parametroAjax.ruta=rutaBP;
+//         parametroAjax.data = {CodigoProducto:VarCodigoProducto};
+//         respuesta=procesarajax(parametroAjax);
+//         ManejoRespuestaBuscarProducto(respuesta); 
+//     }else{
+//         $.growl({message:"Ingrese Codigo  de producto "},{type: "warning", allow_dismiss: true,});
+//     }
+// }
+
 var botonConsultarStockProducto = function(){
-    var VarCodigoProducto = $("#CodigoProductoConsultaCredito").val();
-    if (VarCodigoProducto.length > 1){
+    console.log("BotonBuscar");
+    var largoTXT = $.trim($("#CodigoProductoConsultaCredito").val());
+    if(largoTXT.length >= 4){   
         parametroAjax.ruta=rutaBP;
-        parametroAjax.data = {CodigoProducto:VarCodigoProducto};
+        parametroAjax.data = {InfoProducto:$("#CodigoProductoConsultaCredito").val()};
         respuesta=procesarajax(parametroAjax);
-        ManejoRespuestaBuscarProducto(respuesta); 
+        console.log("procesarajax()");
+        ManejoRespuestaBuscarProducto(respuesta);
     }else{
-        $.growl({message:"Ingrese Codigo  de producto "},{type: "warning", allow_dismiss: true,});
+        $.growl({message:"Debe ingresar al menos 3 caracteres para realizar la busqueda de un Producto!!!"},{type: "warning", allow_dismiss: true});
     }
 }
 
 var botonCerrarStockProducto = function(){
     $("#CodigoProductoConsultaCredito").val("");
-    destruirTabla('#listado_productos_preventa');$('#listado_productos_preventa thead').empty();
+    // destruirTabla('#listado_productos_preventa');$('#listado_productos_preventa thead').empty();
+    if(limpiarProductos==1){destruirTabla('#tablaLocales');$('#tablaLocales thead').empty();limpiarProductos=0;}
     $("#NombreProductoConsulta").text("");
-    limpiarProductos=0;
 }
 
 $(document).ready(function(){   

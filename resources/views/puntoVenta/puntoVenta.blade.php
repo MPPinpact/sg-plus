@@ -133,7 +133,7 @@
 </div>
 
 <!--Modal Consulta Stock Producto -->
-<div class="modal fade" id="ModalConsultaStockProducto" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" style="z-index: 1020 !important;">
+<div class="modal fade" id="ModalConsultaStockProducto" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" style="z-index: 1030 !important;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -146,7 +146,7 @@
 						<div class="col-md-9">
 							<div class="md-input-wrapper">
 								<input id="CodigoProductoConsultaCredito" name="CodigoProductoConsultaCredito" type="text" class="md-form-control md-static" maxlength="250" />
-								<label for="CodigoProductoConsultaCredito">Códido Producto</label>
+								<label for="CodigoProductoConsultaCredito">Código/Nombre/Descripción del Producto</label>
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -183,7 +183,7 @@
 </div>
 
 <!--Modal Consulta Crédito Clientes  -->
-<div class="modal fade" id="ModalConsultaCreditoCliente" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" style="z-index: 1020 !important;">
+<div class="modal fade" id="ModalConsultaCreditoCliente" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" style="z-index: 1030 !important;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -279,7 +279,7 @@
 </div>
 
 <!-- Modal Pago Credito Interno Clientes -->
-<div class="modal fade" id="ModalPagoCreditoCliente" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" style="z-index: 1020 !important;">
+<div class="modal fade" id="ModalPagoCreditoCliente" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" style="z-index: 1030 !important;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -366,7 +366,7 @@
 </div>
 
 <!--Modal Asignar Vendedor a la Pre-Venta -->
-<div class="modal fade" id="ModalAsignarVendedor"  data-keyboard="false" data-backdrop="static" role="document" style="z-index: 1022; display: none;">
+<div class="modal fade" id="ModalAsignarVendedor"  data-keyboard="false" data-backdrop="static" role="document" style="z-index: 1031; display: none;">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -422,7 +422,7 @@
 </div>
 
 <!--Modal Asignar Cliente a la Pre-Venta -->
-<div class="modal fade" id="ModalAsignarCliente" role="document"  data-keyboard="false" data-backdrop="static" style="z-index: 1020; display: none;">
+<div class="modal fade" id="ModalAsignarCliente" role="document"  data-keyboard="false" data-backdrop="static" style="z-index: 1031; display: none;">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -481,7 +481,7 @@
 </div>
 
 <!--Modal Asignar Forma de Pago a la Pre-Venta -->
-<div class="modal fade" id="ModalAsignarFP" role="document"  data-keyboard="false" data-backdrop="static"  style="z-index: 1025; display: none;">
+<div class="modal fade" id="ModalAsignarFP" role="document"  data-keyboard="false" data-backdrop="static"  style="z-index: 1031; display: none;">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -578,7 +578,7 @@
 </div>
 
 <!-- Modal Ingreso Diferentes Formas de Pago -->
-<div class="modal fade" id="ModalIngresoPago"  data-keyboard="false" data-backdrop="static" role="document" style="z-index: 1025; display: none;">
+<div class="modal fade" id="ModalIngresoPago"  data-keyboard="false" data-backdrop="static" role="document" style="z-index: 1031; display: none;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -711,7 +711,7 @@
 </div>
 
 <!-- Modal Selección TipoDTE -->
-<div class="modal fade" id="ModalTipoDTE" role="document"  data-keyboard="false" data-backdrop="static"  style="z-index: 1025; display: none;">
+<div class="modal fade" id="ModalTipoDTE" role="document"  data-keyboard="false" data-backdrop="static"  style="z-index: 1031; display: none;">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -775,7 +775,7 @@
 </div>
 
 <!-- Modal Pre-Venta -->
-<div class="modal fade" id="ModalPreVenta" role="dialog" data-keyboard="false" data-backdrop="static" style="z-index: 1021; display: none;" >
+<div class="modal fade" id="ModalPreVenta" role="dialog" data-keyboard="false" data-backdrop="static" style="z-index: 1030; display: none;" >
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -985,7 +985,7 @@
 </div>
 
 <!-- Modal Cierre Venta -->
-<div class="modal fade" id="ModalFinalizarVenta"  data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" style="z-index: 1020 !important;">
+<div class="modal fade" id="ModalFinalizarVenta"  data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" style="z-index: 1031 !important;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             
@@ -1022,7 +1022,7 @@
 </div>
 
 <!-- Modal Cancelar Venta -->
-<div class="modal fade" id="ModalCancelarVenta"  data-keyboard="false" data-backdrop="static"  tabindex="-1" role="dialog" style="z-index: 1020 !important;">
+<div class="modal fade" id="ModalCancelarVenta"  data-keyboard="false" data-backdrop="static"  tabindex="-1" role="dialog" style="z-index: 1031 !important;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             
@@ -1093,7 +1093,9 @@
 	var rutaCD = "{{ URL::route('infoCD') }}"
 	//Ruta para imprimir pdf
 	var rutaPDF = "{{ URL::route('boletaPDF') }}"
+    var rutaBPN = "{{ URL::route('compraBPM') }}"
 
+rutaBP
 	
 	var d = [];
 	d['v_formas_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_pago) }}'));
