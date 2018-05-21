@@ -45,11 +45,12 @@ var ManejoRespuestaProcesar = function(respuesta){
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
-                $(".divDetalles").toggle();
-                $(".divBotones").toggle();
-                $('#FormProveedor')[0].reset();
-                $('#IdProveedor').val("");
-                cargarTablaProveedores(respuesta.respuesta.v_bodegas);
+                location.reload();
+                // $(".divDetalles").toggle();
+                // $(".divBotones").toggle();
+                // $('#FormProveedor')[0].reset();
+                // $('#IdProveedor').val("");
+                // cargarTablaProveedores(respuesta.respuesta.v_bodegas);
                 break;
             case '-2':
                 $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
@@ -179,7 +180,7 @@ var pintarDatosActualizar= function(data){
     $("#Direccion").val(data.Direccion);
     $("#Telefeno").val(data.Telefeno);
     $("#Vendedor").val(data.Vendedor);
-    // $("#EstadoProveedor").val(data.EstadoProveedor).trigger("change");
+    $("#EstadoProveedor").val(data.EstadoProveedor).trigger("change");
 }
 
 var BotonCancelar = function(){
@@ -259,7 +260,7 @@ var bloquearInuts = function(){
     $("#Direccion").prop('readonly', true);
     $("#Telefeno").prop('readonly', true);
     $("#Vendedor").prop('readonly', true);
-    // $("#EstadoProveedor").prop('disabled', true);
+    $("#EstadoProveedor").prop('disabled', true);
 }
 
 var desbloquearInuts = function(){
@@ -270,7 +271,7 @@ var desbloquearInuts = function(){
     $("#Direccion").prop('readonly', false);
     $("#Telefeno").prop('readonly', false);
     $("#Vendedor").prop('readonly', false);
-    // $("#EstadoProveedor").prop('disabled', false);
+    $("#EstadoProveedor").prop('disabled', false);
 }
 
 var modificarBodega = function(){

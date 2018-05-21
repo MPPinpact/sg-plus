@@ -51,11 +51,12 @@ var ManejoRespuestaProcesar = function(respuesta){
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
-                $(".divDetalles").toggle();
-                $(".divBotones").toggle();
-                $('#FormCliente')[0].reset();
-                $('#IdCliente').val("");
-                cargarTablaClientes(respuesta.respuesta.v_clientes);
+                location.reload();
+                // $(".divDetalles").toggle();
+                // $(".divBotones").toggle();
+                // $('#FormCliente')[0].reset();
+                // $('#IdCliente').val("");
+                // cargarTablaClientes(respuesta.respuesta.v_clientes);
                 break;
             case '-2':
                 $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
@@ -302,7 +303,7 @@ var pintarDatosActualizar= function(data){
     $("#CupoAutorizado").val(data.CupoAutorizado);
     $("#CupoUtilizado").val(data.CupoUtilizado);
     $("#IdCicloFacturacion").val(data.IdCicloFacturacion).trigger("change");
-    // $("#EstadoCliente").val(data.EstadoCliente).trigger("change");
+    $("#EstadoCliente").val(data.EstadoCliente).trigger("change");
 }
 
 var BotonCancelar = function(){
@@ -329,7 +330,11 @@ var BotonAgregar = function(){
 var ProcesarCliente = function(){
     if (errorRut==0){
         parametroAjax.ruta=ruta;
-        parametroAjax.data = $("#FormCliente").serialize();
+        var camposNuevo = {
+            'EstadoCliente': $('#EstadoCliente').val()
+        }
+        parametroAjax.data = $("#FormCliente").serialize() + '&' + $.param(camposNuevo);
+        // parametroAjax.data = $("#FormCliente").serialize();
         respuesta=procesarajax(parametroAjax);
         ManejoRespuestaProcesar(respuesta);
     }
@@ -361,7 +366,7 @@ var bloquearInuts = function(){
     $("#CupoAutorizado").prop('readonly', true);
     $("#CupoUtilizado").prop('readonly', true);
     $("#IdCicloFacturacion").prop('disabled', true);
-    // $("#EstadoCliente").prop('disabled', true);
+    $("#EstadoCliente").prop('disabled', true);
 }
 
 var desbloquearInuts = function(){
@@ -372,7 +377,7 @@ var desbloquearInuts = function(){
     $("#CupoAutorizado").prop('readonly', false);
     $("#CupoUtilizado").prop('readonly', false);
     $("#IdCicloFacturacion").prop('disabled', false);
-    // $("#EstadoCliente").prop('disabled', false);
+    $("#EstadoCliente").prop('disabled', false);
 }
 
 var modificarCliente = function(){
@@ -465,13 +470,6 @@ $(document).ready(function(){
                     }
                 }
             },
-            // 'DireccionCliente': {
-            //     validators: {
-            //         notEmpty: {
-            //             message: 'El campo es requerido.'
-            //         }
-            //     }
-            // },
             'CupoAutorizado': {
                 verbose: false,
                 validators: {
@@ -480,14 +478,6 @@ $(document).ready(function(){
                     },
                 }
             },
-            // 'CupoUtilizado': {
-            //     verbose: false,
-            //     validators: {
-            //         notEmpty: {
-            //             message: 'El campo es requerido.'
-            //         },
-            //     }
-            // },
             'IdCicloFacturacion': {
                 verbose: false,
                 validators: {
@@ -496,14 +486,14 @@ $(document).ready(function(){
                     },
                 }
             },
-            // 'EstadoCliente': {
-            //     verbose: false,
-            //     validators: {
-            //         notEmpty: {
-            //             message: 'El campo es requerido.'
-            //         },
-            //     }
-            // },
+            'EstadoCliente': {
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: 'El campo es requerido.'
+                    },
+                }
+            },
         }
     })
     .on('success.form.fv', function(e){

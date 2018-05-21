@@ -55,10 +55,16 @@ class Cliente extends Authenticatable
         $model = new Usuario();
         $idAdmin = Auth::id();
         $datos['RUTCliente'] = $model->LimpiarRut($datos['RUTCliente']);
-        $datos['EstadoCliente'] = 1;
+        // $datos['EstadoCliente'] = 1;
         $datos['IdCliente']==null ? $Id=0 : $Id= $datos['IdCliente'];
         $datos['CupoUtilizado']==null ? $datos['CupoUtilizado']=0 : $datos['CupoUtilizado']= $datos['IdCliente'];
+        
+        log::info($datos);
+        
         $sql="select f_registro_cliente(".$Id.",'".$datos['RUTCliente']."','".$datos['NombreCliente']."','".$datos['DireccionCliente']."','".$datos['TelefonoCliente']."','".$datos['CupoAutorizado']."','".$datos['CupoUtilizado']."',".$datos['IdCicloFacturacion'].",".$datos['EstadoCliente'].",".$idAdmin.")";
+        
+        log::info($sql);
+        
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
