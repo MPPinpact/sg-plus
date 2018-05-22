@@ -502,4 +502,40 @@ $(document).ready(function(){
     .on('status.field.fv', function(e, data){
         data.element.parents('.form-group').removeClass('has-success');
     });
+
+    $("#aDetalles").click(function() {
+        $("#TabDetalles").show();
+        $("#TabFacturacionActual").hide();
+        $("#TabProximaFacturacion").hide();
+        $("#TabMovimientos").hide();
+        $("#TabEECC").hide();
+    });
+    $("#aFacturacionActual").click(function() {
+        $("#TabDetalles").hide();
+        $("#TabFacturacionActual").show();
+        $("#TabProximaFacturacion").hide();
+        $("#TabMovimientos").hide();
+        $("#TabEECC").hide();
+    });
+    $("#aProximaFacturacion").click(function() {
+        $("#TabDetalles").hide();
+        $("#TabFacturacionActual").hide();
+        $("#TabProximaFacturacion").show();
+        $("#TabMovimientos").hide();
+        $("#TabEECC").hide();
+    });
+    $("#aMovimientos").click(function() {
+        $("#TabDetalles").hide();
+        $("#TabFacturacionActual").hide();
+        $("#TabProximaFacturacion").hide();
+        $("#TabMovimientos").show();
+        $("#TabEECC").hide();
+    });
+    $("#aEECC").click(function() {
+        $("#TabDetalles").hide();
+        $("#TabFacturacionActual").hide();
+        $("#TabProximaFacturacion").hide();
+        $("#TabMovimientos").hide();
+        $("#TabEECC").show();
+    });
 });
