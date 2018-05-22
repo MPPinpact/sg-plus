@@ -80,6 +80,7 @@ var cargarTablaClientes = function(data){
         $("#tablaClientes").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
+            "pageLength": 25,
             "pagingType": "full_numbers",
             "language": LenguajeTabla,
             "columnDefs": [
