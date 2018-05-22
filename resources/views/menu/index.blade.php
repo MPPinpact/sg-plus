@@ -41,7 +41,6 @@
   {!! Html::style('theme/assets/css/svg-weather.css') !!}
   {!! Html::style('theme/assets/css/main.css') !!}
   {!! Html::style('theme/assets/css/responsive.css') !!}
-  <link rel="stylesheet" type="text/css" href="{{ asset('theme/assets/css/color/color-1.css') }}" id="color"/>  
   {!! Html::style('theme/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css') !!}
   {!! Html::style('theme/assets/plugins/data-table/css/buttons.dataTables.min.css') !!}
   {!! Html::style('theme/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') !!}
@@ -52,6 +51,7 @@
   {!! Html::style('plugins/validator/formValidation.min.css') !!}
   {!! Html::style('plugins/jQuery-contextMenu-master/dist/jquery.contextMenu.min.css') !!}
   {!! Html::style('css/login/login.css') !!}
+  <link rel="stylesheet" type="text/css" href="{{ asset('theme/assets/css/color/color-1.css') }}" id="color"/>  
   <!-- JS -->
   <script type="text/javascript" src="{{ asset('theme/bower_components/jquery/js/jquery.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('theme/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
@@ -65,10 +65,11 @@
   <script src="{{ asset('theme/bower_components/jquery-sparkline/js/jquery.sparkline.js') }}"></script>
   <script type="text/javascript" src="{{ asset('theme/bower_components/waypoints/js/jquery.waypoints.min.js') }}"></script>
   <script src="{{ asset('theme/assets/plugins/countdown/js/jquery.counterup.js') }}"></script>
+
   {{ HTML::script('theme/bower_components/select2/js/select2.full.min.js') }}
   {{ HTML::script('theme/bower_components/datatables.net/js/jquery.dataTables.min.js') }}  
   {{ HTML::script('theme/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}
-  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js') }
+  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js') }}
   {{ HTML::script('theme/bower_components/datatables.net-buttons/js/buttons.print.min.js') }}
   {{ HTML::script('theme/bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}
   {{ HTML::script('theme/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}
@@ -79,11 +80,9 @@
   {{ HTML::script('theme/assets/plugins/data-table/js/pdfmake.min.js') }}
   {{ HTML::script('theme/assets/plugins/data-table/js/vfs_fonts.js') }}
   
-  
   {{ HTML::script('theme/assets/pages/contact-detail.js') }}
   {{ HTML::script('theme/bower_components/stroll/js/stroll.js') }}
   {{ HTML::script('theme/assets/plugins/list/js/list.js') }}
-  
 
   {{ HTML::script('theme/assets/plugins/form-mask/js/inputmask.js') }}
   {{ HTML::script('theme/assets/plugins/form-mask/js/jquery.inputmask.js') }}
