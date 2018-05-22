@@ -69,7 +69,7 @@ class FamiliaController extends Controller
         $datos = $request->all();
         $model= new Familia();
         $result['f_registro'] = $model->regFamilia($datos);
-        $result['v_familias'] = $model->listFamilia();
+        $result['v_familias'] = $model->listFamiliasActivas();
         return $result;
     }
 
