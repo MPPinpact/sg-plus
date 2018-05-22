@@ -2,7 +2,7 @@
 @section('content')
 <style type="text/css" media="screen">
 	.nav-tabs .slide{
-		 width: calc(100% / 5)!important;
+		 width: calc(100% / 3)!important;
 	}
 </style>
 <div class="row">
@@ -57,10 +57,20 @@
 			                                <div class="f-26">
 			                                    <i class="icofont icofont-document-search"></i>
 			                                </div>
-			                                Detalles
+			                                Información del Producto
 			                            </a>
 			                            <div class="slide"></div>
 			                        </li>
+			                        <li class="nav-item">
+			                            <a id="astock" class="nav-link" data-toggle="tab" href="#TabStock" role="tab">
+			                                <div class="f-26">
+			                                    <i class="icofont icofont-document-search"></i>
+			                                </div>
+			                                Stock/Bodegas del Producto
+			                           	</a>
+			                            <div class="slide"></div>
+			                        </li>
+			                        <!--
 			                        <li class="nav-item">
 			                            <a id="areceta" class="nav-link" data-toggle="tab" href="#Tabreceta" role="tab">
 			                                <div class="f-26">
@@ -70,21 +80,13 @@
 			                            </a>
 			                            <div class="slide"></div>
 			                        </li>
+			                    -->
 			                        <li class="nav-item">
 			                            <a id="aimpuestos" class="nav-link" data-toggle="tab" href="#TabImpuestos" role="tab">
 			                                <div class="f-26">
 			                                    <i class="icofont icofont-document-search"></i>
 			                                </div>
-			                                Impuestos
-			                           	</a>
-			                            <div class="slide"></div>
-			                        </li>
-			                        <li class="nav-item">
-			                            <a id="astock" class="nav-link" data-toggle="tab" href="#TabStock" role="tab">
-			                                <div class="f-26">
-			                                    <i class="icofont icofont-document-search"></i>
-			                                </div>
-			                                Stock
+			                                Impuestos del Producto
 			                           	</a>
 			                            <div class="slide"></div>
 			                        </li>
@@ -270,21 +272,23 @@
 									'id'            => 'IdProducto2',
 									'class'         => 'form-control'])!!}
 									<div class="row">
-										<div class="col-sm-4"></div>
-										<div class="col-sm-6">
-										<div class="row">
-											<div class="col-sm-8">
-												<div class="md-input-wrapper">
-													<select name="IdImpuesto" id="IdImpuesto" class="md-valid"></select>
-					                                <label for="IdImpuesto">Impuesto</label>
-												</div>
-						                    </div>
-						                    <div class="col-sm-4">
-												<button id="guardarI"  type="button" class="btn btn-primary waves-effect waves-light">
-													Guardar
-					                			</button>
-						                    </div>
-										</div>
+										<div class="col-sm-2"></div>
+										<div class="col-sm-8">
+											<h2 id="ImpuestosDelProducto">Impuestos del Producto: </h2>	
+											<br />
+											<div class="row">											
+												<div class="col-sm-8">
+													<div class="md-input-wrapper">
+														<select name="IdImpuesto" id="IdImpuesto" class="md-valid"></select>
+						                                <label for="IdImpuesto">Impuesto</label>
+													</div>
+							                    </div>
+							                    <div class="col-sm-4">
+													<button id="guardarI"  type="button" class="btn btn-primary waves-effect waves-light">
+														Guardar
+						                			</button>
+							                    </div>
+											</div>
 										</div>
 										<div class="col-sm-2"></div>
 									</div>
@@ -298,25 +302,17 @@
 									</div>
 		                        </div>
 		                        
-		                        <div class="tab-pane" id="Tabreceta" role="tabpanel">
-		                        	<h1>
-		                        		Receta
-		                        	</h1>
-		                        </div>
 		                        <div class="tab-pane" id="TabStock" role="tabpanel">
 									<div class="row">
 										<div class="col-md-2"></div>
 										<div class="col-md-8">
+											<h2 id="StockDelProducto">Stock del Producto: </h2>
+											<br />
 											<table id="tablaStock" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 										</div>
 										<div class="col-md-2"></div>
 									</div>
-		                        <!-- <div class="tab-pane" id="TabKardex" role="tabpanel">
-		                        	<h1>
-		                        		Kardex
-		                        	</h1>
-		                        </div> -->
-		                    </div>
+		                    	</div>
 		                </div>
 		            </div>
 		        </div>

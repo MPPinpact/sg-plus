@@ -13,10 +13,16 @@ var parametroAjax = {
 var ManejoRespuestaProcesarD = function(respuesta){
     if(respuesta.code==200){
         bloquearInuts();
+        var np = respuesta.respuesta.v_detalles[0].NombreProducto;
+        var cp = respuesta.respuesta.v_detalles[0].CodigoBarra;
+
         $(".divDetalles").toggle();
         $("#divVolver").show();
         $("#divTabs").show();
-        $("#spanTitulo").text("Detalles");
+        $("#spanTitulo").text("Detalles del Producto: " + np + " [" + cp + "]");
+        $("#ImpuestosDelProducto").text("Impuestos del Producto: " + np + " [" + cp + "]");
+        $("#StockDelProducto").text("Stock del Producto: " + np + " [" + cp + "]");
+        
         $("#IdProducto2").val(respuesta.respuesta.v_detalles[0].IdProducto);
         pintarDatosActualizar(respuesta.respuesta.v_detalles[0]);
         cargarTablaImpuestos(respuesta.respuesta.v_impuestos);
