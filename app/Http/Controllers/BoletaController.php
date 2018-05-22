@@ -49,9 +49,15 @@ class BoletaController extends Controller
 
 
     protected function postBoletaVer(Request $request){
+        $modelPV = new Preventa();
+        $modelVT = new Venta();
+
         $datos = $request->all();
- if ($datos['caso']==1){
-            $preventa = Preventa::find($datos['idPreVenta']);
+        if ($datos['caso']==1){
+            //$preventa = Preventa::find($datos['idPreVenta']);
+            $pv = $modelPV->getCabeceraPreventa($datos['idPreVenta']);
+            $preventa = $pv[0];
+
             if($preventa->EstadoPreVenta == 2 or $preventa->EstadoPreVenta == 3){
                 $model= new Boleta();
                 $result['status']['code'] = 200;
@@ -65,6 +71,8 @@ class BoletaController extends Controller
 
         if ($datos['caso']==2){
             $venta = Venta::find(isset($datos['IdVenta']) ? $datos['IdVenta'] : $datos['idPreVenta'] );
+            $v = $modelVT->getCabeceraVenta(isset($datos['IdVenta']) ? $datos['IdVenta'] : $datos['idPreVenta'] );
+            $venta = $v[0];
 
             if($venta->EstadoVenta == 2 or $venta->EstadoVenta == 3){
                 $model= new Boleta();
@@ -78,9 +86,7 @@ class BoletaController extends Controller
         }
         return $result;
     }
-
-
-
+    
     protected function postBoletaPdf(Request $request){
         $datos = $request->all();
         $model= new Boleta();

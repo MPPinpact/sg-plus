@@ -25,6 +25,8 @@ class Boleta extends Authenticatable
         if ($caso==1){ 
             $tittle= "PREVENTA"; // N° ".$obj->idPreVenta; 
             $numero = "N° ".$obj->idPreVenta;
+            $vendedor = $obj->IdVendedor.' - '.$obj->NombreVendedor;
+
             $id = $obj->idPreVenta;
             $detalles = DB::select("select CantidadPreVenta as Cant,NombreProducto,ValorUnitarioVenta from v_preventas_detalle where IdPreVenta = ".$obj->idPreVenta);
             $pagos = DB::select("select FormaPago,MontoPagado from v_preventas_pagos where IdPreVenta =".$obj->idPreVenta);
@@ -50,6 +52,8 @@ class Boleta extends Authenticatable
         if ($caso==2){ 
             $tittle= "VENTA ";  // N° ".$obj->IdVenta; 
             $numero = "N° ".$obj->IdVenta;
+            $vendedor = $obj->IdVendedor.' - '.$obj->NombreVendedor;
+
             $id = $obj->IdVenta;
             $detalles = DB::select("select CantidadVenta, NombreProducto, ValorUnitarioVenta from v_ventas_detalle where IdVenta = ".$obj->IdVenta);
             $pagos = DB::select("select FormaPago,MontoPagado from v_ventas_pagos where IdVenta=".$obj->IdVenta);
@@ -91,17 +95,12 @@ class Boleta extends Authenticatable
                         <table border="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="text-align:center;">
-                                    '.$local->RUTEmpresa.'
+                                    '.$local->NombreLocal.'
                                 </td>
                             </tr>
                             <tr>
                                 <td style="text-align:center;">
-                                    '.$tittle.'
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align:center;">
-                                    '.$numero.'
+                                    '.$tittle.' '.$numero.'
                                 </td>
                             </tr>
                         </table>
@@ -118,7 +117,7 @@ class Boleta extends Authenticatable
                 </tr>
                 <tr>
                     <td>
-                        <b>'.$empresa->Giro.'</b>
+                        <b>'.$local->NombreLocal.'</b>
                     </td>
                 </tr>
                 <tr>
@@ -131,14 +130,14 @@ class Boleta extends Authenticatable
             <table border="0" cellspacing="0" width="100%">
                 <tr>
                     <td>
-                        <b>Fecha Emisión: '.$FechaNow->format('d-m-Y').' </b>
+                        <b>Fecha Emisión: '.$FechaNow->format('d-m-Y').' '.$FechaNow->format('H:i:s').' </b>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <b>Hora Emisión: '.$FechaNow->format('H:i:s').' </b>
+                        <b>Vendedor: '.$vendedor.' </b>
                     </td>
-                </tr>                                                                            
+                </tr>                                                                          
             </table>
             <br />
             <table border="0" cellspacing="0" width="100%" style="font-size: 9px; font-family: Arial, Helvetica, sans-serif;">
@@ -146,7 +145,7 @@ class Boleta extends Authenticatable
                     <td width="70%" colspan="2">DETALLE COMPRA</td>
                     <td width="30%" align="right">TOTAL</td>
                 </tr>
-            '.$DetalleFactura.'
+                    '.$DetalleFactura.'
                 <tr>
                     <td width="70%" colspan="2"></td>
                     <td width="30%" border="0"></td>
@@ -163,7 +162,7 @@ class Boleta extends Authenticatable
                 <tr>
                     <td colspan="3" style="font-weight: bold;">DETALLE PAGO</td>
                 </tr>
-            '.$DetallePago.'
+                '.$DetallePago.'
             </table>
         </div>
         ';
