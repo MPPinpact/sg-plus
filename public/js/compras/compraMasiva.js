@@ -259,8 +259,6 @@ var CerrarModalBodegaDestino = function(){
 		$("#cerrarBodegaDestino").addClass("btn-lg btn-danger waves-effect waves-light btn-block");
 		$("#cerrarBodegaDestino").text("Cerrar");
 		
-		
-		
 		$('#NombreProducto').focus().select();		
 		
 	//}else{
@@ -491,6 +489,7 @@ var cargarTablaCompraMasiva = function(data){
 	var columnReport = [[1],[2]];
 	
 	$("#tablaDetalleCompra").dataTable({
+
 		responsive:false,
 		"aLengthMenu": DataTableLengthMenu,
 		"pagingType": "full_numbers",
@@ -818,7 +817,7 @@ $(document).ready(function(){
 	
 	$(document).on('click','#botonAsignarProducto', AsignarBodegaProducto);
 	
-	
+
 	$('#NombreProducto').on('keypress', function(e) {
       var keyCode = e.keyCode || e.which;
       if (keyCode === 13) { 

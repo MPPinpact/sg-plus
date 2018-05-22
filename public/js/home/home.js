@@ -1,6 +1,8 @@
 var meses = ['', 'Enero','Febrero','Marzo','Abril','Mayo', 'Junio', 'Julio', 'Agosto', 'Septiempre','Octubre','Noviembre','Diciembre'];
 var imgProgreso = '<img alt="" src="/img/giphy.gif" height="50" width="50"/>';
 var stopRead = 0;
+var limpiarTablaResutadoBusqueda=limpiarTablaStockProducto=0;
+
 var cambiarSalir = function(){
 	v_salir = 1;
 }
@@ -136,6 +138,144 @@ var goShortcut = function(shortcut){
      window.location.assign("http://sg-plus.int/"+shortcut);
 }
 
+var BotonBuscarProducto = function(){
+    console.log("BotonBuscarProducto");
+    
+    cargarResultadoBusquedaProducto(null);
+    
+    $("#spanTituloModalBusquedaProducto").text("Busqueda de Producto...");
+    $("#InfoProducto").val($.trim($("#NombreProductoBusquedaRapida").val()));
+    $("#ModalBuscarProducto").modal();
+    
+    $('#ModalBuscarProducto').on('shown.bs.modal', function() {
+        $('#InfoProducto').focus().select();
+    });
+    
+    var largoTXT = $.trim($("#InfoProducto").val());
+    
+    if(largoTXT.length > 0) BuscarProducto();
+}
+
+var BuscarProducto = function(){
+
+    var largoTXT = $.trim($("#InfoProducto").val());
+    
+    if(largoTXT.length >= 4){   
+        parametroAjax.ruta=rutaBPM;
+        parametroAjax.data = {InfoProducto:$("#InfoProducto").val()};
+        respuesta=procesarajax(parametroAjax);
+        console.log("procesarajax()");
+        
+        ManejoRespuestaBuscarProductoPTOVTA(respuesta);
+        
+    }else{
+        $.growl({message:"Debe ingresar al menos 3 caracteres para realizar la busqueda de un Producto!!!"},{type: "warning", allow_dismiss: true});
+        
+    }
+}
+
+var ManejoRespuestaBuscarProductoPTOVTA = function(respuesta){
+    console.log(respuesta);
+    console.log(respuesta.respuesta);
+    if(respuesta.code==200){
+        if(respuesta.respuesta!=null){
+            if(respuesta.respuesta.productos){
+                cargarResultadoBusquedaProducto(respuesta.respuesta.productos);
+            }    
+        }else{
+            $.growl({message:"Producto no encontrado"},{type: "warning", allow_dismiss: true});
+        }
+    }
+}
+
+var cargarResultadoBusquedaProducto = function(data){
+    if(limpiarTablaResutadoBusqueda==1){
+        destruirTabla('#tablaResultadoBusquedaProducto');
+        $('#tablaResultadoBusquedaProducto thead').empty();
+    }
+    
+    var columnReport = [[1],[2]];
+    
+    $("#tablaResultadoBusquedaProducto").dataTable({
+        responsive:true,
+        "aLengthMenu": [[5],[5]],
+        "pagingType": "full_numbers",
+        "searching": false,
+        "scrollCollapse": false,
+        "lengthChange": false, 
+        "language": LenguajeTabla,
+        "bFilter": false,
+        "data": data,
+        "columns":[
+            {"title": "Id","data": "IdProducto",visible:0},
+            {"title": "Código","data": "CodigoBarra"},
+            {"title": "Producto","data": "NombreProducto"},
+            {"title": "Precio Venta","data": "PrecioVentaSugerido",
+                        render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                        className: "text-right"},
+            {"title": "Stock Total","data": "StockActual",
+                        render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                        className: "text-right"},
+            {"title": "Ver Stock",
+                "data": null,
+                "render": function(data, type, row, meta){
+                    var result = `
+                    <center>
+                    <a href="#" onclick="StockProducto(`+data.IdProducto+`,'`+data.NombreProducto+`');" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Stock Producto" data-original-title="Delete">
+                        <i class="icofont icofont-search"></i>
+                    </a>
+                    
+                    </center>`;
+                    return result;
+                }
+            },
+        ],
+    });
+    limpiarTablaResutadoBusqueda=1;
+};
+
+var StockProducto = function(IdProducto,NombreProducto){
+    console.log("Estoy 1111");
+    console.log("StockProducto");
+
+    parametroAjax.ruta=rutaCSP;
+    parametroAjax.data = {IdProducto:IdProducto};
+    respuesta=procesarajax(parametroAjax);
+    cargarTablaStockProducto(respuesta.respuesta.v_stock);
+    
+    $("#NombreProductoStock").text("Stock del Producto: "+NombreProducto);
+    $("#ModalStockProducto").modal();   
+}
+
+var cargarTablaStockProducto = function(data){
+    
+    if(limpiarTablaStockProducto==1){
+        destruirTabla('#tablaStockProducto');
+        $('#tablaStockProducto thead').empty();
+    }
+        
+    $("#tablaStockProducto").dataTable({
+        responsive:false,
+        "aLengthMenu": [[5],[5]],
+        "pagingType": "full_numbers",
+        "language": LenguajeTabla,
+        "lengthChange": false, 
+        "bFilter": false,
+        "scrollCollapse": false,
+        
+        "data": data,
+        "columns":[
+            {"title": "IdSotck","data": "IdStock",visible:0},
+            {"title": "Local","data": "NombreLocal"},
+            {"title": "Bodega","data": "NombreBodega",},
+            {"title": "Cantidad","data": "Stock" ,
+                        render: $.fn.dataTable.render.number( '.', ',', 2 ), 
+                        className: "text-right"},
+        ],
+    });
+    limpiarTablaStockProducto=1;
+};
+
 $(document).ready(function() {
 	// moment en idioma español
 	// moment.locale('es');
@@ -153,6 +293,9 @@ $(document).ready(function() {
     $(document).on('click','.download-icon',cambiarSalir);
     //$(document).on('click','.text-muted',cambiarSalir);
     
+    $(document).on('click','#botonBuscar',BotonBuscarProducto);
+    
+
     $(document).on('click','#btn-logout',Salir);
 	$(document.body).on("keydown", this, function (event) {
 	    if (event.keyCode == 116) {
@@ -166,4 +309,16 @@ $(document).ready(function() {
     $('.goShortcut').click(function() {
           goShortcut($(this).data('datac'));
     });
+
+    $('#NombreProductoBusquedaRapida').on('keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) { 
+            console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+            e.preventDefault();
+
+            BotonBuscarProducto();
+            return false;
+        }
+    });
+
 });

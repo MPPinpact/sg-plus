@@ -41,6 +41,11 @@
   {!! Html::style('theme/assets/css/svg-weather.css') !!}
   {!! Html::style('theme/assets/css/main.css') !!}
   {!! Html::style('theme/assets/css/responsive.css') !!}
+  {!! Html::style('theme/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css') !!}
+  {!! Html::style('theme/assets/plugins/data-table/css/buttons.dataTables.min.css') !!}
+  {!! Html::style('theme/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') !!}
+  {!! Html::style('theme/bower_components/datatables.net/css/select.bootstrap4.css') !!}
+
   <link rel="stylesheet" type="text/css" href="{{ asset('theme/assets/css/color/color-1.css') }}" id="color"/>  
 
   <!-- JS -->
@@ -54,9 +59,9 @@
 
   <script src="{{ asset('theme/assets/plugins/notification/js/bootstrap-growl.min.js') }}"></script>
 
-  
-  
-
+  {{ HTML::script('theme/bower_components/datatables.net/js/jquery.dataTables.min.js') }}
+  {{ HTML::script('theme/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}
+  {{ HTML::script('theme/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}
   
   {{ HTML::script('js/utils/utils.js') }}
   {{ HTML::script('js/home/home.js') }}
@@ -84,8 +89,12 @@
   </div>
   <script type="text/javascript" src="{{ asset('js/home/main.js') }}"></script>
   <script src="{{ asset('theme/assets/js/menu-horizontal.min.js') }}"></script>
+
   <script Language="Javascript">
     var rutaHome = "{{ URL::route('infoDashboard') }}"
+    var rutaBPM = "{{ URL::route('compraBPM') }}"
+    var rutaCSP = "{{ URL::route('compraCSP') }}"  
   </script>
+
 </body>
 </html>

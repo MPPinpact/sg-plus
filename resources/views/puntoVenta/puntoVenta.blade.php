@@ -209,16 +209,15 @@
 					
 					<div class="row">
 						<div class="col-md-12">
-							<div class="content clearfix">
-								<h3 id="basic-forms-h-0___" tabindex="-1" class="title current"> Productos Similares</h3>
-								<span id="NombreConsultaProducto"></span>
-								<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0___" class="body current" aria-hidden="false">
-									<table id="tablaResultadoBusquedaProducto" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
-								</fieldset>
+							<div class="clearfix">
+								<h3 tabindex="-1" class="title"> Productos Similares</h3>
+
+								<table id="tablaResultadoBusquedaProducto" class="table table-striped table-hover" cellspacing="0" width="100%"></table>
+								
 							</div> 
 						</div>
 					</div>
-					<br>
+					<br />
 						
 					<div class="row" id="">
 						<div class="col-md-12">

@@ -69,7 +69,7 @@ var cargarResultadoBusquedaProducto = function(data){
     var columnReport = [[1],[2]];
     
     $("#tablaResultadoBusquedaProducto").dataTable({
-        responsive:false,
+        responsive:true,
         "aLengthMenu": [[5],[5]],
         "pagingType": "full_numbers",
         "searching": false,

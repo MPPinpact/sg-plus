@@ -66,35 +66,25 @@
   <script type="text/javascript" src="{{ asset('theme/bower_components/waypoints/js/jquery.waypoints.min.js') }}"></script>
   <script src="{{ asset('theme/assets/plugins/countdown/js/jquery.counterup.js') }}"></script>
   {{ HTML::script('theme/bower_components/select2/js/select2.full.min.js') }}
-  {{ HTML::script('theme/bower_components/datatables.net/js/jquery.dataTables.min.js') }}
+  {{ HTML::script('theme/bower_components/datatables.net/js/jquery.dataTables.min.js') }}  
   {{ HTML::script('theme/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}
-  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js') }}
+  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js') }
+  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/buttons.print.min.js') }}
+  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}
   {{ HTML::script('theme/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}
   {{ HTML::script('theme/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}
-
-
-  {{ HTML::script('theme/bower_components/datatables.net/js/jquery.dataTables.min.js') }}
-  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js') }}
+  {{ HTML::script('theme/bower_components/datatables.net/js/dataTables.select.js') }}
+  
   {{ HTML::script('theme/assets/plugins/data-table/js/jszip.min.js') }}
   {{ HTML::script('theme/assets/plugins/data-table/js/pdfmake.min.js') }}
   {{ HTML::script('theme/assets/plugins/data-table/js/vfs_fonts.js') }}
-  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/buttons.print.min.js') }}
-  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}
-  {{ HTML::script('theme/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}
-  {{ HTML::script('theme/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}
-  {{ HTML::script('theme/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}
-
-
-
+  
+  
   {{ HTML::script('theme/assets/pages/contact-detail.js') }}
   {{ HTML::script('theme/bower_components/stroll/js/stroll.js') }}
   {{ HTML::script('theme/assets/plugins/list/js/list.js') }}
-  {{ HTML::script('theme/bower_components/datatables.net/js/dataTables.select.js') }}
-  {{ HTML::script('theme/assets/plugins/data-table/js/jszip.min.js') }}
-  {{ HTML::script('theme/assets/plugins/data-table/js/pdfmake.min.js') }}
-  {{ HTML::script('theme/assets/plugins/data-table/js/vfs_fonts.js') }}
-  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/buttons.print.min.js') }}
-  {{ HTML::script('theme/bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}
+  
+
   {{ HTML::script('theme/assets/plugins/form-mask/js/inputmask.js') }}
   {{ HTML::script('theme/assets/plugins/form-mask/js/jquery.inputmask.js') }}
   {{ HTML::script('theme/assets/plugins/form-mask/js/autoNumeric.js') }}
