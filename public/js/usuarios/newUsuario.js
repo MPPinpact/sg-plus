@@ -37,6 +37,7 @@ var ManejoRespuestaAsociarLocal = function(respuesta){
         cargarTablaLocales(respuesta.respuesta.v_localesUsuario);
         crearselect(respuesta.respuesta.v_localesDisponibles,"IdLocal");
 
+
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -393,12 +394,15 @@ var ProcesarUsuario = function(){
 };
 
 var ProcesarAsociarLocal = function(){
+    var localNombre = $("#IdLocal option:selected").text();
+
     parametroAjax.ruta=rutaALU;
     parametroAjax.data = $("#FormAsociarLocal").serialize();
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaAsociarLocal(respuesta);
 
     $("#ModalAsociarLocalUsuario").modal("hide");
+    $.growl({message:"Local " + localNombre + " Asociado al Usuario " + $("#usrNombreFull").val()},{type: "success", allow_dismiss: true,});
 };
 
 var ProcesarAsociarTodosLocal = function(){
@@ -408,7 +412,7 @@ var ProcesarAsociarTodosLocal = function(){
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaAsociarLocal(respuesta);
 
-    $("#ModalAsociarLocalUsuario").modal("hide");
+    $.growl({message:"Todos los locales disponibles Asociados al Usuario " + $("#usrNombreFull").val()},{type: "success", allow_dismiss: true,});
 };
 
 var eliminarLocalUsuario = function(IdUsuarioLocal){
@@ -417,6 +421,8 @@ var eliminarLocalUsuario = function(IdUsuarioLocal){
     parametroAjax.data = $.param(camposNuevo);
     respuesta=procesarajax(parametroAjax);
     ManejoRespuestaAsociarLocal(respuesta);
+
+    $.growl({message:"Local desasociado al Usuario " + $("#usrNombreFull").val() + "<br>El usuario ya no podrá ingresar a éste Local."},{type: "success", allow_dismiss: true,});
 }
 
 var ManejoRespuestaProcesarUsuario = function(respuesta){
