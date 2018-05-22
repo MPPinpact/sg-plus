@@ -84,7 +84,7 @@ class SubfamiliaController extends Controller
         $model= new Subfamilia();
         $subfamilia = Subfamilia::find($datos['IdSubFamilia']);
         $result['activar'] = $model->activarSubfamilia($subfamilia);
-        $result['v_subfamilias'] = $model->listSubfamilia();
+        $result['v_subfamilias'] = $model->listSubfamiliaActivas();
         return $result;
     }
 

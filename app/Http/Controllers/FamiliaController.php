@@ -79,7 +79,7 @@ class FamiliaController extends Controller
         $model= new Familia();
         $familia = Familia::find($datos['IdFamilia']);
         $result['activar'] = $model->activarFamilia($familia);
-        $result['v_familias'] = $model->listFamilia();
+        $result['v_familias'] = $model->listFamiliasActivas();
         return $result;
     }
 
