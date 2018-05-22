@@ -91,6 +91,9 @@ class BoletaController extends Controller
         $datos = $request->all();
         $model= new Boleta();
 
+        $modelPV = new Preventa();
+        $modelVT = new Venta();
+        
         if ($datos['caso']==1){
             PDF::SetTitle('PREVENTA');
             $codigo = $datos['idPreVenta'];
@@ -115,7 +118,7 @@ class BoletaController extends Controller
             //$venta = Venta::find(isset($datos['IdVenta']) ? $datos['IdVenta'] : $datos['idPreVenta'] );
             $v = $modelVT->getCabeceraVenta(isset($datos['IdVenta']) ? $datos['IdVenta'] : $datos['idPreVenta'] );
             $venta = $v[0];
-            
+
             if($venta->EstadoVenta == 2 or $venta->EstadoVenta == 3){
                 $model= new Boleta();
                 // Cuerpo de la boleta
