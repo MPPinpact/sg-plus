@@ -37,6 +37,11 @@ class Producto extends Authenticatable
         return DB::table('v_productos')->get();
     }
 
+    public function buscarProductosCodigoNombre($datos){
+        
+        return DB::table('v_productos')->where('NombreProducto', 'like', '%'. $datos['InfoProducto'] .'%')->orWhere('CodigoBarra', $datos['InfoProducto'])->get();
+    }
+
     // Cargar combo de estados de Estado (Activo / Inactivo)
     public function listEstados(){
         return DB::table('v_estados')->get();

@@ -276,9 +276,12 @@ class CompraController extends Controller
 		
 		$datos = $request->all();
 		$IdProducto = $datos['IdProducto'];
-		//log::info("IdProducto: ". $IdProducto);
+		log::info("IdProducto: ". $IdProducto);
 		
         $result['v_stock'] = $modelPRO->listStock($IdProducto);
+
+        log::info($result['v_stock']);
+        
         return $result;
     }
 	
@@ -401,8 +404,13 @@ class CompraController extends Controller
     }
 	
 	protected function postBuscarProductoMasivo(Request $request){
+        $modelPRO = new Producto();
         $datos = $request->all();
+
         $result['productos'] = Producto::where('NombreProducto', 'like', '%'. $datos['InfoProducto'] .'%')->orWhere('CodigoBarra', $datos['InfoProducto'])->get();
+
+        $result['productos'] = $modelPRO->buscarProductosCodigoNombre($datos);
+        
         if($result['productos'] == null) { $result['productos'] = '{"IdProducto":0}'; }
 		
         return $result;

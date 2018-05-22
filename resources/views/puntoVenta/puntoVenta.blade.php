@@ -61,7 +61,8 @@
 					<h5 class="counter txt-white d-inline-block">Consulta Stock Producto</h5>
 					<h6 class="f-w-100 txt-white">Permite consultar el stock de un producto</h6>
 					<h6 class="f-w-100 txt-white">----</h6>                                                   
-            		<a id="botonConsultaStock" name="botonConsultaStock"  style="float:right;" href="#!" class="btn btn-inverse-primary waves-effect waves-light">Consultar Stock <i class="icon-action-redo"></i></a> 
+            		<a id="botonConsultaProducto" name="botonConsultaProducto"  style="float:right;" href="#!" class="btn btn-inverse-primary waves-effect waves-light">Consultar Stock <i class="icon-action-redo"></i></a> 
+            		
 					<br />
 				</div>
 			</div>	
@@ -178,6 +179,90 @@
 					</div>	
 				{!! Form::close() !!}
             </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Buscar Producto -->
+<div class="modal fade" id="ModalBuscarProducto" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<h6 id="spanTituloModalBusquedaProducto" class="modal-title"></h6>
+            </div>
+            <div class="modal-body">
+				{!! Form::open(['id'=>'FormBusquedaProducto','autocomplete' => 'off']) !!}
+					
+					<div class="row" >
+						<div class="col-md-9">
+							<div class="md-input-wrapper">
+								<input id="InfoProducto" name="InfoProducto" type="text" class="md-form-control md-static" maxlength="250" />
+								<label for="InfoProducto">Código/Nombre/Descripción del Producto</label>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<button id="botonBuscar" name="botonBuscar" type="button" class="btn btn-success waves-effect waves-light btn-block">
+								Buscar Producto  <i class="icofont icofont-search"></i>
+							</button>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<div class="content clearfix">
+								<h3 id="basic-forms-h-0___" tabindex="-1" class="title current"> Productos Similares</h3>
+								<span id="NombreConsultaProducto"></span>
+								<fieldset id="basic-forms-p-0" role="tabpanel" aria-labelledby="basic-forms-h-0___" class="body current" aria-hidden="false">
+									<table id="tablaResultadoBusquedaProducto" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+								</fieldset>
+							</div> 
+						</div>
+					</div>
+					<br>
+						
+					<div class="row" id="">
+						<div class="col-md-12">
+							<button id="cancelarBPS" type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block" data-dismiss="modal">
+								Cerrar
+							</button>
+						</div>
+					</div>	
+				{!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal STOCK Producto -->
+<div class="modal fade" id="ModalStockProducto" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            
+            <div class="modal-body">
+				{!! Form::open(['id'=>'FormStockProducto','autocomplete' => 'off']) !!}
+				<input type="hidden" name="IdProductoStock" id="IdProductoStock">
+									
+				<div class="row">
+					<div class="col-md-12">
+						<center>
+							<h3 id="NombreProductoStock" tabindex="-1" class="title current"> Stock del Producto</h3>
+						</center>
+						<!-- <span id="NombreProductoStock"></span> -->
+						<table id="tablaStockProducto" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
+					</div> 
+				</div>
+				
+				<br>
+					
+				<div class="row" id="">
+					<div class="col-md-4">
+						<button id="cerrarBodegaDestino" name="cerrarBodegaDestino" type="button" class="btn-lg btn-danger waves-effect waves-light btn-block" data-dismiss="modal">
+							Cerrar
+						</button>
+					</div>						
+				</div>	
+				{!! Form::close() !!}
+			</div>
         </div>
     </div>
 </div>
@@ -1095,7 +1180,8 @@
 	var rutaPDF = "{{ URL::route('boletaPDF') }}"
     var rutaBPN = "{{ URL::route('compraBPM') }}"
 
-rutaBP
+    var rutaBPM = "{{ URL::route('compraBPM') }}"
+    var rutaCSP = "{{ URL::route('compraCSP') }}"
 	
 	var d = [];
 	d['v_formas_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_pago) }}'));

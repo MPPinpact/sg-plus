@@ -395,7 +395,7 @@ var cargarTablaBodegaDestino = function(data){
 		"aLengthMenu": DataTableLengthMenu,
 		"pagingType": "full_numbers",
 		"language": LenguajeTabla,
-		
+		"lengthChange": false, 
 		"bFilter": false,
 		"data": data,
 		"columns":[
@@ -464,7 +464,7 @@ var cargarResultadoBusquedaProducto = function(data){
 					return result;
 				}
 			},
-			{"title": "",
+			{"title": "Stock",
 				"data": null,
 				"render": function(data, type, row, meta){
 					var result = `
@@ -545,7 +545,7 @@ var cargarTablaStockProducto = function(data){
 		"aLengthMenu": DataTableLengthMenu,
 		"pagingType": "full_numbers",
 		"language": LenguajeTabla,
-		
+		"lengthChange": false, 
 		"bFilter": false,
 		"data": data,
 		"columns":[
@@ -596,6 +596,7 @@ var cargarTablaResumenCompraMasivaBodega = function(data){
 		"aLengthMenu": DataTableLengthMenu,
 		"language": LenguajeTabla,
 		"paging":   false,
+		"lengthChange": false, 
 		"bFilter": false,
 		"data": data,
 		"columns":[
@@ -654,6 +655,7 @@ var cargarTablaResumenCompraMasivaLocal = function(data){
 		"aLengthMenu": DataTableLengthMenu,
 		"language": LenguajeTabla,
 		"paging":   false,
+		"lengthChange": false, 
 		"bFilter": false,
 		"data": data,
 		"columns":[
@@ -816,7 +818,17 @@ $(document).ready(function(){
 	
 	$(document).on('click','#botonAsignarProducto', AsignarBodegaProducto);
 	
-	$('#FormAsignarBodega').on('keyup keypress', function(e) {
+	
+	$('#NombreProducto').on('keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) { 
+        e.preventDefault();
+        BotonBuscarProducto();
+        return false;
+      }
+    });
+
+	$('#FormAsignarBodega').on('keypress', function(e) {
       var keyCode = e.keyCode || e.which;
       if (keyCode === 13) { 
         e.preventDefault();
@@ -824,7 +836,7 @@ $(document).ready(function(){
       }
     });
 	
-	$('#FormDetalleCompra').on('keyup keypress', function(e) {
+	$('#FormDetalleCompra').on('keypress', function(e) {
       var keyCode = e.keyCode || e.which;
       if (keyCode === 13) { 
         e.preventDefault();
@@ -832,7 +844,7 @@ $(document).ready(function(){
       }
     });
 	
-	$('#InfoProducto').on('keyup keypress', function(e) {
+	$('#InfoProducto').on('keypress', function(e) {
       var keyCode = e.keyCode || e.which;
       if (keyCode === 13) { 
         e.preventDefault();
@@ -841,7 +853,7 @@ $(document).ready(function(){
       }
     });
 	
-	$('#CodigoBarra').on('keyup keypress', function(e) {
+	$('#CodigoBarra').on('keypress', function(e) {
       var keyCode = e.keyCode || e.which;
       if (keyCode === 13) { 
         e.preventDefault();
