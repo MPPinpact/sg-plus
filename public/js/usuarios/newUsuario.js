@@ -216,7 +216,7 @@ var cargarTablaLocales = function(data){
                 className: 'btn btn-inverse-warning AsociarLocal',
             },
             {
-                text: 'Asociar Todos los Local',
+                text: 'Asociar Todos los Locales',
                 className: 'btn btn-inverse-warning AsociarTodosLocal',
             },
         ],
