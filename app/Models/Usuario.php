@@ -184,17 +184,23 @@ class Usuario extends Authenticatable
 
     // registrar un nuevo usuario en la aplicacion
     public function regUsuario($datos){
-        $datos['usrUserName'] = $this->LimpiarRut($datos['usrUserName']);
-        $p = Session::get('perfiles');
         $idAdmin = Auth::id();
+
+        $datos['usrUserName'] = $this->LimpiarRut($datos['usrUserName']);
         $datos['idUser']==null ? $idUser=0 : $idUser= $datos['idUser'];
+        
         $pass = substr($datos['usrUserName'], 0,6);
         $usrPassword=bcrypt($pass);
-        $sql="select f_registro_usuario(".$idUser.",'".$datos['usrUserName']."','".$usrPassword."','".$datos['usrNombreFull']."',".$datos['usrEstado'].",".$idAdmin.",'".$datos['_token']."','".$datos['usrEmail']."',".$datos['idPerfil'].")";
+
+        $sql="select f_registro_usuario(".$idUser.",'".$datos['usrUserName']."','".$usrPassword."','".$datos['usrNombreFull']."','".$datos['usrNickName']."',".$datos['usrEstado'].",".$idAdmin.",'".$datos['_token']."','".$datos['usrEmail']."',".$datos['idPerfil'].")";
+        
+        log::info($sql);
         $execute=DB::select($sql);
+
         foreach ($execute[0] as $key => $value) {
             $result['f_registro_usuario']=$value;
         }
+
         return $result;
     }
 
@@ -211,10 +217,40 @@ class Usuario extends Authenticatable
         return $result;
     }
 
+    public function regLocalUsuario($datos){
+        $idAdmin = Auth::id();
+
+        //IdUsuario, IdLocal, Estado, auCreadoEl, auCreadoPor, auModificadoEl, auModificadoPor
+        DB::table('usuarios_locales')->insert(['IdUsuario' => $datos['IdUsuarioLocal'], 'IdLocal' => $datos['IdLocal'], 'Estado' => 1, 'auCreadoPor' => $idAdmin, 'auModificadoPor' => $idAdmin]);
+
+        return true;
+    }
+
+    public function regTodosLocalUsuario($datos){
+        $idAdmin = Auth::id();
+
+        //IdUsuario, IdLocal, Estado, auCreadoEl, auCreadoPor, auModificadoEl, auModificadoPor
+        $pagos = DB::select("INSERT INTO usuarios_locales (IdUsuario, IdLocal, Estado, auCreadoPor, auModificadoPor)
+                                SELECT ".$datos['IdUsuario'].", id, 1, ".$idAdmin.",".$idAdmin." FROM v_locales_combo WHERE id NOT IN (SELECT IdLocal FROM usuarios_locales WHERE IdUsuario = ".$datos['IdUsuario']." AND Estado = 1)");
+        return true;
+    }
+
+    // Registrar la ultima visita del usuario
+    public function delLocalUsuario($datos){
+        $idAdmin = Auth::id();
+
+        DB::table('usuarios_locales')->where('IdUsuarioLocal', $datos['IdUsuarioLocal'])->update(array('Estado'=>0,'auModificadoPor'=>$idAdmin));
+
+        return true;
+
+    }
+
     // Registrar la ultima visita del usuario
     public function registrarVisita($idUser){
         $now = new DateTime();
         DB::table('usuarios')->where('idUser', $idUser)->update(['usrUltimaVisita' => $now]);
+
+        return true;
     }
     
     // Sumar numeros de intentos fallidos de inicio de sesion
@@ -445,6 +481,13 @@ class Usuario extends Authenticatable
 	
 	public function getBuscarUsuario($IdUsuario){
         return DB::table('v_usuarios')->where('idUser',$IdUsuario)->get(); 
+    }
+
+    public function getBuscarLocalesDisponiblesUsuario($IdUsuario){
+        //SELECT * FROM v_locales_combo WHERE id NOT IN (SELECT IdLocal FROM usuarios_locales WHERE IdUsuario = 5 AND Estado = 1);
+        log::info("getBuscarLocalesDisponiblesUsuario(".$IdUsuario.")");
+
+        return DB::table('v_locales_combo')->whereRaw('id NOT IN (SELECT IdLocal FROM usuarios_locales WHERE IdUsuario = '.$IdUsuario.' AND Estado = 1)')->get();
     }
 	
 	public function getBuscarLocales($IdUsuario){

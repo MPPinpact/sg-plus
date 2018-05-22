@@ -31,7 +31,7 @@
 	<div class="col-md-8" style="align-items: center;">
 		<div class="card">
             <div class="card-header">
-            	<h5 class="card-header-text">{{Auth::user()->usrNombreFull}}, antes de comenzar ¿Donde trabajaras hoy?</h5>
+            	<h5 class="card-header-text">{{Auth::user()->usrNickName}}, antes de comenzar ¿Donde trabajaras hoy?</h5>
             </div>
             <div class="card-block color-card">
                 <div class="row text-center">

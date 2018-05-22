@@ -81,12 +81,11 @@ var cargarTablaLocales = function(data){
             "language": LenguajeTabla,
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
-                {"sWidth": "1px", "aTargets": [8]}
+                {"sWidth": "1px", "aTargets": [2]}
             ],
             "data": data,
             "columns":[
-                {
-                    "title": " ",
+                {"title": " ",
                     "data": "IdLocal",
                     "render": function(data, type, row, meta){
                         var result = `
@@ -102,16 +101,13 @@ var cargarTablaLocales = function(data){
                     }
                 },
                 {"title": "IdLocal","data": "IdLocal",visible:0},
-                {"title": "Nombre","data": "NombreLocal"},
-                {"title": "Encargado Local","data": "IdEncargadoLocal"},
+                
+                {"title": "Nombre Local","data": "NombreLocal"},
                 {"title": "Bodega Principal","data": "NombreBodegaPrincipal"},
-                {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
-                {"title": "Usuario creacion","data": "auUsuarioCreacion",visible:0},
-                {"title": "Creado por","data": "creador",visible:0},
-                {"title": "auModificadoPor","data": "auUsuarioModificacion",visible:0},
-                {"title": "auUsuarioModificacion","data": "auFechaModificacion",visible:0},
-                {"title": "Modificado por","data": "modificador",visible:0},
-                {"title": "Estado","data": "desEstadoLocal"}
+                {"title": "Encargado Local","data": "EncargadoLocal"},
+                {"title": "Empresa","data": "NombreFantasiaEmpresa"},
+                {"title": "Estado","data": "desEstadoLocal"},
+                {"title": "fecha de creacion","data": "auFechaCreacion",visible:0}
             ],
         });
         limpiarLocales=1;

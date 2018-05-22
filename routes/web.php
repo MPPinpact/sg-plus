@@ -287,6 +287,12 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){
 	Route::post('/activarP', 'UsuarioController@postPerfilactivo')->name('activarP');
 	// Desbloquear cuenta de usuario por maximo de intentos fallídos
 	Route::post('/desbloquearC', 'UsuarioController@postDesbloquearcuenta')->name('desbloquearC');
+	Route::post('/buscarLocales','UsuarioController@postLocalesDisponiblesUsuario')->name('buscarLocales');
+	Route::post('/agregarLocalUsuario','UsuarioController@postAgregarLocalUsuario')->name('agregarLocalUsuario');
+	Route::post('/agregarTodosLocalUsuario','UsuarioController@postAgregarTodosLocalUsuario')->name('agregarTodosLocalUsuario');
+	Route::post('/eliminarLocalUsuario','UsuarioController@postEliminarLocalUsuario')->name('eliminarLocalUsuario');
+	
+	
 	
 Route::post('/buscarUsuario', 'UsuarioController@postBuscarUsuario')->name('buscarUsuario');
 

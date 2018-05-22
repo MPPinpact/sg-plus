@@ -44,10 +44,7 @@ class UsuarioController extends Controller
             Session::forget('perfilUsuario');
             Auth::logout();
             return redirect('/');
-        }
-
-        
-        
+        }        
     }
 
     // Cargar el perfil escogido
@@ -67,15 +64,72 @@ class UsuarioController extends Controller
         return $result;
     }
 
+    protected function postLocalesDisponiblesUsuario(Request $request){
+        $datos = $request->all();
+        $model= new Usuario();
+
+        log::info("IdUsuario: ". $datos['IdUsuarioLocal']);
+        //$result['v_localesUsuario'] = $model->getBuscarLocales($datos['IdUsuario']);
+        $result['v_localesDisponibles'] = $model->getBuscarLocalesDisponiblesUsuario($datos['IdUsuarioLocal']);
+
+        log::info($result['v_localesDisponibles']);
+
+        return $result;
+    }
+
+    protected function postAgregarLocalUsuario(Request $request){
+        $datos = $request->all();
+        $model= new Usuario();
+
+        log::info("IdUsuario: ". $datos['IdUsuarioLocal']);
+
+        $result['f_registro'] = $model->regLocalUsuario($datos);
+
+        $result['v_usuario'] = $model->getBuscarUsuario($datos['IdUsuarioLocal']);
+        $result['v_localesUsuario'] = $model->getBuscarLocales($datos['IdUsuarioLocal']);
+        $result['v_localesDisponibles'] = $model->getBuscarLocalesDisponiblesUsuario($datos['IdUsuarioLocal']);
+
+        return $result;
+    }
+
+    protected function postAgregarTodosLocalUsuario(Request $request){
+        $datos = $request->all();
+        $model= new Usuario();
+
+        log::info("IdUsuario: ". $datos['IdUsuario']);
+
+        $result['f_registro'] = $model->regTodosLocalUsuario($datos);
+
+        $result['v_usuario'] = $model->getBuscarUsuario($datos['IdUsuario']);
+        $result['v_localesUsuario'] = $model->getBuscarLocales($datos['IdUsuario']);
+        $result['v_localesDisponibles'] = $model->getBuscarLocalesDisponiblesUsuario($datos['IdUsuario']);
+
+        return $result;
+    }
+
+    protected function postEliminarLocalUsuario(Request $request){
+        $datos = $request->all();
+        $model= new Usuario();
+
+        log::info("IdUsuarioLocal: ". $datos['IdUsuarioLocal']);
+        log::info("IdUsuario: ". $datos['IdUsuario']);
+
+        $result['f_registro'] = $model->delLocalUsuario($datos);
+
+        $result['v_usuario'] = $model->getBuscarUsuario($datos['IdUsuario']);
+        $result['v_localesUsuario'] = $model->getBuscarLocales($datos['IdUsuario']);
+        $result['v_localesDisponibles'] = $model->getBuscarLocalesDisponiblesUsuario($datos['IdUsuario']);
+
+        return $result;
+    }
+
 	protected function postBuscarUsuario(Request $request){
         $datos = $request->all();
         $model= new Usuario();
-		
-		//console.log$datos);
-		
-		
+				
         $result['v_usuario'] = $model->getBuscarUsuario($datos['IdUsuario']);
-        $result['v_locales'] = $model->getBuscarLocales($datos['IdUsuario']);
+        $result['v_localesUsuario'] = $model->getBuscarLocales($datos['IdUsuario']);
+        $result['v_localesDisponibles'] = $model->getBuscarLocalesDisponiblesUsuario($datos['IdUsuario']);
         return $result;
     }
 	
@@ -97,11 +151,15 @@ class UsuarioController extends Controller
     protected function postUsuarios(Request $request){
         $p = Session::get('perfiles');
         $datos = $request->all();
+
         $datos['idEmpresa']=0; 
+        
         // caso Administrador registra Usuario
-        if ($p['idPerfil']==1){$datos['caso']=1;}
+        // if ($p['idPerfil']==1){$datos['caso']=1;}
+        
         // caso Cliente registra Usuario cliente
-        if ($p['idPerfil']==2){$datos['caso']=2;}
+        // if ($p['idPerfil']==2){$datos['caso']=2;}
+        
         // Todos los datos del usuario loggeado
         // $user = Auth::user();
         // El id del usuario logeado
