@@ -276,9 +276,14 @@ var cargarTablaStockProducto = function(data){
     limpiarTablaStockProducto=1;
 };
 
+$(document)
+    .ajaxStart(function(){
+        $.growl({message:"Cargando..."},{type: "danger", allow_dismiss: true,});
+    });
+
 $(document).ready(function() {
-	// moment en idioma español
-	// moment.locale('es');
+	
+
 	//Datos de usuario para cargar el contenido dependiendo del perfil
 	v['v_perfil'] = $("#idPerfiltext").val();
 	v['idUser'] = $("#idUsertext").val();
