@@ -272,7 +272,7 @@ var BotonAgregar = function(){
 
     $('#FormUsuario')[0].reset();
     $("#idUser").val("");
-    s
+    
     $("#divTabs").hide();
     $("#divBtnModificar").hide();
     $("#divBtnAceptar").show();
