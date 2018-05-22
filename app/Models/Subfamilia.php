@@ -40,6 +40,10 @@ class Subfamilia extends Authenticatable
         return DB::table('v_subfamilia')->get();
     }
 
+    public function listSubfamiliaActivas(){
+        return DB::table('v_subfamilia')->where('EstadoSubFamilia', 1)->orderBy('IdSubFamilia')->get();
+    }
+
     // Cargar combo de estados de Estado (Activo / Inactivo)
     public function listEstados(){
         return DB::table('v_estados')->get();

@@ -123,6 +123,7 @@ var cargarTablaProductos = function(data){
         $("#tablaProductos").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
+            "pageLegth": 25,
             "pagingType": "full_numbers",
             "language": LenguajeTabla,
             "columnDefs": [

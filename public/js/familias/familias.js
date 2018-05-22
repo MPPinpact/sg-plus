@@ -34,7 +34,7 @@ var ManejoRespuestaProcesarD = function(respuesta){
 
 }
 
-// Manejo Activar / Desactivar empresa
+// Manejo Activar / Desactivar Familia
 var ManejoRespuestaProcesarI = function(respuesta){
     if(respuesta.code==200){
         if(respuesta.respuesta.activar>0){
@@ -50,7 +50,20 @@ var ManejoRespuestaProcesarI = function(respuesta){
     }
 }
 
-// Manejo Registro o actualizacion de empresa
+var ManejoRespuestaFiltrarFamilias = function(respuesta){
+    if(respuesta.code==200){
+        
+            if(respuesta.respuesta.v_familias.length>0){
+                $.growl({message:"Listado Actualizado..."},{type: "success", allow_dismiss: true,});
+                cargarTablaFamilias(respuesta.respuesta.v_familias);
+            }
+        
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
+// Manejo Registro o actualizacion de familia
 var ManejoRespuestaProcesar = function(respuesta){
     if(respuesta.code==200){
         var res = JSON.parse(respuesta.respuesta.f_registro.f_registro_familia);
@@ -79,11 +92,12 @@ var cargarTablaFamilias = function(data){
         $("#tablaFamilias").dataTable({
             responsive:false,
             "aLengthMenu": DataTableLengthMenu,
+            "pageLength": 10,
             "pagingType": "full_numbers",
             "language": LenguajeTabla,
             "columnDefs": [
                 {"targets": [ 1 ],"searchable": true},
-                {"sWidth": "1px", "aTargets": [8]}
+                {"sWidth": "100px", "aTargets": [8]}
             ],
             "data": data,
             "columns":[
@@ -147,6 +161,18 @@ var verDetallesfamilia = function(data){
     ManejoRespuestaBuscar(respuesta);
 }
 
+var VerFamiliasActivas = function(data){
+    parametroAjax.ruta=rutaFA;
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaFiltrarFamilias(respuesta);
+}
+
+var VerTodasLasFamilias = function(data){
+    parametroAjax.ruta=rutaTF;
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaFiltrarFamilias(respuesta);
+}
+
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
     $("#IdFamilia").val(data.IdFamilia);
@@ -164,7 +190,8 @@ var BotonCancelar = function(){
 }
 
 var BotonAgregar = function(){
-    $("#spanTitulo").text("Registrar Familia");
+    desbloquearInuts();
+    $("#spanTitulo").text("Ingresar Nueva Familia");
     $("#divBtnModificar").hide();
     $("#divVolver").hide();
     $("#divBtnAceptar").show();
@@ -172,7 +199,10 @@ var BotonAgregar = function(){
     $("#IdFamilia").val("");
     $(".comboclear").val('').trigger("change");
     $('#FormFamilia')[0].reset();
-    desbloquearInuts();
+    $("#EstadoFamilia").val(1);
+
+    $('#NombreFamilia').focus().select();
+    
 }
 
 var ProcesarUnidad = function(){
@@ -228,6 +258,12 @@ $(document).ready(function(){
     $(document).on('click','#agregar',BotonAgregar);
     $(document).on('click','#modificar',modificarFamilia);
     $(document).on('click','#volverAct',BotonCancelar);
+
+    $(document).on('click','#botonActivas',VerFamiliasActivas);
+    $(document).on('click','#botonTodas',VerTodasLasFamilias);
+
+    
+
     $('#FormFamilia').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',

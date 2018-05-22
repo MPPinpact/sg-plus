@@ -15,6 +15,12 @@
 							<button style="float:right;" name="agregar" id="agregar" type="button" class="btn btn-primary waves-effect waves-light">
 								<span>Agregar</span>
 							</button>
+							<button style="float:right;" name="botonTodas" id="botonTodas" type="button" class="btn btn-primary waves-effect waves-light">
+								<span>Todas las Familias</span>
+							</button>
+							<button style="float:right;" name="botonActivas" id="botonActivas" type="button" class="btn btn-primary waves-effect waves-light">
+								<span>Familias Activas</span>
+							</button>
 						</div>
 					</div>
 					<br />
@@ -45,7 +51,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div class="md-input-wrapper">
-								<select name="EstadoFamilia" id="EstadoFamilia" class="md-disable md-valid" disabled></select>
+								<select name="EstadoFamilia" id="EstadoFamilia" class="md-valid" disabled></select>
 								<label for="EstadoFamilia">Estado</label>
 							</div>
 						</div>
@@ -78,6 +84,9 @@
 	var ruta = "{{ URL::route('familias') }}"
 	var rutaA = "{{ URL::route('activarF') }}"
 	var rutaB = "{{ URL::route('familiab') }}"
+	var rutaFA = "{{ URL::route('familiasActivas') }}"
+	var rutaTF = "{{ URL::route('familiasTodas') }}"
+
 	var d = [];
 	d['v_familias'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_familias) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));

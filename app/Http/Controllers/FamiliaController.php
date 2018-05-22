@@ -43,9 +43,25 @@ class FamiliaController extends Controller
     public function getFamilia()
     {
         $model= new Familia();
-        $data['v_familias'] = $model->listFamilia();
+        $data['v_familias'] = $model->listFamiliasActivas();
         $data['v_estados'] = $model->listEstados();
         return View::make('familias.familias',$data);
+    }
+
+    public function getFamiliasActivas(){
+        $model= new Familia();
+
+        $result['v_familias'] = $model->listFamiliasActivas();
+
+        return $result;
+    }
+
+    public function getFamiliasTodas(){
+        $model= new Familia();
+
+        $result['v_familias'] = $model->listFamilia();
+
+        return $result;
     }
 
     //Registrar o actualizar bodega

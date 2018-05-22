@@ -39,6 +39,10 @@ class Familia extends Authenticatable
         return DB::table('v_familia')->get();
     }
 
+    public function listFamiliasActivas(){
+        return DB::table('v_familia')->where('EstadoFamilia', 1)->orderBy('IdFamilia')->get();
+    }
+
     // Cargar combo de estados de Estado (Activo / Inactivo)
     public function listEstados(){
         return DB::table('v_estados')->get();

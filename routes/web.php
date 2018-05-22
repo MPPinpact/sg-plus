@@ -47,6 +47,8 @@ Route::post('/umedidasb', 'UnidadmedidaController@postBuscarunidad')->name('umed
 
 //CRUD Familia
 Route::get('/familias', 'FamiliaController@getFamilia')->name('familias');
+Route::post('/familiasActivas', 'FamiliaController@getFamiliasActivas')->name('familiasActivas');
+Route::post('/familiasTodas', 'FamiliaController@getFamiliasTodas')->name('familiasTodas');
 Route::post('/familias', 'FamiliaController@postFamilia')->name('familias');
 Route::post('/activarF', 'FamiliaController@postFamiliactivo')->name('activarF');
 Route::post('/familiab', 'FamiliaController@postBuscarfamilia')->name('familiab');
@@ -54,6 +56,8 @@ Route::post('/familiab', 'FamiliaController@postBuscarfamilia')->name('familiab'
 //CRUD SubFamilia
 Route::get('/subfamilias', 'SubfamiliaController@getSubamilia')->name('subfamilias');
 Route::post('/subfamilias', 'SubfamiliaController@postSubfamilia')->name('subfamilias');
+Route::post('/subfamiliasActivas', 'SubfamiliaController@postSubfamiliaActivas')->name('subfamiliasActivas');
+Route::post('/subfamiliasTodas', 'SubfamiliaController@postSubfamiliaTodas')->name('subfamiliasTodas');
 Route::post('/activarSf', 'SubfamiliaController@postSubfamiliactivo')->name('activarSf');
 Route::post('/subfamiliab', 'SubfamiliaController@postBuscarsubfamilia')->name('subfamiliab');
 

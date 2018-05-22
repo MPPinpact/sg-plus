@@ -15,6 +15,12 @@
 							<button style="float:right;" name="agregar" id="agregar" type="button" class="btn btn-primary waves-effect waves-light">
 								<span>Agregar</span>
 							</button>
+							<button style="float:right;" name="botonTodas" id="botonTodas" type="button" class="btn btn-primary waves-effect waves-light">
+								<span>Todas las SubFamilias</span>
+							</button>
+							<button style="float:right;" name="botonActivas" id="botonActivas" type="button" class="btn btn-primary waves-effect waves-light">
+								<span>SubFamilias Activas</span>
+							</button>
 						</div>
 					</div>
 					<br />
@@ -45,7 +51,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div class="md-input-wrapper">
-								<select name="IdFamilia" id="IdFamilia" class="md-disable md-valid" disabled></select>
+								<select name="IdFamilia" id="IdFamilia" class="md-valid"></select>
 								<label for="IdFamilia">Familia</label>
 							</div>
 						</div>
@@ -54,13 +60,13 @@
 						<div class="col-sm-2"></div>
 						<div class="col-sm-4">
 						<div class="md-input-wrapper">
-								<select name="IdUnidadMedida" id="IdUnidadMedida" class="md-disable md-valid" disabled></select>
+								<select name="IdUnidadMedida" id="IdUnidadMedida" class="md-valid"></select>
 								<label for="IdUnidadMedida">Unidad de Medida</label>
 							</div>
 						</div>
 						<div class="col-sm-4">
 							<div class="md-input-wrapper">
-								<select name="EstadoSubFamilia" id="EstadoSubFamilia" class="md-disable md-valid" disabled></select>
+								<select name="EstadoSubFamilia" id="EstadoSubFamilia" class="md-valid"></select>
 								<label for="EstadoSubFamilia">Estado</label>
 							</div>
 						</div>
@@ -93,6 +99,9 @@
 	var ruta = "{{ URL::route('subfamilias') }}"
 	var rutaA = "{{ URL::route('activarSf') }}"
 	var rutaB = "{{ URL::route('subfamiliab') }}"
+	var rutaSA = "{{ URL::route('subfamiliasActivas') }}"
+	var rutaTS = "{{ URL::route('subfamiliasTodas') }}"
+
 	var d = [];
 	d['v_subfamilias'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_subfamilias) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));

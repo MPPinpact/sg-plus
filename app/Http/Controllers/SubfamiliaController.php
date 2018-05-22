@@ -43,7 +43,7 @@ class SubfamiliaController extends Controller
     public function getSubamilia()
     {
         $model= new Subfamilia();
-        $data['v_subfamilias'] = $model->listSubfamilia();
+        $data['v_subfamilias'] = $model->listSubfamiliaActivas();
         $data['v_unidadmedida'] = $model->listUnidadmedida();
         $data['v_familia'] = $model->listFamilia();
         $data['v_estados'] = $model->listEstados();
@@ -55,9 +55,28 @@ class SubfamiliaController extends Controller
         $datos = $request->all();
         $model= new Subfamilia();
         $result['f_registro'] = $model->regSubfamilia($datos);
+        $result['v_subfamilias'] = $model->listSubfamiliaActivas();
+        return $result;
+    }
+
+    //Registrar o actualizar Subfamilia
+    protected function postSubfamiliaActivas(Request $request){
+        $datos = $request->all();
+        $model= new Subfamilia();
+        
+        $result['v_subfamilias'] = $model->listSubfamiliaActivas();
+        return $result;
+    }
+
+    //Registrar o actualizar Subfamilia
+    protected function postSubfamiliaTodas(Request $request){
+        $datos = $request->all();
+        $model= new Subfamilia();
+        
         $result['v_subfamilias'] = $model->listSubfamilia();
         return $result;
     }
+
 
     //Activar / desactivar Subfamilia
     protected function postSubfamiliactivo(Request $request){

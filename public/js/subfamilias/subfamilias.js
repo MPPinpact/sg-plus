@@ -63,6 +63,17 @@ var ManejoRespuestaProcesar = function(respuesta){
     }
 };
 
+var ManejoRespuestaFiltrarSubFamilias = function(respuesta){
+    if(respuesta.code==200){
+            if(respuesta.respuesta.v_subfamilias.length>0){
+                $.growl({message:"Listado Actualizado..."},{type: "success", allow_dismiss: true,});
+                cargarTablaSubfamilias(respuesta.respuesta.v_subfamilias);
+            }
+    }else{
+        $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+    }
+}
+
 var cargarTablaSubfamilias = function(data){
     if(limpiarUnidades==1){destruirTabla('#tablaSubfamilias');$('#tablaSubfamilias thead').empty();}
         $("#tablaSubfamilias").dataTable({
@@ -128,6 +139,18 @@ var seleccionarTablaSubfamilias = function(data){
 
 var cargarFormulario= function(){
     $(".divForm").toggle();
+}
+
+var VerSubFamiliasActivas = function(data){
+    parametroAjax.ruta=rutaSA;
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaFiltrarSubFamilias(respuesta);
+}
+
+var VerTodasLasSubFamilias = function(data){
+    parametroAjax.ruta=rutaTS;
+    respuesta=procesarajax(parametroAjax);
+    ManejoRespuestaFiltrarSubFamilias(respuesta);
 }
 
 var verDetallesubfamilia = function(data){
@@ -230,6 +253,11 @@ $(document).ready(function(){
     $(document).on('click','#agregar',BotonAgregar);
     $(document).on('click','#modificar',modificarFamilia);
     $(document).on('click','#volverAct',BotonCancelar);
+
+    $(document).on('click','#botonActivas',VerSubFamiliasActivas);
+    $(document).on('click','#botonTodas',VerTodasLasSubFamilias);
+
+
     $('#FormSubfamilia').formValidation({
         excluded:[':disabled'],
         // message: 'El módulo le falta un campo para ser completado',
