@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -289,9 +288,10 @@ class CajaDiaria extends Authenticatable
         // $values=array('EstadoCaja'=>2,'FechaCierre'=>date("Y-m-d H:i:s"),'auFechaModificacion'=>date("Y-m-d H:i:s"),'auUsuarioModificacion'=>$IdAdmin);
 
         // return DB::table('caja_diaria')->where('IdCaja', $IdCaja)->update($values);
-
+        date_default_timezone_set('America/Santiago'); 
+        
         $IdAdmin = Auth::id();
-        $FechaCierre = date('Y-m-d');
+        $FechaCierre = date('Y-m-d H:i:s');
 
         $sql="select f_caja_diaria_cerrar(".$IdCaja.",".$IdAdmin.",'".$FechaCierre."','".$MontoCierre."')";
         log::info($sql);

@@ -157,6 +157,7 @@ var BotonBuscarProducto = function(){
 }
 
 var BuscarProducto = function(){
+    console.log("BuscarProducto()");
 
     var largoTXT = $.trim($("#InfoProducto").val());
     
@@ -276,6 +277,10 @@ var cargarTablaStockProducto = function(data){
     limpiarTablaStockProducto=1;
 };
 
+var BotonBuscarCliente = function(){
+    alert("Función en Construcción!!!");
+}
+
 $(document).ready(function() {
 	//Datos de usuario para cargar el contenido dependiendo del perfil
 	v['v_perfil'] = $("#idPerfiltext").val();
@@ -291,7 +296,9 @@ $(document).ready(function() {
     $(document).on('click','.download-icon',cambiarSalir);
     //$(document).on('click','.text-muted',cambiarSalir);
     
-    $(document).on('click','#botonBuscar',BotonBuscarProducto);
+    $(document).on('click','#botonBuscarProducto',BotonBuscarProducto);
+    $(document).on('click','#botonBuscar',BuscarProducto);
+    $(document).on('click','#botonBuscarCliente',BotonBuscarCliente);
     
 
     $(document).on('click','#btn-logout',Salir);
@@ -311,12 +318,34 @@ $(document).ready(function() {
     $('#NombreProductoBusquedaRapida').on('keypress', function(e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13) { 
-            console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+            // console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
             e.preventDefault();
 
             BotonBuscarProducto();
             return false;
         }
     });
+
+    $('#InfoProducto').on('keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) { 
+            // console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+            e.preventDefault();
+
+            BuscarProducto();
+            return false;
+        }
+    });
+
+    $('#NombreClienteBusquedaRapida').on('keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) { 
+            // console.log("Enter " + e.target.name + " | e.type:" + e.type + " - e.which: " + e.which+ " - e.keyCode: " + e.keyCode + "...");
+            e.preventDefault();
+
+            alert("Función en Construcción!!!");
+            return false;
+        }
+    });    
 
 });

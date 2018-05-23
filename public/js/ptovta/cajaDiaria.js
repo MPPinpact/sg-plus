@@ -64,28 +64,39 @@ var cargarCajasDiarias = function(data){
                         return data;
                     }
                 },
+                {"title": "Local","data": "NombreLocal", className: "text-left"},
                 {"title": "Usuario Apertura","data": "UsuarioApertura", className: "text-left"},
                 {"title": "Fecha Apertura", className: "text-center", 
 						"data": "FechaApertura",
 						"render": function(data, type, row, meta){
 							if(type === 'display'){
                                 if( moment(data, moment.ISO_8601).isValid() ){
-                                    data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                                    data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY HH:mm:ss");
                                 }else{
-                                    data = '-----';
+                                    data = 'Desconocida';
                                 }
 							}
 							return data;
 						}
 				},
-                {"title": "Usuario Cierre","data": "UsuarioCierre", className: "text-left"},
+                {"title": "Usuario Cierre","data": "UsuarioCierre", className: "text-left", 
+                            "render": function(data, type, row, meta){
+                                if(type === 'display'){
+                                    if( data == null ){
+                                        data = 'Caja Abierta'
+                                    }
+                                }
+
+                            return data;
+                        }},
                 {"title": "Fecha Cierre", className: "text-center", 
 						"data": "FechaCierre",
 						"render": function(data, type, row, meta){
+
 							if( moment(data, moment.ISO_8601).isValid() ){
-                                data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                                data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY HH:mm:ss");
                             }else{
-                                data = '-----';
+                                data = 'Caja Abierta'
                             }
 							return data;
 						}

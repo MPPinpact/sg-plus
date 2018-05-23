@@ -223,7 +223,7 @@
               </div>
 
               <div class="col-md-4">
-                <button id="botonBuscar" name="botonBuscar" type="button" class="btn btn-success waves-effect waves-light btn-block">
+                <button id="botonBuscarProducto" name="botonBuscarProducto" type="button" class="btn btn-success waves-effect waves-light btn-block">
                   Buscar Producto  <i class="icofont icofont-search"></i>
                 </button>
               </div>

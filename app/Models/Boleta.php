@@ -37,7 +37,7 @@ class Boleta extends Authenticatable
                 $CantTotal = ($detalle->Cant * $detalle->ValorUnitarioVenta);
 
                 $DetalleFactura .= '
-                <tr style="font-size: 8px;">
+                <tr style="font-size: 9px;">
                     <td colspan="2">'.number_format($detalle->Cant, 2, ",", ".").' x $ '.number_format($detalle->ValorUnitarioVenta, 2, ",", ".").'</td>
                     <td align="right">'.number_format($CantTotal, 2, ",", ".").'</td>
                 </tr>
@@ -62,7 +62,7 @@ class Boleta extends Authenticatable
             foreach ($detalles as $key => $detalle) {
                 $CantTotal = 0;
                 $DetalleFactura .= '
-                <tr style="font-size: 8px;">
+                <tr style="font-size:9px;">
                 <td>'.$detalle->NombreProducto.'</td>
                 <td align="center">'.number_format($detalle->CantidadVenta, 2, ",", ".").'</td>
                 <td align="right">'.number_format($detalle->ValorUnitarioVenta, 2, ",", ".").'</td>
@@ -77,13 +77,15 @@ class Boleta extends Authenticatable
         $totalPago = 0;
         foreach ($pagos as $key => $pago) {
             $DetallePago .= '
-            <tr style="font-size: 8px;">
+            <tr style="font-size: 10px;">
             <td colspan="2">'.$pago->FormaPago.'</td>
             <td align="right">'.number_format($pago->MontoPagado, 2, ",", ".").'</td>
             </tr>
             ';
             $totalPago += $pago->MontoPagado;
         }
+
+        $vuelto = $totalPago - $total;
 
         return 
         '
@@ -109,7 +111,7 @@ class Boleta extends Authenticatable
             </table>
             <br>
             <br>
-            <table border="0" cellspacing="0" width="100%">
+            <table border="0" cellspacing="0" width="100%" style="font-size: 10px; font-family: Arial, Helvetica, sans-serif;">
                 <tr>
                     <td>
                         <b>'.$empresa->NombreFantasia.'</b>
@@ -127,7 +129,7 @@ class Boleta extends Authenticatable
                 </tr>
             </table>
              <br />
-            <table border="0" cellspacing="0" width="100%">
+            <table border="0" cellspacing="0" width="100%" style="font-size: 10px; font-family: Arial, Helvetica, sans-serif;">
                 <tr>
                     <td>
                         <b>Fecha Emisión: '.$FechaNow->format('d-m-Y').' '.$FechaNow->format('H:i:s').' </b>
@@ -137,22 +139,37 @@ class Boleta extends Authenticatable
                     <td>
                         <b>Vendedor: '.$vendedor.' </b>
                     </td>
+                </tr>   
+                <tr>
+                    <td>
+                        <b>Documento: '.$obj->DTE.' </b>
+                    </td>
                 </tr>                                                                          
             </table>
             <br />
-            <table border="0" cellspacing="0" width="100%" style="font-size: 9px; font-family: Arial, Helvetica, sans-serif;">
+            <table border="0" cellspacing="0" width="100%" style="font-size: 10px; font-family: Arial, Helvetica, sans-serif;">
+                <tr>   
+                    <td colspan="3"><br /></td>
+                </tr>
                 <tr class="tableHead" style="font-weight: bold;" >
                     <td width="70%" colspan="2">DETALLE COMPRA</td>
                     <td width="30%" align="right">TOTAL</td>
                 </tr>
                     '.$DetalleFactura.'
                 <tr>
-                    <td width="70%" colspan="2"></td>
-                    <td width="30%" border="0"></td>
+                    <td colspan="3"><br /></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><b>TOTAL</b></td>
+                    <td colspan="2"><b>TOTAL COMPRA</b></td>
                     <td align="right"><b>'.number_format($total, 2,",", ".").'</b></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>SUMA DE SUS PAGOS</b></td>
+                    <td align="right"><b>'.number_format($totalPago, 2,",", ".").'</b></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>'.($vuelto>=0 ? 'VUELTO' : 'PENDIENTE PAGO').'</b></td>
+                    <td align="right"><b>'.number_format($vuelto, 2,",", ".").'</b></td>
                 </tr>
                 <tr>
                     <td colspan="3"><br /></td>
