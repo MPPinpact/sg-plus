@@ -12,24 +12,6 @@
 	a{
 	  color: #FFF;
 	}
-
-	#tablaPagos {
-	    border-collapse: collapse;
-	    width: 100%;
-	}
-
-	#tablaPagos td, #tablaPagos th {
-	    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	    font-size: 25px; 
-	    padding: 8px;
-	}
-
-	#tablaPagos tr:nth-child(even){background-color: #f2f2f2;}
-
-	#tablaPagos tr:hover {background-color: #ddd;}
-
-	#tablaPagos th {display: none;}
-
 </style>
 
 <div class="row">
@@ -628,12 +610,12 @@
 						
 						</div>
 						<div class="col-sm-6">
-							<table id="tablaPagos_" class="table table-striped table-hover" cellspacing="0" width="100%"></table>
+							<table id="tablaPagos" class="table table-striped dt-responsive nowrap table-hover" cellspacing="0" width="100%"></table>
 							
 							<div class="row">
 								<div class="col-sm-4">
 									<div class="md-input-wrapper" >
-										<input style="text-align:right;" id="TotalPagadoPreVenta_" value="0" name="TotalPagadoPreVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
+										<input style="text-align:right;" id="TotalPagadoPreVenta" value="0" name="TotalPagadoPreVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
 										<div style="float: right;">
 											<label style="color:#40C4FF" for="TotalPagadoPreVenta">Total Pagado</label>
 										</div>
@@ -649,9 +631,9 @@
 								</div>
 								<div class="col-sm-4">
 									<div class="md-input-wrapper" >
-										<input style="text-align:right;" id="SaldoPagoPreVenta_" name="SaldoPagoPreVenta_" type="text" class="md-form-control md-static" maxlength="250" readonly />
+										<input style="text-align:right;" id="SaldoPagoPreVenta" name="SaldoPagoPreVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
 										<div style="float: right;">
-											<label style="color:#40C4FF" for="SaldoPagoPreVenta_">Saldo x Pagar</label>
+											<label style="color:#40C4FF" for="SaldoPagoPreVenta">Saldo x Pagar</label>
 										</div>
 									</div>
 								</div>
@@ -858,7 +840,7 @@
 					<div class="row"><br /><br /><br /><br /></div>
 					<div class="row"><br /><br /><br /><br /></div>
 
-					<div class="row" style="display: none;">
+					<div class="row" id="">
 						<div class="col-md-6">
 							<button id="botonCancelarTippDTE" name="botonCancelarTippDTE" href="#!"  type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
 								<i class="icofont icofont-ui-close"></i> Cerrar
@@ -1011,83 +993,31 @@
 					
 					<div id="PreVentaStep_2" style="display: none;" >
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col-md-12">
 								<div class="md-input-wrapper">
-									<input id="TotalPreVenta" name="TotalPreVenta" type="text" class="md-form-control text-center form-control-lg md-static" style="font-size: 30px; font-weight: bold;" maxlength="250" readonly />
+									<input id="TotalPreVenta" name="TotalPreVenta" type="text" class="md-form-control text-right form-control-lg" maxlength="250" readonly />
 									
-									<label  id="lblTotalVentaVR" for="TotalVentaVR" style="font-size: 15px; font-weight: bold;">Total Venta</label>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="md-input-wrapper">
-									<input id="TotalPagadoPreVenta" name="TotalPagadoPreVenta" type="text" class="md-form-control text-center form-control-lg md-static" style="font-size: 30px; font-weight: bold;" maxlength="250" readonly />
-									
-									<label  id="lblTotalPagadoPreVenta" for="TotalPagadoPreVenta" style="font-size: 15px; font-weight: bold;">Total Pagado</label>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="md-input-wrapper">
-									<input id="SaldoPagoPreVenta" name="SaldoPagoPreVenta" type="text" class="md-form-control text-center form-control-lg md-static" style="font-size: 30px; font-weight: bold;" maxlength="250" readonly />
-									
-									<label  id="lblSaldoPorPagarPreVenta" for="SaldoPagoPreVenta" style="font-size: 15px; font-weight: bold;">Saldo x Pagar</label>
+									<label  id="lblTotalVentaVR" for="TotalVentaVR">Total Venta</label>
 								</div>
 							</div>
 						</div>
-						<!-- Nuevas Formas de Pago -->
+						
 						<div class="row"> <br /> </div>	
 						
 						<div class="row">
-							<div class="col-sm-6">
-								<div class="row">
-									<div class="col-sm-6">
-										<button name="botonPagoEfectivo" id="botonPagoEfectivo" class="btn-xlg waves-effect waves-light btn-primary btn-block">
-											<i class="icofont icofont-cur-dollar"></i> Efectivo / Cash 
-										</button>
-									</div>
-									<div class="col-sm-6">
-										<button name="botonPagoCreditoPreVenta" id="botonPagoCreditoPreVenta"  href="!#" class="btn-xlg waves-effect waves-light btn-primary btn-block">
-											<i class="icofont icofont-ebook"></i> Crédito Interno
-										</button>	
-									</div>
-								</div>
-								
-								<div class="row">
-									<div class="col-sm-6">
-										<button name="botonPagoTD" id="botonPagoTD"  href="!#" class="btn-xlg waves-effect waves-light btn-warning btn-block">
-											<i class="icofont icofont-credit-card"></i> Tarjeta  Debito
-										</button>
-									</div>
-									<div class="col-sm-6">
-										<button name="botonPagoTC" id="botonPagoTC"  href="!#" class="btn-xlg waves-effect waves-light btn-info btn-block">
-											<i class="icofont icofont-mastercard">    </i> Tarjeta Crédito
-										</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="col-sm-12">
-									<table id="tablaPagos" class="table no-header no-footer table-striped table-hover" cellspacing="0" width="100%"></table>
-								</div>	
-							</div>
-						</div>
-
-						<div class="row"> <br /> <br /> </div>	
-
-						<!-- botones de VEndedor, Clietne, Forma de Pago, TipoDTE -->
-						<div class="row" style="display: none;">
-							<div class="col-md-4" style="display: none; ">
+							<div class="col-md-4">
 								<label for="botonVendedorPreVenta"> Ingrese Vendedor <i class="icofont icofont-business-man"> </i></label>
 								<button id="botonVendedorPreVenta" name="botonVendedorPreVenta"  href="#!"   type="button" data-toggle="modal" data-target="#meta-Modal" class="btn-xlg btn-primary waves-effect waves-light btn-block">
 									<i class="icofont icofont-business-man"> </i>  Vendedor
 								</button>
 							</div>
-							<div class="col-md-4" style="display: none; ">
+							<div class="col-md-4">
 								<label for="botonClientePreVenta"> Seleccione Cliente <i class="icofont icofont-ui-user"> </i></label>
 								<button id="botonClientePreVenta" name="botonClientePreVenta" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
 									<i class="icofont icofont-ui-user"> </i> Cliente Contado
 								</button>
 							</div>
-							<div class="col-md-4"  style="display: none; ">
+							<div class="col-md-4">
 								<label for="botonFormaPagoPreVenta"> Forma de Pago <i class="icofont icofont-coins"> </i></label>
 								<button id="botonFormaPagoPreVenta" name="botonFormaPagoPreVenta" type="button" class="btn-xlg btn-primary waves-effect waves-light btn-block">
 									<i class="icofont icofont-coins"> </i> Contado
@@ -1097,9 +1027,8 @@
 
 						<div class="row"> <br /> </div>
 
-						<!-- TipoDTE -->
-						<div class="row" style="display: none;">
-							<div class="col-md-4" style="display: none; ">
+						<div class="row">
+							<div class="col-md-4">
 								<label for="botonTipoDTE"> Seleccione Tipo DTE <i class="icofont icofont-copy-alt"> </i></label>
 								<button id="botonTipoDTE" name="botonTipoDTE" href="#!" type="button" data-toggle="modal" data-target="#meta-Modal" class="btn-xlg btn-primary waves-effect waves-light btn-block">
 									<i class="icofont icofont-copy-alt"> </i> Tipo DTE
@@ -1128,7 +1057,7 @@
 							</div>
 							<div class="col-md-4">
 								<button id="botonFinalizarPreVenta" name="botonFinalizarPreVenta"  type="button" class="btn-xlg btn-success waves-effect waves-light btn-block">
-									<i class="icofont icofont-ui-check"></i> Imprimir Ticket 
+									<i class="icofont icofont-ui-check"></i> Finalizar 
 								</button>
 							</div>
 						</div>

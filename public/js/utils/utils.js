@@ -12,7 +12,7 @@ DataTableLengthMenu = [[5,10, 25, 50, 100, -1],[5,10, 25, 50, 100, "Todos"]]
 var LenguajeTabla = {
     "sProcessing": "Procesando...",
     "sLengthMenu": "Ver listado de _MENU_",
-    "sZeroRecords": "No se encontraron registros...",
+    "sZeroRecords": "Sin Información...",
     "sInfo": "_START_ al _END_ de _TOTAL_ registros",
     "sInfoEmpty": "0 al 0 de 0 registros",
     "sInfoFiltered": "(filtrado de _MAX_ registros)",

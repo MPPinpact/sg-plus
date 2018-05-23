@@ -53,11 +53,11 @@ $(document).ready(function(){
 	
 	$(document).on('click','#botonVolverPreVenta', VolverPreVenta);
 	$(document).on('click','#botonContinuarPreVenta', ContinuarPreVenta);
-	$(document).on('click','#botonFinalizarPreVenta', ModalTipoDTE);
+	$(document).on('click','#botonFinalizarPreVenta', FinalizarPreVenta);
 	$(document).on('click','#botonCancelarPreVenta_1', CancelarPreVenta);
 	$(document).on('click','#botonCancelarPreVenta_2', CancelarPreVenta);
 	
-	$(document).on('click','#botonPreVenta',PreVentaPaso01);
+	$(document).on('click','#botonPreVenta',PreVenta);
 	$(document).on('click','#botonVentaDirecta',VentaDirecta);
 
 	$(document).on('click','#botonTipoDTE',ModalTipoDTE);
@@ -381,25 +381,19 @@ $(document).ready(function(){
 
 var AsignaBoleta = function(){
 	AsignaTipoDTE(1, 'Boleta');
-	$("#ModalTipoDTE").modal('hide');
-
-	PreVentaPaso04();
+	
 	return false;
 }
 
 var AsignaFactura  = function(){
 	AsignaTipoDTE(2, 'Factura');
-	$("#ModalTipoDTE").modal('hide');
 
-	PreVentaPaso04();
 	return false;
 }
 
 var AsignaCI  = function(){
 	AsignaTipoDTE(5, 'CI');
-	$("#ModalTipoDTE").modal('hide');
 
-	PreVentaPaso04();
 	return false;
 }
 
@@ -415,6 +409,7 @@ var AsignaTipoDTE = function(tipoDTE, nombreDTE){
 	parametroAjax.data = $("#FormPreVenta").serialize();
 	respuesta=procesarajax(parametroAjax);
 
+	$("#ModalTipoDTE").modal('toggle');
 }
 
 var ActualizarTituloVentanaVenta = function(){
@@ -444,9 +439,8 @@ var ModalVendedor = function(){
 
 var CerrarModalAsignarVendedor = function(){
     
-    $("#ModalAsignarVendedor").modal("hide");
-	PreVentaPaso02()
-	
+	$("#ModalAsignarVendedor").modal("hide");
+	$('#TotalPreVenta').focus().select();
 }
 
 var AsignarVendedorPreVenta = function(){
@@ -475,7 +469,10 @@ var ModalTipoDTE = function(){
     
 	$("#spanTituloModalTipoDTE").text("Seleccione el Tipo de Documento");
     $("#ModalTipoDTE").modal();
-
+	
+	$('#ModalTipoDTE').on('shown.bs.modal', function() {
+		//$('#RUTCliente').focus().select();
+	});
 }
 
 var ModalFormaPago = function(){
@@ -503,7 +500,7 @@ var BotonPagoEfectivo = function (){
 	$("#MontoFinalCredito").val(0);
     $("#MontoCuotaCredito").val(0);
 	
-    $("#spanTituloModalFormaPago").text("Total Ingresado en Efectivo");
+    $("#spanTituloModalFormaPago").text("Registrar Pago Efectivo");
 	$("#ModalIngresoPago").modal();	
 	
 	$("#InfoAddTC").hide();
@@ -715,66 +712,12 @@ var PersonalizaFormularioVenta = function(){
 	//$("#botonRecuperarPreVenta").text('Recuperar '+_tipoVenta_);
 	//$("#botonAgregarPreVentaPV").text('Recuperar '+_tipoVenta_);
 	
-	$("#botonContinuarPreVenta").text('Totalizar '+_tipoVenta_);
-	$("#botonContinuarPreVenta").text('Totalizar '+_tipoVenta_);
+	$("#botonContinuarPreVenta").text('Continuar '+_tipoVenta_);
+	$("#botonContinuarPreVenta").text('Continuar '+_tipoVenta_);
 	//$('#lblNroPreVenta').text("Nro. "+_tipoVenta_);
 	$('#lblTotalVenta').text("Total "+_tipoVenta_);
 	$('#lblTotalVentaVR').text("Total "+_tipoVenta_);
 	$('#lblTotalVenta_').text("Total "+_tipoVenta_);
-}
-
-var PreVentaPaso01 = function(){
-	console.log("PreVentaPaso01()");
-
-	_tipoVenta_ = "PreVenta";
-	_idVenta_ = 0;
-
-    $("#ModalAsignarVendedor").modal();
-	
-	$('#ModalAsignarVendedor').on('shown.bs.modal', function() {
-		$('#CodigoVendedor').focus().select();
-	});
-}
-
-var PreVentaPaso02 = function(){
-	_tipoVenta_ = "PreVenta";
-	_idVenta_ = 0;
-
-	CargarTablaProductosPreVenta(null);
-	PersonalizaFormularioVenta();
-	
-	$("#frameProductos").show();
-	$("#frameNroPreVenta").hide();
-	$("#botonRecuperarPreVenta").show();
-	$("#botonAgregarProductos").hide();
-	
-    $("#PreVentaStep_1").show();
-    $("#NroPreVenta").val("");
-
-	$("#PreVentaStep_2").hide();
-		
-	ActualizarTituloVentanaVenta()
-	
-	$('#IdPreVenta').val(0);
-	$('#IdTipoDTEPreVenta').val(1);
-	$('#botonTipoDTE').text('Boleta');
-
-	$("#TotalPagadoPreVenta").val(0);
-	$("#SaldoPagoPreVenta").val(0);
-	
-    $("#ModalPreVenta").modal();
-	
-	$('#ModalPreVenta').on('shown.bs.modal', function() {
-		$('#CodigoProductoPreVenta').focus().select();
-	});
-}
-
-var PreVentaPaso03 = function(){
-	ModalTipoDTE();
-}
-
-var PreVentaPaso04 = function(){
-	FinalizarPreVenta();
 }
 
 var PreVenta= function(){
@@ -871,7 +814,6 @@ var ManejoRespuestaVerBoleta = function(respuestaBoleta){
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true});
     }
 }
-
 
 var FinalizarPreVenta = function (){
     
@@ -971,9 +913,6 @@ var CalcularSaldoPago = function(){
 	var totalVendido = parseFloat($("#TotalPreVentaFP").val());
 	var saldoFinal = totalPagado - totalVendido;		
 	$("#SaldoPagoPreVenta").val(saldoFinal);
-
-	if(saldoFinal < 0) $("#lblSaldoPorPagarPreVenta").text("Saldo x Pagar");
-	else  $("#lblSaldoPorPagarPreVenta").text("Vuelto");
 	
 	console.log("Saldo Pendiente de Pago: " + saldoFinal +" - TotalPagado: " + totalPagado + " - TotalVendido: " +totalVendido);
 }
@@ -1478,14 +1417,10 @@ var ManejoRespuestaBuscarClienteVC = function(respuesta){
 }
 
 var CargarTablaPagos = function(data){
-	console.log("limpiarPagos: " + limpiarPagos);
-
-    if(limpiarPagos==1) { 
-    	destruirTabla('#tablaPagos'); 
-    	$('#tablaPagos thead').empty();
-    }
+    if(limpiarPagos==1) { destruirTabla('#tablaPagos'); $('#tablaPagos thead').empty();}
 	
 	$("#tablaPagos").dataTable({
+		
 		"footerCallback": function (data){
 		var api = this.api(), data;
 		// Remove the formatting to get integer data for summation
@@ -1504,13 +1439,11 @@ var CargarTablaPagos = function(data){
 			}, 0 );
 		},
 		
-		"language": LenguajeTabla,
 		responsive:false,
 		"bSort": false,
 		"scrollCollapse": false,
 		"paging": false,
 		"searching": false,
-		fixedHeader: {header:false, footer:false}, 
 		"info":false,			
 		"pageLength": 50, 
 		
@@ -1571,7 +1504,6 @@ var CargarTablaProductosPreVenta = function(data){
 			}, 0 );
 		},
 		responsive:false,
-		"language": LenguajeTabla,
 		"bSort": false,
 		"scrollCollapse": false,
 		"paging": false,
