@@ -108,7 +108,8 @@
   {{ HTML::script('plugins/jQuery-contextMenu-master/dist/jquery.contextMenu.min.js') }}
   {{ HTML::script('plugins/validator/valtexto.js') }}
   {{ HTML::script('plugins/printArea/jquery.printarea.js') }}
-  
+  {{ HTML::script('plugins/Jquery-Price-Format/jquery.number.min.js') }}
+
   {{ HTML::script('plugins/jsBarcode/JsBarcode.code39.min.js') }}
   {{ HTML::script('js/utils/utils.js') }}
   {{ HTML::script('js/index/index.js') }}
@@ -134,10 +135,17 @@
       </div>
     </div>
   </div>
+  @php  
+    $localUsuario = Session::get('localUsuario');
+  @endphp
   <script src="{{ asset('js/ptovta/main.js') }}" type="text/javascript" ></script>
-  
   <script Language="Javascript">
     var rutaHome = "{{ URL::route('infoDashboard') }}"
+    v['localUsuario'] = JSON.parse(rhtmlspecialchars('{{ json_encode($localUsuario) }}'));
+    var FormatoFecha_ = v['localUsuario'].FormatoFecha;
+    var SeparadorMiles_ = v['localUsuario'].SeparadorMiles;
+    var SeparadorDecimal_ = v['localUsuario'].SeparadorDecimal;
+    var NumeroDecimales_ = v['localUsuario'].NumeroDecimales;
   </script>
 </body>
 </html>
