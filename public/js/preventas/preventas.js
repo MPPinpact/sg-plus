@@ -109,6 +109,12 @@ var ManejoRespuestaProcesarCompraD = function(respuesta){
             $("#divBotonesAC").hide();
             bloquearInputsDetalles();
             pintarDatosActualizarDetalles(respuesta.respuesta[0]);
+            // $("#CantidadPreVenta").focus();
+            // $("#CantidadPreVenta").focusout();
+            // $("#ValorUnitarioVenta").focus();
+            // $("#ValorUnitarioVenta").focusout();
+            // $("#TotalLinea").focus();
+            // $("#TotalLinea").focusout();
         }else{
             $.growl({message:"Contacte al personal informatico"},{type: "warning", allow_dismiss: true,});
         }
@@ -149,6 +155,8 @@ var ManejoRespuestaProcesarD = function(respuesta){
         $("#spanTitulo").text("Detalle Pre-Venta");
         pintarDatosActualizar(respuesta.respuesta.v_cabecera[0]);
         cargarTablaDetalles(respuesta.respuesta.v_detalles);
+        // $("#TotalPreVentaDetalle").focus();
+        // $("#TotalPreVentaDetalle").focusout();
         if(parseInt(respuesta.respuesta.v_cabecera[0].EstadoPreVenta)>1){
             $(".CerrarPreventa").hide();
             $("#agregarC").hide();
@@ -286,7 +294,7 @@ var cargarTablaPreventas = function(data){
                     "data": "FechaPreVenta", className: "text-center", 
                     "render": function(data, type, row, meta){
                         if(type === 'display'){
-                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format(FormatoFecha_);
                         }
                         return data;
                     }
@@ -296,7 +304,7 @@ var cargarTablaPreventas = function(data){
                 {"title": "Nombre Cliente","data": "NombreCliente"},
                 {"title": "Nombre Vendedor","data": "NombreVendedor",visible:0},
                 {"title": "Total","data": "TotalPreVenta",
-                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),
                             className: "text-right"},
                 {"title": "EstadoPreVenta","data": "EstadoPreVenta",visible:0},
                 {"title": "Estado","data": "desEstadoPreventa", className: "text-center"}
@@ -364,21 +372,21 @@ var cargarTablaDetalles = function(data){
                             width: 200},
                 {"title": "Cantidad","data": "CantidadPreVenta", 
                             width: 50,
-                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            render: $.fn.dataTable.render.number( '.', '', 0 ),
                             className: "text-center"},
                 {"title": "Valor Unitario","data": "ValorUnitarioVenta", 
-                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),                            
                             className: "text-right"},
                 {"title": "Factor Impuesto","data": "FactorImpuesto",visible:0},
                 {"title": "Valor Impuestos","data": "ValorImpuestos",visible:0},
                 {"title": "Monto Descuento","data": "MontoDescuento",
-                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),                            
                             className: "text-right"},
                 {"title": "Valor Unitario Final","data": "ValorUnitarioFinal",
-                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),                            
                             visible:0},
                 {"title": "Total Linea","data": "TotalLinea", 
-                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),                            
                             className: "text-right"},
                 {"title": "Estado","data": "EstadoPreVentaDetalle",visible:0},
                 {"title": "Estado","data": "desEstadoPreventaDetalle",visible:0}

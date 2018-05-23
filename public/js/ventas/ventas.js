@@ -340,15 +340,15 @@ var cargarTablaVentas = function(data){
                         return result;
                     }
                 },
-                {"title": "Id","data": "IdVenta", 
-                            render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                {"title": "Id","data": "IdVenta",
+                            render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),                            
                             className: "text-center"},
                 {
                     "title": "Fecha Venta", 
                     "data": "FechaVenta", className: "text-center", 
                     "render": function(data, type, row, meta){
                         if(type === 'display'){
-                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
+                            data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format(FormatoFecha_);
                         }
                         return data;
                     }
@@ -358,7 +358,7 @@ var cargarTablaVentas = function(data){
                 {"title": "Nombre Cliente","data": "NombreCliente"},
                 {"title": "Nombre Vendedor","data": "NombreVendedor"},
                 {"title": "Total","data": "TotalVenta",
-                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),                            
                             className: "text-right"},
                 {"title": "Estado Venta","data": "EstadoVenta",visible:0},
                 {"title": "Estado","data": "DesEstadoVenta", className: "text-center"}
@@ -425,21 +425,26 @@ var cargarTablaDetalles = function(data){
                             width: 200},
                 {"title": "Cantidad","data": "CantidadVenta", 
                             width: 50,
-                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            // render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),                            
                             className: "text-center"},
                 {"title": "Valor Unitario","data": "ValorUnitarioVenta", 
-                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            // render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),                            
                             className: "text-right"},
                 {"title": "Factor Impuesto","data": "FactorImpuesto",visible:0},
                 {"title": "Valor Impuestos","data": "ValorImpuestos",visible:0},
                 {"title": "Monto Descuento","data": "MontoDescuento",
-                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            // render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),                            
                             className: "text-right"},
                 {"title": "Valor Unitario Final","data": "ValorUnitarioFinal",
-                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            // render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),                            
                             visible:0},
                 {"title": "Total Linea","data": "TotalLinea", 
-                            render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            // render: $.fn.dataTable.render.number( '.', ',', 2 ),
+                            render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),                            
                             className: "text-right"},
                 {"title": "Estado","data": "EstadoVentaDetalle",visible:0},
                 {"title": "Estado","data": "desEstadoVentaDetalle",visible:0}
@@ -474,7 +479,6 @@ var cargarTablaDetalles = function(data){
                 }
             ]
         });
-
     limpiarImpuestos=1;
     calcularTotalVenta(totalVenta);
 };
@@ -499,9 +503,9 @@ var cargarTablaPagos = function(data){
                     return intVal(a) + intVal(b);
                 }, 0 );
 
-            $( api.column( 4 ).footer() ).html(
-                '$'+pageTotal +' ( $'+ total +' total)'
-            );
+            // $( api.column( 4 ).footer() ).html(
+            //     '$'+pageTotal +' ( $'+ total +' total)'
+            // );
             
             },
             responsive:false,
@@ -532,7 +536,10 @@ var cargarTablaPagos = function(data){
                 {"title": "Id Pago","data": "IdDetallePago",visible:0},
                 {"title": "Id Venta","data": "IdVenta",visible:0},
                 {"title": "Forma de Pago","data": "FormaPago", width: 200,  className: "text-left"},
-                {"title": "Monto Pagado","data": "MontoPagado", width: 300, className: "text-right", render: $.fn.dataTable.render.number('.',',',2) }
+                {"title": "Monto Pagado","data": "MontoPagado", width: 300, className: "text-right", 
+                    // render: $.fn.dataTable.render.number('.',',',2),
+                    render: $.fn.dataTable.render.number(SeparadorMiles_, SeparadorDecimal_,NumeroDecimales_),
+                    className: "text-right"}   
             ],   
             
         });

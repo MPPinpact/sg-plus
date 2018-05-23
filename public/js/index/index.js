@@ -41,6 +41,14 @@ $(document).ready(function() {
 	// moment en idioma español
 	// moment.locale('es');
 	//Datos de usuario para cargar el contenido dependiendo del perfil
+	$('.InputMoneda').number(true, NumeroDecimales_,SeparadorDecimal_ ,SeparadorMiles_);
+	// $('.InputMoneda').number(NumeroDecimales_, ',', SeparadorDecimal_);
+	// $('.InputMoneda').priceFormat({
+ //        prefix: '',
+ //        centsSeparator: SeparadorDecimal_,
+ //        thousandsSeparator: SeparadorMiles_,
+ //        centsLimit: NumeroDecimales_
+ //    });
 	v['v_perfil'] = $("#idPerfiltext").val();
 	v['idUser'] = $("#idUsertext").val();
 	//Cierre de sesion despues de 20 min de inactividad

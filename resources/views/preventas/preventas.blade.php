@@ -119,7 +119,7 @@
 										<div class="col-sm-4"></div>
 										<div class="col-sm-4">
 											<div class="md-input-wrapper">
-												<input style="text-align:right;" id="TotalPreVenta" name="TotalPreVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
+												<input style="text-align:right;" id="TotalPreVenta" name="TotalPreVenta" type="text" class="InputMoneda md-form-control md-static" maxlength="250" readonly />
 												<div style="float: right;">
 													<label for="TotalPreVenta" style="color:#40C4FF">Total Preventa</label>
 												</div>
@@ -162,7 +162,7 @@
 											<div class="col-sm-3">
 												<div class="pull-right">
 													<div class="md-input-wrapper">
-														<input id="TotalPreVentaDetalle" name="TotalPreVentaDetalle" type="text" class="md-form-control md-static" maxlength="250" readonly />
+														<input id="TotalPreVentaDetalle" name="TotalPreVentaDetalle" type="text" class="InputMoneda md-form-control md-static" maxlength="250" readonly />
 														<label for="TotalPreVentaDetalle">Total Pre-Venta</label>
 													</div>
 												</div>
@@ -262,13 +262,13 @@
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="ValorUnitarioVenta" name="ValorUnitarioVenta" type="text" class="md-form-control md-static" maxlength="10" readonly />
+								<input id="ValorUnitarioVenta" name="ValorUnitarioVenta" type="text" class="InputMoneda md-form-control md-static" maxlength="10" readonly />
 								<label for="ValorUnitarioVenta">Valor Unitario</label>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="TotalLinea" name="TotalLinea" type="text" class="md-form-control md-static" maxlength="10" readonly />
+								<input id="TotalLinea" name="TotalLinea" type="text" class="InputMoneda md-form-control md-static" maxlength="10" readonly />
 								<label for="TotalLinea">Total Linea</label>
 							</div>
 						</div>
@@ -315,7 +315,6 @@
 	var rutaVDB = "{{ URL::route('boletaV') }}"
 	var rutaPDF = "{{ URL::route('boletaPDF') }}"
 	
-
 	var d = [];
 	d['v_preventas'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_preventas) }}'));
 	d['v_estados'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_estados) }}'));

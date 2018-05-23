@@ -124,7 +124,7 @@
 										</div>
 										<div class="col-sm-2">
 											<div class="md-input-wrapper">
-												<input style="text-align:right;" id="TotalVenta" name="TotalVenta" type="text" class="md-form-control md-static" maxlength="250" readonly />
+												<input style="text-align:right;" id="TotalVenta" name="TotalVenta" type="text" class="InputMoneda md-form-control md-static" maxlength="250" readonly />
 												<div style="float: right;">
 													<label for="TotalVenta" style="text-align: right;color:#40C4FF">Total Venta</label>
 												</div>
@@ -161,7 +161,7 @@
 											<div class="col-sm-9"></div>
 											<div class="col-sm-3">
 												<div class="md-input-wrapper" >
-													<input style="text-align:right;" id="TotalVentaDetalle" name="TotalVentaDetalle" type="text" class="md-form-control md-static" maxlength="250" readonly />
+													<input style="text-align:right;" id="TotalVentaDetalle" name="TotalVentaDetalle" type="text" class="InputMoneda md-form-control md-static" maxlength="250" readonly />
 													<div style="float: right;">
 														<label style="text-align: right;color:#40C4FF" for="TotalVentaDetalle">Total Venta</label>
 													</div>
@@ -211,7 +211,7 @@
 											<div class="row">
 												<div class="col-sm-4">
 													<div class="md-input-wrapper" >
-														<input style="text-align:right;" id="TotalPagado" name="TotalPagado" type="text" class="md-form-control md-static" maxlength="250" />
+														<input style="text-align:right;" id="TotalPagado" name="TotalPagado" type="text" class="InputMoneda md-form-control md-static" maxlength="250" />
 														<div style="float: right;">
 															<label style="color:#40C4FF" for="TotalPagado">Total Pagado</label>
 														</div>
@@ -219,7 +219,7 @@
 												</div>
 												<div class="col-sm-4">
 													<div class="md-input-wrapper" >
-														<input style="text-align:right;" id="TotalVentaPago" name="TotalVentaPago" type="text" class="md-form-control md-static" maxlength="250" />
+														<input style="text-align:right;" id="TotalVentaPago" name="TotalVentaPago" type="text" class="InputMoneda md-form-control md-static" maxlength="250" />
 														<div style="float: right;">
 															<label style="color:#40C4FF" for="TotalVentaPago">Total Venta</label>
 														</div>
@@ -227,7 +227,7 @@
 												</div>
 												<div class="col-sm-4">
 													<div class="md-input-wrapper" >
-														<input style="text-align:right;" id="SaldoPago" name="SaldoPago" type="text" class="md-form-control md-static" maxlength="250"  />
+														<input style="text-align:right;" id="SaldoPago" name="SaldoPago" type="text" class="InputMoneda md-form-control md-static" maxlength="250"  />
 														<div style="float: right;">
 															<label style="color:#40C4FF" for="SaldoPago">Saldo x Pagar</label>
 														</div>
@@ -294,13 +294,13 @@
 						</div>
 						<div class="col-md-3">
 							<div class="md-input-wrapper">
-								<input id="ValorUnitarioVenta" name="ValorUnitarioVenta" type="text" class="md-form-control md-static" maxlength="10" readonly />
+								<input id="ValorUnitarioVenta" name="ValorUnitarioVenta" type="text" class="InputMoneda md-form-control md-static" maxlength="10" readonly />
 								<label for="ValorUnitarioVenta">Valor Unitario</label>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="TotalLinea" name="TotalLinea" type="text" class="md-form-control md-static" maxlength="10" readonly />
+								<input id="TotalLinea" name="TotalLinea" type="text" class="InputMoneda md-form-control md-static" maxlength="10" readonly />
 								<label for="TotalLinea">Total Linea</label>
 							</div>
 						</div>
@@ -421,7 +421,7 @@
 						<div class="row">
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="MontoAFinanciar" name="MontoAFinanciar" type="text" class="md-form-control md-static" maxlength="250" />
+									<input id="MontoAFinanciar" name="MontoAFinanciar" type="text" class="InputMoneda md-form-control md-static" maxlength="250" />
 									<label for="MontoAFinanciar">Monto A Financiar</label>
 								</div>
 							</div>
@@ -433,7 +433,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="InteresMensualCredito" name="InteresMensualCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
+									<input id="InteresMensualCredito" name="InteresMensualCredito" type="text" class="InputMoneda md-form-control md-static" maxlength="250" readonly />
 									<label for="InteresMensualCredito">Interes Mensual</label>
 								</div>
 							</div>
@@ -441,19 +441,19 @@
 						<div class="row">
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="FechaPrimeraCuota" name="FechaPrimeraCuota" type="text" class="md-form-control md-static" maxlength="250" readonly />
+									<input id="FechaPrimeraCuota" name="FechaPrimeraCuota" type="text" class="InputMoneda md-form-control md-static" maxlength="250" readonly />
 									<label for="FechaPrimeraCuota">Primera Cuota</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="MontoCuotaCredito" name="MontoCuotaCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
+									<input id="MontoCuotaCredito" name="MontoCuotaCredito" type="text" class="InputMoneda md-form-control md-static" maxlength="250" readonly />
 									<label for="MontoCuotaCredito">Monto Cuota</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="MontoFinalCredito" name="MontoFinalCredito" type="text" class="md-form-control md-static" maxlength="250" readonly />
+									<input id="MontoFinalCredito" name="MontoFinalCredito" type="text" class="InputMoneda md-form-control md-static" maxlength="250" readonly />
 									<label for="MontoFinalCredito">Monto Final Crédito</label>
 								</div>
 							</div>
@@ -463,7 +463,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="md-input-wrapper">
-								<input id="MontoPagoEfectivo" name="MontoPagoEfectivo" type="text" class="md-form-control md-static" maxlength="250" readonly />
+								<input id="MontoPagoEfectivo" name="MontoPagoEfectivo" type="text" class="InputMoneda md-form-control md-static" maxlength="250" readonly />
 								<label for="MontoPagoEfectivo">Monto Pagado</label>
 							</div>
 						</div>
