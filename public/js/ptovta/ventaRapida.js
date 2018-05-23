@@ -503,7 +503,7 @@ var BotonPagoEfectivo = function (){
 	$("#MontoFinalCredito").val(0);
     $("#MontoCuotaCredito").val(0);
 	
-    $("#spanTituloModalFormaPago").text("Total Ingresado en Efectivo");
+    $("#spanTituloModalFormaPago").text("Ingrese monto en Efectivo");
 	$("#ModalIngresoPago").modal();	
 	
 	$("#InfoAddTC").hide();
@@ -741,6 +741,7 @@ var PreVentaPaso02 = function(){
 	_idVenta_ = 0;
 
 	CargarTablaProductosPreVenta(null);
+	CargarTablaPagos(null);
 	PersonalizaFormularioVenta();
 	
 	$("#frameProductos").show();
@@ -827,7 +828,9 @@ var VolverPreVenta = function(){
 
 var ContinuarPreVenta = function(){
 	$("#PreVentaStep_1").hide();
-	$("#PreVentaStep_2").show();	
+	$("#PreVentaStep_2").show();
+
+	CalcularSaldoPago();
 }
 
 var verDetallesBoleta = function(idPreVenta){
@@ -954,6 +957,16 @@ var VentaDirecta = function(){
 /* Funciones Comunes de los formularios de PreVenta, Venta Directa y Venta Pre-Venta*/
 var validadorFormaPago = function(){
 	console.log("IdVenta Antes de Validar Formulario FormIngresoFP: " + $("#IdVenta").val());
+	
+	if( $("#IdFormaPagoPreVenta").val() != 0) {
+		if ( $("#MontoPagoEfectivo").val() > ($("#SaldoPagoPreVenta").val() * -1) ){
+			alert("EL MONTO PAGADO ($ "+$("#MontoPagoEfectivo").val()+") NO PUEDE SER MAYOR AL SALDO PENDIENTE DE PAGO ($ "+ ($("#SaldoPagoPreVenta").val() * -1) + ")");
+			$("#MontoPagoEfectivo").val( $("#SaldoPagoPreVenta").val() * -1);
+			$("#MontoPagoEfectivo").focus().select();
+			return false;
+		}
+	}
+
     $('#FormIngresoFP').formValidation('validate');
 };
 
@@ -972,8 +985,16 @@ var CalcularSaldoPago = function(){
 	var saldoFinal = totalPagado - totalVendido;		
 	$("#SaldoPagoPreVenta").val(saldoFinal);
 
-	if(saldoFinal < 0) $("#lblSaldoPorPagarPreVenta").text("Saldo x Pagar");
-	else  $("#lblSaldoPorPagarPreVenta").text("Vuelto");
+	if(saldoFinal < 0) {
+		$("#lblSaldoPorPagarPreVenta").text("Saldo x Pagar");
+		$("#SelectorFormaPago *").removeAttr("disabled");
+
+	} else {
+
+	  $("#lblSaldoPorPagarPreVenta").text("Vuelto");
+	  $("#SelectorFormaPago *").attr("disabled", "disabled").off("click");
+
+	 }
 	
 	console.log("Saldo Pendiente de Pago: " + saldoFinal +" - TotalPagado: " + totalPagado + " - TotalVendido: " +totalVendido);
 }

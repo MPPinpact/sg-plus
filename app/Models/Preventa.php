@@ -85,7 +85,7 @@ class Preventa extends Authenticatable
 		
 		$sql="select f_registro_preventa(".$IdPreVenta.",".$datos['IdClientePreVenta'].",".$datos['IdVendedorPreVenta'].",".$datos['IdLocalPreVenta'].",".$datos['IdCajaPreVenta'].",'".$datos['FechaPreVenta']."',".$IdUsuario.")";
 
-        // log::info($sql);
+        log::info($sql);
         $execute=DB::select($sql);
         
         foreach ($execute[0] as $key => $value) {
