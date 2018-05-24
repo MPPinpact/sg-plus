@@ -444,9 +444,13 @@ var ModalVendedor = function(){
 
 var CerrarModalAsignarVendedor = function(){
     
+    if(_tipoVenta_=="Venta"){
+    	FinalizarPreVenta();    	
+	}else{
+		PreVentaPaso02();
+    }
+
     $("#ModalAsignarVendedor").modal("hide");
-	PreVentaPaso02()
-	
 }
 
 var AsignarVendedorPreVenta = function(){
@@ -631,7 +635,7 @@ var BotonPagoTC = function (){
 
 var CancelarFormaPago = function(){
     
-	$("#TotalPagadoPreVenta").val(0);
+	// $("#TotalPagadoPreVenta").val(0);
 	CalcularSaldoPago();
 	
     $("#ModalIngresoPago").modal("hide");
@@ -775,6 +779,14 @@ var PreVentaPaso03 = function(){
 }
 
 var PreVentaPaso04 = function(){
+	//if(_tipoVenta_=="Venta"){
+		var IdVendedor = $("#IdVendedorPreVenta").val();
+		if (IdVendedor.length < 1){
+			ModalVendedor();
+			return;
+		}
+	//}
+
 	FinalizarPreVenta();
 }
 
@@ -881,33 +893,48 @@ var FinalizarPreVenta = function (){
 	var TablaDetalles = $("#tablaDetalles").dataTable();
 	if(TablaDetalles.fnGetData().length < 1){
         $.growl({message:"Debe Seleccionar al Menos un Producto a Vender"},{type: "warning", allow_dismiss: true});
-		return;
+		return false;
 	}
+
+	var TablaPagos = $("#tablaPagos").dataTable();
+	if(TablaPagos.fnGetData().length < 1){
+        $.growl({message:"Debe Seleccionar al Menos una Forma de Pago"},{type: "warning", allow_dismiss: true});
+		return false;
+	}
+	var IdVendedor = $("#IdVendedorPreVenta").val();
+	if (IdVendedor.length < 1){
+        $.growl({message:"Debe Seleccionar Vendedor"},{type: "warning", allow_dismiss: true});
+		return false;
+	}
+
 	if(_tipoVenta_=="PreVenta"){					
 		var IdVendedor = $("#IdVendedorPreVenta").val();
 		var IdTipoDTE = $("#IdTipoDTEPreVenta").val();
-		var IdFormaPago = $("#IdFormaPagoPreVenta").val();
+		var SaldoPagoPreVenta = ( $("#SaldoPagoPreVenta").val() * -1);
+
 		if (IdVendedor.length < 1){
             $.growl({message:"Debe Seleccionar Vendedor"},{type: "warning", allow_dismiss: true});
-			return;
+			return false;
 		}
 		if (IdTipoDTE.length < 1){
             $.growl({message:"Debe Seleccionar Tipo de DTE"},{type: "warning", allow_dismiss: true});
-			return;
+			return false;
 		}	
-		if (IdFormaPago.length < 1){
-            $.growl({message:"Debe Seleccionar Forma de Pago"},{type: "warning", allow_dismiss: true});
-			return;
+		if (SaldoPagoPreVenta > 0) {
+			$.growl({message:"El Ticket no puede tener Saldo Pendiente"},{type: "warning", allow_dismiss: true});
+			return false;
 		}
 		parametroAjax.ruta=rutaPVCP;
 		parametroAjax.data = $("#FormPreVenta").serialize();
 		respuesta=procesarajax(parametroAjax);
+
 	}else if(_tipoVenta_=="Venta"){
 		//parametroAjax.data = {IdVenta:_idVenta_};
 		parametroAjax.ruta=rutaVCP;
 		parametroAjax.data = $("#FormPreVenta").serialize();
 		respuesta=procesarajax(parametroAjax);
 	}
+
 	var res = JSON.parse(respuesta.respuesta.f_registro);
 	if(res.code==200){
 
@@ -929,6 +956,7 @@ var VentaDirecta = function(){
 	_idVenta_ = 0;
 
 	CargarTablaProductosPreVenta(null);
+	CargarTablaPagos(null);
 	PersonalizaFormularioVenta();
 	
 	$("#frameProductos").show();
@@ -940,7 +968,7 @@ var VentaDirecta = function(){
     $("#NroPreVenta").val("");
 
 	$("#PreVentaStep_2").hide();
-	
+	$("#IdVendedorPreVenta").val("");
 	//destruirTabla('#tablaDetalles');
 	//$('#tablaDetalles thead').empty();
 	

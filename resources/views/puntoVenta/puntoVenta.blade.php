@@ -492,7 +492,7 @@
 						</div>
 						<div class="col-md-4">
 							<button id="botonConsultarVendedor" name="botonConsultarVendedor" type="button" class="btn btn-success waves-effect waves-light btn-block">
-								<i class="icon-check"></i>  Consultar Vendedor
+								<i class="icon-check"></i>  Consultar/Asignar Vendedor
 							</button>
 						</div>
 					</div>
@@ -507,7 +507,7 @@
 					
 					<div class="row"><br /><br /><br /><br /></div>
 					
-					<div class="row" id="">
+					<div class="row"  style="display: none;">
 						<div class="col-md-6">
 							<button id="botonCancelarAsignarVendedor" name="botonCancelarAsignarVendedor" href="#!"  type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
 								Cerrar
@@ -702,13 +702,13 @@
 						<div class="col-md-6">
 							<div class="md-input-wrapper">
 								<input id="NumeroTransaccionTarjeta" name="NumeroTransaccionTarjeta" type="text" class="md-form-control md-static"   style="text-align: right; font-size: 30px; font-weight: bold;" maxlength="250" />
-								<label for="NumeroTransaccionTarjeta" style="font-size: 25px; font-weight: bold;">Número Transacción</label>
+								<label for="NumeroTransaccionTarjeta" style="font-size: 20px; font-weight: bold;">Número Transacción</label>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="md-input-wrapper">
 								<input id="CodigoAprobacionTarjeta" name="CodigoAprobacionTarjeta" type="text" class="md-form-control md-static"  style="text-align: right; font-size: 30px; font-weight: bold;"  maxlength="250" />
-								<label for="CodigoAprobacionTarjeta" style="font-size: 25px; font-weight: bold;">Código Aprobación</label>
+								<label for="CodigoAprobacionTarjeta" style="font-size: 20px; font-weight: bold;">Código Aprobación</label>
 							</div>
 						</div>
 					</div>
@@ -716,15 +716,15 @@
 						<div class="row" >
 							<div class="col-md-3">
 								<div class="md-input-wrapper">
-									<input id="RUTClienteCredito" name="RUTClienteCredito" type="text" class="md-form-control md-static"  style="text-align: right; font-size: 30px; font-weight: bold;"  maxlength="250" />
-									<label for="RUTClienteCredito" style="font-size: 25px; font-weight: bold;">RUT Cliente</label>
+									<input id="RUTClienteCredito" name="RUTClienteCredito" type="text" class="md-form-control md-static"  style="text-align: right; font-size: 25px; font-weight: bold;"  maxlength="250" />
+									<label for="RUTClienteCredito" style="font-size: 20px; font-weight: bold;">RUT Cliente</label>
 									<small id="ErrorRutCredito" class="rut-error"></small>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="NombreClienteCredito" name="NombreClienteCredito" type="text" class="md-form-control md-static"  style="text-align: right; font-size: 30px; font-weight: bold;"  maxlength="250" readonly />
-									<label for="NombreClienteCredito" style="font-size: 25px; font-weight: bold;">Nombre Cliente</label>
+									<input id="NombreClienteCredito" name="NombreClienteCredito" type="text" class="md-form-control md-static"  style="text-align: right; font-size: 25px; font-weight: bold;"  maxlength="250" readonly />
+									<label for="NombreClienteCredito" style="font-size: 20px; font-weight: bold;">Nombre Cliente</label>
 								</div>
 							</div>
 							<div class="col-md-5">
@@ -738,19 +738,19 @@
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
 									<input id="MontoAFinanciar" name="MontoAFinanciar" type="text" class="md-form-control md-static"  style="text-align: right; font-size: 30px; font-weight: bold;"  maxlength="250" />
-									<label for="MontoAFinanciar" style="font-size: 25px; font-weight: bold;">Monto A Financiar</label>
+									<label for="MontoAFinanciar" style="font-size: 20px; font-weight: bold;">Monto A Financiar</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
 									<input id="NumeroCuotasCredito" name="NumeroCuotasCredito" type="text" class="md-form-control md-static"   style="text-align: right; font-size: 30px; font-weight: bold;" maxlength="250" />
-									<label for="NumeroCuotasCredito" style="font-size: 25px; font-weight: bold;">Nro de Cuotas</label>
+									<label for="NumeroCuotasCredito" style="font-size: 20px; font-weight: bold;">Nro de Cuotas</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
 									<input id="InteresMensualCredito" name="InteresMensualCredito" type="text" class="md-form-control md-static"  style="text-align: right; font-size: 30px; font-weight: bold;"  maxlength="250" readonly />
-									<label for="InteresMensualCredito" style="font-size: 25px; font-weight: bold;">Interes Mensual</label>
+									<label for="InteresMensualCredito" style="font-size: 20px; font-weight: bold;">Interes Mensual</label>
 								</div>
 							</div>
 						</div>
@@ -758,19 +758,19 @@
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
 									<input id="FechaPrimeraCuota" name="FechaPrimeraCuota" type="text" class="md-form-control md-static"  style="text-align: right; font-size: 30px; font-weight: bold;"  maxlength="250" readonly />
-									<label for="FechaPrimeraCuota" style="font-size: 25px; font-weight: bold;">Primera Cuota</label>
+									<label for="FechaPrimeraCuota" style="font-size: 20px; font-weight: bold;">Primera Cuota</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="MontoCuotaCredito" name="MontoCuotaCredito" type="text" class="md-form-control md-static"  style="text-align: right; font-size: 40px; font-weight: bold;"  maxlength="250" readonly />
-									<label for="MontoCuotaCredito" style="font-size: 25px; font-weight: bold;">Monto Cuota</label>
+									<input id="MontoCuotaCredito" name="MontoCuotaCredito" type="text" class="md-form-control md-static"  style="text-align: right; font-size: 30px; font-weight: bold;"  maxlength="250" readonly />
+									<label for="MontoCuotaCredito" style="font-size: 20px; font-weight: bold;">Monto Cuota</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
 									<input id="MontoFinalCredito" name="MontoFinalCredito" type="text" class="md-form-control md-static"  style="text-align: right; font-size: 30px; font-weight: bold;"  maxlength="250" readonly />
-									<label for="MontoFinalCredito" style="font-size: 25px; font-weight: bold;">Monto Final Crédito</label>
+									<label for="MontoFinalCredito" style="font-size: 20px; font-weight: bold;">Monto Final Crédito</label>
 								</div>
 							</div>
 						</div>
@@ -780,8 +780,9 @@
 						<div class="col-md-12">
 							<div class="md-input-wrapper">
 								<input id="MontoPagoEfectivo" name="MontoPagoEfectivo" type="text" class="md-form-control  form-control-lg md-static"  style="text-align: right; font-size: 30px; font-weight: bold;" maxlength="250" />
+								<label for="MontoPagoEfectivo" style="text-align: right; font-size: 20px; font-weight: bold;">Monto Pagado</label>
 								<div style="float: right;">
-									<label for="MontoPagoEfectivo" style="font-size: 25px; font-weight: bold;">Monto Pagado</label>
+									
 								</div>
 							</div>
 						</div>
@@ -825,6 +826,9 @@
 				<h6 id="spanTituloModalTipoDTE" class="modal-title">-----</h6>
 			</div>
 			<div class="modal-body">
+				<div class="row"><br /><br /><br /><br /></div>
+				<div class="row"><br /><br /><br /><br /></div>
+
 				{!! Form::open(['id'=>'FormTipoDTE','autocomplete' => 'off']) !!}
 					<input type="hidden" name="IdTipoDTE" id="IdTipoDTE">
 										
@@ -858,15 +862,14 @@
 					
 					<div class="row"><br /><br /><br /><br /></div>
 					<div class="row"><br /><br /><br /><br /></div>
-					<div class="row"><br /><br /><br /><br /></div>
 
-					<div class="row" style="display: none;">
+					<div class="row" >
 						<div class="col-md-6">
-							<button id="botonCancelarTippDTE" name="botonCancelarTippDTE" href="#!"  type="button" class="btn-xlg btn-danger waves-effect waves-light btn-block">
-								<i class="icofont icofont-ui-close"></i> Cerrar
+							<button id="botonCancelarTippDTE" name="botonCancelarTippDTE" href="#!"  type="button" class="btn-xlg btn-warning waves-effect waves-light btn-block">
+								<i class="icofont icofont-ui-close"></i> Volver
 							</button>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-6" style="display: none;">
 							<button id="botonConfirmarTipoDTE" name="botonConfirmarTipoDTE" type="button" href="#!"  class="btn-xlg btn-success waves-effect waves-light btn-block">
 								<i class="icofont icofont-ui-check"></i>  Confirmar DTE
 							</button>
