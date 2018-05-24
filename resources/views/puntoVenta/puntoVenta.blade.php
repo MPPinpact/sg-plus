@@ -435,7 +435,7 @@
 					<div class="row">
 						<div class="col-md-4">
 							<div class="md-input-wrapper">
-								<input id="MontoAPagarPagoCredito" name="MontoAPagarPagoCredito" type="text" class="md-form-control md-static PagoCreditoM" maxlength="250" />
+								<input id="MontoAPagarPagoCredito" name="MontoAPagarPagoCredito" type="text" class="InputMoneda md-form-control md-static PagoCreditoM" maxlength="250" />
 								<label for="MontoAPagarPagoCredito">Monto a Pagar</label>
 							</div>
 						</div>

@@ -556,7 +556,7 @@ var pintarDatosActualizar = function(data){
     $("#IdVenta").val(data.IdVenta);
     $("#IdVenta2").val(data.IdVenta);
     $("#IdCliente").val(data.IdCliente);
-    $("#FechaVenta").val(moment(data.FechaVenta, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY"));
+    $("#FechaVenta").val(moment(data.FechaVenta, 'YYYY-MM-DD HH:mm:ss',true).format(FormatoFecha_));
     $("#RUTCliente").val(data.RUTCliente);
     $("#IdEstadoVenta").val(data.EstadoVenta);
     $("#NombreCliente").val(data.NombreCliente);
@@ -590,7 +590,7 @@ var BotonAgregar = function(){
     $("#divTabs").hide();
     $("#div-mod").hide();
     $("#div-acep").show();
-    var now = moment().format('DD-MM-YYYY')
+    var now = moment().format(FormatoFecha_)
     $("#FechaVenta").val(now);
     
     cargarTablaDetalles();
@@ -1265,9 +1265,9 @@ var buscarClienteVC = function(RUTCliente){
 // } 
 
 var calcularFechaPago = function (fecha){
-    var FechaDTE = moment(fecha, 'DD-MM-YYYY',true).format("YYYY-MM-DD");
-    var FechaSuma = moment(FechaDTE).add(1, 'month').format("YYYY-MM-DD");
-    var FechaVencimiento = moment(FechaSuma, 'YYYY-MM-DD',true).format("DD-MM-YYYY");
+    var FechaDTE = moment(fecha, 'DD-MM-YYYY',true).format(FormatoFecha_);
+    var FechaSuma = moment(FechaDTE).add(1, 'month').format(FormatoFecha_);
+    var FechaVencimiento = moment(FechaSuma, 'YYYY-MM-DD',true).format(FormatoFecha_);
     $("#FechaVencimiento").val(FechaVencimiento);
     $("#FechaPago").val(FechaVencimiento);
     $("#FechaVencimiento").focus();
