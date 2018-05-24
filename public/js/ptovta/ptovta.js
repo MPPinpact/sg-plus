@@ -228,21 +228,29 @@ var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
                 limpiarDatosCreditoClientes();
                 $("#IdClienteConsultaCredito").val(cliente[0].IdCliente);
                 $("#NombreClienteConsultaCredito").val(cliente[0].NombreCliente);
+                $('#CreditoAutorizadoConsultaCredito').number(true, NumeroDecimales_,SeparadorDecimal_ ,SeparadorMiles_);
+                $('#CreditoUtilizadoConsultaCredito').number(true, NumeroDecimales_,SeparadorDecimal_ ,SeparadorMiles_);
+                $('#CreditoDisponibleConsultaCredito').number(true, NumeroDecimales_,SeparadorDecimal_ ,SeparadorMiles_);
                 $("#CreditoAutorizadoConsultaCredito").val(cliente[0].CupoAutorizado);
                 $("#CreditoUtilizadoConsultaCredito").val(cliente[0].CupoUtilizado);
                 var disp = (parseInt(cliente[0].CupoAutorizado)-parseInt(cliente[0].CupoUtilizado));
                 $("#CreditoDisponibleConsultaCredito").val(disp);
                 if (respuesta.respuesta.v_cliente.UltimaCompra.length > 0){
-                    $("#UltimaCompraConsultaCredito").val(respuesta.respuesta.v_cliente.UltimaCompra[0].TotalVenta);
+                    var fechaC = moment(respuesta.respuesta.v_cliente.UltimaCompra[0].FechaVenta, 'YYYY-MM-DD HH:mm:ss',true).format(FormatoFecha_);
+                    var montoC = $.number(respuesta.respuesta.v_cliente.UltimaCompra[0].TotalVenta, NumeroDecimales_,SeparadorDecimal_ ,SeparadorMiles_);
+                    $("#UltimaCompraConsultaCredito").val(montoC+" / "+fechaC);
                 }
                 if (respuesta.respuesta.v_cliente.UltimoPago.length > 0){
-                    $("#UltimoPagoConsultaCredito").val(respuesta.respuesta.v_cliente.UltimoPago[0].MontoAbono);
+                    var fechaU = moment(respuesta.respuesta.v_cliente.UltimoPago[0].FechaAbono, 'YYYY-MM-DD HH:mm:ss',true).format(FormatoFecha_);
+                    var montoU = $.number(respuesta.respuesta.v_cliente.UltimoPago[0].MontoAbono, NumeroDecimales_,SeparadorDecimal_ ,SeparadorMiles_);
+                    $("#UltimoPagoConsultaCredito").val(montoU+" / "+fechaU);
                 }
                 if (respuesta.respuesta.v_cliente.MontoAnterior.length > 0){
-                    $("#UltimoMontoFacturadoConsultaCredito").val(respuesta.respuesta.v_cliente.MontoAnterior[0].MontoFacturadoAnterior);
+                    var fechaM = moment(respuesta.respuesta.v_cliente.MontoAnterior[0].FechaVencimiento, 'YYYY-MM-DD',true).format(FormatoFecha_);
+                    var montoM = $.number(respuesta.respuesta.v_cliente.MontoAnterior[0].MontoFacturadoAnterior, NumeroDecimales_,SeparadorDecimal_ ,SeparadorMiles_);
+                    $("#UltimoMontoFacturadoConsultaCredito").val(montoM+" / "+fechaM);
                 }
                 $("#EstadoClienteConsultaCredito").val(cliente[0].DetalleEstadoCliente);
-
                 $("#bontonEstadoCliente").text(cliente[0].DetalleEstadoCliente);
                 if(cliente[0].EstadoCliente==1) {
                     $("#bontonEstadoCliente").removeClass("btn-danger");
@@ -251,9 +259,7 @@ var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
                     $("#bontonEstadoCliente").removeClass("btn-success");
                     $("#bontonEstadoCliente").addClass("btn-danger");
                 }
-
                 $("#bontonEstadoCliente").show();
-
             }
             //Caso pago Credito  UltimoMontoFacturadoConsultaCredito
             if (caso == 2){ 
@@ -263,13 +269,17 @@ var ManejoRespuestaBuscarClienteDC = function(respuesta,caso){
                 //     $("#MontoFacturadoPagoCredito").val(respuesta.respuesta.v_cliente.MontoActual[0].MontoFacturadoActual);
                 // }
                 if (respuesta.respuesta.v_cliente.MontoAnterior.length > 0){
-                    $("#MontoFacturadoPagoCredito").val(respuesta.respuesta.v_cliente.MontoAnterior[0].MontoFacturadoAnterior);
+                    var fechaA = moment(respuesta.respuesta.v_cliente.MontoAnterior[0].FechaVencimiento, 'YYYY-MM-DD',true).format(FormatoFecha_);
+                    var montoA = $.number(respuesta.respuesta.v_cliente.MontoAnterior[0].MontoFacturadoAnterior, NumeroDecimales_,SeparadorDecimal_ ,SeparadorMiles_);
+                    $("#MontoFacturadoPagoCredito").val(montoA+" / "+fechaA);
                 }
                 if (respuesta.respuesta.v_cliente.FechaVencimiento.length > 0){
-                    $("#FechaVencimientoPagoCredito").val(respuesta.respuesta.v_cliente.FechaVencimiento[0].FechaVencimiento);
+                    var fechaF = moment(respuesta.respuesta.v_cliente.FechaVencimiento[0].FechaVencimiento, 'YYYY-MM-DD',true).format(FormatoFecha_);
+                    $("#FechaVencimientoPagoCredito").val(fechaF);
                 }
                 if (respuesta.respuesta.v_cliente.DeudaTotal.length > 0){
-                    $("#DeudaTotalPagoCredito").val(respuesta.respuesta.v_cliente.DeudaTotal[0].CupoUtilizado);
+                    var montoD = $.number(respuesta.respuesta.v_cliente.DeudaTotal[0].CupoUtilizado, NumeroDecimales_,SeparadorDecimal_ ,SeparadorMiles_);
+                    $("#DeudaTotalPagoCredito").val(montoD);
                 }
             }
 
