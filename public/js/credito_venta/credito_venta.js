@@ -283,11 +283,13 @@ var buscarCliente = function(RUTCliente){
 }
 
 var cargarInteresCuotas = function(data){
+    console.log(data);
     CuotaMax=data.NumeroMaxCuotas;
     Interes = data.InteresMensual;
 }
 
 $(document).ready(function(){
+    console.log(d);
     cargarInteresCuotas(d['v_prefencias']);
     $("#RUTCliente").focusout(function() {
         var valid = $("#RUTCliente").val();

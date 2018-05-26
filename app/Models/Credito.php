@@ -77,7 +77,7 @@ class Credito extends Authenticatable
 
         $sql="select f_registro_preferencia(".$Id.",'".$datos['FechaInicio']."','".$datos['FechaFin']."','".$datos['InteresMensual']."',".$datos['NumeroMaxCuotas'].",".$datos['TolenranciaDiasPrimeraCuota'].",".$datos['AdvertenciaDeudaVencida'].",'".$datos['MontoMantencionCuenta']."',".$datos['EstadoPreferencia'].",".$idAdmin.")";
         //Validador de Ingreso de Fechas
-
+        $validador = 0;
         $model = new Credito();
         if($datos['EstadoPreferencia'] == 1){
             $validador = $model->validarPreferencia($datos['FechaInicio'],$datos['FechaFin']);
@@ -97,7 +97,6 @@ class Credito extends Authenticatable
     public function activarCredito($datos){
         $model = new Credito();
         $validador = 0;
-   
         if($datos['EstadoPreferencia'] == 0){
             $validador = $model->validarPreferencia($datos['FechaInicio'],$datos['FechaFin']);
         }    
@@ -120,7 +119,7 @@ class Credito extends Authenticatable
 
      // Validacion de Preferencia de Credito activa para ese rango de fecha
     public function validarPreferencia($fInicio, $fFin){
-        $sql = "select count(1) existe from sgp.credito_preferencias 
+        $sql = "select count(1) existe from credito_preferencias 
             WHERE ((FechaInicio <= '".$fInicio."'  AND FechaFin >= '".$fFin."')
             OR FechaInicio BETWEEN '".$fInicio."' AND '".$fFin."'
             OR FechaFin BETWEEN '".$fInicio."' AND '".$fFin."') and EstadoPreferencia = 1";
