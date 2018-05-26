@@ -111,6 +111,8 @@ class Venta extends Authenticatable
 		
         $datos['IdDetallePreVenta']==null ? $Id=0 : $Id= $datos['IdDetallePreVenta'];
         $sql="select f_registro_detalle_venta(".$Id.",".$datos['IdPreVenta'].",".$datos['IdProductoPreVenta'].",null,'".$datos['CantidadProductoPreVenta']."','".$datos['PrecioProductoPreVenta']."','0','0','0','0','".$datos['TotalLineaPreVenta']."',".$IdUsuario.")";
+        log::info($sql);
+        
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {
             $result=$value;
