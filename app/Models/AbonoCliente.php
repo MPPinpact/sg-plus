@@ -47,9 +47,11 @@ class AbonoCliente extends Authenticatable
         $datos['IdAbono']==null ? $Id=0 : $Id= $datos['IdAbono'];
         $datos['IdCaja']==null ? $IdCaja=0 : $IdCaja=$datos['IdCaja'];
 
+        // log::info($datos);
+
         $sql="select f_registro_abono(".$Id.",".$datos['IdClienteAbono']."," . $IdCaja . ",'".$datos['MontoAbono']."',".$datos['IdFormaPago'].",".$idAdmin.")";
 
-        //log::info($sql);
+        // log::info($sql);
 
         $execute=DB::select($sql);
         foreach ($execute[0] as $key => $value) {

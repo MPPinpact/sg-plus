@@ -52,6 +52,7 @@ class AbonoClienteController extends Controller
 
     //Registrar o actualizar proveedor
     protected function postAbonoCliente(Request $request){
+        log::info("Hooooooola 22222");
         $datos = $request->all();
         $model= new AbonoCliente ();
         $result['f_registro'] = $model->regAbonoCliente($datos);

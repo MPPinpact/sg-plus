@@ -64,11 +64,12 @@ var ManejoRespuestaProcesar = function(respuesta){
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
-                $(".divDetalles").toggle();
-                $(".divBotones").toggle();
-                $('#FormAbonoCliente')[0].reset();
-                $('#IdFormaPago').val("");
-                cargarTablaAbonoCliente(respuesta.respuesta.v_abono_cliente);
+                location.reload();
+                // $(".divDetalles").toggle();
+                // $(".divBotones").toggle();
+                // $('#FormAbonoCliente')[0].reset();
+                // $('#IdFormaPago').val("");
+                // cargarTablaAbonoCliente(respuesta.respuesta.v_abono_cliente);
                 break;
             case '-2':
                 $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
@@ -136,6 +137,7 @@ var cargarTablaAbonoCliente = function(data){
 var pintarDatosActualizar= function(data){
     $(".md-form-control").addClass("md-valid");
     $("#IdAbono").val(data.IdAbono);
+    $("#IdClienteAbono").val(data.IdCliente);
     $("#RUTClienteAbono").val(data.RUTCliente);
     $("#NombreClienteAbono").val(data.NombreCliente);
     $("#MontoAbono").val(data.MontoAbono);
@@ -320,7 +322,7 @@ $(document).ready(function(){
                         message: 'El campo es requerido.'
                     },
                 }
-            },            
+            },         
             'IdFormaPago': {
                 verbose: false,
                 validators: {
