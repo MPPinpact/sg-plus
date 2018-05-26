@@ -1336,7 +1336,6 @@ var CancelarPreVenta = function(){
 $(document).ready(function(){
     $("#FechaVenta").inputmask({ mask: "99-99-9999"});
     // $("#NombreCliente").val(now);
-    console.log(d.v_ventas);
     cargarTablaVentas(d.v_ventas);
     crearAllSelect(d);
     // $("#IdLocal").change(function() {

@@ -51,7 +51,6 @@ class VentaController extends Controller
     {
         $model= new Venta();
         $data['v_ventas'] = $model->listVentas();
-        log::info($data['v_ventas']);
         $data['v_estados'] = $model->listEstados();
         $data['v_tipo_dte'] = $model->listTipoDte();
         $data['v_unidad_medida'] = $model->listUnidadMedida();
