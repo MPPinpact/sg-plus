@@ -39,7 +39,7 @@ var HideMessage = function(){
 
 $(document).ready(function() {
 	// moment en idioma español
-	// moment.locale('es');
+	moment.locale('es');
 	//Datos de usuario para cargar el contenido dependiendo del perfil
 	$('.InputMoneda').number(true, NumeroDecimales_,SeparadorDecimal_ ,SeparadorMiles_);
 	// $('.InputMoneda').number(NumeroDecimales_, ',', SeparadorDecimal_);
