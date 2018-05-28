@@ -58,9 +58,9 @@ $(document).ready(function() {
     //console.log('$(document).ready...');
 
     //sidebar dropdown open
-    $(".designation").on('click', function() {
-        $(".extra-profile-list").slideToggle();
-    });
+    // $(".designation").on('click', function() {
+    //     $(".extra-profile-list").slideToggle();
+    // });
 
 });
 

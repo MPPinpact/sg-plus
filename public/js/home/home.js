@@ -300,6 +300,9 @@ $(document).ready(function() {
     $(document).on('click','#botonBuscar',BuscarProducto);
     $(document).on('click','#botonBuscarCliente',BotonBuscarCliente);
     
+     $(".designation").on('click', function() {
+        $(".extra-profile-list").slideToggle();
+    });
 
     $(document).on('click','#btn-logout',Salir);
 	$(document.body).on("keydown", this, function (event) {
