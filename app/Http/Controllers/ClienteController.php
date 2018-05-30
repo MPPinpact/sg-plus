@@ -70,9 +70,12 @@ class ClienteController extends Controller
     }
 
     // Ver detalles de los cliente
-    protected function postClientedetalle (Request $request){
+    protected function postClienteDetalle (Request $request){
         $datos = $request->all();
         $model= new Cliente();
+
+        //log::info("IdCliente: " . $datos['IdCliente']);
+
         $result['v_detalles'] = $model->getDetallesClientes($datos['IdCliente']);
         $result['v_movimientos'] = $model->listMovimientos($datos['IdCliente']);
         $result['v_movimientos_ultimo_eecc'] = $model->listMovimientosUltimoEECC($datos['IdCliente']);

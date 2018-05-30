@@ -86,8 +86,9 @@ class Cliente extends Authenticatable
     }
 
     public function listMovimientos($IdCliente){
-        $sql="SELECT * FROM v_clientes_movimientos WHERE IdCliente=".$IdCliente." AND EstadoMovimiento=1 ORDER BY FechaMovimiento DESC";
-        //log::info($sql);
+        $sql="SELECT * FROM v_clientes_movimientos WHERE IdCliente=".$IdCliente." AND IdEstadoMovimiento=1 ORDER BY FechaMovimiento DESC";
+        // log::info($sql);
+
         $result=DB::select($sql);
         return $result;
     }
