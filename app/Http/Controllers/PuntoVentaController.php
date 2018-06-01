@@ -419,7 +419,7 @@ class PuntoVentaController extends Controller
         $tittle= "RECIBO DE PAGO ";  // N° ".$obj->IdVenta; 
         $IdAbono = $datos['IdAbono'];
         $cliente= new Cliente();
-        $FechaNow = new DateTime();
+        $FechaNow = new DateTime();
 
         $abono = DB::table('v_abono_cliente')->where('IdAbono', $IdAbono)->first();
         $datos['RUTCliente'] = $abono->RUTCliente;
