@@ -459,12 +459,12 @@ class PuntoVentaController extends Controller
             <table border="0" cellspacing="0" width="100%" style="font-size: 10px; font-family: Arial, Helvetica, sans-serif;">
                 <tr>
                     <td>
-                        <b>Nombre Cliente: '.$pdf['cliente'][0]->NombreCliente.'</b>
+                        <b>RUT Cliente: '.$pdf['cliente'][0]->RUTCliente.'</b>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <b>RUT Cliente: '.$pdf['cliente'][0]->RUTCliente.'</b>
+                        <b>Nombre Cliente: '.$pdf['cliente'][0]->NombreCliente.'</b>
                     </td>
                 </tr>
 
