@@ -19,6 +19,12 @@ use Config;
 use Mail;
 use Storage;
 use DB;
+use PDF;
+use DateTime;
+
+use CodeItNow\BarcodeBundle\Utils\QrCode;
+use CodeItNow\BarcodeBundle\Utils\BarcodeGenerator;
+use DNS1D;
 
 use App\Models\PuntoVenta;
 use App\Models\CajaDiaria;
@@ -391,9 +397,129 @@ class PuntoVentaController extends Controller
 
     protected function postPagarCuenta(Request $request){
         $datos = $request->all();
+        // log::info($datos);
+        $model= new Usuario();
+        $datos['RUTCliente']=$model->LimpiarRut($datos['RUTClientePagoCredito']);
+        $FechaNow = new DateTime();
         $model= new AbonoCliente();
-        $result = $model->regPagoCredito($datos);
+        $result['data']['RUTCliente'] = $datos['RUTCliente'];
+        $result['data']['MontoAnterior'] = $datos['DeudaTotalPagoCredito'];
+        $result['data']['FechaAbono'] = $FechaNow->format('d-m-Y H:i');
+        $result['resp'] = $model->regPagoCredito($datos);
         return $result;
+    }
+
+    protected function postReciboPago(Request $request){
+        $datos = $request->all();
+        
+        log::info($datos);
+        log::info("");
+        log::info("");
+        log::info("");
+        log::info("");
+        log::info("");
+        log::info("");
+
+        $localUsuario = Session::get('localUsuario');
+        $local = DB::table('v_locales')->where('IdLocal',$localUsuario->IdLocal)->first();
+        $empresa = DB::table('v_empresas')->where('IdEmpresa',$local->IdEmpresa)->first();
+        $tittle= "RECIBO DE PAGO";  // N° ".$obj->IdVenta; 
+        $numero = $datos['IdAbono'];
+        $cliente= new Cliente();
+        $FechaNow = new DateTime();
+        $pdf = $cliente->buscarClienteDetalleCredito($datos);
+
+
+        log::info($pdf);
+        log::info($pdf['UltimoPago'][0]->MontoAbono);
+        // log::info($pdf['cliente'][0]->NombreCliente);
+        // log::info($pdf['cliente'] ['items']);
+        // log::info($pdf['items'][0]->NombreCliente);
+
+
+        $html_content = 
+        '
+        <div style="font-size:7px;">
+            <table border="1" cellspacing="0" width="100%">
+                <tr>
+                    <td>
+                        <table border="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td style="text-align:center;">
+                                    '.$local->NombreLocal.'
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">
+                                    '.$tittle.' '.$numero.'
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <br>
+            <table border="0" cellspacing="0" width="100%" style="font-size: 10px; font-family: Arial, Helvetica, sans-serif;">
+                <tr>
+                    <td>
+                        <b>Cliente: '.$pdf['cliente'][0]->NombreCliente.'</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Fecha Emisión: '.$FechaNow->format('d-m-Y').' '.$FechaNow->format('H:i').' </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Fecha Abono: '.$datos['FechaAbono'].' </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Saldo Anterior: '.$datos['MontoAnterior'].'
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Monto Abono: '.$pdf['UltimoPago'][0]->MontoAbono.'
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Saldo Actual: '.$pdf['DeudaTotal'][0]->CupoUtilizado.'
+                    </td>
+                </tr>
+            </table>
+        </div>
+        ';
+
+        $html_content .= 
+        '<table border="0" cellspacing="0" width="100%" style="text-align:center;">
+            <tr>
+                <td width="100%">
+                    <img align=center src="data:image/png;base64,'.DNS1D::getBarcodePNG($datos['IdAbono'], "C39+").'" alt="barcode"/> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    '.$datos['IdAbono'].'
+                </td>
+            </tr>
+        </table>';
+
+        PDF::SetTitle('RECIBO DE PAGO');
+        $width = 80;  
+        $height = 70;
+        $pageLayout = array($width, $height);
+        PDF::SetMargins(0, 1, 3);
+        PDF::SetAutoPageBreak(TRUE, 0);
+        PDF::AddPage('P',$pageLayout);
+        PDF::writeHTML($html_content, true, false, true, false, '');
+        PDF::IncludeJS('print(true);');
+        PDF::Output(uniqid().'_SamplePDF.pdf', 'I');
+
     }
 
     protected function postBuscarProductosC(Request $request){

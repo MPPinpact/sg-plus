@@ -180,7 +180,8 @@ var ManejoRespuestaProcesarD = function(respuesta){
 
 var ManejoRespuestaProcesarPagarCuenta = function(respuesta){
     if(respuesta.code==200){
-        if(respuesta.respuesta.code==200){
+        var res = JSON.parse(respuesta.respuesta.resp);
+        if(res.code==200){
             $("#ModalPagoCreditoCliente").modal("hide");
             $("#IdClientePagoCredito").val("");
             $("#RUTClientePagoCredito").val("");
@@ -190,9 +191,18 @@ var ManejoRespuestaProcesarPagarCuenta = function(respuesta){
             $("#DeudaTotalPagoCredito").val("");
             $("#MontoAPagarPagoCredito").val("");
             $("#IdFormaPagoCredito").val("").trigger("change");
-            $.growl({message:respuesta.respuesta.des_code},{type: "success", allow_dismiss: true,});
+            $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
+
+            var valores={
+                _token : $("#_token").val(),
+                RUTCliente : respuesta.respuesta.data.RUTCliente,
+                MontoAnterior :respuesta.respuesta.data.MontoAnterior, 
+                FechaAbono :respuesta.respuesta.data.FechaAbono, 
+                IdAbono : res.IdAbono
+            };
+            OpenWindowWithPost(rutaRboPgo,'','_blank',valores);
         }else{
-            $.growl({message:respuesta.respuesta.des_code},{type: "warning", allow_dismiss: true,});
+            $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
         }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});

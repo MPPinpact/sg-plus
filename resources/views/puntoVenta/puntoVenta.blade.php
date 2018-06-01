@@ -1257,6 +1257,10 @@
 
     var rutaBPM = "{{ URL::route('compraBPM') }}"
     var rutaCSP = "{{ URL::route('compraCSP') }}"
+
+    var rutaRboPgo = "{{ URL::route('reciboPago') }}"
+
+    
 	
 	var d = [];
 	d['v_formas_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_pago) }}'));
