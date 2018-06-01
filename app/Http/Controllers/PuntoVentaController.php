@@ -436,6 +436,7 @@ class PuntoVentaController extends Controller
         // log::info($pdf['cliente'] ['items']);
         // log::info($pdf['items'][0]->NombreCliente);
 
+        $datos['MontoAnterior'] = str_replace('.', '', $datos['MontoAnterior']);
 
         $html_content = 
         '
@@ -468,9 +469,16 @@ class PuntoVentaController extends Controller
                 </tr>
                 <tr>
                     <td>
+                        <b>Cliente: '.$pdf['cliente'][0]->RUTCliente.'</b>
+                    </td>
+                </tr>
+                <!--
+                <tr>
+                    <td>
                         <b>Fecha Emisión: '.$FechaNow->format('d-m-Y').' '.$FechaNow->format('H:i').' </b>
                     </td>
                 </tr>
+                -->
                 <tr>
                     <td>
                         <b>Fecha Abono: '.$datos['FechaAbono'].' </b>
@@ -478,17 +486,22 @@ class PuntoVentaController extends Controller
                 </tr>
                 <tr>
                     <td>
-                        Saldo Anterior: '.$datos['MontoAnterior'].'
+                        <br>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Monto Abono: '.$pdf['UltimoPago'][0]->MontoAbono.'
+                        Saldo Anterior: '.number_format($datos['MontoAnterior'], 0, ',', '.').'
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Saldo Actual: '.$pdf['DeudaTotal'][0]->CupoUtilizado.'
+                        Monto Abono: '.number_format($pdf['UltimoPago'][0]->MontoAbono, 0, ',', '.').'
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Saldo Actual: '.number_format($pdf['DeudaTotal'][0]->CupoUtilizado, 0, ',', '.').'
                     </td>
                 </tr>
             </table>
