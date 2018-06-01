@@ -83,6 +83,17 @@ var ManejoRespuestaProcesar = function(respuesta){
     }
 };
 
+var reimprimirComprobante = function(IdAbono){
+        var valores={
+                _token : $("#_token").val(),
+                RUTCliente : '11111111-1', 
+                MontoAnterior : '0', 
+                FechaAbono :'10-10-2010', 
+                IdAbono : IdAbono
+            };
+            OpenWindowWithPost(rutaRboPgo,'','_blank',valores);
+}
+
 var cargarTablaAbonoCliente = function(data){
     if(limpiarLocales==1){destruirTabla('#TablaAbonoCliente');$('#TablaAbonoCliente thead').empty();}
         $("#TablaAbonoCliente").dataTable({
@@ -109,6 +120,9 @@ var cargarTablaAbonoCliente = function(data){
                         <a href="#" onclick="verDetalles(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Ver Detalles" data-original-title="Delete">
                             <i class="icofont icofont-search"></i>
                         </a>
+                        <a href="#" onclick="reimprimirComprobante(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Reimprimir Comprobante de Pago" data-original-title="Delete">
+                            <i class="icofont icofont-printer"></i>
+                        </a>
                         <a href="#" onclick="cambiarEstatus(`+data+`);" class="text-muted" data-toggle="tooltip" data-placement="top" title="Activar / Desactivar" data-original-title="Delete">
                             <i class="icofont icofont-ui-delete"></i>
                         </a>
@@ -117,10 +131,24 @@ var cargarTablaAbonoCliente = function(data){
                     }
                 },
                 {"title": "IdFormaPago","data": "IdFormaPago",visible:0},
+                {"title": "Nro. Abono","data": "IdAbono",
+                            render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                            className: "text-center"},
+                {"title": "Fecha Anono","data": "FechaAbono", 
+                            "render": function(data, type, row, meta){
+                                if(type === 'display'){
+                                    data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY HH:mm:ss");
+                                }
+                                return data;
+                            }
+                },
                 {"title": "RUTCliente","data": "RUTCliente"},
                 {"title": "Nombre Cliente","data": "NombreCliente"},                
-                {"title": "Monto Abonado","data": "MontoAbono"},
-                {"title": "EstadoAbono","data": "desEstadoAbono"},
+                {"title": "Monto Abonado","data": "MontoAbono", 
+                            render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                            className: "text-center"},
+                {"title": "Local","data": "NombreLocal"},
+                {"title": "Estado Abono","data": "desEstadoAbono"},
                 {"title": "auUsuarioCreacion","data": "auUsuarioCreacion",visible:0},
                 {"title": "fecha de creacion","data": "auFechaCreacion",visible:0},
                 {"title": "Creado por","data": "creador",visible:0},

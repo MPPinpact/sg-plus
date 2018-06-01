@@ -410,33 +410,28 @@ class PuntoVentaController extends Controller
     }
 
     protected function postReciboPago(Request $request){
+        date_default_timezone_set('America/Santiago');
         $datos = $request->all();
         
-        log::info($datos);
-        log::info("");
-        log::info("");
-        log::info("");
-        log::info("");
-        log::info("");
-        log::info("");
-
         $localUsuario = Session::get('localUsuario');
         $local = DB::table('v_locales')->where('IdLocal',$localUsuario->IdLocal)->first();
-        $empresa = DB::table('v_empresas')->where('IdEmpresa',$local->IdEmpresa)->first();
-        $tittle= "RECIBO DE PAGO";  // N° ".$obj->IdVenta; 
-        $numero = $datos['IdAbono'];
+        //$empresa = DB::table('v_empresas')->where('IdEmpresa',$local->IdEmpresa)->first();
+        $tittle= "RECIBO DE PAGO ";  // N° ".$obj->IdVenta; 
+        $IdAbono = $datos['IdAbono'];
         $cliente= new Cliente();
-        $FechaNow = new DateTime();
+        $FechaNow = new DateTime();
+
+        $abono = DB::table('v_abono_cliente')->where('IdAbono', $IdAbono)->first();
+        $datos['RUTCliente'] = $abono->RUTCliente;
+        $FechaAbono = new DateTime($abono->FechaAbono);
+
         $pdf = $cliente->buscarClienteDetalleCredito($datos);
-
-
-        log::info($pdf);
-        log::info($pdf['UltimoPago'][0]->MontoAbono);
+    
+        // log::info($pdf);
+        // log::info($pdf['UltimoPago'][0]->MontoAbono);
         // log::info($pdf['cliente'][0]->NombreCliente);
         // log::info($pdf['cliente'] ['items']);
         // log::info($pdf['items'][0]->NombreCliente);
-
-        $datos['MontoAnterior'] = str_replace('.', '', $datos['MontoAnterior']);
 
         $html_content = 
         '
@@ -452,7 +447,7 @@ class PuntoVentaController extends Controller
                             </tr>
                             <tr>
                                 <td style="text-align:center;">
-                                    '.$tittle.' '.$numero.'
+                                    '.$tittle.' '.$IdAbono.'
                                 </td>
                             </tr>
                         </table>
@@ -464,44 +459,46 @@ class PuntoVentaController extends Controller
             <table border="0" cellspacing="0" width="100%" style="font-size: 10px; font-family: Arial, Helvetica, sans-serif;">
                 <tr>
                     <td>
-                        <b>Cliente: '.$pdf['cliente'][0]->NombreCliente.'</b>
+                        <b>Nombre Cliente: '.$pdf['cliente'][0]->NombreCliente.'</b>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <b>Cliente: '.$pdf['cliente'][0]->RUTCliente.'</b>
+                        <b>RUT Cliente: '.$pdf['cliente'][0]->RUTCliente.'</b>
                     </td>
                 </tr>
-                <!--
+
+                <tr><td><br></td></tr> 
+
                 <tr>
                     <td>
-                        <b>Fecha Emisión: '.$FechaNow->format('d-m-Y').' '.$FechaNow->format('H:i').' </b>
+                        <b>Local Abono: '.$abono->NombreLocal.' </b>
                     </td>
                 </tr>
-                -->
+
                 <tr>
                     <td>
-                        <b>Fecha Abono: '.$datos['FechaAbono'].' </b>
+                        <b>Fecha Abono: '.$FechaAbono->format('d-m-Y').' '.$FechaAbono->format('H:i').' </b>
                     </td>
                 </tr>
+                
                 <tr>
                     <td>
-                        <br>
+                        <b>Monto Abono: '.number_format($abono->MontoAbono, 0, ',', '.').' </b>
                     </td>
                 </tr>
+
+                <tr><td><br></td></tr>
+
                 <tr>
                     <td>
-                        Saldo Anterior: '.number_format($datos['MontoAnterior'], 0, ',', '.').'
+                        Saldo Actual Cliente: '.number_format($pdf['DeudaTotal'][0]->CupoUtilizado, 0, ',', '.').'
                     </td>
                 </tr>
+
                 <tr>
                     <td>
-                        Monto Abono: '.number_format($pdf['UltimoPago'][0]->MontoAbono, 0, ',', '.').'
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Saldo Actual: '.number_format($pdf['DeudaTotal'][0]->CupoUtilizado, 0, ',', '.').'
+                        <b>Fecha Impresión: '.$FechaNow->format('d-m-Y').' '.$FechaNow->format('H:i').' </b>
                     </td>
                 </tr>
             </table>

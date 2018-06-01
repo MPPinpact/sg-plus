@@ -146,6 +146,8 @@
 	var rutaD = "{{ URL::route('AbonoClienteDet') }}"
 	var rutaBC = "{{ URL::route('AbonoClienteBC') }}"
 	var rutaCD = "{{ URL::route('infoCD') }}"
+	var rutaRboPgo = "{{ URL::route('reciboPago') }}"
+	
 	 var d = [];
 	 d['v_abono_cliente'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_abono_cliente) }}'));
 	 d['v_formas_pago'] = JSON.parse(rhtmlspecialchars('{{ json_encode($v_formas_pago) }}'));

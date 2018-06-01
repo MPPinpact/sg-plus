@@ -34,7 +34,7 @@ class AbonoCliente extends Authenticatable
     ];
 
     public function listAbonoCliente(){
-        return DB::table('v_abono_cliente')->where('EstadoAbono',1)->get();
+        return DB::table('v_abono_cliente')->where('EstadoAbono',1)->orderBy('IdAbono', 'desc')->get();
     }
 
     public function listFormaPago(){
