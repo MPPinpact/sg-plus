@@ -77,6 +77,9 @@ $avatarUser = Auth::user()->usrUrlimage;
             Venta
           </a>
         </li>
+        <li class="p-1">
+          <div class="dropdown-divider m-0"></div>
+        </li>
         <li>
           <a class="waves-effect" href="{{ route('vendedores') }}">
             <i class="icon-arrow-right"></i>
@@ -152,9 +155,18 @@ $avatarUser = Auth::user()->usrUrlimage;
             Inventario
           </a>
         </li>
-         <li class="p-0">
-            <div class="dropdown-divider m-0"></div>
-          </li>
+        
+        <li>
+          <a class="waves-effect" href="{{ route('transferenciaBodega') }}">
+            <i class="icon-arrow-right"></i>
+            Transferencia de Productos
+          </a>
+        </li>
+
+        <li class="p-1">
+          <div class="dropdown-divider m-0"></div>
+        </li>
+
         <li>
           <a class="waves-effect" href="{{ route('umedidas') }}">
             <i class="icon-grid"></i>

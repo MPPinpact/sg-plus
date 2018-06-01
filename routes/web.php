@@ -234,8 +234,6 @@ Route::post('/FormaPago', 'FormaPagoController@postFormaPago')->name('FormaPago'
 Route::post('/FormaPagoAtc', 'FormaPagoController@postFormaPagoactivo')->name('FormaPagoAtc');
 Route::post('/FormaPagoDet', 'FormaPagoController@postFormaPagodetalle')->name('FormaPagoDet');
 
-
-
 // CRUD inventario
 Route::get('/inventario', 'InventarioController@getInventario')->name('inventario');
 Route::post('/inventario', 'InventarioController@postInventario')->name('inventario');
@@ -249,12 +247,15 @@ Route::post('/inventariobf', 'InventarioController@postbuscarFamilia')->name('in
 Route::post('/inventarioci', 'InventarioController@postCerrarInventario')->name('inventarioci');
 Route::post('/inventarioibb', 'InventarioController@postBuscarBodegaCombo')->name('inventarioibb');
 
+Route::get('/transferenciaBodega', 'TransferenciaBodegaController@getTransferenciasActivas')->name('transferenciaBodega');
+Route::post('/transferenciaBodega', 'TransferenciaBodegaController@getInventario')->name('transferenciaBodega');
+
+Route::get('/transferenciaList', 'TransferenciaBodegaController@getTransferenciasActivas')->name('transferenciaList');
+Route::post('/transferenciaView', 'TransferenciaBodegaController@getTransferenciaView')->name('transferenciaView');
+Route::get('/transferenciaNew', 'TransferenciaBodegaController@getTransferenciasNew')->name('transferenciaNew');
 
 Route::post('/boletaV', 'BoletaController@postBoletaVer')->name('boletaV');
 Route::post('/boletaPDF', 'BoletaController@postBoletaPdf')->name('boletaPDF');
-
-
-
 
 //CRUD Abono Cliente
 Route::get('/AbonoCliente', 'AbonoClienteController@getAbonoCliente')->name('AbonoCliente');
@@ -299,6 +300,9 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'admin'], function (){
 	
 	
 Route::post('/buscarUsuario', 'UsuarioController@postBuscarUsuario')->name('buscarUsuario');
+
+Route::get('contact', 'TransferenciaController@create')->name('contact.create');
+Route::post('contact', 'TransferenciaController@store')->name('contact.store');
 
 });
 
