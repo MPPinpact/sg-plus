@@ -133,8 +133,6 @@ class Cliente extends Authenticatable
             $result['CupoAutorizado'] = DB::select("select CupoAutorizado from clientes where IdCliente= ".$cliente[0]->IdCliente.";");
             
             $result['DeudaTotal'] = DB::select("select CupoUtilizado from clientes where IdCliente= ".$cliente[0]->IdCliente.";");
-
-            log::info($result);
         }
         return $result;
     }

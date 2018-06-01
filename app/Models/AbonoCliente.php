@@ -61,8 +61,6 @@ class AbonoCliente extends Authenticatable
     }
 
     public function regPagoCredito($datos){
-        //log::info("A pagar los cuenta cliente desde el modelo");
-        //log::info($datos);
         $idAdmin = Auth::id();
         $Id=0;
         $datos['IdCajaPC'] == null ? $IdCaja = 0 : $IdCaja = $datos['IdCajaPC'];

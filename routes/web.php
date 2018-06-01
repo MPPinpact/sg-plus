@@ -191,6 +191,8 @@ Route::get('/cajaDiariaResumenVenta', 'PuntoVentaController@getCajaDiariaResumen
 Route::get('/cajaDiariaDetalleVenta', 'PuntoVentaController@getCajaDiariaDetalleVenta')->name('cajaDiariaDetalleVenta');
 Route::post('/detalleVenta', 'PuntoVentaController@postDetalleVenta')->name('detalleVenta');
 
+Route::post('/reciboPago', 'PuntoVentaController@postReciboPago')->name('reciboPago');
+
 Route::post('/addPreVentaPV', 'PreventaController@postAddPreVentaPreVenta')->name('addPreVentaPV');
 Route::post('/addProductPV', 'PreventaController@postAddProductPreVenta')->name('addProductPV');
 Route::post('/asginarVen', 'PreventaController@postAsignarVendedor')->name('asginarVen');
