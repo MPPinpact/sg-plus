@@ -1,8 +1,13 @@
 <?php
 
-require('../tcpdf/tcpdf.php');
-require('../tcpdf/tcpdf_barcodes_2d.php');
-require('../tcpdf/tcpdf_barcodes_1d.php');
+require('../pdf/tcpdf.php');
+require('../pdf/tcpdf_barcodes_2d.php');
+require('../pdf/tcpdf_barcodes_1d.php');
+
+$codigo = isset( $_GET["codigo"] ) ?   $_GET["codigo"] : "1234567890"  ;
+$producto = isset( $_GET["producto"] ) ? $_GET["producto"] : "PRODUCTO - PRODUCTO" ;
+$precio = isset( $_GET["precio"] ) ? "$ " . number_format($_GET["precio"], 0, ",", ".") .".-"  : "$ 000.000.-"; 
+$cantidad = isset( $_GET["cantidad"] ) ? $_GET["cantidad"] : 1;
 
 // create new PDF document
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -53,93 +58,15 @@ $style = array(
 // add a page ----------
 $pdf->AddPage('P', 'A4');
 
-// CODE 128 AUTO
-$pdf->Cell(0, 0, 'CALZA DEPORTIVA', 0, 1, 'C');
-$pdf->write1DBarcode('2045', 'C128A', '', '', '', 13, 0.4, $style, 'N');
-$pdf->SetFont('helvetica', '', 10);
-$pdf->Cell(0, 0, '$ 4.990.-', 0, 1, 'C');
-$pdf->SetFont('helvetica', '', 6);
-$pdf->Cell(0, 0, '', 0, 1);
-
-// CODE 128 AUTO
-$pdf->Cell(0, 0, 'CALZA DEPORTIVA', 0, 1, 'C');
-$pdf->write1DBarcode('2045', 'C128A', '', '', '', 13, 0.4, $style, 'N');
-$pdf->SetFont('helvetica', '', 10);;
-$pdf->Cell(0, 0, '$ 4.990.-', 0, 1, 'C');
-$pdf->SetFont('helvetica', '', 6);
-$pdf->Cell(0, 0, '', 0, 1);
-
-// CODE 128 AUTO
-$pdf->Cell(0, 0, 'CALZA DEPORTIVA', 0, 1, 'C');
-$pdf->write1DBarcode('2045', 'C128A', '', '', '', 13, 0.4, $style, 'N');
-$pdf->SetFont('helvetica', '', 10);
-$pdf->Cell(0, 0, '$ 4.990.-', 0, 1, 'C');
-$pdf->SetFont('helvetica', '', 6);
-$pdf->Cell(0, 0, '', 0, 1);
-
-// CODE 128 AUTO
-$pdf->Cell(0, 0, 'CALZA DEPORTIVA', 0, 1, 'C');
-$pdf->write1DBarcode('2045', 'C128A', '', '', '', 13, 0.4, $style, 'N');
-$pdf->SetFont('helvetica', '', 10);
-$pdf->Cell(0, 0, '$ 4.990.-', 0, 1, 'C');
-$pdf->SetFont('helvetica', '', 6);
-$pdf->Cell(0, 0, '', 0, 1);
-
-// CODE 128 AUTO
-$pdf->Cell(0, 0, 'CALZA DEPORTIVA', 0, 1, 'C');
-$pdf->write1DBarcode('2045', 'C128A', '', '', '', 13, 0.4, $style, 'N');
-$pdf->SetFont('helvetica', '', 10);
-$pdf->Cell(0, 0, '$ 4.990.-', 0, 1, 'C');
-$pdf->SetFont('helvetica', '', 6);
-$pdf->Cell(0, 0, '', 0, 1);
-
-// CODE 128 AUTO
-$pdf->Cell(0, 0, 'CALZA DEPORTIVA', 0, 1, 'C');
-$pdf->write1DBarcode('2045', 'C128A', '', '', '', 13, 0.4, $style, 'N');
-$pdf->SetFont('helvetica', '', 10);
-$pdf->Cell(0, 0, '$ 4.990.-', 0, 1, 'C');
-$pdf->SetFont('helvetica', '', 6);
-$pdf->Cell(0, 0, '', 0, 1);
-
-// CODE 128 AUTO
-$pdf->Cell(0, 0, 'CALZA DEPORTIVA', 0, 1, 'C');
-$pdf->write1DBarcode('2045', 'C128A', '', '', '', 13, 0.4, $style, 'N');
-$pdf->SetFont('helvetica', '', 10);
-$pdf->Cell(0, 0, '$ 4.990.-', 0, 1, 'C');
-$pdf->SetFont('helvetica', '', 6);
-$pdf->Cell(0, 0, '', 0, 1);
-
-// CODE 128 AUTO
-$pdf->Cell(0, 0, 'CALZA DEPORTIVA', 0, 1, 'C');
-$pdf->write1DBarcode('2045', 'C128A', '', '', '', 13, 0.4, $style, 'N');
-$pdf->SetFont('helvetica', '', 10);
-$pdf->Cell(0, 0, '$ 4.990.-', 0, 1, 'C');
-$pdf->SetFont('helvetica', '', 6);
-$pdf->Cell(0, 0, '', 0, 1);
-
-// CODE 128 AUTO
-$pdf->Cell(0, 0, 'CALZA DEPORTIVA', 0, 1, 'C');
-$pdf->write1DBarcode('2045', 'C128A', '', '', '', 13, 0.4, $style, 'N');
-$pdf->SetFont('helvetica', '', 10);
-$pdf->Cell(0, 0, '$ 4.990.-', 0, 1, 'C');
-$pdf->SetFont('helvetica', '', 6);
-$pdf->Cell(0, 0, '', 0, 1);
-
-// CODE 128 AUTO
-$pdf->Cell(0, 0, 'CALZA DEPORTIVA', 0, 1, 'C');
-$pdf->write1DBarcode('2045', 'C128A', '', '', '', 13, 0.4, $style, 'N');
-$pdf->SetFont('helvetica', '', 10);
-$pdf->Cell(0, 0, '$ 4.990.-', 0, 1, 'C');
-$pdf->SetFont('helvetica', '', 6);
-$pdf->Cell(0, 0, '', 0, 1);
-
-// CODE 128 AUTO
-$pdf->Cell(0, 0, 'CALZA DEPORTIVA', 0, 1, 'C');
-$pdf->write1DBarcode('2045', 'C128A', '', '', '', 13, 0.4, $style, 'N');
-$pdf->SetFont('helvetica', '', 10);
-$pdf->Cell(0, 0, '$ 4.990.-', 0, 1, 'C');
-$pdf->SetFont('helvetica', '', 6);
-$pdf->Cell(0, 0, '', 0, 1);
+for($i=0; $i<$cantidad;$i++){
+	// CODE 128 AUTO
+	$pdf->Cell(0, 0, $producto, 0, 1, 'C');
+	$pdf->write1DBarcode($codigo, 'C128A', '', '', '', 13, 0.4, $style, 'N');
+	$pdf->SetFont('helvetica', '', 10);
+	$pdf->Cell(0, 0, $precio, 0, 1, 'C');
+	$pdf->SetFont('helvetica', '', 6);
+	$pdf->Cell(0, 0, '', 0, 1);	
+}
 
 
 //Close and output PDF document

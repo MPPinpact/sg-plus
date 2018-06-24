@@ -25,6 +25,31 @@ var StockProducto = function(IdProducto,NombreProducto){
 	
 }
 
+var ImprimirEtiquetas = function(infoEtiqueta){
+
+	parametroAjax.ruta=rutaBDC;
+
+
+	if( !infoEtiqueta.originalEvent ) {
+		parametroAjax.data = {IdDetalleCompra:infoEtiqueta};
+	}else{
+		parametroAjax.data = {IdDetalleCompra:$("#IdDetalleCompraBD").val()};	
+	} 
+
+    respuesta=procesarajax(parametroAjax);
+
+	if(respuesta.code==200) {
+		detalle = respuesta.respuesta[0];
+		window.open('barcode/codigoBarra.php?cantidad='+detalle.CantidadComprada+'&codigo='+detalle.CodigoBarra+'&precio='+detalle.PrecioVentaSugerido+'&producto='+detalle.NombreProducto,'_blank');
+
+	}else{
+	
+
+	}
+
+	
+}
+
 var BotonFinalizarCompraMasiva = function(){
 	console.log("BotonFinalizarCompraMasiva");
 
@@ -816,6 +841,8 @@ $(document).ready(function(){
 	$(document).on('click','#cerrarBodegaDestino', CerrarModalBodegaDestino);
 	
 	$(document).on('click','#botonAsignarProducto', AsignarBodegaProducto);
+	$(document).on('click','#botonImprimirEtiqueta', ImprimirEtiquetas);
+	
 	
 
 	$('#NombreProducto').on('keypress', function(e) {
