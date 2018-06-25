@@ -11,12 +11,15 @@ $cantidad = isset( $_GET["cantidad"] ) ? $_GET["cantidad"] : 1;
 
 // create new PDF document
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 // set default monospaced font
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
+$pdf->SetPrintHeader(false);
+$pdf->SetPrintFooter(false);
+
 // set margins
-$pdf->SetMargins(6, 5, 175);
+//$pdf->SetMargins(6, 5, 175);
 
 // set auto page breaks
 $pdf->SetAutoPageBreak(TRUE, 5);
@@ -25,10 +28,10 @@ $pdf->SetAutoPageBreak(TRUE, 5);
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 // set some language-dependent strings (optional)
-if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-	require_once(dirname(__FILE__).'/lang/eng.php');
-	$pdf->setLanguageArray($l);
-}
+// if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+// 	require_once(dirname(__FILE__).'/lang/eng.php');
+// 	$pdf->setLanguageArray($l);
+// }
 
 // ---------------------------------------------------------
 
@@ -56,7 +59,8 @@ $style = array(
 
 
 // add a page ----------
-$pdf->AddPage('P', 'A4');
+// $pdf->AddPage('P', 'A4');
+$pdf->AddPage('L', array(60,40));
 
 for($i=0; $i<$cantidad;$i++){
 	// CODE 128 AUTO
