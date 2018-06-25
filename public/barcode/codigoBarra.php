@@ -74,4 +74,4 @@ for($i=0; $i<$cantidad;$i++){
 
 
 //Close and output PDF document
-$pdf->Output('example_027.pdf', 'I');
+$pdf->Output('etiquetasSGPLUS.pdf', 'I');
