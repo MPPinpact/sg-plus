@@ -60,16 +60,23 @@ $style = array(
 
 // add a page ----------
 // $pdf->AddPage('P', 'A4');
-$pdf->AddPage('L', array(60,40));
+// $pdf->AddPage('P', array(60,40));
 
 for($i=0; $i<$cantidad;$i++){
 	// CODE 128 AUTO
+	$pdf->AddPage('P', array(60,40));
+
+	$pdf->StartTransform();
+	$pdf->Rotate(-90);
+
 	$pdf->Cell(0, 0, $producto, 0, 1, 'C');
 	$pdf->write1DBarcode($codigo, 'C128A', '', '', '', 13, 0.4, $style, 'N');
 	$pdf->SetFont('helvetica', '', 10);
 	$pdf->Cell(0, 0, $precio, 0, 1, 'C');
 	$pdf->SetFont('helvetica', '', 6);
-	$pdf->Cell(0, 0, '', 0, 1);	
+	$pdf->Cell(0, 0, '----------------', 0, 1);	
+
+	$pdf->StopTransform();
 }
 
 
