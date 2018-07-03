@@ -64,7 +64,7 @@ $style = array(
 
 for($i=0; $i<$cantidad;$i++){
 	// CODE 128 AUTO
-	$pdf->AddPage('P', array(60,40));
+	$pdf->AddPage('P', array(33,20));
 
 	$pdf->StartTransform();
 	$pdf->Rotate(-90);
