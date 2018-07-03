@@ -70,7 +70,7 @@ for($i=0; $i<$cantidad;$i++){
 	//$pdf->Rotate(-90);
 
 	$pdf->Cell(0, 0, $producto, 0, 1, 'C');
-	$pdf->write1DBarcode($codigo, 'C128A', '', '', '', 13, 0.4, $style, 'N');
+	$pdf->write1DBarcode($codigo, 'UPC-E', '', '', '', 13, 0.4, $style, 'N');
 	$pdf->SetFont('helvetica', '', 10);
 	$pdf->Cell(0, 0, $precio, 0, 1, 'C');
 	$pdf->SetFont('helvetica', '', 6);
