@@ -19,7 +19,7 @@ $pdf->SetPrintHeader(false);
 $pdf->SetPrintFooter(false);
 
 // set margins
-//$pdf->SetMargins(6, 5, 175);
+$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 
 // set auto page breaks
 $pdf->SetAutoPageBreak(TRUE, 5);
