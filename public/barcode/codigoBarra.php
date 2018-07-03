@@ -66,7 +66,7 @@ for($i=0; $i<$cantidad;$i++){
 	// CODE 128 AUTO
 	$pdf->AddPage('P', array(20,33));
 
-	$pdf->StartTransform();
+	//$pdf->StartTransform();
 	//$pdf->Rotate(-90);
 
 	$pdf->Cell(0, 0, $producto, 0, 1, 'C');
@@ -76,7 +76,7 @@ for($i=0; $i<$cantidad;$i++){
 	$pdf->SetFont('helvetica', '', 6);
 	$pdf->Cell(0, 0, '----------------', 0, 1);	
 
-	$pdf->StopTransform();
+	//$pdf->StopTransform();
 }
 
 
