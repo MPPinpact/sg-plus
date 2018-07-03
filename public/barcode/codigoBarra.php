@@ -22,7 +22,7 @@ $pdf->SetPrintFooter(false);
 $pdf->SetMargins(0, 0, 0);
 
 // set auto page breaks
-$pdf->SetAutoPageBreak(TRUE, 5);
+$pdf->SetAutoPageBreak(false, 5);
 
 // set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
