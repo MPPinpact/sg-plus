@@ -132,9 +132,11 @@ var cargarTablaMovimientos = function(data){
         $('#tablaClientesMovimientos thead').empty();
     }
 
+    var columnReport = [[5],[6],[9],[11],[12]];
+
         $("#tablaClientesMovimientos").dataTable({
             responsive:false,
-            "aLengthMenu": DataTableLengthMenu,
+            "aLengthMenu": [[-1],["Todos"]],
             "pagingType": "full_numbers",
             "language": LenguajeTabla,
             "columnDefs": [
@@ -144,9 +146,7 @@ var cargarTablaMovimientos = function(data){
             "data": data,
             "columns":[
                 {"title": "Id","data": "IdMovimiento",visible:0},
-                {
-                    "title": "Fecha Movimiento", 
-                    "data": "FechaMovimiento",
+                {"title": "Fecha Movimiento", "data": "FechaMovimiento",
                     "render": function(data, type, row, meta){
                         if(type === 'display'){
                             data = moment(data, 'YYYY-MM-DD HH:mm:ss',true).format("DD-MM-YYYY");
@@ -154,9 +154,7 @@ var cargarTablaMovimientos = function(data){
                         return data;
                     }
                 },
-                {
-                    "title": "Fecha Vencimiento", 
-                    "data": "FechaVencimiento",
+                {"title": "Fecha Vencimiento", "data": "FechaVencimiento",
                     "render": function(data, type, row, meta){
                         if(type === 'display'){
                             data = moment(data, 'YYYY-MM-DD',true).format("DD-MM-YYYY");
@@ -168,6 +166,10 @@ var cargarTablaMovimientos = function(data){
                 {"title": "N° Documento","data": "NumeroDocumento"},
                 {"title": "Descripción","data": "DescripcionMovimiento"},
                 {"title": "Monto","data": "MontoMovimiento"}
+            ],
+            dom: 'Bfrtip',
+            buttons: [
+                'print'       
             ],
         });
         limpiarMovimientos=1;

@@ -54,6 +54,7 @@ class Familia extends Authenticatable
         $datos['IdFamilia']==null ? $Id=0 : $Id= $datos['IdFamilia'];
         $sql="select f_registro_familia(".$Id.",'".$datos['NombreFamilia']."',".$datos['EstadoFamilia'].",".$idAdmin.")";
         $execute=DB::select($sql);
+        
         foreach ($execute[0] as $key => $value) {
             $result['f_registro_familia']=$value;
         }
