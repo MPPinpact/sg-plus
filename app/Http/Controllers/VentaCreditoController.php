@@ -73,11 +73,19 @@ class VentaCreditoController extends Controller
 		
 		$datos = $request->all();
         $usuario= new Usuario();
+
         $datos['RUTCliente'] = $usuario->LimpiarRut($datos['RUTCliente']);
-		
+        log::info("RUT CLiente: " . $datos['RUTCliente']);
+
         $venta= new VentaCredito();
-        $result ['v_cliente'] = $venta->getOneCliente($datos['RUTCliente']);
-        $result ['v_fechas'] = $venta->calcularFechaPago($result ['v_cliente']);
+        $result['v_cliente'] = $venta->getOneCliente($datos['RUTCliente']);
+
+        if(count($result['v_cliente'])){
+            $result['v_fechas'] = $venta->calcularFechaPago($result['v_cliente']);    
+        }else{
+            $result['v_fechas'] = $venta->formatearFecha(date("Y-m-d"));
+        }
+        
         return $result;
     }
 

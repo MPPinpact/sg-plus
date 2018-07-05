@@ -239,19 +239,24 @@ class Venta extends Authenticatable
 		else $fpc = $this->formatearFecha($fpc);
 		
         $sql="select f_registro_pago_ventas(".$Id.",".$datos['IdPreVentaPago'].",".$datos['IdFormaPagoPreVenta'].",'".$datos['CodigoAprobacionTarjeta']."','".$datos['NumeroTransaccionTarjeta']."','".$datos['IdClienteVC']."', '".$fpc."','".$datos['NumeroCuotasCredito']."','".$datos['InteresMensualCredito']."','".$datos['MontoFinalCredito']."','".$datos['MontoCuotaCredito']."','".$datos['MontoPagoEfectivo']."',1,".$idAdmin.")";
-		////log::info($sql);
+		
+        log::info("SQL: " . $sql);
 		
         $execute=DB::select($sql);
+
         foreach ($execute[0] as $key => $value) {
             $result=$value;
         }
+
+        log::info("Result: " . $result);
+
         return $result;
     }
 	
 	public function regFinalizarVenta($IdVenta){
 		$sql="select f_finaliza_venta(".$IdVenta.")";
-		////log::info($sql);
 		
+        log::info($sql);
 		$execute=DB::select($sql);
 		
 		foreach ($execute[0] as $key => $value) {

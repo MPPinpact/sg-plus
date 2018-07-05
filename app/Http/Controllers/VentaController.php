@@ -273,9 +273,16 @@ class VentaController extends Controller
     protected function postBuscarCliente(Request $request){
         $datos = $request->all();
         $model= new Usuario();
+
+        log::info("RUT: " . $datos['RUTCliente']);
+        
         $datos['RUT']=$model->LimpiarRut($datos['RUTCliente']);
         $result = Cliente::where('RUTCliente',$datos['RUT'])->first();
-        if($result == null) { $result = '{"IdCliente":0}'; } 
+
+        if($result == null) {
+            $result = '{"code":200, "IdCliente":0}'; 
+        }
+
         return $result;
     }
 

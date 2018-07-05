@@ -112,13 +112,14 @@ class VentaCredito extends Authenticatable
     }
 
     public function getOneCliente($RUTCliente){
-        return DB::table('v_clientes')->where('RUTCliente',$RUTCliente)->get();
+        return DB::table('v_clientes')->where('RUTCliente', $RUTCliente)->get();
     }
 
     public function calcularFechaPago($cliente){
 
         $sql="select f_calculo_pago(".$cliente[0]->IdCliente.")";
         $execute=DB::select($sql);
+        
         foreach ($execute[0] as $key => $value) {
             $result=$value;
         }

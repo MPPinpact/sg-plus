@@ -788,7 +788,13 @@
 						</div>
 					</div>
 					
-					<div class="row"><br /><br /><br /><br /></div>
+					<div class="row" align="center">
+						<div class="col-md-1">
+							<label class="label label-lg bg-danger" id="lblMensajeErrorFormaPago"  style="display: none;"></label>
+						</div>
+					</div>
+
+					<div class="row"><br /><br /></div>
 
 					<div class="row" id="divBotonM_FPE" style="display:none;">						
 						<div class="col-md-12">
@@ -948,7 +954,7 @@
 						<div class="row" id="frameNroPreVenta" style="display: none;">
 							<div class="col-md-8">
 								<div class="md-input-wrapper">
-									<input id="NroPreVenta" name="NroPreVenta" type="text" class="md-form-control form-control-lg  md-static" maxlength="6" />
+									<input id="NroPreVenta" name="NroPreVenta" type="text" class="md-form-control form-control-lg  md-static" maxlength="10" />
 									<label id="lblNroPreVenta" for="NroPreVenta">Nro. Pre-Venta</label>
 								</div>
 							</div>

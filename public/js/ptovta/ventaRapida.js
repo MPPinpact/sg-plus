@@ -365,10 +365,10 @@ $(document).ready(function(){
                 verbose: false,
                 validators: {
                     notEmpty: {
-                        message: 'El campo es requerido.'
+                        message: 'ESTE CAMPO ES REQUERIDO.'
                     },
                 }
-            },
+            },   
         }
     })
     .on('success.form.fv', function(e){
@@ -985,7 +985,42 @@ var VentaDirecta = function(){
 /* Funciones Comunes de los formularios de PreVenta, Venta Directa y Venta Pre-Venta*/
 var validadorFormaPago = function(){
 	console.log("IdVenta Antes de Validar Formulario FormIngresoFP: " + $("#IdVenta").val());
-	
+	console.log("IdFormaPagoPreVenta: " + $("#IdFormaPagoPreVenta").val() );
+
+	var vCampo =  $("#IdFormaPagoPreVenta").val();
+	if(vCampo == 3){
+		var vCampo = $("#RUTClienteCredito").val();
+		console.log("RUTClienteCredito: " + vCampo);
+
+		if(vCampo.length == 0){
+			$("#lblMensajeErrorFormaPago").text("DEBE INGRESAR EL RUT DEL CLIENTE.");
+	        $("#lblMensajeErrorFormaPago").show();
+			$("#bontonEstadoClienteVC").hide();
+			return false;
+		}
+
+		var vCampo = $("#NumeroCuotasCredito").val();
+		console.log("NumeroCuotasCredito: " + vCampo);
+
+		if(vCampo.length == 0){
+			$("#lblMensajeErrorFormaPago").text("DEBE INGRESAR EL NÚMERO DE CUOTAS DE LA VENTA A CRÉDITO.");
+	        $("#lblMensajeErrorFormaPago").show();
+			$("#bontonEstadoClienteVC").hide();
+			return false;
+		}
+
+		var vCampo = $("#MontoAFinanciar").val();
+		console.log("MontoAFinanciar: " + vCampo);
+
+		if(vCampo.length == 0){
+			$("#lblMensajeErrorFormaPago").text("DEBE INGRESAR EL MONTO A CRÉDITO.");
+	        $("#lblMensajeErrorFormaPago").show();
+			$("#bontonEstadoClienteVC").hide();
+			return false;
+		}
+	}
+
+	/* Proceso la forma de pago*/
 	if( $("#IdFormaPagoPreVenta").val() != 0) {
 		if ( $("#MontoPagoEfectivo").val() > ($("#SaldoPagoPreVenta").val() * -1) ){
 			alert("EL MONTO PAGADO ($ "+$("#MontoPagoEfectivo").val()+") NO PUEDE SER MAYOR AL SALDO PENDIENTE DE PAGO ($ "+ ($("#SaldoPagoPreVenta").val() * -1) + ")");
@@ -995,7 +1030,8 @@ var validadorFormaPago = function(){
 		}
 	}
 
-    $('#FormIngresoFP').formValidation('validate');
+	$('#FormIngresoFP').formValidation('validate');
+
 };
 
 var CalcularMontosPreVenta = function(){
@@ -1069,7 +1105,16 @@ var verificarRut = function(control,caso){
         if (caso==1){errorRut = 1;$("#ErrorRut").text("RUT Cliente inválido");}
         if (caso==2){errorRut2 = 1;$("#ErrorRut2").text("Rut invalido");}
         if (caso==3){errorRut3 = 1;$("#ErrorRut3").text("Rut invalido");}
-		if (caso==4){errorRut4 = 1;$("#ErrorRutCredito").text("Rut invalido");}
+		if (caso==4){
+			errorRut4 = 1;
+			$("#ErrorRutCredito").text("Rut invalido");
+			$("#lblMensajeErrorFormaPago").text("RUT INGRESADO NO ES VÁLIDO");
+			$("#NombreClienteCredito").val("");
+			$("#bontonEstadoClienteVC").hide();
+			
+			$("#lblMensajeErrorFormaPago").show();
+		}
+
         return control.val();
     }
 }
@@ -1240,27 +1285,60 @@ var ManejoRespuestaBuscarVendedorPreVenta = function(respuesta){
 }
 
 var ManejoRespuestaProcesarFormaPago = function(respuesta){
+	console.log("Respuesta.code: " + respuesta.code);
+
     if(respuesta.code==200){
         var res = JSON.parse(respuesta.respuesta.f_registro);
         switch(res.code) {
             case '200':
                 $.growl({message:res.des_code},{type: "success", allow_dismiss: true,});
+
+                $("#lblMensajeErrorFormaPago").hide();
                 $("#ModalIngresoPago").modal("hide");
-				
-				//$(".divBotonesC").toggle();
-                //$('#IdVenta2').val("");
                 $('#FormIngresoFP')[0].reset();
+
                 CargarTablaPagos(respuesta.respuesta.v_pagos);
 				console.log("Pago Procesado!!!");
-				
                 break;
+
+            case '501':
+            	console.log("Falta RUT Cliente!!!");
+		        var res = JSON.parse(respuesta.respuesta.f_registro);
+		        $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
+		        $("#lblMensajeErrorFormaPago").text(res.des_code);
+		        $("#lblMensajeErrorFormaPago").show();
+		        $("#RUTClienteCredito").focus();
+            	break;
+
+            case '502':
+            	console.log("Falta Número de Cuotas!!!");
+		        var res = JSON.parse(respuesta.respuesta.f_registro);
+		        $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
+		        $("#lblMensajeErrorFormaPago").text(res.des_code);
+		        $("#lblMensajeErrorFormaPago").show();
+		        $("#NumeroCuotasCredito").focus();
+            	break;
+
             case '-2':
                 $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
+                $("#lblMensajeErrorFormaPago").text(res.des_code);
+                $("#lblMensajeErrorFormaPago").show();
                 break;
             default:
-                $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
+                $.growl({message:"Contacte al personal informatico."},{type: "danger", allow_dismiss: true,});
+                $("#lblMensajeErrorFormaPago").text("Contacte al personal informatico.");
+                $("#lblMensajeErrorFormaPago").show();
                 break;
         }
+
+    }else if(respuesta.code==500){
+    	console.log("Falta RUT Cliente!!!");
+
+        var res = JSON.parse(respuesta.respuesta.f_registro);
+        $.growl({message:res.des_code},{type: "warning", allow_dismiss: true,});
+        $("#RUTCliente").focus().select();
+
+
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
     }
@@ -1488,9 +1566,13 @@ var ManejoRespuestaProcesarInfoCaja = function(respuesta){
 var ManejoRespuestaBuscarClienteVC = function(respuesta){
 	
 	console.log("ManejoRespuestaBuscarClienteVC...");
-	
+	//console.log("Respuesta.code: " . respuesta.code);
+
     if(respuesta.code==200){
-        if(respuesta.respuesta.v_cliente!=null){
+    	vCliente = respuesta.respuesta.v_cliente[0];
+    	console.log(vCliente);
+
+        if(vCliente!=null){
             $("#IdClienteVC").val(respuesta.respuesta.v_cliente[0].IdCliente);
             $("#NombreClienteCredito").val(respuesta.respuesta.v_cliente[0].NombreCliente);
             $("#FechaPrimeraCuota").val(respuesta.respuesta.v_fechas.fechaPago);
@@ -1519,7 +1601,16 @@ var ManejoRespuestaBuscarClienteVC = function(respuesta){
             $("#bontonEstadoClienteVC").show();
 
         }else{
+        	$("#IdClienteVC").val("0");
+        	$("#NombreClienteCredito").val("");
+            $("#FechaPrimeraCuota").val("");
+            $("#bontonEstadoClienteVC").hide();
+
             $.growl({message:"Cliente no encontrado"},{type: "warning", allow_dismiss: true,});
+
+            $("#lblMensajeErrorFormaPago").text("RUT INGRESADO NO CORRESPONDE A UN CLIENTE DE LA EMPRESA");
+            $("#lblMensajeErrorFormaPago").show();
+			$("#RUTClienteCredito").select().focus();
         }
     }else{
         $.growl({message:"Contacte al personal informatico"},{type: "danger", allow_dismiss: true,});
