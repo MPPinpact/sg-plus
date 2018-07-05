@@ -922,13 +922,19 @@
 						<div class="row" id="frameProductos">
 							<div class="col-md-2">
 								<div class="md-input-wrapper">
-									<input id="CodigoProductoPreVenta" name="CodigoProductoPreVenta" type="text" class="md-form-control md-static" maxlength="15" />
+									<input id="CantidadProductoPreVenta" name="CantidadProductoPreVenta" type="text" class="md-form-control md-static text-center" maxlength="6" value="1" />
+									<label for="CantidadProductoPreVenta">Cant</label>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="md-input-wrapper">
+									<input id="CodigoProductoPreVenta" name="CodigoProductoPreVenta" type="text" class="md-form-control md-static text-center" maxlength="15" />
 									<label for="CodigoProductoPreVenta">Código</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="md-input-wrapper">
-									<input id="NombreProductoPreVenta" name="NombreProductoPreVenta" type="text" class="md-form-control md-static" maxlength="50" readonly  />
+									<input id="NombreProductoPreVenta" name="NombreProductoPreVenta" type="text" class="md-form-control md-static text-center" maxlength="50" readonly  />
 									<label for="NombreProductoPreVenta">Producto</label>
 								</div>
 							</div>
@@ -936,12 +942,6 @@
 								<div class="md-input-wrapper">
 									<input id="PrecioProductoPreVenta" name="PrecioProductoPreVenta" type="text" class="md-form-control md-static" maxlength="12" readonly />
 									<label for="PrecioProductoPreVenta">Precio</label>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div class="md-input-wrapper">
-									<input id="CantidadProductoPreVenta" name="CantidadProductoPreVenta" type="text" class="md-form-control md-static" maxlength="6" />
-									<label for="CantidadProductoPreVenta">Cant</label>
 								</div>
 							</div>
 							<div class="col-md-2">

@@ -228,7 +228,8 @@ $(document).ready(function(){
       		e.stopImmediatePropagation();
 
       		$("#CodigoProductoPreVenta").trigger("focusout");
-			
+			AgregarProductoPreVenta();
+
 			return false;
       	}
     });
@@ -241,7 +242,7 @@ $(document).ready(function(){
        		e.preventDefault();
        		e.stopImmediatePropagation();
 			
-			AgregarProductoPreVenta();
+			//AgregarProductoPreVenta();
 
 	 		return false;
        	}
@@ -1039,6 +1040,11 @@ var CalcularMontosPreVenta = function(){
 	var PrecioPreVenta =  $("#PrecioProductoPreVenta").val();
 	var MontoDescuentoPreVenta = 0;
 	
+	if(CantidadPreVenta.length == 0){
+		$("#CantidadProductoPreVenta").val(1);
+		CantidadPreVenta = 1;
+	}
+
     var TotalLineaPreVenta = ((CantidadPreVenta * PrecioPreVenta) - MontoDescuentoPreVenta);
     $("#TotalLineaPreVenta").val(TotalLineaPreVenta);
 }
@@ -1185,7 +1191,6 @@ var buscarProducto = function(CodigoBarra){
 		
 		ManejoRespuestaBuscarProductoPreVenta(respuesta);
 
-
 	}else{
 		//$.growl("Debe ingresar el Código del Producto!",{type: "warning", allow_dismiss: true,});
 		//$("#CodigoProductoPreVenta").focus();
@@ -1216,10 +1221,13 @@ var ManejoRespuestaBuscarProductoPreVenta = function(respuesta){
                     $("#CodigoProductoPreVenta").focus().select();
 
                 }else{
+                	var vPrecioVenta = respuesta.respuesta.producto.PrecioVentaSugerido;
+                	console.log("PrecioVenta: " + parseInt(vPrecioVenta));
+
                     $("#IdProductoPreVenta").val(respuesta.respuesta.producto.IdProducto);
                     $("#NombreProductoPreVenta").val(respuesta.respuesta.producto.NombreProducto);
-                    $("#PrecioProductoPreVenta").val(respuesta.respuesta.producto.PrecioVentaSugerido);
-                    $("#CantidadProductoPreVenta").val(1);
+                    $("#PrecioProductoPreVenta").val(parseInt(vPrecioVenta));
+                    //$("#CantidadProductoPreVenta").val(1);
 					
 					CalcularMontosPreVenta();
 					$("#CantidadProductoPreVenta").focus().select();
@@ -1371,7 +1379,7 @@ var ManejoRespuestaProcesarProductoPreVenta = function(respuesta, origen){
 			$("#IdProductoPreVenta").val("");
 			$("#NombreProductoPreVenta").val("");
 			$("#PrecioProductoPreVenta").val("");
-			$("#CantidadProductoPreVenta").val("");
+			$("#CantidadProductoPreVenta").val("1");
 			$("#CodigoProductoPreVenta").val("");
 			
 			$('#EstadoPreVenta').val(respuesta.respuesta.v_cabecera[0].EstadoPreVenta);
@@ -1734,16 +1742,16 @@ var CargarTablaProductosPreVenta = function(data){
 						width: 800},
 			{"title": "Valor","data": "ValorUnitarioVenta", 
 						width: 100,
-						render: $.fn.dataTable.render.number( '.', ',', 2 ),
+						render: $.fn.dataTable.render.number( '.', ',', 0 ),
 						className: "text-right"},
 			{"title": "Cant.","data": "Cantidad"+_tipoVenta_, 
 						width: 50,
-						render: $.fn.dataTable.render.number( '.', ',', 2 ),
+						render: $.fn.dataTable.render.number( '.', ',', 0 ),
 						className: "text-center"},
 			{"title": "Dcto","data": "MontoDescuento",visible:0},
 			{"title": "Total","data": "TotalLinea", 
 						width: 100,
-						render: $.fn.dataTable.render.number( '.', ',', 2 ),
+						render: $.fn.dataTable.render.number( '.', ',', 0 ),
 						className: "text-right"},
 			{"title": "",
 				"data": "IdDetalle"+_tipoVenta_,
